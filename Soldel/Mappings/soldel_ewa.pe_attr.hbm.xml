@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_attr" table="pe_attr">
+    <composite-id>
+      <key-property name="pe_muta_id" type="String">
+        <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
+      </key-property>
+      <key-property name="nom_attr" type="String">
+        <column name="nom_attr" default="''" not-null="true" length="12" sql-type="varchar" />
+      </key-property>
+      <key-property name="clatit_attr" type="String">
+        <column name="clatit_attr" default="''" not-null="true" length="10" sql-type="varchar" />
+      </key-property>
+    </composite-id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="check_attr" type="String">
+      <column name="check_attr" not-null="false" length="500" sql-type="varchar" />
+    </property>
+    <property name="val_def" type="String">
+      <column name="val_def" not-null="false" length="40" sql-type="varchar" />
+    </property>
+    <property name="visibilite" type="String">
+      <column name="visibilite" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="identifiant" type="String">
+      <column name="identifiant" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="oblig_fac" type="String">
+      <column name="oblig_fac" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="log" type="String">
+      <column name="log" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="donnee_traite" type="String">
+      <column name="donnee_traite" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="position" type="Int32">
+      <column name="position" not-null="false" precision="11" scale="0" sql-type="int" />
+    </property>
+    <property name="groupe" type="String">
+      <column name="groupe" not-null="false" length="10" sql-type="varchar" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" sql-type="date" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" sql-type="date" />
+    </property>
+    <property name="copy_to" type="String">
+      <column name="copy_to" not-null="false" length="40" sql-type="varchar" />
+    </property>
+    <property name="from_db" type="String">
+      <column name="from_db" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <many-to-one name="pe_muta" class="pe_muta">
+      <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

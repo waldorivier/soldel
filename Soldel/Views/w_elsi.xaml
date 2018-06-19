@@ -1,0 +1,52 @@
+﻿<Window x:Class="Soldel.Views.w_elsi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Soldel.Views"
+        mc:Ignorable="d"
+        Title="ELEMENTS DE SITUATION" Height="600" Width="600">
+
+    <Grid x:Name="object_list">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row = "0">
+            <StackPanel Orientation="Vertical">
+                <local:uc_select_connection x:Name="uc_select_connection"/>
+                <TextBox x:Name="tb_personne"/>
+                <Button x:Name="btn_reload_personne" Content="Relire la personne"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row = "1">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <DataGrid x:Name="dg_elsi_simple" 
+                          AlternatingRowBackground="LightGray"/>
+            </Grid>
+            <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1"/>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="180*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="tb_column_filter" Grid.Row="0" Height="20" Grid.ColumnSpan="2"/>
+                <DataGrid EnableColumnVirtualization="True" 
+                          AlternatingRowBackground="LightGray" 
+                          ScrollViewer.IsDeferredScrollingEnabled="true" 
+                          x:Name="dg_elsi_multiple" Grid.Row="1" Grid.ColumnSpan="2"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

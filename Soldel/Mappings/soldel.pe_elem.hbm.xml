@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_elem" table="pe_elem">
+    <id name="nom_elem" type="String">
+      <column name="nom_elem" default="''" not-null="true" length="12" />
+      <generator class="assigned" />
+    </id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" />
+    </property>
+    <property name="libf_elem" type="String">
+      <column name="libf_elem" not-null="true" length="40" />
+    </property>
+    <property name="libd_elem" type="String">
+      <column name="libd_elem" not-null="false" length="40" />
+    </property>
+    <property name="libi_elem" type="String">
+      <column name="libi_elem" not-null="false" length="40" />
+    </property>
+    <property name="libe_elem" type="String">
+      <column name="libe_elem" not-null="false" length="40" />
+    </property>
+    <property name="abregf_elem" type="String">
+      <column name="abregf_elem" not-null="true" length="18" />
+    </property>
+    <property name="abregd_elem" type="String">
+      <column name="abregd_elem" not-null="false" length="18" />
+    </property>
+    <property name="abregi_elem" type="String">
+      <column name="abregi_elem" not-null="false" length="18" />
+    </property>
+    <property name="abrege_elem" type="String">
+      <column name="abrege_elem" not-null="false" length="18" />
+    </property>
+    <property name="tydata_elem" type="String">
+      <column name="tydata_elem" not-null="true" length="2" />
+    </property>
+    <property name="format_elem" type="String">
+      <column name="format_elem" not-null="false" length="2" />
+    </property>
+    <property name="tyutil_elem" type="String">
+      <column name="tyutil_elem" not-null="true" length="2" />
+    </property>
+    <property name="tyinit_elem" type="String">
+      <column name="tyinit_elem" not-null="true" length="2" />
+    </property>
+    <property name="valinit_elem" type="String">
+      <column name="valinit_elem" not-null="false" length="20" />
+    </property>
+    <property name="tyelem_elem" type="String">
+      <column name="tyelem_elem" not-null="true" length="2" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" />
+    </property>
+    <property name="caspname" type="String">
+      <column name="caspname" not-null="false" length="30" />
+    </property>
+    <property name="ybronly" type="String">
+      <column name="ybronly" not-null="false" length="1" />
+    </property>
+  </class>
+</hibernate-mapping>

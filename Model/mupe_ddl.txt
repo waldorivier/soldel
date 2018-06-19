@@ -1,0 +1,260 @@
+-- Start of DDL Script for Table PADEV96_DATA.PE_ASSU
+-- Generated 21-déc.-2017 07:43:46 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_assu
+    (no_ip                         INTEGER ,
+    nperso                         VARCHAR(15) ,
+    no_plan                        INTEGER ,
+    no_cas                         INTEGER ,
+    nassur                         INTEGER ,
+    u_version                      VARCHAR(1),
+    pe_assu_id                     VARCHAR(10) NOT NULL,
+    daffil                         DATE NOT NULL,
+    dtdroi                         DATE,
+    dtsorx                         DATE,
+    dtverx                         DATE,
+    dtindx                         DATE,
+    dtfind                         DATE,
+    pe_even_id                     VARCHAR(10),
+    pe_donndr_id                   VARCHAR(10),
+    dtverf                         DATE,
+    stexto                         VARCHAR(2),
+    dextou                         DATE,
+    user_cre                       VARCHAR(20),
+    user_maj                       VARCHAR(20),
+    dh_cre                         DATE,
+    dh_maj                         DATE,
+    cgmanu                         VARCHAR(2),
+    cmodem                         VARCHAR(2),
+    bloquerimpr                    VARCHAR(2));
+ 
+-- Indexes for PE_ASSU
+
+CREATE INDEX pe_assui3 ON pe_assu
+  (
+    no_ip                           ASC,
+    no_plan                         ASC,
+    no_cas                          ASC,
+    daffil                          ASC
+  );
+
+CREATE INDEX pe_assui4 ON pe_assu
+  (
+    pe_even_id                      ASC
+  );
+  
+CREATE INDEX pe_assui5 ON pe_assu
+  (
+    pe_donndr_id                    ASC
+  );
+
+
+-- Constraints for PE_ASSU
+
+ALTER TABLE pe_assu
+ADD CONSTRAINT pe_assuc2 UNIQUE (pe_assu_id);
+
+ALTER TABLE pe_assu
+ADD CONSTRAINT pe_assup1 PRIMARY KEY (no_ip, nperso, no_plan, no_cas, nassur);
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_SITU
+-- Generated 22.12.2017 15:56:26 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_situ
+    (pe_assu_id                    VARCHAR(10) ,
+    dtmutx                         DATE ,
+    nositu                         INTEGER ,
+    no_cate                        INTEGER,
+    codmou                         VARCHAR(2) NOT NULL,
+    tymouv                         VARCHAR(2),
+    sreport                        VARCHAR(2) NOT NULL,
+    u_version                      VARCHAR(1),
+    pe_even_id                     VARCHAR(10),
+    stexto                         VARCHAR(2),
+    dextou                         DATE,
+    creproj                        VARCHAR(1),
+    user_cre                       VARCHAR(20),
+    user_maj                       VARCHAR(20),
+    dh_cre                         DATE,
+    dh_maj                         DATE,
+    pe_no_exer                     INTEGER,
+    no_perio                       INTEGER,
+    no_exer_ext                    INTEGER,
+    no_perio_ext                   INTEGER);
+    
+    
+-- Indexes for PE_SITU
+
+CREATE INDEX pe_situi3 ON pe_situ
+  (
+    pe_assu_id                      ASC,
+    no_exer_ext                     ASC,
+    no_perio_ext                    ASC
+  );
+
+CREATE INDEX pe_situi2 ON pe_situ
+  (
+    pe_even_id                      ASC,
+    dtmutx                          ASC,
+    nositu                          ASC
+  );
+  
+-- Constraints for PE_SITU
+
+ALTER TABLE pe_situ
+ADD CONSTRAINT pe_situp1 PRIMARY KEY (pe_assu_id, dtmutx, nositu)
+
+
+-- End of DDL Script for Table PADEV96_DATA.PE_SITU
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_ELSI
+-- Generated 22.12.2017 16:01:51 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_elsi
+    (pe_assu_id                    VARCHAR(10) ,
+    dtmutx                         DATE ,
+    nositu                         INTEGER ,
+    u_version                      VARCHAR(1),
+    user_cre                       VARCHAR(20),
+    user_maj                       VARCHAR(20),
+    dh_cre                         DATE,
+    dh_maj                         DATE,
+    liste_elsi                     LONGTEXT);
+  
+-- Constraints for PE_ELSI
+
+ALTER TABLE pe_elsi
+ADD CONSTRAINT pe_elsip1 PRIMARY KEY (pe_assu_id, dtmutx, nositu);
+
+
+-- End of DDL Script for Table PADEV96_DATA.PE_ELSI
+
+CREATE TABLE pe_pers
+    (no_ip                         INTEGER ,
+    nperso                         VARCHAR(15) ,
+    u_version                      VARCHAR(1),
+    pe_even_id                     VARCHAR(10),
+    pe_pers_id                     VARCHAR(10) NOT NULL,
+    nidper                         VARCHAR(15),
+    danais                         DATE,
+    dadece                         DATE,
+    syslan                         VARCHAR(3) NOT NULL,
+    projet                         VARCHAR(1) NOT NULL,
+    npersg                         VARCHAR(15),
+    pwd_pers                       VARCHAR(6),
+    stexto                         VARCHAR(2),
+    dextou                         DATE,
+    user_maj                       VARCHAR(20),
+    dh_maj                         DATE,
+    user_cre                       VARCHAR(20),
+    dh_cre                         DATE,
+    no_offre                       INTEGER);
+ 
+-- Indexes for PE_PERS
+
+CREATE INDEX pe_persi3 ON pe_pers
+  (
+    pe_even_id                      ASC
+  );
+
+
+CREATE INDEX pe_persi4 ON pe_pers
+  (
+    no_ip                           ASC,
+    npersg                          ASC
+  );
+ 
+
+CREATE INDEX pe_persi5 ON pe_pers
+  (
+    no_ip                           ASC,
+    no_offre                        ASC
+  );
+
+
+CREATE INDEX pe_persi6 ON pe_pers
+  (
+    danais                          ASC
+  );
+ 
+-- Constraints for PE_PERS
+
+ALTER TABLE pe_pers
+ADD CONSTRAINT pe_persc2 UNIQUE (pe_pers_id);
+
+ALTER TABLE pe_pers
+ADD CONSTRAINT pe_persp1 PRIMARY KEY (no_ip, nperso);
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_PER1
+-- Generated 22.12.2017 16:12:24 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_per1
+    (pe_pers_id                    VARCHAR(10) ,
+    dadval                         DATE ,
+    u_version                      VARCHAR(1),
+    numavs                         VARCHAR(16),
+    lnmper                         VARCHAR(40) NOT NULL,
+    lpnper                         VARCHAR(40) NOT NULL,
+    syssex                         VARCHAR(2),
+    codetc                         VARCHAR(2),
+    pe_even_id                     VARCHAR(10) NOT NULL,
+    user_cre                       VARCHAR(20),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR(20),
+    dh_maj                         DATE,
+    lnmper_upper                   VARCHAR(40),
+    lpnper_upper                   VARCHAR(40),
+    namehandle                     VARCHAR(20),
+    namehandle_upper               VARCHAR(20));
+
+-- Indexes for PE_PER1
+
+CREATE INDEX pe_per1i4 ON pe_per1
+  (
+    numavs                          ASC
+  );
+ 
+
+CREATE INDEX pe_per1i5 ON pe_per1
+  (
+    lnmper_upper                    ASC,
+    lpnper_upper                    ASC
+  );
+
+CREATE INDEX pe_per1i2 ON pe_per1
+  (
+    pe_even_id                      ASC
+  );
+  
+
+CREATE INDEX pe_per1i3 ON pe_per1
+  (
+    lnmper                          ASC,
+    lpnper                          ASC
+  );
+
+
+CREATE INDEX pe_per1i6 ON pe_per1
+  (
+    lpnper_upper                    ASC,
+    lnmper_upper                    ASC
+  );
+
+-- Constraints for PE_PER1
+
+ALTER TABLE pe_per1
+ADD CONSTRAINT pe_per1p1 PRIMARY KEY (pe_pers_id, dadval);
+
+-- Triggers for PE_PER1
+
+CREATE OR REPLACE TRIGGER bef_ins_up_per1
+ BEFORE
+  INSERT OR UPDATE
+ ON pe_per1
+REFERENCING NEW AS NEW OLD AS OLD
+ FOR EACH ROW
+BEGIN
+:new.lnmper_upper:= upper(:new.lnmper);
+:new.lpnper_upper:= upper(:new.lpnper);
+:new.namehandle_upper:= upper(:new.namehandle);
+END;

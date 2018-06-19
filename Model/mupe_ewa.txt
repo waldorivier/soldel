@@ -1,0 +1,210 @@
+ Start of DDL Script for Table PADEV96_DATA.PE_CFGD
+-- Generated 10-mars-2018 09:53:56 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_cfgd
+    (pe_cfgt_id                    VARCHAR2(10 BYTE) ,
+    pe_grmu_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    cfg_xml                        CLOB,
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+
+
+-- Constraints for PE_CFGD
+
+ALTER TABLE pe_cfgd
+ADD CONSTRAINT pe_cfgdp1 PRIMARY KEY (pe_cfgt_id, pe_grmu_id)
+
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_CFGT
+-- Generated 10-mars-2018 09:58:26 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_cfgt
+    (pe_cfgt_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    no_ip                          NUMBER(20,0) NOT NULL,
+    dadval                         DATE NOT NULL,
+    description                    VARCHAR2(40 BYTE),
+    statut                         VARCHAR2(10 BYTE) NOT NULL,
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+
+
+-- Constraints for PE_CFGT
+
+ALTER TABLE pe_cfgt
+ADD CONSTRAINT pe_cfgtc2 UNIQUE (no_ip, dadval)
+
+ALTER TABLE pe_cfgt
+ADD CONSTRAINT pe_cfgtp1 PRIMARY KEY (pe_cfgt_id)
+
+CREATE TABLE pe_gmes
+    (pe_grmu_id                     VARCHAR2(10 BYTE) ,
+    pe_este_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+ 
+-- Constraints for PE_GMES
+
+ALTER TABLE pe_gmes
+ADD CONSTRAINT pe_gmesp1 PRIMARY KEY (pe_grmu_id, pe_este_id)
+
+CREATE TABLE pe_gmmu
+    (pe_grmu_id                    VARCHAR2(10 BYTE) ,
+    pe_muta_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+
+-- Constraints for PE_GMMU
+
+ALTER TABLE pe_gmmu
+ADD CONSTRAINT pe_gmmup1 PRIMARY KEY (pe_grmu_id, pe_muta_id)
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_GRMU
+-- Generated 10-mars-2018 10:10:09 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_grmu
+    (pe_grmu_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    libf_grmu                      VARCHAR2(160 BYTE) NOT NULL,
+    libd_grmu                      VARCHAR2(160 BYTE) NOT NULL,
+    libe_grmu                      VARCHAR2(160 BYTE) NOT NULL,
+    libi_grmu                      VARCHAR2(160 BYTE) NOT NULL,
+    description                    VARCHAR2(500 BYTE),
+    no_ip                          NUMBER(7,0) NOT NULL,
+    type_grmu                      VARCHAR2(2 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+ 
+-- Constraints for PE_GRMU
+
+ALTER TABLE pe_grmu
+ADD CONSTRAINT pe_grmup1 PRIMARY KEY (pe_grmu_id)
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_MUTA
+-- Generated 10-mars-2018 10:12:07 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_muta
+    (pe_muta_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    libf_muta                      VARCHAR2(160 BYTE) NOT NULL,
+    libd_muta                      VARCHAR2(160 BYTE) NOT NULL,
+    libe_muta                      VARCHAR2(160 BYTE) NOT NULL,
+    libi_muta                      VARCHAR2(160 BYTE) NOT NULL,
+    no_ip                          NUMBER(7,0) NOT NULL,
+    tyeven                         VARCHAR2(10 BYTE) NOT NULL,
+    exttyeven                      VARCHAR2(10 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE,
+    muta_order                     NUMBER(20,0),
+    liste_tycas                    VARCHAR2(40 BYTE),
+    type_grmu                      VARCHAR2(2 BYTE))
+
+-- Constraints for PE_MUTA
+
+ALTER TABLE pe_muta
+ADD CONSTRAINT pe_mutap1 PRIMARY KEY (pe_muta_id)
+    
+
+-- End of DDL Script for Table PADEV96_DATA.PE_MUTA
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_ATTR
+-- Generated 10-mars-2018 10:13:35 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_attr
+    (pe_muta_id                    VARCHAR2(10 BYTE) ,
+    nom_attr                       VARCHAR2(12 BYTE) ,
+    clatit_attr                    VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    check_attr                     VARCHAR2(500 BYTE),
+    val_def                        VARCHAR2(40 BYTE),
+    visibilite                     VARCHAR2(1 BYTE),
+    identifiant                    VARCHAR2(1 BYTE),
+    oblig_fac                      VARCHAR2(1 BYTE),
+    log                            VARCHAR2(1 BYTE),
+    donnee_traite                  VARCHAR2(1 BYTE),
+    position                       NUMBER(7,0),
+    groupe                         VARCHAR2(10 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE,
+    copy_to                        VARCHAR2(40 BYTE),
+    from_db                        VARCHAR2(1 BYTE))
+
+-- Constraints for PE_ATTR
+
+ALTER TABLE pe_attr
+ADD CONSTRAINT pe_attrp1 PRIMARY KEY (pe_muta_id, nom_attr, clatit_attr)
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_DICT
+-- Generated 10-mars-2018 10:15:23 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_dict
+    (pe_dict_id                     VARCHAR2(10 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    nom_dict                       VARCHAR2(12 BYTE) NOT NULL,
+    libf_dict                      VARCHAR2(160 BYTE) NOT NULL,
+    libd_dict                      VARCHAR2(160 BYTE) NOT NULL,
+    libe_dict                      VARCHAR2(160 BYTE) NOT NULL,
+    libi_dict                      VARCHAR2(160 BYTE) NOT NULL,
+    clatit_dict                    VARCHAR2(10 BYTE),
+    tydata_dict                    VARCHAR2(2 BYTE),
+    format_dict                    VARCHAR2(2 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+
+-- Constraints for PE_DICT
+
+ALTER TABLE pe_dict
+ADD CONSTRAINT pe_dictp1 PRIMARY KEY (pe_dict_id)
+
+-- Start of DDL Script for Table PADEV96_DATA.PE_LIBL
+-- Generated 10-mars-2018 10:16:44 from PADEV96_DATA@labcit
+
+CREATE TABLE pe_libl
+    (no_ip                         NUMBER(20,0) ,
+    nom_attr                       VARCHAR2(12 BYTE) ,
+    u_version                      VARCHAR2(1 BYTE),
+    libf_attr                      VARCHAR2(160 BYTE),
+    libd_attr                      VARCHAR2(160 BYTE),
+    libe_attr                      VARCHAR2(160 BYTE),
+    libi_attr                      VARCHAR2(160 BYTE),
+    lif_valeur                     CLOB,
+    lid_valeur                     CLOB,
+    lie_valeur                     CLOB,
+    lii_valeur                     CLOB,
+    groupe                         VARCHAR2(10 BYTE),
+    hintf                          VARCHAR2(200 BYTE),
+    hintd                          VARCHAR2(200 BYTE),
+    hinte                          VARCHAR2(200 BYTE),
+    hinti                          VARCHAR2(200 BYTE),
+    user_cre                       VARCHAR2(20 BYTE),
+    dh_cre                         DATE,
+    user_maj                       VARCHAR2(20 BYTE),
+    dh_maj                         DATE)
+
+-- Constraints for PE_LIBL
+
+ALTER TABLE pe_libl
+ADD CONSTRAINT pe_liblp1 PRIMARY KEY (no_ip, nom_attr)
+
+
+
+

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_elca" table="pe_elca">
+    <id name="pe_elca_id" type="String">
+      <column name="pe_elca_id" default="''" not-null="true" length="10" unique-key="KEY1" />
+      <generator class="assigned" />
+    </id>
+    <property name="no_ip" type="Int32">
+      <column name="no_ip" not-null="true" precision="11" scale="0" unique-key="KEY1" />
+    </property>
+    <property name="no_plan" type="Int32">
+      <column name="no_plan" not-null="true" precision="11" scale="0" unique-key="KEY1" />
+    </property>
+    <property name="no_cas" type="Int32">
+      <column name="no_cas" not-null="true" precision="11" scale="0" unique-key="KEY1" />
+    </property>
+    <property name="no_cate" type="Int32">
+      <column name="no_cate" not-null="true" precision="11" scale="0" unique-key="KEY1" />
+    </property>
+    <property name="tymouv" type="String">
+      <column name="tymouv" not-null="true" length="2" unique-key="KEY1" />
+    </property>
+    <property name="pe_chai_ddv" type="DateTime">
+      <column name="pe_chai_ddv" not-null="true" unique-key="KEY1" />
+    </property>
+    <property name="no_bloc" type="Decimal">
+      <column name="no_bloc" not-null="true" precision="7" scale="0" unique-key="KEY1" />
+    </property>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" />
+    </property>
+    <property name="nom_elem" type="String">
+      <column name="nom_elem" not-null="true" length="12" />
+    </property>
+    <property name="nom_logi" type="String">
+      <column name="nom_logi" not-null="false" length="20" />
+    </property>
+    <property name="no_volet" type="Decimal">
+      <column name="no_volet" not-null="false" precision="7" scale="0" />
+    </property>
+    <property name="pos_volet" type="Decimal">
+      <column name="pos_volet" not-null="false" precision="7" scale="0" />
+    </property>
+    <property name="codaff_elvf" type="String">
+      <column name="codaff_elvf" not-null="false" length="2" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" />
+    </property>
+  </class>
+</hibernate-mapping>

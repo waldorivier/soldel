@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_per1" table="pe_per1s">
+    <composite-id>
+      <key-property name="pe_pers_id" type="String">
+        <column name="pe_pers_id" default="''" not-null="true" length="10" />
+      </key-property>
+      <key-property name="dadval" type="DateTime">
+        <column name="dadval" default="0000-00-00" not-null="true" />
+      </key-property>
+    </composite-id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" />
+    </property>
+    <property name="numavs" type="String">
+      <column name="numavs" not-null="false" length="16" />
+    </property>
+    <property name="lnmper" type="String">
+      <column name="lnmper" not-null="true" length="40" />
+    </property>
+    <property name="lpnper" type="String">
+      <column name="lpnper" not-null="true" length="40" />
+    </property>
+    <property name="syssex" type="String">
+      <column name="syssex" not-null="false" length="2" />
+    </property>
+    <property name="codetc" type="String">
+      <column name="codetc" not-null="false" length="2" />
+    </property>
+    <property name="pe_even_id" type="String">
+      <column name="pe_even_id" not-null="true" length="10" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" />
+    </property>
+    <property name="lnmper_upper" type="String">
+      <column name="lnmper_upper" not-null="false" length="40" />
+    </property>
+    <property name="lpnper_upper" type="String">
+      <column name="lpnper_upper" not-null="false" length="40" />
+    </property>
+    <property name="namehandle" type="String">
+      <column name="namehandle" not-null="false" length="20" />
+    </property>
+    <property name="namehandle_upper" type="String">
+      <column name="namehandle_upper" not-null="false" length="20" />
+    </property>
+  </class>
+</hibernate-mapping>

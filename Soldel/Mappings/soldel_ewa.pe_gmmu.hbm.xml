@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_gmmu" table="pe_gmmu">
+    <composite-id>
+      <key-property name="pe_grmu_id" type="String">
+        <column name="pe_grmu_id" default="''" not-null="true" length="10" sql-type="varchar" />
+      </key-property>
+      <key-property name="pe_muta_id" type="String">
+        <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
+      </key-property>
+    </composite-id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" sql-type="date" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" sql-type="date" />
+    </property>
+    <many-to-one name="pe_grmu" class="pe_grmu">
+      <column name="pe_grmu_id" default="''" not-null="true" length="10" sql-type="varchar" />
+    </many-to-one>
+    <many-to-one name="pe_muta" class="pe_muta">
+      <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

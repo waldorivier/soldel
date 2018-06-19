@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_dict" table="pe_dict">
+    <id name="pe_dict_id" type="String">
+      <column name="pe_dict_id" default="''" not-null="true" length="10" sql-type="varchar" />
+      <generator class="assigned" />
+    </id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="nom_dict" type="String">
+      <column name="nom_dict" not-null="true" length="12" sql-type="varchar" />
+    </property>
+    <property name="libf_dict" type="String">
+      <column name="libf_dict" not-null="true" length="160" sql-type="varchar" />
+    </property>
+    <property name="libd_dict" type="String">
+      <column name="libd_dict" not-null="true" length="160" sql-type="varchar" />
+    </property>
+    <property name="libe_dict" type="String">
+      <column name="libe_dict" not-null="true" length="160" sql-type="varchar" />
+    </property>
+    <property name="libi_dict" type="String">
+      <column name="libi_dict" not-null="true" length="160" sql-type="varchar" />
+    </property>
+    <property name="clatit_dict" type="String">
+      <column name="clatit_dict" not-null="false" length="10" sql-type="varchar" />
+    </property>
+    <property name="tydata_dict" type="String">
+      <column name="tydata_dict" not-null="false" length="2" sql-type="varchar" />
+    </property>
+    <property name="format_dict" type="String">
+      <column name="format_dict" not-null="false" length="2" sql-type="varchar" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" sql-type="date" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" sql-type="date" />
+    </property>
+  </class>
+</hibernate-mapping>

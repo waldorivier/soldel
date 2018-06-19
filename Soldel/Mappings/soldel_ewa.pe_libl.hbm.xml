@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_libl" table="pe_libl">
+    <composite-id>
+      <key-property name="no_ip" type="Int32">
+        <column name="no_ip" default="0" not-null="true" precision="11" scale="0" sql-type="int" />
+      </key-property>
+      <key-property name="nom_attr" type="String">
+        <column name="nom_attr" default="''" not-null="true" length="12" sql-type="varchar" />
+      </key-property>
+    </composite-id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="libf_attr" type="String">
+      <column name="libf_attr" not-null="false" length="160" sql-type="varchar" />
+    </property>
+    <property name="libd_attr" type="String">
+      <column name="libd_attr" not-null="false" length="160" sql-type="varchar" />
+    </property>
+    <property name="libe_attr" type="String">
+      <column name="libe_attr" not-null="false" length="160" sql-type="varchar" />
+    </property>
+    <property name="libi_attr" type="String">
+      <column name="libi_attr" not-null="false" length="160" sql-type="varchar" />
+    </property>
+    <property name="lif_valeur" type="StringClob">
+      <column name="lif_valeur" not-null="false" sql-type="longtext" />
+    </property>
+    <property name="lid_valeur" type="StringClob">
+      <column name="lid_valeur" not-null="false" sql-type="longtext" />
+    </property>
+    <property name="lie_valeur" type="StringClob">
+      <column name="lie_valeur" not-null="false" sql-type="longtext" />
+    </property>
+    <property name="lii_valeur" type="StringClob">
+      <column name="lii_valeur" not-null="false" sql-type="longtext" />
+    </property>
+    <property name="groupe" type="String">
+      <column name="groupe" not-null="false" length="10" sql-type="varchar" />
+    </property>
+    <property name="hintf" type="String">
+      <column name="hintf" not-null="false" length="200" sql-type="varchar" />
+    </property>
+    <property name="hintd" type="String">
+      <column name="hintd" not-null="false" length="200" sql-type="varchar" />
+    </property>
+    <property name="hinte" type="String">
+      <column name="hinte" not-null="false" length="200" sql-type="varchar" />
+    </property>
+    <property name="hinti" type="String">
+      <column name="hinti" not-null="false" length="200" sql-type="varchar" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" sql-type="date" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" sql-type="date" />
+    </property>
+  </class>
+</hibernate-mapping>

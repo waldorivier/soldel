@@ -14,6 +14,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace mupeModel
 {
@@ -21,7 +23,8 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for pe_gmmu, Soldel in the schema.
     /// </summary>
-    public partial class pe_gmmu : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_gmmu : INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter
+    {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -85,7 +88,16 @@ namespace mupeModel
             OnCreated();
         }
 
-    
+        public pe_gmmu(pe_grmu grmu, pe_muta muta)
+        {
+            this._pe_grmu_id = grmu.pe_grmu_id;
+            this._pe_muta_id = muta.pe_muta_id;
+            muta.pe_gmmu_list.Add(this);
+            grmu.pe_gmmu_list.Add(this);
+
+            OnCreated();
+        }
+        
         /// <summary>
         /// There are no comments for pe_grmu_id in the schema.
         /// </summary>
@@ -298,6 +310,25 @@ namespace mupeModel
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                pe_gmmu gmmu = (pe_gmmu)value;
+                return gmmu.pe_muta.pe_attr_list;
+            }
+            catch
+            {
+            }
+            return null;
+        }
+
+        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 }

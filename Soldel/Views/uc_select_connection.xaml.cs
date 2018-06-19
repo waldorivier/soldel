@@ -31,7 +31,6 @@ namespace Soldel.Views
             cb_ip_list.DropDownOpened += Cb_ip_list_DropDownOpened;
         }
 
-
         private void Cb_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbConnection = (ComboBox)sender;

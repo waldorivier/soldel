@@ -131,6 +131,8 @@
     <Compile Include="Generated\soldel_ewa.pe_muta.cs" />
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />
+    <Compile Include="Views\ewa_model_view_converter.cs" />
+    <Compile Include="Views\Templates\EwaTemplateSelector.cs" />
     <Compile Include="Views\uc_find_element.xaml.cs">
       <DependentUpon>uc_find_element.xaml</DependentUpon>
     </Compile>

@@ -3,9 +3,51 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:mupeModel"
+        xmlns:model="clr-namespace:mupeModel"
+        xmlns:views="clr-namespace:mupeModel.Views"
+        xmlns:template="clr-namespace:mupeModel.Views.Templates"
         mc:Ignorable="d"
         Title="GENERIC" Height="600" Width="600">
+    <Window.Resources>
+        <views:ewa_model_view_converter x:Key="ewa_converter"/>
+        <DataTemplateSelector x:Key="EwaTemplateSelector"/>
+        <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libf_grmu, Mode=TwoWay}">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="pe_gmmu_template" DataType="pe_gmmu">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=pe_muta.tyeven, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=pe_muta.libf_muta, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=pe_muta.no_ip, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=pe_muta.type_grmu, Mode=TwoWay}">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="pe_attr_template" DataType="pe_attr">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=clatit_attr, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=check_attr, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=val_def, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=visibilite, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=identifiant, Mode=TwoWay}" FontStyle="Normal" FontWeight="Bold">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
 
     <Grid x:Name="object_list">
         <Grid.RowDefinitions>
@@ -18,48 +60,87 @@
                 <ComboBox x:Name="cb_connection" Height="25" Padding="5"/>
             </StackPanel>
         </Grid>
-       
+
         <Grid Grid.Row = "1">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TreeView x:Name="tree_main" Grid.Column="0">
-                <TreeView.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type local:pe_grmu}" ItemsSource="{Binding pe_gmmu_list}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding no_ip}" />
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type local:pe_gmmu}" ItemsSource="{Binding pe_muta.pe_attr_list}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding pe_muta.libf_muta}"/>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                    <DataTemplate DataType="{x:Type local:pe_attr}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding nom_attr}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </TreeView.Resources>
-            </TreeView>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <TreeView x:Name="tree_main" Grid.Row="0">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}" ItemsSource="{Binding pe_gmmu_list}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding no_ip}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_gmmu}" ItemsSource="{Binding pe_muta.pe_attr_list}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding pe_muta.libf_muta}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type model:pe_attr}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding nom_attr}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+                <Grid x:Name="dg_tree_crud" Margin="2" Grid.Row="1">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Button x:Name="btn_tree_add" Content="Ajouter un élément">
+                        </Button>
+                        <Button x:Name="btn_tree_del" Content="Supprimer un élément">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
             <GridSplitter VerticalContentAlignment="Stretch" Grid.Column="1"/>
+
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                <DataGrid x:Name="dg_detail" Grid.Row="0"/>
-                <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1"/>
-                <DataGrid x:Name="dg_list" Grid.Row="2" ItemsSource="{Binding ElementName=tree_main, Path=SelectedItem.Content}">
-                    <!--<DataTemplate DataType="{x:Type local:pe_attr}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding nom_attr}"/>
-                        </StackPanel>
-                    </DataTemplate> />-->
+                <Grid x:Name="dg_detail" 
+                      DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" 
+                      Margin="2" Grid.Row="0">
+                    <ContentControl Content="{Binding}">
+                        <ContentControl.ContentTemplateSelector>
+                            <template:EwaTemplateSelector>
+                            </template:EwaTemplateSelector>
+                        </ContentControl.ContentTemplateSelector>
+                    </ContentControl>
+                </Grid>
+                <Grid x:Name="dg_detail_crud" Margin="2" Grid.Row="1">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Button x:Name="btn_detail_save" Content="Sauvegarder" VerticalAlignment="Center">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <GridSplitter HorizontalAlignment="Stretch" 
+                              Grid.Row="2"/>
+
+                <DataGrid x:Name="dg_list" Margin="2" Grid.Row="3" 
+                          ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource ewa_converter}}">
                 </DataGrid>
+                <Grid x:Name="dg_list_crud" 
+                      Margin="2"
+                      Grid.Row="4">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Button x:Name="btn_save_list" Content="Sauvegarder la liste" VerticalAlignment="Center">
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

@@ -48,14 +48,12 @@ namespace Soldel.Views {
         }
 
         private void buildTree(List<object> objects) {
-            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(objects);            
+            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(objects);
         }
 
-        private void Btn_tree_add_Click(object sender, RoutedEventArgs e)
-        {
+        private void Btn_tree_add_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
-            try
-            {
+            try {
                 transaction = session.BeginTransaction();
 
                 var grmu = tree_main.SelectedValue as pe_grmu;
@@ -70,11 +68,8 @@ namespace Soldel.Views {
                 session.Refresh(grmu);
                 tree_main.Items.Refresh();
 
-            }
-            catch (Exception ex)
-            {
-                if (transaction != null)
-                {
+            } catch (Exception ex) {
+                if (transaction != null) {
                     transaction.Rollback();
                     var x = ex.StackTrace;
                 }
@@ -82,19 +77,14 @@ namespace Soldel.Views {
         }
 
         // TODO : encapsuler vers une fonction générique
-        private void Btn_detail_save_Click(object sender, RoutedEventArgs e)
-        {
+        private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
-            if (dg_detail.DataContext != null)
-            {
-                try
-                {
+            if (dg_detail.DataContext != null) {
+                try {
                     transaction = session.BeginTransaction();
                     session.Save(dg_detail.DataContext);
                     transaction.Commit();
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     if (transaction != null)
                         transaction.Rollback();
                 }

@@ -52,8 +52,7 @@ namespace Soldel.Views {
 
             btn_filter.Click += Btn_filter_Click;
         }
-
-
+        
         private void Cb_ip_list_SelectionChanged(object sender, RoutedEventArgs e) {
             var noIp = uc_select_connection.cb_ip_list.SelectedValue;
             if (noIp != null)

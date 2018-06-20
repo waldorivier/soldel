@@ -12,15 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Soldel.Views
-{
+namespace Soldel.Views {
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class w_main : Window
-    {
-        public w_main()
-        {
+    public partial class w_main : Window {
+        public w_main() {
             InitializeComponent();
 
             btn_elca.Click += Btn_elca_Click;
@@ -28,18 +25,15 @@ namespace Soldel.Views
             btn_ewa.Click += Btn_ewa_Click;
         }
 
-        private void Btn_ewa_Click(object sender, RoutedEventArgs e)
-        {
+        private void Btn_ewa_Click(object sender, RoutedEventArgs e) {
             new w_generic().ShowDialog();
         }
 
-        private void Btn_elca_Click(object sender, RoutedEventArgs e)
-        {
+        private void Btn_elca_Click(object sender, RoutedEventArgs e) {
             new w_compare().ShowDialog();
         }
 
-        public void Btn_elsi_Click(object sender, RoutedEventArgs e)
-        {
+        public void Btn_elsi_Click(object sender, RoutedEventArgs e) {
             new w_elsi().ShowDialog();
         }
     }

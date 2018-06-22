@@ -57,8 +57,18 @@ namespace Soldel.Views {
                 transaction = session.BeginTransaction();
 
                 var grmu = tree_main.SelectedValue as pe_grmu;
+
                 var muta = new pe_muta();
                 muta.no_ip = grmu.no_ip;
+                muta.libf_muta = 
+                muta.libd_muta = 
+                muta.libe_muta = 
+                muta.libi_muta = "libelle nouvelle mutation";
+                muta.tyeven = "INDEFINI";
+
+                // TODO : définir dans un ID GENERATOR
+                muta.pe_muta_id = generate_muta_id();
+
                 session.Save(muta);
 
                 var gmmu = new pe_gmmu(grmu, muta);
@@ -71,7 +81,7 @@ namespace Soldel.Views {
             } catch (Exception ex) {
                 if (transaction != null) {
                     transaction.Rollback();
-                    var x = ex.StackTrace;
+                    MessageBox.Show(ex.InnerException.ToString());                       
                 }
             }
         }
@@ -90,6 +100,11 @@ namespace Soldel.Views {
                 }
             }
         }
+
+        private string generate_muta_id() {
+            return session.CreateSQLQuery("SELECT MAX (to_number(pe_muta_id)) + 1 from pe_muta").UniqueResult().ToString();
+        }
+
     }
 }
 

@@ -316,7 +316,7 @@ namespace mupeModel
             try
             {
                 pe_gmmu gmmu = (pe_gmmu)value;
-                return gmmu.pe_muta.pe_attr_list;
+                return gmmu.pe_muta;
             }
             catch
             {

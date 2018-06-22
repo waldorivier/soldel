@@ -47,7 +47,7 @@
       </key>
       <one-to-many class="pe_cfgd" />
     </bag>
-    <bag name="pe_gmmu_list" inverse="true" generic="true">
+    <bag name="pe_gmmu_list" inverse="true" cascade="all" generic="true">
       <key>
         <column name="pe_grmu_id" />
       </key>

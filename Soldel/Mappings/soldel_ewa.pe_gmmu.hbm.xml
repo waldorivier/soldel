@@ -24,10 +24,10 @@
     <property name="dh_maj" type="DateTime">
       <column name="dh_maj" not-null="false" sql-type="date" />
     </property>
-    <many-to-one name="pe_grmu" class="pe_grmu">
+    <many-to-one name="pe_grmu" class="pe_grmu" insert="false" update="false">
       <column name="pe_grmu_id" default="''" not-null="true" length="10" sql-type="varchar" />
     </many-to-one>
-    <many-to-one name="pe_muta" class="pe_muta">
+    <many-to-one name="pe_muta" class="pe_muta" insert="false" update="false">
       <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
     </many-to-one>
   </class>

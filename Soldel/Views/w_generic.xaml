@@ -19,15 +19,13 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:Key="pe_gmmu_template" DataType="pe_gmmu">
+        <DataTemplate x:Key="pe_muta_template" DataType="pe_muta">
             <StackPanel>
-                <TextBox Text = "{Binding Path=pe_muta.tyeven, Mode=TwoWay}">
+                <TextBox Text = "{Binding Path=tyeven, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=pe_muta.libf_muta, Mode=TwoWay}">
+                <TextBox Text = "{Binding Path=exttyeven, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=pe_muta.no_ip, Mode=TwoWay}">
-                </TextBox>
-                <TextBox Text = "{Binding Path=pe_muta.type_grmu, Mode=TwoWay}">
+                <TextBox Text = "{Binding Path=libf_muta, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
         </DataTemplate>
@@ -79,16 +77,21 @@
                                 <TextBlock Text="{Binding no_ip}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type model:pe_gmmu}" ItemsSource="{Binding pe_muta.pe_attr_list}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_gmmu}" ItemsSource="{Binding pe_muta}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding pe_muta.libf_muta}"/>
+                                <TextBlock Text="{Binding pe_muta.tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        <DataTemplate DataType="{x:Type model:pe_attr}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding tyeven}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <!--<DataTemplate DataType="{x:Type model:pe_attr}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding nom_attr}"/>
                             </StackPanel>
-                        </DataTemplate>
+                        </DataTemplate>-->
                     </TreeView.Resources>
                 </TreeView>
                 <Grid x:Name="dg_tree_crud" Margin="2" Grid.Row="1">

@@ -3,7 +3,7 @@
   <class name="pe_cfgt" table="pe_cfgt">
     <id name="pe_cfgt_id" type="String">
       <column name="pe_cfgt_id" default="''" not-null="true" length="10" sql-type="varchar" />
-      <generator class="assigned" />
+      <generator class="native" />
     </id>
     <property name="u_version" type="String">
       <column name="u_version" not-null="false" length="1" sql-type="varchar" />

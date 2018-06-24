@@ -72,14 +72,9 @@
                 </Grid.RowDefinitions>
                 <TreeView x:Name="tree_main" Grid.Row="0">
                     <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}" ItemsSource="{Binding pe_gmmu_list}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}" ItemsSource="{Binding pe_muta_list}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding no_ip}" />
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type model:pe_gmmu}" ItemsSource="{Binding pe_muta}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding pe_muta.tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
@@ -87,14 +82,14 @@
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        <!--<DataTemplate DataType="{x:Type model:pe_attr}">
+                        <DataTemplate DataType="{x:Type model:pe_attr}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding nom_attr}"/>
                             </StackPanel>
-                        </DataTemplate>-->
+                        </DataTemplate>
                     </TreeView.Resources>
                 </TreeView>
-                <Grid x:Name="dg_tree_crud" Margin="2" Grid.Row="1">
+                <Grid x:Name="g_tree_crud" Margin="2" Grid.Row="1">
                     <StackPanel HorizontalAlignment="Stretch">
                         <Button x:Name="btn_tree_add" Content="Ajouter un élément">
                         </Button>
@@ -113,7 +108,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                <Grid x:Name="dg_detail" 
+                <Grid x:Name="g_detail" 
                       DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" 
                       Margin="2" Grid.Row="0">
                     <ContentControl Content="{Binding}">
@@ -123,20 +118,20 @@
                         </ContentControl.ContentTemplateSelector>
                     </ContentControl>
                 </Grid>
-                <Grid x:Name="dg_detail_crud" Margin="2" Grid.Row="1">
+                <Grid x:Name="g_detail_crud" Margin="2" Grid.Row="1">
                     <StackPanel HorizontalAlignment="Stretch">
                         <Button x:Name="btn_detail_save" Content="Sauvegarder" VerticalAlignment="Center">
                         </Button>
                     </StackPanel>
                 </Grid>
 
-                <GridSplitter HorizontalAlignment="Stretch" 
-                              Grid.Row="2"/>
+                <GridSplitter HorizontalAlignment="Stretch" Grid.Row="2"/>
 
                 <DataGrid x:Name="dg_list" Margin="2" Grid.Row="3" 
-                          ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource ewa_converter}}">
+                    ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource ewa_converter}}">
                 </DataGrid>
-                <Grid x:Name="dg_list_crud" 
+                
+                <Grid x:Name="g_list_crud" 
                       Margin="2"
                       Grid.Row="4">
                     <StackPanel HorizontalAlignment="Stretch">

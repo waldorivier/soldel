@@ -58,9 +58,9 @@ namespace mupeModel
         private IList<pe_gmmu> _pe_gmmu_list;
 
         private IList<pe_gmes> _pe_gmes_list;
-    
+
         #region Extensibility Method Definitions
-        
+
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
@@ -425,12 +425,18 @@ namespace mupeModel
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public virtual IList<pe_muta> pe_muta_list  {
+            get {
+                return (from g in this.pe_gmmu_list select g.pe_muta).ToList<pe_muta>();
+            }
+        }
+
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
                 pe_grmu grmu = (pe_grmu)value;
-                return grmu.pe_gmmu_list;
+                return grmu.pe_muta_list;
             }
             catch
             {

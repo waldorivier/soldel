@@ -281,7 +281,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\soldel_ewa.pe_attr.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_attr.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_cfgd.hbm.xml" />
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_cfgt.hbm.xml" />
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_dict.hbm.xml" />

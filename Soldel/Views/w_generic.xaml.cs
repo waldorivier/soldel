@@ -89,10 +89,10 @@ namespace Soldel.Views {
         // TODO : encapsuler vers une fonction générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
-            if (dg_detail.DataContext != null) {
+            if (g_detail.DataContext != null) {
                 try {
                     transaction = session.BeginTransaction();
-                    session.Save(dg_detail.DataContext);
+                    session.Save(g_detail.DataContext);
                     transaction.Commit();
                 } catch (Exception ex) {
                     if (transaction != null)
@@ -104,7 +104,6 @@ namespace Soldel.Views {
         private string generate_muta_id() {
             return session.CreateSQLQuery("SELECT MAX (to_number(pe_muta_id)) + 1 from pe_muta").UniqueResult().ToString();
         }
-
     }
 }
 

@@ -23,7 +23,7 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for pe_gmmu, Soldel in the schema.
     /// </summary>
-    public partial class pe_gmmu : INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter
+    public partial class pe_gmmu : INotifyPropertyChanging, INotifyPropertyChanged
     {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
@@ -309,24 +309,6 @@ namespace mupeModel
 		        var handler = this.PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            try
-            {
-                pe_gmmu gmmu = (pe_gmmu)value;
-                return gmmu.pe_muta;
-            }
-            catch
-            {
-            }
-            return null;
-        }
-
-        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
 
     }

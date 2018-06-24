@@ -14,6 +14,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace mupeModel
 {
@@ -21,7 +23,7 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for pe_muta, Soldel in the schema.
     /// </summary>
-    public partial class pe_muta : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_muta : INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -471,6 +473,20 @@ namespace mupeModel
 		        var handler = this.PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            try {
+                var pe_muta = (pe_muta)value;
+                return pe_muta.pe_attr_list;
+            } catch {
+            }
+            return null;
+        }
+
+        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            return null;
         }
     }
 

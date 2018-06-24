@@ -98,46 +98,54 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <GridSplitter VerticalContentAlignment="Stretch" Grid.Column="1"/>
+            
+            <GridSplitter HorizontalAlignment="Stretch"  Grid.Column="1"/>
 
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="25"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Grid x:Name="g_detail" 
                       DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" 
                       Margin="2" Grid.Row="0">
-                    <ContentControl Content="{Binding}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <ContentControl Content="{Binding}" Grid.Row="0">
                         <ContentControl.ContentTemplateSelector>
                             <template:EwaTemplateSelector>
                             </template:EwaTemplateSelector>
                         </ContentControl.ContentTemplateSelector>
                     </ContentControl>
-                </Grid>
-                <Grid x:Name="g_detail_crud" Margin="2" Grid.Row="1">
-                    <StackPanel HorizontalAlignment="Stretch">
-                        <Button x:Name="btn_detail_save" Content="Sauvegarder" VerticalAlignment="Center">
-                        </Button>
-                    </StackPanel>
+                    <Grid x:Name="g_detail_crud" Margin="2" Grid.Row="1">
+                        <StackPanel>
+                            <Button x:Name="btn_detail_save" Content="Sauvegarder" VerticalAlignment="Center">
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
 
-                <GridSplitter HorizontalAlignment="Stretch" Grid.Row="2"/>
+                <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1"/>
 
-                <DataGrid x:Name="dg_list" Margin="2" Grid.Row="3" 
-                    ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource ewa_converter}}">
-                </DataGrid>
+                <Grid x:Name="g_list" Grid.Row="2">
+                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="25"/>
+                      </Grid.RowDefinitions>
+
+                    <DataGrid x:Name="dg_list" Margin="2" Grid.Row="0" 
+                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource ewa_converter}}">
+                    </DataGrid>
                 
-                <Grid x:Name="g_list_crud" 
-                      Margin="2"
-                      Grid.Row="4">
-                    <StackPanel HorizontalAlignment="Stretch">
-                        <Button x:Name="btn_save_list" Content="Sauvegarder la liste" VerticalAlignment="Center">
-                        </Button>
-                    </StackPanel>
+                    <Grid x:Name="g_list_crud" Margin="2" Grid.Row="1">
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Button x:Name="btn_save_list" Content="Sauvegarder la liste" VerticalAlignment="Center">
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

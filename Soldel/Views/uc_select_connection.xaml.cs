@@ -26,7 +26,7 @@ namespace Soldel.Views
         {
             InitializeComponent();
 
-            cb_connection.ItemsSource = HibernateUtil.getInstance().getConnections;
+            cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
             cb_connection.SelectionChanged += Cb_connection_SelectionChanged;
             cb_ip_list.DropDownOpened += Cb_ip_list_DropDownOpened;
         }
@@ -35,7 +35,7 @@ namespace Soldel.Views
         {
             ComboBox cbConnection = (ComboBox)sender;
             String connectionString = (String)cbConnection.SelectedValue;
-            session = HibernateUtil.getInstance().getSession(connectionString);
+            session = HibernateUtil.get_instance().get_session(connectionString);
         }
 
         private void Cb_ip_list_DropDownOpened(object sender, EventArgs e)

@@ -60,7 +60,7 @@
     <property name="from_db" type="String">
       <column name="from_db" not-null="false" length="1" sql-type="varchar" />
     </property>
-    <many-to-one name="pe_muta" class="pe_muta">
+    <many-to-one name="pe_muta" insert="false" update="false" class="pe_muta">
       <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
     </many-to-one>
   </class>

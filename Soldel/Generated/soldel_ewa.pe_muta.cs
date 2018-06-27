@@ -17,8 +17,7 @@ using System.Collections.Generic;
 using System.Windows.Data;
 using System.Globalization;
 
-namespace mupeModel
-{
+namespace mupeModel {
 
     /// <summary>
     /// There are no comments for pe_muta, Soldel in the schema.
@@ -62,40 +61,35 @@ namespace mupeModel
         private IList<pe_gmmu> _pe_gmmu_list;
 
         private IList<pe_attr> _pe_attr_list;
-    
+
         #region Extensibility Method Definitions
-        
+
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
-        
+
         #endregion
         /// <summary>
         /// There are no comments for pe_muta constructor in the schema.
         /// </summary>
-        public pe_muta()
-        {
+        public pe_muta() {
             this._pe_muta_id = @"";
             this._pe_gmmu_list = new List<pe_gmmu>();
             this._pe_attr_list = new List<pe_attr>();
             OnCreated();
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_muta_id in the schema.
         /// </summary>
-        public virtual string pe_muta_id
-        {
-            get
-            {
+        public virtual string pe_muta_id {
+            get {
                 return this._pe_muta_id;
             }
-            set
-            {
-                if (this._pe_muta_id != value)
-                {
+            set {
+                if (this._pe_muta_id != value) {
                     this.SendPropertyChanging();
                     this._pe_muta_id = value;
                     this.SendPropertyChanged("pe_muta_id");
@@ -103,20 +97,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for u_version in the schema.
         /// </summary>
-        public virtual string u_version
-        {
-            get
-            {
+        public virtual string u_version {
+            get {
                 return this._u_version;
             }
-            set
-            {
-                if (this._u_version != value)
-                {
+            set {
+                if (this._u_version != value) {
                     this.SendPropertyChanging();
                     this._u_version = value;
                     this.SendPropertyChanged("u_version");
@@ -124,20 +114,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for libf_muta in the schema.
         /// </summary>
-        public virtual string libf_muta
-        {
-            get
-            {
+        public virtual string libf_muta {
+            get {
                 return this._libf_muta;
             }
-            set
-            {
-                if (this._libf_muta != value)
-                {
+            set {
+                if (this._libf_muta != value) {
                     this.SendPropertyChanging();
                     this._libf_muta = value;
                     this.SendPropertyChanged("libf_muta");
@@ -145,20 +131,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for libd_muta in the schema.
         /// </summary>
-        public virtual string libd_muta
-        {
-            get
-            {
+        public virtual string libd_muta {
+            get {
                 return this._libd_muta;
             }
-            set
-            {
-                if (this._libd_muta != value)
-                {
+            set {
+                if (this._libd_muta != value) {
                     this.SendPropertyChanging();
                     this._libd_muta = value;
                     this.SendPropertyChanged("libd_muta");
@@ -166,20 +148,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for libe_muta in the schema.
         /// </summary>
-        public virtual string libe_muta
-        {
-            get
-            {
+        public virtual string libe_muta {
+            get {
                 return this._libe_muta;
             }
-            set
-            {
-                if (this._libe_muta != value)
-                {
+            set {
+                if (this._libe_muta != value) {
                     this.SendPropertyChanging();
                     this._libe_muta = value;
                     this.SendPropertyChanged("libe_muta");
@@ -187,20 +165,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for libi_muta in the schema.
         /// </summary>
-        public virtual string libi_muta
-        {
-            get
-            {
+        public virtual string libi_muta {
+            get {
                 return this._libi_muta;
             }
-            set
-            {
-                if (this._libi_muta != value)
-                {
+            set {
+                if (this._libi_muta != value) {
                     this.SendPropertyChanging();
                     this._libi_muta = value;
                     this.SendPropertyChanged("libi_muta");
@@ -208,20 +182,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for no_ip in the schema.
         /// </summary>
-        public virtual int no_ip
-        {
-            get
-            {
+        public virtual int no_ip {
+            get {
                 return this._no_ip;
             }
-            set
-            {
-                if (this._no_ip != value)
-                {
+            set {
+                if (this._no_ip != value) {
                     this.SendPropertyChanging();
                     this._no_ip = value;
                     this.SendPropertyChanged("no_ip");
@@ -229,20 +199,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for tyeven in the schema.
         /// </summary>
-        public virtual string tyeven
-        {
-            get
-            {
+        public virtual string tyeven {
+            get {
                 return this._tyeven;
             }
-            set
-            {
-                if (this._tyeven != value)
-                {
+            set {
+                if (this._tyeven != value) {
                     this.SendPropertyChanging();
                     this._tyeven = value;
                     this.SendPropertyChanged("tyeven");
@@ -250,20 +216,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for exttyeven in the schema.
         /// </summary>
-        public virtual string exttyeven
-        {
-            get
-            {
+        public virtual string exttyeven {
+            get {
                 return this._exttyeven;
             }
-            set
-            {
-                if (this._exttyeven != value)
-                {
+            set {
+                if (this._exttyeven != value) {
                     this.SendPropertyChanging();
                     this._exttyeven = value;
                     this.SendPropertyChanged("exttyeven");
@@ -271,20 +233,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for user_cre in the schema.
         /// </summary>
-        public virtual string user_cre
-        {
-            get
-            {
+        public virtual string user_cre {
+            get {
                 return this._user_cre;
             }
-            set
-            {
-                if (this._user_cre != value)
-                {
+            set {
+                if (this._user_cre != value) {
                     this.SendPropertyChanging();
                     this._user_cre = value;
                     this.SendPropertyChanged("user_cre");
@@ -292,20 +250,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for dh_cre in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dh_cre
-        {
-            get
-            {
+        public virtual System.Nullable<System.DateTime> dh_cre {
+            get {
                 return this._dh_cre;
             }
-            set
-            {
-                if (this._dh_cre != value)
-                {
+            set {
+                if (this._dh_cre != value) {
                     this.SendPropertyChanging();
                     this._dh_cre = value;
                     this.SendPropertyChanged("dh_cre");
@@ -313,20 +267,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for user_maj in the schema.
         /// </summary>
-        public virtual string user_maj
-        {
-            get
-            {
+        public virtual string user_maj {
+            get {
                 return this._user_maj;
             }
-            set
-            {
-                if (this._user_maj != value)
-                {
+            set {
+                if (this._user_maj != value) {
                     this.SendPropertyChanging();
                     this._user_maj = value;
                     this.SendPropertyChanged("user_maj");
@@ -334,20 +284,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for dh_maj in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dh_maj
-        {
-            get
-            {
+        public virtual System.Nullable<System.DateTime> dh_maj {
+            get {
                 return this._dh_maj;
             }
-            set
-            {
-                if (this._dh_maj != value)
-                {
+            set {
+                if (this._dh_maj != value) {
                     this.SendPropertyChanging();
                     this._dh_maj = value;
                     this.SendPropertyChanged("dh_maj");
@@ -355,20 +301,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for muta_order in the schema.
         /// </summary>
-        public virtual System.Nullable<int> muta_order
-        {
-            get
-            {
+        public virtual System.Nullable<int> muta_order {
+            get {
                 return this._muta_order;
             }
-            set
-            {
-                if (this._muta_order != value)
-                {
+            set {
+                if (this._muta_order != value) {
                     this.SendPropertyChanging();
                     this._muta_order = value;
                     this.SendPropertyChanged("muta_order");
@@ -376,20 +318,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for liste_tycas in the schema.
         /// </summary>
-        public virtual string liste_tycas
-        {
-            get
-            {
+        public virtual string liste_tycas {
+            get {
                 return this._liste_tycas;
             }
-            set
-            {
-                if (this._liste_tycas != value)
-                {
+            set {
+                if (this._liste_tycas != value) {
                     this.SendPropertyChanging();
                     this._liste_tycas = value;
                     this.SendPropertyChanged("liste_tycas");
@@ -397,20 +335,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for type_grmu in the schema.
         /// </summary>
-        public virtual string type_grmu
-        {
-            get
-            {
+        public virtual string type_grmu {
+            get {
                 return this._type_grmu;
             }
-            set
-            {
-                if (this._type_grmu != value)
-                {
+            set {
+                if (this._type_grmu != value) {
                     this.SendPropertyChanging();
                     this._type_grmu = value;
                     this.SendPropertyChanged("type_grmu");
@@ -418,59 +352,50 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_gmmu_list in the schema.
         /// </summary>
-        public virtual IList<pe_gmmu> pe_gmmu_list
-        {
-            get
-            {
+        public virtual IList<pe_gmmu> pe_gmmu_list {
+            get {
                 return this._pe_gmmu_list;
             }
-            set
-            {
+            set {
                 this._pe_gmmu_list = value;
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_attr_list in the schema.
         /// </summary>
-        public virtual IList<pe_attr> pe_attr_list
-        {
-            get
-            {
+        public virtual IList<pe_attr> pe_attr_list {
+            get {
                 return this._pe_attr_list;
             }
-            set
-            {
+            set {
                 this._pe_attr_list = value;
             }
         }
-   
+
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void SendPropertyChanging()
-        {
-		        var handler = this.PropertyChanging;
+        protected virtual void SendPropertyChanging() {
+            var handler = this.PropertyChanging;
             if (handler != null)
                 handler(this, emptyChangingEventArgs);
         }
 
-        protected virtual void SendPropertyChanging(System.String propertyName) 
-        {    
-		        var handler = this.PropertyChanging;
+        protected virtual void SendPropertyChanging(System.String propertyName) {
+            var handler = this.PropertyChanging;
             if (handler != null)
                 handler(this, new PropertyChangingEventArgs(propertyName));
         }
 
-        protected virtual void SendPropertyChanged(System.String propertyName)
-        {    
-		        var handler = this.PropertyChanged;
+        protected virtual void SendPropertyChanged(System.String propertyName) {
+            var handler = this.PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -489,18 +414,29 @@ namespace mupeModel
             return null;
         }
 
+        public virtual void add_attr(pe_attr attr) {
+            attr.pe_muta = this;
+            _pe_attr_list.Add(attr);
+        }
+
         public virtual pe_muta shallow_copy() {
             var copy = new pe_muta();
 
             CopyObject.copy<pe_muta>(this, copy);
             copy.pe_muta_id = "";
+            copy.no_ip = 0;
             copy.dh_maj = copy.dh_cre = DateTime.Today;
-            copy.user_cre = copy.user_maj = HibernateUtil.get_user();
+            copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;
         }
 
-        public virtual pe_muta deep_copy () {
+        public virtual pe_muta deep_copy(string muta_id) {
             var copy = shallow_copy();
+            copy.pe_muta_id = muta_id;
+            copy.no_ip = 0;
+            foreach (var attr in this.pe_attr_list) {
+                copy.add_attr(attr.shallow_copy(muta_id));
+            }
             return copy;
         }
     }

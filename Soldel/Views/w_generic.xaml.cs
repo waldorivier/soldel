@@ -30,18 +30,18 @@ namespace Soldel.Views {
         public w_generic() {
             InitializeComponent();
 
-            //cb_connection.SelectionChanged += Cb_database_SelectionChanged;
-            //cb_connection.ItemsSource = HibernateUtil.getInstance().getConnections;
+            cb_connection.SelectionChanged += Cb_database_SelectionChanged;
+            cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
 
-            //btn_tree_add.Click += Btn_tree_add_Click;
-            //btn_tree_copy.Click += Btn_tree_copy_Click;
-            //btn_detail_save.Click += Btn_detail_save_Click;
+            btn_tree_add.Click += Btn_tree_add_Click;
+            btn_tree_copy.Click += Btn_tree_copy_Click;
+            btn_detail_save.Click += Btn_detail_save_Click;
         }
 
         private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             ComboBox cbConnection = (ComboBox)sender;
             String connectionString = (String)cbConnection.SelectedValue;
-            session = HibernateUtil.getInstance().getSession(connectionString);
+            session = HibernateUtil.get_instance().get_session(connectionString);
 
             List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().Where(x => x.no_ip == 11).ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
@@ -106,21 +106,9 @@ namespace Soldel.Views {
                     if (grmu.no_ip == 11) {
                         transaction = session.BeginTransaction();
 
-                        var muta = session.Get<pe_muta>(muta_id).deep_copy();
-                        muta.pe_muta_id = generate_muta_id();
-                        muta_dest.dh_cre = muta.dh_maj = DateTime.Now;
-                        muta_dest.user_cre = muta.user_maj = "WRI";
-
-                        foreach (var item in muta.pe_attr_list) {
-
-                            attr_new.pe_muta_id = "";
-
-                            muta_dest.pe_attr_list.Add(attr_new);
-                        }
-
+                        var muta = session.Get<pe_muta>(muta_id).deep_copy(generate_muta_id());
                         session.Save(muta);
-                        var gmmu = new pe_gmmu(grmu, muta_dest);
-
+                        var gmmu = new pe_gmmu(grmu, muta);
                         session.Save(grmu);
 
                         transaction.Commit();

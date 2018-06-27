@@ -8,34 +8,40 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-
 using System.Dynamic;
+
 public class HibernateUtil {
+
     // ILog mlog = LogManager.GetLogger(GetType());
-    private IDictionary<string, ISessionFactory> sessionFactoryCache = new Dictionary<string, ISessionFactory>();
-    private static HibernateUtil m_hibernate_util = null;
+    private IDictionary<string, ISessionFactory> session_factory_cache = new Dictionary<string, ISessionFactory>();
+    private IDictionary<string, string> global_parameters;
+    private IList<string> connections;
+
+    private static HibernateUtil hibernate_util = null;
 
     public static HibernateUtil get_instance() {
-        if (m_hibernate_util == null) {
-            m_hibernate_util = new HibernateUtil();
+        if (hibernate_util == null) {
+            hibernate_util = new HibernateUtil();
+            hibernate_util.load_connections();
+            hibernate_util.load_global_parameters();
         };
-        return m_hibernate_util;
+        return hibernate_util;
     }
 
     public ISession get_session(String connection_string) {
         ISessionFactory sessionFactory = null;
 
-        if (!sessionFactoryCache.TryGetValue(connection_string, out sessionFactory)) {
+        if (!session_factory_cache.TryGetValue(connection_string, out sessionFactory)) {
             var hibernateCfg = new NHibernate.Cfg.Configuration().Configure().SetProperty(NHibernate.Cfg.Environment.ConnectionString, connection_string);
             sessionFactory = hibernateCfg.BuildSessionFactory();
-            sessionFactoryCache.Add(connection_string, sessionFactory);
+            session_factory_cache.Add(connection_string, sessionFactory);
         }
         return sessionFactory.OpenSession();
     }
 
-    public List<string> get_connections =
-                // new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;" };
-                new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
+    private void load_connections() {
+        // new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;" };
+        connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
                                     "Data Source = QALIC; User ID = qa_cpne; Password = qa_cpne",
                                     "Data Source = QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
                                     "Data Source = LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
@@ -51,6 +57,23 @@ public class HibernateUtil {
                                     "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
                                     "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
                                     "Data Source=outsrc; User Id = prod_1; Password=prod_1"};
+
+    }
+
+    private void load_global_parameters() {
+        global_parameters = new Dictionary<string, string>();
+        global_parameters.Add("USERNAME", System.Environment.GetEnvironmentVariable("USERNAME"));
+    }
+
+    public IList<string> get_connections() {
+        return connections;
+    }
+
+    public string get_user() {
+        string user;
+        global_parameters.TryGetValue("USERNAME", out user);
+        return user;
+    }
 }
 
 

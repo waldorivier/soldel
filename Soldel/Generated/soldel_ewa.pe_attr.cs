@@ -555,6 +555,15 @@ namespace mupeModel
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
 
+        public virtual pe_attr shallow_copy(string muta_id) {
+            var copy = new pe_attr();
+
+            CopyObject.copy<pe_attr>(this, copy);
+            copy.pe_muta_id = muta_id;
+            copy.dh_maj = copy.dh_cre = DateTime.Today;
+            copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
+            return copy;
+        }
+    }
 }

@@ -58,7 +58,7 @@ namespace Soldel.Views {
             if (noIp != null)
             {
                 List<pe_elca> list = uc_select_connection.session.CreateCriteria<pe_elca>().Add(Restrictions.Eq("no_ip", noIp)).List<pe_elca>().ToList();
-                DataTable dt = ExtensionMethods.ToDataTable(list);
+                DataTable dt = ExtensionMethods.to_data_table(list);
                 _dt = _dt_filtered = dt;
 
                 source = CollectionViewSource.GetDefaultView(list);

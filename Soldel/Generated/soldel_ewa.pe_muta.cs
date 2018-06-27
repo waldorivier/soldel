@@ -488,6 +488,20 @@ namespace mupeModel
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             return null;
         }
-    }
 
+        public virtual pe_muta shallow_copy() {
+            var copy = new pe_muta();
+
+            CopyObject.copy<pe_muta>(this, copy);
+            copy.pe_muta_id = "";
+            copy.dh_maj = copy.dh_cre = DateTime.Today;
+            copy.user_cre = copy.user_maj = HibernateUtil.get_user();
+            return copy;
+        }
+
+        public virtual pe_muta deep_copy () {
+            var copy = shallow_copy();
+            return copy;
+        }
+    }
 }

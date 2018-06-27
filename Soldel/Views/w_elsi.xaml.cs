@@ -98,7 +98,7 @@ namespace Soldel.Views {
 
                 dg_elsi_multiple.ItemsSource = null;
                 dg_elsi_multiple.Visibility = Visibility.Hidden;
-                dg_elsi_multiple.ItemsSource = CollectionViewSource.GetDefaultView(ExtensionMethods.ToDataTable(dicts));
+                dg_elsi_multiple.ItemsSource = CollectionViewSource.GetDefaultView(ExtensionMethods.to_data_table(dicts));
             }
         }
         private void Tb_column_filter_LostFocus(object sender, RoutedEventArgs e) {

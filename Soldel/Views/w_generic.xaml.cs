@@ -30,11 +30,12 @@ namespace Soldel.Views {
         public w_generic() {
             InitializeComponent();
 
-            cb_connection.SelectionChanged += Cb_database_SelectionChanged;
-            cb_connection.ItemsSource = HibernateUtil.getInstance().getConnections;
+            //cb_connection.SelectionChanged += Cb_database_SelectionChanged;
+            //cb_connection.ItemsSource = HibernateUtil.getInstance().getConnections;
 
-            btn_detail_save.Click += Btn_detail_save_Click;
-            btn_tree_add.Click += Btn_tree_add_Click;
+            //btn_tree_add.Click += Btn_tree_add_Click;
+            //btn_tree_copy.Click += Btn_tree_copy_Click;
+            //btn_detail_save.Click += Btn_detail_save_Click;
         }
 
         private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -42,51 +43,102 @@ namespace Soldel.Views {
             String connectionString = (String)cbConnection.SelectedValue;
             session = HibernateUtil.getInstance().getSession(connectionString);
 
-            List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
+            List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().Where(x => x.no_ip == 11).ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
-            buildTree(object_list.ToList<object>());
+            build_tree(object_list.ToList<object>());
         }
 
-        private void buildTree(List<object> objects) {
+        private void build_tree(List<object> objects) {
             tree_main.ItemsSource = CollectionViewSource.GetDefaultView(objects);
         }
+
+        // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
 
         private void Btn_tree_add_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
             try {
-                transaction = session.BeginTransaction();
-
                 var grmu = tree_main.SelectedValue as pe_grmu;
+                if (grmu != null) {
+                    transaction = session.BeginTransaction();
 
-                var muta = new pe_muta();
-                muta.no_ip = grmu.no_ip;
-                muta.libf_muta = 
-                muta.libd_muta = 
-                muta.libe_muta = 
-                muta.libi_muta = "libelle nouvelle mutation";
-                muta.tyeven = "INDEFINI";
+                    var muta = new pe_muta();
+                    muta.no_ip = grmu.no_ip;
+                    muta.libf_muta =
+                    muta.libd_muta =
+                    muta.libe_muta =
+                    muta.libi_muta = "libelle nouvelle mutation";
+                    muta.tyeven = "INDEFINI";
 
-                // TODO : définir dans un ID GENERATOR
-                muta.pe_muta_id = generate_muta_id();
+                    // TODO : définir dans un ID GENERATOR
+                    muta.pe_muta_id = generate_muta_id();
 
-                session.Save(muta);
+                    session.Save(muta);
 
-                var gmmu = new pe_gmmu(grmu, muta);
-                session.Save(grmu);
-                transaction.Commit();
+                    var gmmu = new pe_gmmu(grmu, muta);
+                    session.Save(grmu);
 
-                session.Refresh(grmu);
-                tree_main.Items.Refresh();
-
+                    transaction.Commit();
+                    session.Refresh(grmu);
+                    tree_main.Items.Refresh();
+                }
             } catch (Exception ex) {
                 if (transaction != null) {
-                    transaction.Rollback();
-                    MessageBox.Show(ex.InnerException.ToString());                       
+                    if (transaction != null)
+                        transaction.Rollback();
+                    
+                    MessageBox.Show(ex.Message);                       
+                }
+            }
+        }
+        
+        // copie une mutation (deep coyy)
+        // TODO : encapsule de manière générique
+
+        private void Btn_tree_copy_Click(object sender, RoutedEventArgs e) {
+            ITransaction transaction = null;
+
+            // base pour tester la copie
+            var muta_id = "607";
+
+            try {
+                var grmu = tree_main.SelectedValue as pe_grmu;
+                if (grmu != null) {
+                    if (grmu.no_ip == 11) {
+                        transaction = session.BeginTransaction();
+
+                        var muta = session.Get<pe_muta>(muta_id).deep_copy();
+                        muta.pe_muta_id = generate_muta_id();
+                        muta_dest.dh_cre = muta.dh_maj = DateTime.Now;
+                        muta_dest.user_cre = muta.user_maj = "WRI";
+
+                        foreach (var item in muta.pe_attr_list) {
+
+                            attr_new.pe_muta_id = "";
+
+                            muta_dest.pe_attr_list.Add(attr_new);
+                        }
+
+                        session.Save(muta);
+                        var gmmu = new pe_gmmu(grmu, muta_dest);
+
+                        session.Save(grmu);
+
+                        transaction.Commit();
+                        session.Refresh(grmu);
+                        tree_main.Items.Refresh();
+                    }
+                }
+            } catch (Exception ex) {
+                if (transaction != null) {
+                    if (transaction != null)
+                        transaction.Rollback();
+
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
 
-        // TODO : encapsuler vers une fonction générique
+        // TODO : encapsule de manière générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
             if (g_detail.DataContext != null) {
@@ -97,6 +149,7 @@ namespace Soldel.Views {
                 } catch (Exception ex) {
                     if (transaction != null)
                         transaction.Rollback();
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

@@ -56,7 +56,7 @@
       </key>
       <one-to-many class="pe_gmmu" />
     </bag>
-    <bag name="pe_attr_list" inverse="true" generic="true">
+    <bag name="pe_attr_list" inverse="true" cascade="all" generic="true">
       <key>
         <column name="pe_muta_id" />
       </key>

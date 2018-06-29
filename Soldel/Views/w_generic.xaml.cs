@@ -35,6 +35,8 @@ namespace Soldel.Views {
 
             btn_tree_add.Click += Btn_tree_add_Click;
             btn_tree_copy.Click += Btn_tree_copy_Click;
+            btn_tree_delete.Click += Btn_tree_delete_Click;
+
             btn_detail_save.Click += Btn_detail_save_Click;
         }
 
@@ -73,12 +75,11 @@ namespace Soldel.Views {
                     muta.pe_muta_id = generate_muta_id();
 
                     session.Save(muta);
-
                     var gmmu = new pe_gmmu(grmu, muta);
-                    session.Save(grmu);
+                    session.Save(gmmu);
 
                     transaction.Commit();
-                    session.Refresh(grmu);
+                    session.Refresh(gmmu);
                     tree_main.Items.Refresh();
                 }
             } catch (Exception ex) {
@@ -107,12 +108,14 @@ namespace Soldel.Views {
                         transaction = session.BeginTransaction();
 
                         var muta = session.Get<pe_muta>(muta_id).deep_copy(generate_muta_id());
+                        muta.no_ip = grmu.no_ip;
+
                         session.Save(muta);
                         var gmmu = new pe_gmmu(grmu, muta);
-                        session.Save(grmu);
-
+                        session.Save(gmmu);
+                       
                         transaction.Commit();
-                        session.Refresh(grmu);
+                        session.Refresh(gmmu);
                         tree_main.Items.Refresh();
                     }
                 }
@@ -126,6 +129,36 @@ namespace Soldel.Views {
             }
         }
 
+        private void Btn_tree_delete_Click(object sender, RoutedEventArgs e) {
+            ITransaction transaction = null;
+
+            try {
+                var muta = tree_main.SelectedValue as pe_muta;
+                if (muta != null) {
+                    if (muta.no_ip == 11) {
+                        transaction = session.BeginTransaction();
+
+                        // TODO : ce n'est pas complet, car il faut choisir
+
+                        var gmmu = muta.pe_gmmu_list[0];
+                        gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);
+                        muta.pe_gmmu_list.Remove(gmmu);
+
+                        session.Delete(gmmu);
+                        transaction.Commit();
+                        tree_main.Items.Refresh();
+                    }
+                }
+            } catch (Exception ex) {
+                if (transaction != null) {
+                    if (transaction != null)
+                        transaction.Rollback();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        
         // TODO : encapsule de manière générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;

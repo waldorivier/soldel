@@ -50,13 +50,13 @@
     <property name="type_grmu" type="String">
       <column name="type_grmu" not-null="false" length="2" sql-type="varchar" />
     </property>
-    <bag name="pe_gmmu_list" inverse="true" generic="true">
+    <bag name="pe_gmmu_list" cascade="all-delete-orphan" inverse="true" generic="true">
       <key>
         <column name="pe_muta_id" />
       </key>
       <one-to-many class="pe_gmmu" />
     </bag>
-    <bag name="pe_attr_list" inverse="true" cascade="all" generic="true">
+    <bag name="pe_attr_list" cascade="all-delete-orphan" inverse="true" generic="true">
       <key>
         <column name="pe_muta_id" />
       </key>

@@ -21,7 +21,7 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for pe_attr, Soldel in the schema.
     /// </summary>
-    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged  {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -565,5 +565,6 @@ namespace mupeModel
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;
         }
+     
     }
 }

@@ -57,6 +57,8 @@ namespace mupeModel
 
         private string _hinti;
 
+        private pe_ip _pe_ip;
+
         private string _user_cre;
 
         private System.Nullable<System.DateTime> _dh_cre;
@@ -442,8 +444,19 @@ namespace mupeModel
                 }
             }
         }
+        public virtual pe_ip pe_ip {
+            get {
+                return this._pe_ip;
+            }
+            set {
+                if (this._pe_ip != value) {
+                    this.SendPropertyChanging();
+                    this._pe_ip = value;
+                    this.SendPropertyChanged("pe_ip");
+                }
+            }
+        }
 
-    
         /// <summary>
         /// There are no comments for user_cre in the schema.
         /// </summary>

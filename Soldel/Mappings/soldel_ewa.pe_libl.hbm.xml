@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
-  <class name="pe_libl" table="pe_libl">
+  <class name="pe_libl" table="pe_libl" >
     <composite-id>
       <key-property name="no_ip" type="Int32">
         <column name="no_ip" default="0" not-null="true" precision="11" scale="0" sql-type="int" />
@@ -24,18 +24,18 @@
     <property name="libi_attr" type="String">
       <column name="libi_attr" not-null="false" length="160" sql-type="varchar" />
     </property>
-    <property name="lif_valeur" type="StringClob">
-      <column name="lif_valeur" not-null="false" sql-type="longtext" />
+    <!--<property name="lif_valeur" type="StringClob" length="4000" lazy="true">
+      <column name="lif_valeur" not-null="false" sql-type="CLOB" />
+    </property>-->
+    <!--<property name="lid_valeur" type="StringClob" lazy="true">
+      <column name="lid_valeur" not-null="false"  sql-type="CLOB" />
     </property>
-    <property name="lid_valeur" type="StringClob">
-      <column name="lid_valeur" not-null="false" sql-type="longtext" />
+    <property name="lie_valeur" type="StringClob" length="100000" lazy="true">
+      <column name="lie_valeur" not-null="false"  sql-type="CLOB" />
     </property>
-    <property name="lie_valeur" type="StringClob">
-      <column name="lie_valeur" not-null="false" sql-type="longtext" />
-    </property>
-    <property name="lii_valeur" type="StringClob">
-      <column name="lii_valeur" not-null="false" sql-type="longtext" />
-    </property>
+    <property name="lii_valeur" type="StringClob" lazy="true">
+      <column name="lii_valeur" not-null="false" sql-type="CLOB" />
+    </property>-->
     <property name="groupe" type="String">
       <column name="groupe" not-null="false" length="10" sql-type="varchar" />
     </property>
@@ -63,5 +63,8 @@
     <property name="dh_maj" type="DateTime">
       <column name="dh_maj" not-null="false" sql-type="date" />
     </property>
+    <many-to-one name="pe_ip" class="pe_ip">
+      <column name="no_ip" not-null="true" sql-type="int" />
+    </many-to-one>
   </class>
 </hibernate-mapping>

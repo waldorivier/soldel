@@ -58,6 +58,8 @@ namespace mupeModel {
 
         private string _type_grmu;
 
+        private pe_ip _pe_ip;
+
         private IList<pe_gmmu> _pe_gmmu_list;
 
         private IList<pe_attr> _pe_attr_list;
@@ -198,7 +200,6 @@ namespace mupeModel {
                 }
             }
         }
-
 
         /// <summary>
         /// There are no comments for tyeven in the schema.
@@ -378,6 +379,19 @@ namespace mupeModel {
             }
         }
 
+        public virtual pe_ip pe_ip {
+            get {
+                return this._pe_ip;
+            }
+            set {
+                if (this._pe_ip != value) {
+                    this.SendPropertyChanging();
+                    this._pe_ip = value;
+                    this.SendPropertyChanged("pe_ip");
+                }
+            }
+        }
+
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
@@ -430,12 +444,13 @@ namespace mupeModel {
             return copy;
         }
 
-        public virtual pe_muta deep_copy(string muta_id) {
+        public virtual pe_muta deep_copy(string muta_id, int no_ip) {
             var copy = shallow_copy();
             copy.pe_muta_id = muta_id;
-            copy.no_ip = 0;
+            copy.no_ip = no_ip;
+
             foreach (var attr in this.pe_attr_list) {
-                copy.add_attr(attr.shallow_copy(muta_id));
+                copy.add_attr(attr.shallow_copy(copy));
             }
             return copy;
         }

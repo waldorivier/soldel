@@ -64,9 +64,11 @@ namespace mupeModel
         private string _from_db;
 
         private pe_muta _pe_muta;
-    
+
+        private IList<pe_libl> _pe_libl_list;
+
         #region Extensibility Method Definitions
-        
+
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
@@ -530,7 +532,13 @@ namespace mupeModel
                 }
             }
         }
-   
+
+        //public virtual IList<pe_libl> pe_libl_list {
+        //    get {
+        //        return (from g in this.pe_gmmu_list select g.pe_muta).ToList<pe_muta>();
+        //    }
+        //}
+
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
@@ -556,11 +564,14 @@ namespace mupeModel
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual pe_attr shallow_copy(string muta_id) {
+        public virtual pe_attr shallow_copy(pe_muta muta) {
             var copy = new pe_attr();
 
             CopyObject.copy<pe_attr>(this, copy);
-            copy.pe_muta_id = muta_id;
+
+            copy.pe_muta_id = muta.pe_muta_id;
+            copy.pe_muta = muta;
+
             copy.dh_maj = copy.dh_cre = DateTime.Today;
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;

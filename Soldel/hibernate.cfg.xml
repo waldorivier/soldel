@@ -24,17 +24,7 @@
 			false
 		</property>
 
-		<!--<property name="connection.connection_string">
-			Server=labcit;Database=;User Name=padev96_data;
-			Password=padev96_data;
-			Convert Zero Datetime=True
-	    </property> -->
-
-		<!--<property name="connection.connection_string">
-		  Data Source=outcatst;User ID=qc_laus_2018; Password=qc_laus_2018;
-	  </property>-->
-
-		<!-- 
+	 <!-- 
 		roperty name="current_session_context_class">
 		org.hibernate.context.ThreadLocalSessionContext
 		</property>

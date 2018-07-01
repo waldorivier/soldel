@@ -33,11 +33,59 @@ namespace Soldel.Views {
             cb_connection.SelectionChanged += Cb_database_SelectionChanged;
             cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
 
-            btn_tree_add.Click += Btn_tree_add_Click;
-            btn_tree_copy.Click += Btn_tree_copy_Click;
-            btn_tree_delete.Click += Btn_tree_delete_Click;
+            //btn_tree_add.Click += Btn_tree_add_Click;
+            //btn_tree_copy.Click += Btn_tree_copy_Click;
+            //btn_tree_delete.Click += Btn_tree_delete_Click;
 
-            btn_detail_save.Click += Btn_detail_save_Click;
+            //btn_detail_save.Click += Btn_detail_save_Click;
+
+            test();
+        }
+
+
+        private void test() {
+            ITransaction transaction = null;
+
+            session = HibernateUtil.get_instance().get_session("Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA");
+
+            pe_grmu grmu = session.Get<pe_grmu>("1");
+            pe_ip ip = session.Get<pe_ip>(3110);
+
+            // base pour tester la copie
+            var mut_to_copy_id = "607";
+
+            try {
+
+                transaction = session.BeginTransaction();
+
+                // var l = session.CreateSQLQuery("SELECT * FROM PE_LIBL where no_ip = 3110").List();
+                // var l = session.CreateSQLQuery("SELECT * FROM PE_CFGD").List();
+
+                List<pe_libl> libls = session.CreateCriteria<pe_libl>().List<pe_libl>().Where(x => x.no_ip == 3110).ToList();
+               
+
+                var muta_to_copy = session.Get<pe_muta>(mut_to_copy_id);
+                var muta_id = generate_muta_id();
+                var muta = muta_to_copy.deep_copy(muta_id, grmu.no_ip);
+                muta.pe_ip = ip;
+
+                session.Save(muta);
+
+                var gmmu = new pe_gmmu(grmu, muta);
+                session.Save(gmmu);
+
+                transaction.Commit();
+                session.Refresh(gmmu);
+                tree_main.Items.Refresh();
+
+            } catch (Exception ex) {
+                if (transaction != null) {
+                    if (transaction != null)
+                        transaction.Rollback();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -86,20 +134,19 @@ namespace Soldel.Views {
                 if (transaction != null) {
                     if (transaction != null)
                         transaction.Rollback();
-                    
-                    MessageBox.Show(ex.Message);                       
+
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
-        
-        // copie une mutation (deep coyy)
+
         // TODO : encapsule de manière générique
 
         private void Btn_tree_copy_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
 
             // base pour tester la copie
-            var muta_id = "607";
+            var mut_to_copy_id = "607";
 
             try {
                 var grmu = tree_main.SelectedValue as pe_grmu;
@@ -107,13 +154,14 @@ namespace Soldel.Views {
                     if (grmu.no_ip == 11) {
                         transaction = session.BeginTransaction();
 
-                        var muta = session.Get<pe_muta>(muta_id).deep_copy(generate_muta_id());
-                        muta.no_ip = grmu.no_ip;
+                        var muta_to_copy = session.Get<pe_muta>(mut_to_copy_id);
+                        var muta_id = generate_muta_id();
+                        var muta = muta_to_copy.deep_copy(muta_id, grmu.no_ip);
 
                         session.Save(muta);
                         var gmmu = new pe_gmmu(grmu, muta);
                         session.Save(gmmu);
-                       
+
                         transaction.Commit();
                         session.Refresh(gmmu);
                         tree_main.Items.Refresh();
@@ -158,7 +206,7 @@ namespace Soldel.Views {
                 }
             }
         }
-        
+
         // TODO : encapsule de manière générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;

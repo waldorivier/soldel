@@ -15,13 +15,12 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-namespace mupeModel
-{
+namespace mupeModel {
 
     /// <summary>
     /// There are no comments for pe_attr, Soldel in the schema.
     /// </summary>
-    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged  {
+    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -65,8 +64,6 @@ namespace mupeModel
 
         private pe_muta _pe_muta;
 
-        private IList<pe_libl> _pe_libl_list;
-
         #region Extensibility Method Definitions
 
         /// <summary>
@@ -74,59 +71,51 @@ namespace mupeModel
         /// </summary>
         partial void OnCreated();
 
-        public override bool Equals(object obj)
-        {
-          pe_attr toCompare = obj as pe_attr;
-          if (toCompare == null)
-          {
-            return false;
-          }
+        public override bool Equals(object obj) {
+            pe_attr toCompare = obj as pe_attr;
+            if (toCompare == null) {
+                return false;
+            }
 
-          if (!Object.Equals(this.pe_muta_id, toCompare.pe_muta_id))
-            return false;
-          if (!Object.Equals(this.nom_attr, toCompare.nom_attr))
-            return false;
-          if (!Object.Equals(this.clatit_attr, toCompare.clatit_attr))
-            return false;
-          
-          return true;
+            if (!Object.Equals(this.pe_muta_id, toCompare.pe_muta_id))
+                return false;
+            if (!Object.Equals(this.nom_attr, toCompare.nom_attr))
+                return false;
+            if (!Object.Equals(this.clatit_attr, toCompare.clatit_attr))
+                return false;
+
+            return true;
         }
 
-        public override int GetHashCode()
-        {
-          int hashCode = 13;
-          hashCode = (hashCode * 7) + pe_muta_id.GetHashCode();
-          hashCode = (hashCode * 7) + nom_attr.GetHashCode();
-          hashCode = (hashCode * 7) + clatit_attr.GetHashCode();
-          return hashCode;
+        public override int GetHashCode() {
+            int hashCode = 13;
+            hashCode = (hashCode * 7) + pe_muta_id.GetHashCode();
+            hashCode = (hashCode * 7) + nom_attr.GetHashCode();
+            hashCode = (hashCode * 7) + clatit_attr.GetHashCode();
+            return hashCode;
         }
-        
+
         #endregion
         /// <summary>
         /// There are no comments for pe_attr constructor in the schema.
         /// </summary>
-        public pe_attr()
-        {
+        public pe_attr() {
             this._pe_muta_id = @"";
             this._nom_attr = @"";
             this._clatit_attr = @"";
             OnCreated();
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_muta_id in the schema.
         /// </summary>
-        public virtual string pe_muta_id
-        {
-            get
-            {
+        public virtual string pe_muta_id {
+            get {
                 return this._pe_muta_id;
             }
-            set
-            {
-                if (this._pe_muta_id != value)
-                {
+            set {
+                if (this._pe_muta_id != value) {
                     this.SendPropertyChanging();
                     this._pe_muta_id = value;
                     this.SendPropertyChanged("pe_muta_id");
@@ -134,20 +123,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for nom_attr in the schema.
         /// </summary>
-        public virtual string nom_attr
-        {
-            get
-            {
+        public virtual string nom_attr {
+            get {
                 return this._nom_attr;
             }
-            set
-            {
-                if (this._nom_attr != value)
-                {
+            set {
+                if (this._nom_attr != value) {
                     this.SendPropertyChanging();
                     this._nom_attr = value;
                     this.SendPropertyChanged("nom_attr");
@@ -155,20 +140,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for clatit_attr in the schema.
         /// </summary>
-        public virtual string clatit_attr
-        {
-            get
-            {
+        public virtual string clatit_attr {
+            get {
                 return this._clatit_attr;
             }
-            set
-            {
-                if (this._clatit_attr != value)
-                {
+            set {
+                if (this._clatit_attr != value) {
                     this.SendPropertyChanging();
                     this._clatit_attr = value;
                     this.SendPropertyChanged("clatit_attr");
@@ -176,20 +157,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for u_version in the schema.
         /// </summary>
-        public virtual string u_version
-        {
-            get
-            {
+        public virtual string u_version {
+            get {
                 return this._u_version;
             }
-            set
-            {
-                if (this._u_version != value)
-                {
+            set {
+                if (this._u_version != value) {
                     this.SendPropertyChanging();
                     this._u_version = value;
                     this.SendPropertyChanged("u_version");
@@ -197,20 +174,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for check_attr in the schema.
         /// </summary>
-        public virtual string check_attr
-        {
-            get
-            {
+        public virtual string check_attr {
+            get {
                 return this._check_attr;
             }
-            set
-            {
-                if (this._check_attr != value)
-                {
+            set {
+                if (this._check_attr != value) {
                     this.SendPropertyChanging();
                     this._check_attr = value;
                     this.SendPropertyChanged("check_attr");
@@ -218,20 +191,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for val_def in the schema.
         /// </summary>
-        public virtual string val_def
-        {
-            get
-            {
+        public virtual string val_def {
+            get {
                 return this._val_def;
             }
-            set
-            {
-                if (this._val_def != value)
-                {
+            set {
+                if (this._val_def != value) {
                     this.SendPropertyChanging();
                     this._val_def = value;
                     this.SendPropertyChanged("val_def");
@@ -239,20 +208,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for visibilite in the schema.
         /// </summary>
-        public virtual string visibilite
-        {
-            get
-            {
+        public virtual string visibilite {
+            get {
                 return this._visibilite;
             }
-            set
-            {
-                if (this._visibilite != value)
-                {
+            set {
+                if (this._visibilite != value) {
                     this.SendPropertyChanging();
                     this._visibilite = value;
                     this.SendPropertyChanged("visibilite");
@@ -260,20 +225,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for identifiant in the schema.
         /// </summary>
-        public virtual string identifiant
-        {
-            get
-            {
+        public virtual string identifiant {
+            get {
                 return this._identifiant;
             }
-            set
-            {
-                if (this._identifiant != value)
-                {
+            set {
+                if (this._identifiant != value) {
                     this.SendPropertyChanging();
                     this._identifiant = value;
                     this.SendPropertyChanged("identifiant");
@@ -281,20 +242,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for oblig_fac in the schema.
         /// </summary>
-        public virtual string oblig_fac
-        {
-            get
-            {
+        public virtual string oblig_fac {
+            get {
                 return this._oblig_fac;
             }
-            set
-            {
-                if (this._oblig_fac != value)
-                {
+            set {
+                if (this._oblig_fac != value) {
                     this.SendPropertyChanging();
                     this._oblig_fac = value;
                     this.SendPropertyChanged("oblig_fac");
@@ -302,20 +259,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for log in the schema.
         /// </summary>
-        public virtual string log
-        {
-            get
-            {
+        public virtual string log {
+            get {
                 return this._log;
             }
-            set
-            {
-                if (this._log != value)
-                {
+            set {
+                if (this._log != value) {
                     this.SendPropertyChanging();
                     this._log = value;
                     this.SendPropertyChanged("log");
@@ -323,20 +276,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for donnee_traite in the schema.
         /// </summary>
-        public virtual string donnee_traite
-        {
-            get
-            {
+        public virtual string donnee_traite {
+            get {
                 return this._donnee_traite;
             }
-            set
-            {
-                if (this._donnee_traite != value)
-                {
+            set {
+                if (this._donnee_traite != value) {
                     this.SendPropertyChanging();
                     this._donnee_traite = value;
                     this.SendPropertyChanged("donnee_traite");
@@ -344,20 +293,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for position in the schema.
         /// </summary>
-        public virtual System.Nullable<int> position
-        {
-            get
-            {
+        public virtual System.Nullable<int> position {
+            get {
                 return this._position;
             }
-            set
-            {
-                if (this._position != value)
-                {
+            set {
+                if (this._position != value) {
                     this.SendPropertyChanging();
                     this._position = value;
                     this.SendPropertyChanged("position");
@@ -365,20 +310,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for groupe in the schema.
         /// </summary>
-        public virtual string groupe
-        {
-            get
-            {
+        public virtual string groupe {
+            get {
                 return this._groupe;
             }
-            set
-            {
-                if (this._groupe != value)
-                {
+            set {
+                if (this._groupe != value) {
                     this.SendPropertyChanging();
                     this._groupe = value;
                     this.SendPropertyChanged("groupe");
@@ -386,20 +327,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for user_cre in the schema.
         /// </summary>
-        public virtual string user_cre
-        {
-            get
-            {
+        public virtual string user_cre {
+            get {
                 return this._user_cre;
             }
-            set
-            {
-                if (this._user_cre != value)
-                {
+            set {
+                if (this._user_cre != value) {
                     this.SendPropertyChanging();
                     this._user_cre = value;
                     this.SendPropertyChanged("user_cre");
@@ -407,20 +344,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for dh_cre in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dh_cre
-        {
-            get
-            {
+        public virtual System.Nullable<System.DateTime> dh_cre {
+            get {
                 return this._dh_cre;
             }
-            set
-            {
-                if (this._dh_cre != value)
-                {
+            set {
+                if (this._dh_cre != value) {
                     this.SendPropertyChanging();
                     this._dh_cre = value;
                     this.SendPropertyChanged("dh_cre");
@@ -428,20 +361,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for user_maj in the schema.
         /// </summary>
-        public virtual string user_maj
-        {
-            get
-            {
+        public virtual string user_maj {
+            get {
                 return this._user_maj;
             }
-            set
-            {
-                if (this._user_maj != value)
-                {
+            set {
+                if (this._user_maj != value) {
                     this.SendPropertyChanging();
                     this._user_maj = value;
                     this.SendPropertyChanged("user_maj");
@@ -449,20 +378,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for dh_maj in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dh_maj
-        {
-            get
-            {
+        public virtual System.Nullable<System.DateTime> dh_maj {
+            get {
                 return this._dh_maj;
             }
-            set
-            {
-                if (this._dh_maj != value)
-                {
+            set {
+                if (this._dh_maj != value) {
                     this.SendPropertyChanging();
                     this._dh_maj = value;
                     this.SendPropertyChanged("dh_maj");
@@ -470,20 +395,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for copy_to in the schema.
         /// </summary>
-        public virtual string copy_to
-        {
-            get
-            {
+        public virtual string copy_to {
+            get {
                 return this._copy_to;
             }
-            set
-            {
-                if (this._copy_to != value)
-                {
+            set {
+                if (this._copy_to != value) {
                     this.SendPropertyChanging();
                     this._copy_to = value;
                     this.SendPropertyChanged("copy_to");
@@ -491,20 +412,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for from_db in the schema.
         /// </summary>
-        public virtual string from_db
-        {
-            get
-            {
+        public virtual string from_db {
+            get {
                 return this._from_db;
             }
-            set
-            {
-                if (this._from_db != value)
-                {
+            set {
+                if (this._from_db != value) {
                     this.SendPropertyChanging();
                     this._from_db = value;
                     this.SendPropertyChanged("from_db");
@@ -512,20 +429,15 @@ namespace mupeModel
             }
         }
 
-    
         /// <summary>
         /// There are no comments for pe_muta in the schema.
         /// </summary>
-        public virtual pe_muta pe_muta
-        {
-            get
-            {
+        public virtual pe_muta pe_muta {
+            get {
                 return this._pe_muta;
             }
-            set
-            {
-                if (this._pe_muta != value)
-                {
+            set {
+                if (this._pe_muta != value) {
                     this.SendPropertyChanging();
                     this._pe_muta = value;
                     this.SendPropertyChanged("pe_muta");
@@ -533,33 +445,45 @@ namespace mupeModel
             }
         }
 
-        //public virtual IList<pe_libl> pe_libl_list {
-        //    get {
-        //        return (from g in this.pe_gmmu_list select g.pe_muta).ToList<pe_muta>();
-        //    }
-        //}
+        public virtual pe_libl pe_libl {
+            get {
+                try {
+                    return pe_muta.pe_ip.pe_libl_list.
+                           Where<pe_libl>(x => x.nom_attr.Equals(nom_attr)).Single<pe_libl>();
+                } catch {
+                    return null;
+                }
+            }
+        }
+        public virtual pe_dict pe_dict {
+            get {
+                try {
+                    return HibernateUtil.get_instance().get_dict_libelles().
+                           Where<pe_dict>(x => x.nom_dict.Equals(nom_attr)).ToList<pe_dict>().Single<pe_dict>();
+                } catch {
+                    return null;
+                }
+            }
+        }
 
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void SendPropertyChanging()
-        {
-		        var handler = this.PropertyChanging;
+        protected virtual void SendPropertyChanging() {
+            var handler = this.PropertyChanging;
             if (handler != null)
                 handler(this, emptyChangingEventArgs);
         }
 
-        protected virtual void SendPropertyChanging(System.String propertyName) 
-        {    
-		        var handler = this.PropertyChanging;
+        protected virtual void SendPropertyChanging(System.String propertyName) {
+            var handler = this.PropertyChanging;
             if (handler != null)
                 handler(this, new PropertyChangingEventArgs(propertyName));
         }
 
-        protected virtual void SendPropertyChanged(System.String propertyName)
-        {    
-		        var handler = this.PropertyChanged;
+        protected virtual void SendPropertyChanged(System.String propertyName) {
+            var handler = this.PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -576,6 +500,5 @@ namespace mupeModel
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;
         }
-     
     }
 }

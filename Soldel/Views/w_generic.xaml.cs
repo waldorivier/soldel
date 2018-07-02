@@ -33,13 +33,13 @@ namespace Soldel.Views {
             cb_connection.SelectionChanged += Cb_database_SelectionChanged;
             cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
 
-            //btn_tree_add.Click += Btn_tree_add_Click;
-            //btn_tree_copy.Click += Btn_tree_copy_Click;
-            //btn_tree_delete.Click += Btn_tree_delete_Click;
+            btn_tree_add.Click += Btn_tree_add_Click;
+            btn_tree_copy.Click += Btn_tree_copy_Click;
+            btn_tree_delete.Click += Btn_tree_delete_Click;
 
-            //btn_detail_save.Click += Btn_detail_save_Click;
+            btn_detail_save.Click += Btn_detail_save_Click;
 
-            test();
+            // test();
         }
 
 
@@ -57,12 +57,6 @@ namespace Soldel.Views {
             try {
 
                 transaction = session.BeginTransaction();
-
-                // var l = session.CreateSQLQuery("SELECT * FROM PE_LIBL where no_ip = 3110").List();
-                // var l = session.CreateSQLQuery("SELECT * FROM PE_CFGD").List();
-
-                List<pe_libl> libls = session.CreateCriteria<pe_libl>().List<pe_libl>().Where(x => x.no_ip == 3110).ToList();
-               
 
                 var muta_to_copy = session.Get<pe_muta>(mut_to_copy_id);
                 var muta_id = generate_muta_id();
@@ -93,7 +87,8 @@ namespace Soldel.Views {
             String connectionString = (String)cbConnection.SelectedValue;
             session = HibernateUtil.get_instance().get_session(connectionString);
 
-            List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().Where(x => x.no_ip == 11).ToList();
+            // List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().Where(x => x.no_ip == 11).ToList();
+            List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
             build_tree(object_list.ToList<object>());
         }
@@ -186,7 +181,7 @@ namespace Soldel.Views {
                     if (muta.no_ip == 11) {
                         transaction = session.BeginTransaction();
 
-                        // TODO : ce n'est pas complet, car il faut choisir
+                        // TODO : ce n'est pas complet, car il faut choisir un des gmmus.....!
 
                         var gmmu = muta.pe_gmmu_list[0];
                         gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);

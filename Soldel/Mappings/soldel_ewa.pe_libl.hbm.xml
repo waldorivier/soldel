@@ -24,18 +24,18 @@
     <property name="libi_attr" type="String">
       <column name="libi_attr" not-null="false" length="160" sql-type="varchar" />
     </property>
-    <!--<property name="lif_valeur" type="StringClob" length="4000" lazy="true">
-      <column name="lif_valeur" not-null="false" sql-type="CLOB" />
-    </property>-->
-    <!--<property name="lid_valeur" type="StringClob" lazy="true">
-      <column name="lid_valeur" not-null="false"  sql-type="CLOB" />
+    <property name="lif_valeur" type="String">
+      <column name="lif_valeur" not-null="false" length="4000" sql-type="varchar" />
     </property>
-    <property name="lie_valeur" type="StringClob" length="100000" lazy="true">
-      <column name="lie_valeur" not-null="false"  sql-type="CLOB" />
+    <property name="lid_valeur" type="String">
+      <column name="lid_valeur" not-null="false" length="4000" sql-type="varchar" />
     </property>
-    <property name="lii_valeur" type="StringClob" lazy="true">
-      <column name="lii_valeur" not-null="false" sql-type="CLOB" />
-    </property>-->
+    <property name="lie_valeur" type="String">
+      <column name="lie_valeur" not-null="false" length="4000" sql-type="varchar" />
+    </property>
+    <property name="lii_valeur" type="String">
+      <column name="lii_valeur" not-null="false" length="4000" sql-type="varchar" />
+    </property>
     <property name="groupe" type="String">
       <column name="groupe" not-null="false" length="10" sql-type="varchar" />
     </property>
@@ -63,6 +63,7 @@
     <property name="dh_maj" type="DateTime">
       <column name="dh_maj" not-null="false" sql-type="date" />
     </property>
+
     <many-to-one name="pe_ip" class="pe_ip">
       <column name="no_ip" not-null="true" sql-type="int" />
     </many-to-one>

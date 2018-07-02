@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Dynamic;
+using mupeModel;
 
 public class HibernateUtil {
 
@@ -16,6 +17,7 @@ public class HibernateUtil {
     private IDictionary<string, ISessionFactory> session_factory_cache = new Dictionary<string, ISessionFactory>();
     private IDictionary<string, string> global_parameters;
     private IList<string> connections;
+    private IList<pe_dict> dict_libelles;
 
     private static HibernateUtil hibernate_util = null;
 
@@ -24,6 +26,7 @@ public class HibernateUtil {
             hibernate_util = new HibernateUtil();
             hibernate_util.load_connections();
             hibernate_util.load_global_parameters();
+            hibernate_util.load_global_libelles();
         };
         return hibernate_util;
     }
@@ -38,7 +41,6 @@ public class HibernateUtil {
         }
         return sessionFactory.OpenSession();
     }
-
     private void load_connections() {
         // new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;" };
         connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
@@ -64,6 +66,10 @@ public class HibernateUtil {
         global_parameters = new Dictionary<string, string>();
         global_parameters.Add("USERNAME", System.Environment.GetEnvironmentVariable("USERNAME"));
     }
+    private void load_global_libelles() {
+        dict_libelles = get_session("Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA")
+                                    .CreateCriteria<pe_dict>().List<pe_dict>().ToList();
+    }
 
     public IList<string> get_connections() {
         return connections;
@@ -73,6 +79,10 @@ public class HibernateUtil {
         string user;
         global_parameters.TryGetValue("USERNAME", out user);
         return user;
+    }
+
+    public IList<pe_dict> get_dict_libelles() {
+        return dict_libelles;
     }
 }
 

@@ -388,6 +388,16 @@ namespace mupeModel
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
 
+        public virtual pe_libl convert_to_libl() {
+            pe_libl libl = new pe_libl();
+
+            libl.libd_attr = libd_dict;
+            libl.libf_attr = libf_dict;
+            libl.libi_attr = libi_dict;
+            libl.libe_attr = libe_dict;
+            
+            return null;
+        }
+    }
 }

@@ -414,7 +414,6 @@ namespace mupeModel {
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             try {
                 var pe_muta = (pe_muta)value;
@@ -443,7 +442,6 @@ namespace mupeModel {
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;
         }
-
         public virtual pe_muta deep_copy(string muta_id, int no_ip) {
             var copy = shallow_copy();
             copy.pe_muta_id = muta_id;

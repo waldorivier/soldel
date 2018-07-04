@@ -62,7 +62,6 @@ namespace Soldel.Views {
                 var muta_id = generate_muta_id();
                 var muta = muta_to_copy.deep_copy(muta_id, grmu.no_ip);
                 muta.pe_ip = ip;
-
                 session.Save(muta);
 
                 var gmmu = new pe_gmmu(grmu, muta);
@@ -152,8 +151,8 @@ namespace Soldel.Views {
                         var muta_to_copy = session.Get<pe_muta>(mut_to_copy_id);
                         var muta_id = generate_muta_id();
                         var muta = muta_to_copy.deep_copy(muta_id, grmu.no_ip);
-
                         session.Save(muta);
+
                         var gmmu = new pe_gmmu(grmu, muta);
                         session.Save(gmmu);
 

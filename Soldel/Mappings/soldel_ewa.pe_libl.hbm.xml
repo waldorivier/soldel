@@ -64,7 +64,7 @@
       <column name="dh_maj" not-null="false" sql-type="date" />
     </property>
 
-    <many-to-one name="pe_ip" class="pe_ip">
+    <many-to-one name="pe_ip" class="pe_ip" insert="false" update="false">
       <column name="no_ip" not-null="true" sql-type="int" />
     </many-to-one>
   </class>

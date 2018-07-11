@@ -42,7 +42,8 @@ namespace Soldel.Views
         {
             List<int> ips = new List<int>() { 4250, 5750 };
 
-            if (session != null) {
+            if (session != null)
+            {
                 // cb_ip_list.ItemsSource = CollectionViewSource.GetDefaultView(ips);
                 cb_ip_list.ItemsSource = session.CreateSQLQuery("SELECT NO_IP FROM PE_IP order by NO_IP asc").List();
             }

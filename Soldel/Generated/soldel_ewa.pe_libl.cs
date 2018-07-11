@@ -478,11 +478,12 @@ namespace mupeModel
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual pe_libl shallow_copy(pe_libl libl) {
+        public virtual pe_libl shallow_copy() {
             var copy = new pe_libl();
-
             CopyObject.copy<pe_libl>(this, copy);
-                        
+
+            copy.no_ip = 0;
+
             copy.dh_maj = copy.dh_cre = DateTime.Today;
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;

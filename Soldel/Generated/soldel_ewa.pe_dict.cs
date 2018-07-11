@@ -357,7 +357,7 @@ namespace mupeModel
             libl.libi_attr = libi_dict;
             libl.libe_attr = libe_dict;
 
-            return null;
+            return libl;
         }
     }
 }

@@ -38,47 +38,6 @@ namespace Soldel.Views {
             btn_tree_delete.Click += Btn_tree_delete_Click;
 
             btn_detail_save.Click += Btn_detail_save_Click;
-
-            // test();
-        }
-
-
-        private void test() {
-            ITransaction transaction = null;
-
-            session = HibernateUtil.get_instance().get_session("Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA");
-
-            pe_grmu grmu = session.Get<pe_grmu>("1");
-            pe_ip ip = session.Get<pe_ip>(3110);
-
-            // base pour tester la copie
-            var mut_to_copy_id = "607";
-
-            try {
-
-                transaction = session.BeginTransaction();
-
-                var muta_to_copy = session.Get<pe_muta>(mut_to_copy_id);
-                var muta_id = generate_muta_id();
-                var muta = muta_to_copy.deep_copy(muta_id, grmu.no_ip);
-                muta.pe_ip = ip;
-                session.Save(muta);
-
-                var gmmu = new pe_gmmu(grmu, muta);
-                session.Save(gmmu);
-
-                transaction.Commit();
-                session.Refresh(gmmu);
-                tree_main.Items.Refresh();
-
-            } catch (Exception ex) {
-                if (transaction != null) {
-                    if (transaction != null)
-                        transaction.Rollback();
-
-                    MessageBox.Show(ex.Message);
-                }
-            }
         }
 
         private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -86,9 +45,9 @@ namespace Soldel.Views {
             String connectionString = (String)cbConnection.SelectedValue;
             session = HibernateUtil.get_instance().get_session(connectionString);
 
-            // List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().Where(x => x.no_ip == 11).ToList();
             List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
+            
             build_tree(object_list.ToList<object>());
         }
 
@@ -134,13 +93,11 @@ namespace Soldel.Views {
             }
         }
 
-        // TODO : encapsule de manière générique
+        // TODO : encapsuler de manière générique
 
         private void Btn_tree_copy_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
-
-            // base pour tester la copie
-            var mut_to_copy_id = "607";
+            var muta_to_copy_id = "607";
 
             try {
                 var grmu = tree_main.SelectedValue as pe_grmu;
@@ -148,13 +105,16 @@ namespace Soldel.Views {
                     if (grmu.no_ip == 11) {
                         transaction = session.BeginTransaction();
 
-                        var muta_to_copy = session.Get<pe_muta>(mut_to_copy_id);
+                        var ip = session.Get<pe_ip>(grmu.no_ip);
+                        var muta_to_copy = session.Get<pe_muta>(muta_to_copy_id);
+
                         var muta_id = generate_muta_id();
-                        var muta = muta_to_copy.deep_copy(muta_id, grmu.no_ip);
-                        session.Save(muta);
+                        var muta = muta_to_copy.deep_copy(muta_id, ip);
+                        ip.add_muta(muta);
 
                         var gmmu = new pe_gmmu(grmu, muta);
                         session.Save(gmmu);
+                        session.Save(ip);
 
                         transaction.Commit();
                         session.Refresh(gmmu);
@@ -166,11 +126,16 @@ namespace Soldel.Views {
                     if (transaction != null)
                         transaction.Rollback();
 
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.StackTrace);
                 }
             }
         }
 
+        //---------------------------------------------------------------------
+        // TODO : encapsuler de manière générique
+        // on ne supprime que la relation
+        //---------------------------------------------------------------------
+        
         private void Btn_tree_delete_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
 
@@ -201,7 +166,7 @@ namespace Soldel.Views {
             }
         }
 
-        // TODO : encapsule de manière générique
+        // TODO : encapsuler de manière générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
             if (g_detail.DataContext != null) {

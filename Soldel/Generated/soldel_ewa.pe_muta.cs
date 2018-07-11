@@ -432,20 +432,20 @@ namespace mupeModel {
             _pe_attr_list.Add(attr);
         }
 
-        public virtual pe_muta shallow_copy() {
+        public virtual pe_muta shallow_copy(string muta_id, pe_ip ip) {
             var copy = new pe_muta();
 
             CopyObject.copy<pe_muta>(this, copy);
-            copy.pe_muta_id = "";
-            copy.no_ip = 0;
+
+            copy.pe_muta_id = muta_id;
+            copy.pe_ip = ip;
+
             copy.dh_maj = copy.dh_cre = DateTime.Today;
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;
         }
-        public virtual pe_muta deep_copy(string muta_id, int no_ip) {
-            var copy = shallow_copy();
-            copy.pe_muta_id = muta_id;
-            copy.no_ip = no_ip;
+        public virtual pe_muta deep_copy(string muta_id, pe_ip ip) {
+            var copy = shallow_copy(muta_id, ip);
 
             foreach (var attr in this.pe_attr_list) {
                 copy.add_attr(attr.shallow_copy(copy));

@@ -496,6 +496,10 @@ namespace mupeModel {
             copy.pe_muta_id = muta.pe_muta_id;
             copy.pe_muta = muta;
 
+            // copie des libellés qui sont référencés par l'ip
+
+            copy.pe_muta.pe_ip.add_libl(pe_libl.shallow_copy());
+
             copy.dh_maj = copy.dh_cre = DateTime.Today;
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
             return copy;

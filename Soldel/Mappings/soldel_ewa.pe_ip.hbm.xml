@@ -5,13 +5,13 @@
       <column name="no_ip" not-null="true" sql-type="int" />
       <generator class="assigned" />
     </id>
-    <bag name="pe_libl_list">
+    <set name="pe_libl_list" cascade="all" inverse="true">
       <key>
         <column name="no_ip" />
       </key>
       <one-to-many class="pe_libl" />
-    </bag>
-    <bag name="pe_muta_list" cascade="none" inverse="true" generic="true">
+    </set>
+    <bag name="pe_muta_list" cascade="all" inverse="true" generic="true">
       <key>
         <column name="no_ip" />
       </key>

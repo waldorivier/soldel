@@ -13,7 +13,7 @@ namespace mupeModel {
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
         private int _no_ip;
-        private IList<pe_libl> _pe_libl_list;
+        private ISet<pe_libl> _pe_libl_list;
         private IList<pe_muta> _pe_muta_list;
 
         partial void OnCreated();
@@ -41,7 +41,7 @@ namespace mupeModel {
         /// </summary>
         public pe_ip() {
             this._no_ip = 0;
-            this._pe_libl_list = new List<pe_libl>();
+            this._pe_libl_list = new HashSet<pe_libl>();
             this._pe_muta_list = new List<pe_muta>();
             OnCreated();
         }
@@ -61,7 +61,7 @@ namespace mupeModel {
                 }
             }
         }
-        public virtual IList<pe_libl> pe_libl_list {
+        public virtual ISet<pe_libl> pe_libl_list {
             get {
                 return this._pe_libl_list;
             }
@@ -98,6 +98,16 @@ namespace mupeModel {
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
 
+        public virtual void add_muta(pe_muta muta) {
+            muta.pe_ip = this;
+            pe_muta_list.Add(muta);
+        }
+
+        public virtual void add_libl(pe_libl libl) {
+            libl.pe_ip = this;
+            libl.no_ip = no_ip;
+            pe_libl_list.Add(libl);
+        }
+    }
 }

@@ -36,7 +36,6 @@ namespace Soldel.Views {
             btn_tree_add.Click += Btn_tree_add_Click;
             btn_tree_copy.Click += Btn_tree_copy_Click;
             btn_tree_delete.Click += Btn_tree_delete_Click;
-
             btn_detail_save.Click += Btn_detail_save_Click;
         }
 
@@ -165,6 +164,8 @@ namespace Soldel.Views {
                 }
             }
         }
+
+        
 
         // TODO : encapsuler de manière générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {

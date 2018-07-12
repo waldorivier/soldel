@@ -445,11 +445,11 @@ namespace mupeModel {
             }
         }
 
-        public virtual pe_libl pe_libl {
+        public virtual IList<pe_libl> pe_libl_list {
             get {
                 try {
                     return pe_muta.pe_ip.pe_libl_list.
-                           Where<pe_libl>(x => x.nom_attr.Equals(nom_attr)).Single<pe_libl>();
+                           Where<pe_libl>(x => x.nom_attr.Equals(nom_attr)).ToList<pe_libl>();
                 } catch {
                     return null;
                 }
@@ -488,6 +488,18 @@ namespace mupeModel {
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public virtual IList<String> visibility_list {
+            get {
+                return new List<String>() { " ", "F", "T", "D" };
+            }
+        }
+
+        public virtual IList<String> true_false_list {
+            get {
+                return new List<String>() { " ", "F", "T"};
+            }
+        }
+
         public virtual pe_attr shallow_copy(pe_muta muta) {
             var copy = new pe_attr();
 
@@ -498,7 +510,7 @@ namespace mupeModel {
 
             // copie des libellés qui sont référencés par l'ip
 
-            copy.pe_muta.pe_ip.add_libl(pe_libl.shallow_copy());
+            copy.pe_muta.pe_ip.add_libl(pe_libl_list.First().shallow_copy());
 
             copy.dh_maj = copy.dh_cre = DateTime.Today;
             copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();

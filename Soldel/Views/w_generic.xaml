@@ -27,6 +27,12 @@
                 </TextBox>
                 <TextBox Text = "{Binding Path=libf_muta, Mode=TwoWay}">
                 </TextBox>
+                <TextBox Text = "{Binding Path=libd_muta, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libe_muta, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libi_muta, Mode=TwoWay}">
+                </TextBox>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="pe_attr_template" DataType="pe_attr">
@@ -39,12 +45,38 @@
                 </TextBox>
                 <TextBox Text = "{Binding Path=val_def, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=visibilite, Mode=TwoWay}">
+                <ComboBox Text="visibilite" 
+                          ItemsSource = "{Binding Path=visibility_list}" 
+                          SelectedItem = "{Binding Path=visibilite, Mode=TwoWay}">
+                </ComboBox>
+                <ComboBox Text="identifiant" 
+                          ItemsSource = "{Binding Path=true_false_list}" 
+                          SelectedItem = "{Binding Path=identifiant, Mode=TwoWay}"
+                          FontStyle="Normal" FontWeight="Bold">
+                </ComboBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="pe_libl_template" DataType="pe_libl">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=libf_attr, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=identifiant, Mode=TwoWay}" FontStyle="Normal" FontWeight="Bold">
+                <TextBox Text = "{Binding Path=libd_attr, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libe_attr, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libi_attr, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=lif_valeur, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=lid_valeur, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=lie_valeur, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=lii_valeur, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
         </DataTemplate>
+        
     </Window.Resources>
 
     <Grid x:Name="object_list">
@@ -82,11 +114,16 @@
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        <DataTemplate DataType="{x:Type model:pe_attr}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_attr}" ItemsSource="{Binding pe_libl_list}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding nom_attr}"/>
                             </StackPanel>
-                        </DataTemplate>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type model:pe_libl}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding libf_attr}"/>
+                            </StackPanel>
+                        </DataTemplate>                            
                     </TreeView.Resources>
                 </TreeView>
                 <Grid x:Name="g_tree_crud" Grid.Row="1">

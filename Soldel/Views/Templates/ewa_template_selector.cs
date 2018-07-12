@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace mupeModel.Views.Templates {
-    class EwaTemplateSelector : DataTemplateSelector {
+    class ewa_template_selector : DataTemplateSelector {
 
         public override DataTemplate SelectTemplate(Object item, DependencyObject container) {
             

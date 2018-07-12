@@ -6,9 +6,11 @@
         xmlns:model="clr-namespace:mupeModel"
         xmlns:views="clr-namespace:mupeModel.Views"
         xmlns:template="clr-namespace:mupeModel.Views.Templates"
+        xmlns:command="clr-namespace:mupeModel.Command"
         mc:Ignorable="d"
         Title="GENERIC" Height="600" Width="600">
     <Window.Resources>
+        <command:generate_config_command x:Key="generate_config_command"/>
         <views:ewa_model_view_converter x:Key="ewa_converter"/>
         <DataTemplateSelector x:Key="EwaTemplateSelector"/>
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
@@ -37,10 +39,8 @@
         </DataTemplate>
         <DataTemplate x:Key="pe_attr_template" DataType="pe_attr">
             <StackPanel>
-                <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}">
-                </TextBox>
-                <TextBox Text = "{Binding Path=clatit_attr, Mode=TwoWay}">
-                </TextBox>
+                <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}"/>
+                <TextBox Text = "{Binding Path=clatit_attr, Mode=TwoWay}"/>
                 <TextBox Text = "{Binding Path=check_attr, Mode=TwoWay}">
                 </TextBox>
                 <TextBox Text = "{Binding Path=val_def, Mode=TwoWay}">
@@ -106,11 +106,22 @@
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}" ItemsSource="{Binding pe_muta_list}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding no_ip}" />
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Générer la configuration" Command="{Binding Source={StaticResource generate_config_command}}"/>
+                                    </ContextMenu>
+                            </StackPanel.ContextMenu>
+                            <TextBlock Text="{Binding no_ip}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
                             <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Copier l'élément" Command="{Binding}"/>
+                                        <MenuItem Header="Coller" Command="{Binding tree_view_command}"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
@@ -151,8 +162,8 @@
                     </Grid.RowDefinitions>
                     <ContentControl Content="{Binding}" Grid.Row="0">
                         <ContentControl.ContentTemplateSelector>
-                            <template:EwaTemplateSelector>
-                            </template:EwaTemplateSelector>
+                            <template:ewa_template_selector>
+                            </template:ewa_template_selector>
                         </ContentControl.ContentTemplateSelector>
                     </ContentControl>
                     <Grid x:Name="g_detail_crud" Grid.Row="1">

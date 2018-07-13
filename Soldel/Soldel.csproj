@@ -111,7 +111,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command\Class1.cs" />
+    <Compile Include="Command\paste_from_clipboard.cs" />
+    <Compile Include="Command\copy_to_clipboard.cs" />
     <Compile Include="Command\generate_config_command.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />

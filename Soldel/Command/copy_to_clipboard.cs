@@ -19,11 +19,14 @@ namespace mupeModel.Command {
         }
 
         bool ICommand.CanExecute(object parameter) {
-            return Clipboard.GetText() is null;
+            var s = Clipboard.GetData("String");
+            return s == null;
         }
 
         void ICommand.Execute(object parameter) {
-            
+            var muta_id = parameter as string; 
+            if (muta_id != null)
+                Clipboard.SetData("String", parameter);
         }
     }
 }

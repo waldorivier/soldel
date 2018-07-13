@@ -11,6 +11,9 @@
         Title="GENERIC" Height="600" Width="600">
     <Window.Resources>
         <command:generate_config_command x:Key="generate_config_command"/>
+        <command:copy_to_clipboard x:Key="copy_to_clipboard"/>
+        <command:paste_from_clipboard x:Key="paste_from_clipboard"/>
+         
         <views:ewa_model_view_converter x:Key="ewa_converter"/>
         <DataTemplateSelector x:Key="EwaTemplateSelector"/>
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
@@ -109,6 +112,7 @@
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Générer la configuration" Command="{Binding Source={StaticResource generate_config_command}}"/>
+                                        <MenuItem Header="Coller l'élément" Command="{Binding Source={StaticResource paste_from_clipboard}}"/>
                                     </ContextMenu>
                             </StackPanel.ContextMenu>
                             <TextBlock Text="{Binding no_ip}" />
@@ -118,8 +122,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Copier l'élément" Command="{Binding}"/>
-                                        <MenuItem Header="Coller" Command="{Binding tree_view_command}"/>
+                                        <MenuItem Header="Copier l'élément" 
+                                                  Command="{Binding Source={StaticResource copy_to_clipboard}}"
+                                                  CommandParameter="{Binding pe_muta_id}"/>
+                                        <MenuItem Header="Coller"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>

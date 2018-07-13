@@ -165,8 +165,6 @@ namespace Soldel.Views {
             }
         }
 
-        
-
         // TODO : encapsuler de manière générique
         private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;

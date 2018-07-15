@@ -10,11 +10,10 @@ namespace mupeModel.Command {
     class paste_from_clipboard : ICommand {
         event EventHandler ICommand.CanExecuteChanged {
             add {
-                // throw new NotImplementedException();
+                 CommandManager.RequerySuggested += value; 
             }
-
             remove {
-                // throw new NotImplementedException();
+                 CommandManager.RequerySuggested -= value; 
             }
         }
 
@@ -25,6 +24,7 @@ namespace mupeModel.Command {
 
         void ICommand.Execute(object parameter) {
             var muta_id = Clipboard.GetData("String");
+            Clipboard.Clear();
             if (muta_id != null)
                 // TODO 
                 Clipboard.Clear();

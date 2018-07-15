@@ -9,11 +9,17 @@
         xmlns:command="clr-namespace:mupeModel.Command"
         mc:Ignorable="d"
         Title="GENERIC" Height="600" Width="600">
-    <Window.Resources>
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="command:test_command.Test" 
+                        CanExecute="test_can_execute"
+                        Executed="test_executed">
+        </CommandBinding>
+    </Window.CommandBindings>
+    
+        <Window.Resources>
         <command:generate_config_command x:Key="generate_config_command"/>
-        <command:copy_to_clipboard x:Key="copy_to_clipboard"/>
-        <command:paste_from_clipboard x:Key="paste_from_clipboard"/>
-         
+        
         <views:ewa_model_view_converter x:Key="ewa_converter"/>
         <DataTemplateSelector x:Key="EwaTemplateSelector"/>
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
@@ -111,8 +117,11 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Générer la configuration" Command="{Binding Source={StaticResource generate_config_command}}"/>
-                                        <MenuItem Header="Coller l'élément" Command="{Binding Source={StaticResource paste_from_clipboard}}"/>
+                                        <MenuItem Header="Générer la configuration" 
+                                                  Command="{Binding Source={StaticResource generate_config_command}}"/>
+                                        <MenuItem Header="Coller l'élément" 
+                                                  Command="command:test_command.Test"
+                                                  CommandParameter="coller_element"/>
                                     </ContextMenu>
                             </StackPanel.ContextMenu>
                             <TextBlock Text="{Binding no_ip}" />
@@ -123,9 +132,8 @@
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Copier l'élément" 
-                                                  Command="{Binding Source={StaticResource copy_to_clipboard}}"
+                                                  Command="command:test_command.Test"
                                                   CommandParameter="{Binding pe_muta_id}"/>
-                                        <MenuItem Header="Coller"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
@@ -146,8 +154,7 @@
                 <Grid x:Name="g_tree_crud" Grid.Row="1">
                     <StackPanel>
                         <Button x:Name="btn_tree_add"  Content="Ajouter un élément"/>
-                        <Button x:Name="btn_tree_copy" Content="Copier un élément"/>
-                        <Button x:Name="btn_tree_delete" Content="Supprimer un élément"/>
+                        <Button x:Name="btn_tree_delete" Content="Supprimer un élément" HorizontalAlignment="Right" Width="294"/>
                     </StackPanel>
                 </Grid>
             </Grid>

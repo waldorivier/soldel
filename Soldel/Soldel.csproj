@@ -111,6 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\test_command.cs" />
     <Compile Include="Command\paste_from_clipboard.cs" />
     <Compile Include="Command\copy_to_clipboard.cs" />
     <Compile Include="Command\generate_config_command.cs" />

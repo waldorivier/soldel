@@ -292,7 +292,7 @@ namespace mupeModel
 
         protected virtual void SendPropertyChanging()
         {
-		        var handler = this.PropertyChanging;
+		    var handler = this.PropertyChanging;
             if (handler != null)
                 handler(this, emptyChangingEventArgs);
         }

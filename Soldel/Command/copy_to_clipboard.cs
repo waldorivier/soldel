@@ -9,12 +9,9 @@ using System.Windows.Input;
 namespace mupeModel.Command {
     class copy_to_clipboard : ICommand {
         event EventHandler ICommand.CanExecuteChanged {
-            add {
-                // throw new NotImplementedException();
+            add {  CommandManager.RequerySuggested += value;
             }
-
-            remove {
-                // throw new NotImplementedException();
+            remove {  CommandManager.RequerySuggested -= value; 
             }
         }
 

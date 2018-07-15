@@ -30,11 +30,12 @@ namespace Soldel.Views {
         public w_generic() {
             InitializeComponent();
 
+            Clipboard.Clear();
+
             cb_connection.SelectionChanged += Cb_database_SelectionChanged;
             cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
 
             btn_tree_add.Click += Btn_tree_add_Click;
-            btn_tree_copy.Click += Btn_tree_copy_Click;
             btn_tree_delete.Click += Btn_tree_delete_Click;
             btn_detail_save.Click += Btn_detail_save_Click;
         }
@@ -46,7 +47,7 @@ namespace Soldel.Views {
 
             List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
-            
+
             build_tree(object_list.ToList<object>());
         }
 
@@ -93,11 +94,9 @@ namespace Soldel.Views {
         }
 
         // TODO : encapsuler de manière générique
-
-        private void Btn_tree_copy_Click(object sender, RoutedEventArgs e) {
+        private void copy_element(string element_id) {
             ITransaction transaction = null;
-            var muta_to_copy_id = "607";
-
+            
             try {
                 var grmu = tree_main.SelectedValue as pe_grmu;
                 if (grmu != null) {
@@ -105,7 +104,7 @@ namespace Soldel.Views {
                         transaction = session.BeginTransaction();
 
                         var ip = session.Get<pe_ip>(grmu.no_ip);
-                        var muta_to_copy = session.Get<pe_muta>(muta_to_copy_id);
+                        var muta_to_copy = session.Get<pe_muta>(element_id);
 
                         var muta_id = generate_muta_id();
                         var muta = muta_to_copy.deep_copy(muta_id, ip);
@@ -134,7 +133,7 @@ namespace Soldel.Views {
         // TODO : encapsuler de manière générique
         // on ne supprime que la relation
         //---------------------------------------------------------------------
-        
+
         private void Btn_tree_delete_Click(object sender, RoutedEventArgs e) {
             ITransaction transaction = null;
 
@@ -183,6 +182,31 @@ namespace Soldel.Views {
 
         private string generate_muta_id() {
             return session.CreateSQLQuery("SELECT MAX (to_number(pe_muta_id)) + 1 from pe_muta").UniqueResult().ToString();
+        }
+
+        //---------------------------------------------------------------------
+        // Command HANDLER
+        //---------------------------------------------------------------------
+
+        private void test_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            var id = Clipboard.GetData("String");
+            if (e.Parameter.ToString().Equals("coller_element")) {
+                e.CanExecute = (id != null);
+            } else {
+                e.CanExecute = (id == null);
+            }
+        }
+
+        private void test_executed(object sender, ExecutedRoutedEventArgs e) {
+            // copier
+            if (!e.Parameter.ToString().Equals("coller_element")) {
+                Clipboard.SetData("String", e.Parameter.ToString());
+
+            } else {
+                var element_id = Clipboard.GetData("String") as string;
+                copy_element(element_id);
+                Clipboard.Clear();
+            }
         }
     }
 }

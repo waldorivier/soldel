@@ -18,6 +18,7 @@ public class HibernateUtil {
     private IDictionary<string, string> global_parameters;
     private IList<string> connections;
     private IList<pe_dict> dict_libelles;
+    private ISession current_session;
 
     private static HibernateUtil hibernate_util = null;
 
@@ -31,6 +32,14 @@ public class HibernateUtil {
         return hibernate_util;
     }
 
+    public ISession get_current_session() {
+        if (current_session == null) {
+            throw new Exception("Aucune session n'a été encore ouverte; ouvrir une nouvelle session avec get_session(string)");
+        } else {
+            return current_session;
+        }
+    }
+
     public ISession get_session(String connection_string) {
         ISessionFactory sessionFactory = null;
 
@@ -39,26 +48,28 @@ public class HibernateUtil {
             sessionFactory = hibernateCfg.BuildSessionFactory();
             session_factory_cache.Add(connection_string, sessionFactory);
         }
-        return sessionFactory.OpenSession();
+        
+        current_session = sessionFactory.OpenSession();
+        return current_session;
     }
     private void load_connections() {
-        // new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;" };
-        connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
-                                    "Data Source = QALIC; User ID = qa_cpne; Password = qa_cpne",
-                                    "Data Source = QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
-                                    "Data Source = LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
-                                    "Data Source=QCASP1; User Id = qc_bcn; Password = qc_bcn",
-                                    "Data Source=QCASP1; User Id = qc_cap; Password = qc_cap",
-                                    "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
-                                    "Data Source=outcatst;User Id=qc_laus_2018;Password=qc_laus_2018",
-                                    "Data Source=OUTCATST; User Id = qc_lausanne; Password = qc_lausanne",
-                                    "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
-                                    "Data Source=OUTSRC; User Id = prod_2; Password = prod_2",
-                                    "Data Source=OUTSRC; User Id = prod_3; Password = prod_3",
-                                    "Data Source=OUTSTST; User Id = tst_2; Password = tst_2",
-                                    "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
-                                    "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
-                                    "Data Source=outsrc; User Id = prod_1; Password=prod_1"};
+        connections = new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;SslMode=none" };
+        //connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
+        //                            "Data Source = QALIC; User ID = qa_cpne; Password = qa_cpne",
+        //                            "Data Source = QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
+        //                            "Data Source = LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
+        //                            "Data Source=QCASP1; User Id = qc_bcn; Password = qc_bcn",
+        //                            "Data Source=QCASP1; User Id = qc_cap; Password = qc_cap",
+        //                            "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
+        //                            "Data Source=outcatst;User Id=qc_laus_2018;Password=qc_laus_2018",
+        //                            "Data Source=OUTCATST; User Id = qc_lausanne; Password = qc_lausanne",
+        //                            "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
+        //                            "Data Source=OUTSRC; User Id = prod_2; Password = prod_2",
+        //                            "Data Source=OUTSRC; User Id = prod_3; Password = prod_3",
+        //                            "Data Source=OUTSTST; User Id = tst_2; Password = tst_2",
+        //                            "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
+        //                            "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
+        //                            "Data Source=outsrc; User Id = prod_1; Password=prod_1"};
 
     }
 
@@ -67,8 +78,7 @@ public class HibernateUtil {
         global_parameters.Add("USERNAME", System.Environment.GetEnvironmentVariable("USERNAME"));
     }
     private void load_global_libelles() {
-        dict_libelles = get_session("Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA")
-                                    .CreateCriteria<pe_dict>().List<pe_dict>().ToList();
+        // dict_libelles = get_current_session().CreateCriteria<pe_dict>().List<pe_dict>().ToList();
     }
 
     public IList<string> get_connections() {

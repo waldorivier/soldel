@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:model="clr-namespace:mupeModel"
         xmlns:views="clr-namespace:mupeModel.Views"
-        xmlns:template="clr-namespace:mupeModel.Views.Templates"
-        xmlns:command="clr-namespace:mupeModel.Command"
+        xmlns:templates="clr-namespace:mupeModel.Views.Templates"
+        xmlns:commands="clr-namespace:mupeModel.Commands"
         mc:Ignorable="d"
         Title="GENERIC" Height="600" Width="600">
     
     <Window.CommandBindings>
-        <CommandBinding Command="command:test_command.Test" 
+        <CommandBinding Command="command:" 
                         CanExecute="test_can_execute"
                         Executed="test_executed">
         </CommandBinding>
@@ -55,7 +55,7 @@
                 <TextBox Text = "{Binding Path=val_def, Mode=TwoWay}">
                 </TextBox>
                 <ComboBox Text="visibilite" 
-                          ItemsSource = "{Binding Path=visibility_list}" 
+                          ItemsSource  = "{Binding Path=visibility_list}" 
                           SelectedItem = "{Binding Path=visibilite, Mode=TwoWay}">
                 </ComboBox>
                 <ComboBox Text="identifiant" 

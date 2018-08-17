@@ -18,6 +18,7 @@ using System.ComponentModel;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
+using mupeModel.Utils;
 
 namespace Soldel.Views {
     /// <summary>

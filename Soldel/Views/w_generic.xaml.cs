@@ -24,7 +24,8 @@ namespace Soldel.Views {
     /// <summary>
     /// Logique d'interaction pour w_generic.xaml
     /// </summary>
-    public partial class w_generic : Window {
+    public partial class w_generic:Window {
+        private pe_attr clip_attr;
         private ISession session;
 
         public w_generic() {
@@ -33,17 +34,17 @@ namespace Soldel.Views {
             Clipboard.Clear();
 
             cb_connection.SelectionChanged += Cb_database_SelectionChanged;
-            cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
+            cb_connection.ItemsSource = hibernate_util.get_instance().get_connections();
 
             btn_tree_add.Click += Btn_tree_add_Click;
             btn_tree_delete.Click += Btn_tree_delete_Click;
             btn_detail_save.Click += Btn_detail_save_Click;
         }
 
-        private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void Cb_database_SelectionChanged(object sender,SelectionChangedEventArgs e) {
             ComboBox cbConnection = (ComboBox)sender;
             String connectionString = (String)cbConnection.SelectedValue;
-            session = HibernateUtil.get_instance().get_session(connectionString);
+            session = hibernate_util.get_instance().get_session(connectionString);
 
             List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
@@ -57,74 +58,89 @@ namespace Soldel.Views {
 
         // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
 
-        private void Btn_tree_add_Click(object sender, RoutedEventArgs e) {
+        private void Btn_tree_add_Click(object sender,RoutedEventArgs e) {
+
             ITransaction transaction = null;
             try {
-                var grmu = tree_main.SelectedValue as pe_grmu;
-                if (grmu != null) {
-                    transaction = session.BeginTransaction();
-
-                    var muta = new pe_muta();
-                    muta.no_ip = grmu.no_ip;
-                    muta.libf_muta =
-                    muta.libd_muta =
-                    muta.libe_muta =
-                    muta.libi_muta = "libelle nouvelle mutation";
-                    muta.tyeven = "INDEFINI";
-
-                    // TODO : définir dans un ID GENERATOR
-                    muta.pe_muta_id = generate_muta_id();
+                transaction = session.BeginTransaction();
+                if(this.tree_main.SelectedValue is pe_grmu) {
+                    pe_grmu selectedValue = tree_main.SelectedValue as pe_grmu;
+                    pe_muta muta = new pe_muta {
+                        no_ip = selectedValue.no_ip,
+                        pe_muta_id = generate_muta_id()
+                    };
 
                     session.Save(muta);
-                    var gmmu = new pe_gmmu(grmu, muta);
-                    session.Save(gmmu);
-
+                    pe_gmmu _gmmu = new pe_gmmu(selectedValue,muta);
+                    session.Save(_gmmu);
                     transaction.Commit();
-                    session.Refresh(gmmu);
                     tree_main.Items.Refresh();
                 }
-            } catch (Exception ex) {
-                if (transaction != null) {
-                    if (transaction != null)
+            } catch(Exception exception) {
+                if(transaction != null) {
+                    if(transaction != null) {
                         transaction.Rollback();
-
-                    MessageBox.Show(ex.Message);
+                    }
+                    MessageBox.Show(exception.Message);
                 }
             }
         }
 
         // TODO : encapsuler de manière générique
-        private void copy_element(string element_id) {
+        private void copy_muta(string element_id) {
             ITransaction transaction = null;
-            
+
             try {
                 var grmu = tree_main.SelectedValue as pe_grmu;
-                if (grmu != null) {
-                    if (grmu.no_ip == 11) {
-                        transaction = session.BeginTransaction();
+                if(grmu != null) {
+                    transaction = session.BeginTransaction();
 
-                        var ip = session.Get<pe_ip>(grmu.no_ip);
-                        var muta_to_copy = session.Get<pe_muta>(element_id);
+                    pe_ip ip = session.Get<pe_ip>(grmu.no_ip);
+                    pe_muta muta_to_copy = session.Get<pe_muta>(element_id);
 
-                        var muta_id = generate_muta_id();
-                        var muta = muta_to_copy.deep_copy(muta_id, ip);
-                        ip.add_muta(muta);
+                    string str = generate_muta_id();
+                    pe_muta muta = muta_to_copy.deep_copy(str,ip);
 
-                        var gmmu = new pe_gmmu(grmu, muta);
-                        session.Save(gmmu);
-                        session.Save(ip);
+                    ip.add_muta(muta);
+                    pe_gmmu gmmu = new pe_gmmu(grmu, muta);
+                    session.Save(gmmu);
 
-                        transaction.Commit();
-                        session.Refresh(gmmu);
-                        tree_main.Items.Refresh();
-                    }
+                    session.Save(ip);
+
+                    transaction.Commit();
+                    session.Refresh(gmmu);
+                    tree_main.Items.Refresh();
                 }
-            } catch (Exception ex) {
-                if (transaction != null) {
-                    if (transaction != null)
+            } catch(Exception ex) {
+                if(transaction != null) {
+                    if(transaction != null)
                         transaction.Rollback();
 
                     MessageBox.Show(ex.StackTrace);
+                }
+            }
+        }
+
+        private void copy_attr(pe_attr attr_to_copy) {
+            ITransaction transaction = null;
+            try {
+                pe_muta muta = this.tree_main.SelectedValue as pe_muta;
+                if(muta != null) {
+                    transaction = this.session.BeginTransaction();
+
+                    pe_attr attr = attr_to_copy.shallow_copy(muta);
+                    muta.add_attr(attr);
+                    session.Save(muta);
+
+                    transaction.Commit();
+                    tree_main.Items.Refresh();
+                }
+            } catch(Exception exception) {
+                if(transaction != null) {
+                    if(transaction != null) {
+                        transaction.Rollback();
+                    }
+                    MessageBox.Show(exception.StackTrace);
                 }
             }
         }
@@ -133,30 +149,28 @@ namespace Soldel.Views {
         // TODO : encapsuler de manière générique
         // on ne supprime que la relation
         //---------------------------------------------------------------------
-
-        private void Btn_tree_delete_Click(object sender, RoutedEventArgs e) {
+        private void Btn_tree_delete_Click(object sender,RoutedEventArgs e) {
             ITransaction transaction = null;
 
             try {
                 var muta = tree_main.SelectedValue as pe_muta;
-                if (muta != null) {
-                    if (muta.no_ip == 11) {
-                        transaction = session.BeginTransaction();
+                if(muta != null) {
+                    transaction = session.BeginTransaction();
 
-                        // TODO : ce n'est pas complet, car il faut choisir un des gmmus.....!
+                    // TODO : ce n'est pas complet, car il faut choisir un des gmmus.....!
 
-                        var gmmu = muta.pe_gmmu_list[0];
-                        gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);
-                        muta.pe_gmmu_list.Remove(gmmu);
+                    var gmmu = muta.pe_gmmu_list[0];
+                    gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);
+                    muta.pe_gmmu_list.Remove(gmmu);
 
-                        session.Delete(gmmu);
-                        transaction.Commit();
-                        tree_main.Items.Refresh();
-                    }
+                    session.Delete(gmmu);
+                    transaction.Commit();
+                    tree_main.Items.Refresh();
+
                 }
-            } catch (Exception ex) {
-                if (transaction != null) {
-                    if (transaction != null)
+            } catch(Exception ex) {
+                if(transaction != null) {
+                    if(transaction != null)
                         transaction.Rollback();
 
                     MessageBox.Show(ex.Message);
@@ -165,15 +179,15 @@ namespace Soldel.Views {
         }
 
         // TODO : encapsuler de manière générique
-        private void Btn_detail_save_Click(object sender, RoutedEventArgs e) {
+        private void Btn_detail_save_Click(object sender,RoutedEventArgs e) {
             ITransaction transaction = null;
-            if (g_detail.DataContext != null) {
+            if(g_detail.DataContext != null) {
                 try {
                     transaction = session.BeginTransaction();
                     session.Save(g_detail.DataContext);
                     transaction.Commit();
-                } catch (Exception ex) {
-                    if (transaction != null)
+                } catch(Exception ex) {
+                    if(transaction != null)
                         transaction.Rollback();
                     MessageBox.Show(ex.Message);
                 }
@@ -187,25 +201,42 @@ namespace Soldel.Views {
         //---------------------------------------------------------------------
         // Command HANDLER
         //---------------------------------------------------------------------
-
-        private void test_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            var id = Clipboard.GetData("String");
-            if (e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = (id != null);
+        private void copy_muta_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+            object data = Clipboard.GetData("String");
+            if(e.Parameter.ToString().Equals("coller_element")) {
+                e.CanExecute = data != null;
             } else {
-                e.CanExecute = (id == null);
+                e.CanExecute = data == null;
             }
         }
 
-        private void test_executed(object sender, ExecutedRoutedEventArgs e) {
-            // copier
-            if (!e.Parameter.ToString().Equals("coller_element")) {
-                Clipboard.SetData("String", e.Parameter.ToString());
-
+        private void copy_muta_executed(object sender,ExecutedRoutedEventArgs e) {
+            if(!e.Parameter.ToString().Equals("coller_element")) {
+                Clipboard.SetData("String",e.Parameter.ToString());
             } else {
-                var element_id = Clipboard.GetData("String") as string;
-                copy_element(element_id);
+                string data = Clipboard.GetData("String") as string;
+                copy_muta(data);
                 Clipboard.Clear();
+            }
+        }
+
+        private void copy_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+            if(e.Parameter.ToString().Equals("coller_element")) {
+                e.CanExecute = clip_attr != null;
+            } else {
+                e.CanExecute = clip_attr == null;
+            }
+        }
+
+        private void copy_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+            if(!e.Parameter.ToString().Equals("coller_element")) {
+                pe_attr parameter = e.Parameter as pe_attr;
+                if(parameter != null) {
+                    clip_attr = parameter;
+                }
+            } else if(clip_attr != null) {
+                copy_attr(clip_attr);
+                clip_attr = null;
             }
         }
     }

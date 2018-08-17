@@ -111,9 +111,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command\test_command.cs" />
-    <Compile Include="Command\paste_from_clipboard.cs" />
-    <Compile Include="Command\copy_to_clipboard.cs" />
+    <Compile Include="Command\attr_command.cs" />
+    <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />
@@ -134,10 +133,14 @@
     <Compile Include="Generated\soldel_ewa.pe_grmu.cs" />
     <Compile Include="Generated\soldel_ewa.pe_libl.cs" />
     <Compile Include="Generated\soldel_ewa.pe_muta.cs" />
+    <Compile Include="Utils\audit_interceptor.cs" />
+    <Compile Include="Utils\hibernate_util.cs" />
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />
-    <Compile Include="Views\ewa_model_view_converter.cs" />
-    <Compile Include="Views\Templates\ewa_template_selector.cs" />
+    <Compile Include="Views\Converters\folder_node.cs" />
+    <Compile Include="Views\Converters\w_generic_list_converter.cs" />
+    <Compile Include="Views\Converters\w_generic_tree_multi_list_converter.cs" />
+    <Compile Include="Views\Templates\w_generic_detail_template_selector.cs" />
     <Compile Include="Views\uc_find_element.xaml.cs">
       <DependentUpon>uc_find_element.xaml</DependentUpon>
     </Compile>
@@ -241,7 +244,6 @@
     <EmbeddedResource Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Compile Include="Utils\HibernateUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel.pe_elca.hbm.xml">

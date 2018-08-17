@@ -14,14 +14,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using mupeModel.Utils;
 
-namespace mupeModel
-{
+namespace mupeModel {
 
     /// <summary>
     /// There are no comments for pe_libl, Soldel in the schema.
     /// </summary>
-    public partial class pe_libl : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_libl:INotifyPropertyChanging, INotifyPropertyChanged {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -76,13 +76,13 @@ namespace mupeModel
 
         public override bool Equals(object obj) {
             pe_libl toCompare = obj as pe_libl;
-            if (toCompare == null) {
+            if(toCompare == null) {
                 return false;
             }
 
-            if (!Object.Equals(this.no_ip, toCompare.no_ip))
+            if(!Object.Equals(this.no_ip,toCompare.no_ip))
                 return false;
-            if (!Object.Equals(this.nom_attr, toCompare.nom_attr))
+            if(!Object.Equals(this.nom_attr,toCompare.nom_attr))
                 return false;
 
             return true;
@@ -114,7 +114,7 @@ namespace mupeModel
                 return this._no_ip;
             }
             set {
-                if (this._no_ip != value) {
+                if(this._no_ip != value) {
                     this.SendPropertyChanging();
                     this._no_ip = value;
                     this.SendPropertyChanged("no_ip");
@@ -131,7 +131,7 @@ namespace mupeModel
                 return this._nom_attr;
             }
             set {
-                if (this._nom_attr != value) {
+                if(this._nom_attr != value) {
                     this.SendPropertyChanging();
                     this._nom_attr = value;
                     this.SendPropertyChanged("nom_attr");
@@ -148,7 +148,7 @@ namespace mupeModel
                 return this._u_version;
             }
             set {
-                if (this._u_version != value) {
+                if(this._u_version != value) {
                     this.SendPropertyChanging();
                     this._u_version = value;
                     this.SendPropertyChanged("u_version");
@@ -165,7 +165,7 @@ namespace mupeModel
                 return this._libf_attr;
             }
             set {
-                if (this._libf_attr != value) {
+                if(this._libf_attr != value) {
                     this.SendPropertyChanging();
                     this._libf_attr = value;
                     this.SendPropertyChanged("libf_attr");
@@ -182,7 +182,7 @@ namespace mupeModel
                 return this._libd_attr;
             }
             set {
-                if (this._libd_attr != value) {
+                if(this._libd_attr != value) {
                     this.SendPropertyChanging();
                     this._libd_attr = value;
                     this.SendPropertyChanged("libd_attr");
@@ -199,7 +199,7 @@ namespace mupeModel
                 return this._libe_attr;
             }
             set {
-                if (this._libe_attr != value) {
+                if(this._libe_attr != value) {
                     this.SendPropertyChanging();
                     this._libe_attr = value;
                     this.SendPropertyChanged("libe_attr");
@@ -216,7 +216,7 @@ namespace mupeModel
                 return this._libi_attr;
             }
             set {
-                if (this._libi_attr != value) {
+                if(this._libi_attr != value) {
                     this.SendPropertyChanging();
                     this._libi_attr = value;
                     this.SendPropertyChanged("libi_attr");
@@ -233,7 +233,7 @@ namespace mupeModel
                 return this._lif_valeur;
             }
             set {
-                if (this._lif_valeur != value) {
+                if(this._lif_valeur != value) {
                     this.SendPropertyChanging();
                     this._lif_valeur = value;
                     this.SendPropertyChanged("lif_valeur");
@@ -250,7 +250,7 @@ namespace mupeModel
                 return this._lid_valeur;
             }
             set {
-                if (this._lid_valeur != value) {
+                if(this._lid_valeur != value) {
                     this.SendPropertyChanging();
                     this._lid_valeur = value;
                     this.SendPropertyChanged("lid_valeur");
@@ -267,7 +267,7 @@ namespace mupeModel
                 return this._lie_valeur;
             }
             set {
-                if (this._lie_valeur != value) {
+                if(this._lie_valeur != value) {
                     this.SendPropertyChanging();
                     this._lie_valeur = value;
                     this.SendPropertyChanged("lie_valeur");
@@ -284,7 +284,7 @@ namespace mupeModel
                 return this._lii_valeur;
             }
             set {
-                if (this._lii_valeur != value) {
+                if(this._lii_valeur != value) {
                     this.SendPropertyChanging();
                     this._lii_valeur = value;
                     this.SendPropertyChanged("lii_valeur");
@@ -301,7 +301,7 @@ namespace mupeModel
                 return this._groupe;
             }
             set {
-                if (this._groupe != value) {
+                if(this._groupe != value) {
                     this.SendPropertyChanging();
                     this._groupe = value;
                     this.SendPropertyChanged("groupe");
@@ -318,7 +318,7 @@ namespace mupeModel
                 return this._hintf;
             }
             set {
-                if (this._hintf != value) {
+                if(this._hintf != value) {
                     this.SendPropertyChanging();
                     this._hintf = value;
                     this.SendPropertyChanged("hintf");
@@ -335,7 +335,7 @@ namespace mupeModel
                 return this._hintd;
             }
             set {
-                if (this._hintd != value) {
+                if(this._hintd != value) {
                     this.SendPropertyChanging();
                     this._hintd = value;
                     this.SendPropertyChanged("hintd");
@@ -352,7 +352,7 @@ namespace mupeModel
                 return this._hinte;
             }
             set {
-                if (this._hinte != value) {
+                if(this._hinte != value) {
                     this.SendPropertyChanging();
                     this._hinte = value;
                     this.SendPropertyChanged("hinte");
@@ -369,7 +369,7 @@ namespace mupeModel
                 return this._hinti;
             }
             set {
-                if (this._hinti != value) {
+                if(this._hinti != value) {
                     this.SendPropertyChanging();
                     this._hinti = value;
                     this.SendPropertyChanged("hinti");
@@ -381,7 +381,7 @@ namespace mupeModel
                 return this._pe_ip;
             }
             set {
-                if (this._pe_ip != value) {
+                if(this._pe_ip != value) {
                     this.SendPropertyChanging();
                     this._pe_ip = value;
                     this.SendPropertyChanged("pe_ip");
@@ -397,7 +397,7 @@ namespace mupeModel
                 return this._user_cre;
             }
             set {
-                if (this._user_cre != value) {
+                if(this._user_cre != value) {
                     this.SendPropertyChanging();
                     this._user_cre = value;
                     this.SendPropertyChanged("user_cre");
@@ -414,7 +414,7 @@ namespace mupeModel
                 return this._dh_cre;
             }
             set {
-                if (this._dh_cre != value) {
+                if(this._dh_cre != value) {
                     this.SendPropertyChanging();
                     this._dh_cre = value;
                     this.SendPropertyChanged("dh_cre");
@@ -431,7 +431,7 @@ namespace mupeModel
                 return this._user_maj;
             }
             set {
-                if (this._user_maj != value) {
+                if(this._user_maj != value) {
                     this.SendPropertyChanging();
                     this._user_maj = value;
                     this.SendPropertyChanged("user_maj");
@@ -448,7 +448,7 @@ namespace mupeModel
                 return this._dh_maj;
             }
             set {
-                if (this._dh_maj != value) {
+                if(this._dh_maj != value) {
                     this.SendPropertyChanging();
                     this._dh_maj = value;
                     this.SendPropertyChanged("dh_maj");
@@ -462,30 +462,30 @@ namespace mupeModel
 
         protected virtual void SendPropertyChanging() {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, emptyChangingEventArgs);
+            if(handler != null)
+                handler(this,emptyChangingEventArgs);
         }
 
         protected virtual void SendPropertyChanging(System.String propertyName) {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, new PropertyChangingEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangingEventArgs(propertyName));
         }
 
         protected virtual void SendPropertyChanged(System.String propertyName) {
             var handler = this.PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangedEventArgs(propertyName));
         }
 
         public virtual pe_libl shallow_copy() {
             var copy = new pe_libl();
-            CopyObject.copy<pe_libl>(this, copy);
+            copy_object.copy<pe_libl>(this,copy);
 
             copy.no_ip = 0;
 
             copy.dh_maj = copy.dh_cre = DateTime.Today;
-            copy.user_cre = copy.user_maj = HibernateUtil.get_instance().get_user();
+            copy.user_cre = copy.user_maj = hibernate_util.get_instance().get_user();
             return copy;
         }
     }

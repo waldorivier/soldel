@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using mupeModel.Utils;
 using NHibernate;
 
 namespace Soldel.Views
@@ -26,7 +27,7 @@ namespace Soldel.Views
         {
             InitializeComponent();
 
-            cb_connection.ItemsSource = HibernateUtil.get_instance().get_connections();
+            cb_connection.ItemsSource = hibernate_util.get_instance().get_connections();
             cb_connection.SelectionChanged += Cb_connection_SelectionChanged;
             cb_ip_list.DropDownOpened += Cb_ip_list_DropDownOpened;
         }
@@ -35,7 +36,7 @@ namespace Soldel.Views
         {
             ComboBox cbConnection = (ComboBox)sender;
             String connectionString = (String)cbConnection.SelectedValue;
-            session = HibernateUtil.get_instance().get_session(connectionString);
+            session = hibernate_util.get_instance().get_session(connectionString);
         }
 
         private void Cb_ip_list_DropDownOpened(object sender, EventArgs e)

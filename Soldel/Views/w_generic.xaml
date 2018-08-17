@@ -169,8 +169,8 @@
                 
                 <Grid x:Name="g_tree_crud" Grid.Row="1">
                     <StackPanel>
-                        <Button x:Name="btn_tree_add"  Content="Ajouter un élément"/>
-                        <Button x:Name="btn_tree_delete" Content="Supprimer un élément" HorizontalAlignment="Right" Width="294"/>
+                        <Button x:Name="btn_tree_add"    Content="Ajouter un élément"/>
+                        <Button x:Name="btn_tree_delete" Content="Supprimer un élément"/>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -187,7 +187,7 @@
                       DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
                     <ContentControl Content="{Binding}" Grid.Row="0">
                         <ContentControl.ContentTemplateSelector>
@@ -201,7 +201,7 @@
                 <Grid x:Name="g_list" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid x:Name="dg_list" Grid.Row="0" 
@@ -209,13 +209,7 @@
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="0*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel>
                             <Button x:Name="btn_save" Content="Enregistrer"/>
-                        </StackPanel>
                     </Grid>
                 </Grid>
             </Grid>

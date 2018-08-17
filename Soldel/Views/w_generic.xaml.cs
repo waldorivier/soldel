@@ -24,7 +24,7 @@ namespace Soldel.Views {
     /// <summary>
     /// Logique d'interaction pour w_generic.xaml
     /// </summary>
-    public partial class w_generic:Window {
+    public partial class w_generic : Window {
         private pe_attr clip_attr;
         private ISession session;
 
@@ -178,7 +178,6 @@ namespace Soldel.Views {
             }
         }
 
-        // TODO : encapsuler de manière générique
         private void Btn_save_Click(object sender,RoutedEventArgs e) {
             ITransaction transaction = null;
             if(g_detail.DataContext != null) {
@@ -201,7 +200,7 @@ namespace Soldel.Views {
         //---------------------------------------------------------------------
         // Command HANDLER
         //---------------------------------------------------------------------
-        private void copy_muta_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             object data = Clipboard.GetData("String");
             if(e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = data != null;
@@ -210,7 +209,7 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_muta_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void copy_muta_executed(object sender, ExecutedRoutedEventArgs e) {
             if(!e.Parameter.ToString().Equals("coller_element")) {
                 Clipboard.SetData("String",e.Parameter.ToString());
             } else {
@@ -220,7 +219,7 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             if(e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = clip_attr != null;
             } else {
@@ -228,7 +227,7 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void copy_attr_executed(object sender, ExecutedRoutedEventArgs e) {
             if(!e.Parameter.ToString().Equals("coller_element")) {
                 pe_attr parameter = e.Parameter as pe_attr;
                 if(parameter != null) {

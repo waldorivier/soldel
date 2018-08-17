@@ -17,5 +17,17 @@
       </key>
       <one-to-many class="pe_muta" />
     </bag>
+    <bag name="pe_grmu_list" cascade="all" inverse="true" generic="true">
+      <key>
+        <column name="no_ip" />
+      </key>
+      <one-to-many class="pe_grmu" />
+    </bag>
+    <bag name="pe_cfgt_list" cascade="all" inverse="true" generic="true">
+      <key>
+        <column name="no_ip" />
+      </key>
+      <one-to-many class="pe_cfgt" />
+    </bag>
    </class>
 </hibernate-mapping>

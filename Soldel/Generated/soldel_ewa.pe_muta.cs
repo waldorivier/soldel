@@ -32,11 +32,8 @@ namespace mupeModel {
         private IList<pe_gmmu> _pe_gmmu_list = new List<pe_gmmu>();
         private IList<pe_attr> _pe_attr_list = new List<pe_attr>();
 
-        [field: CompilerGenerated, DebuggerBrowsable(0)]
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [field: CompilerGenerated, DebuggerBrowsable(0)]
-        public event PropertyChangingEventHandler PropertyChanging;
+        public virtual event PropertyChangedEventHandler PropertyChanged;
+        public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public pe_muta() {
             this._libf_muta = this.libd_muta = this._libe_muta = this._libi_muta = "libelle nouvelle mutation";

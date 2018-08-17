@@ -59,5 +59,8 @@
       </key>
       <one-to-many class="pe_gmes" />
     </bag>
+    <many-to-one name="pe_ip" class="pe_ip" insert="false" update="false">
+      <column name="no_ip" not-null="true" sql-type="int" />
+    </many-to-one>
   </class>
 </hibernate-mapping>

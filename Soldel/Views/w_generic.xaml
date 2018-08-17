@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:model="clr-namespace:mupeModel"
-        xmlns:views="clr-namespace:mupeModel.Views"
         xmlns:converters="clr-namespace:mupeModel.Views.Converters"
         xmlns:templates="clr-namespace:mupeModel.Views.Templates"
         xmlns:commands="clr-namespace:mupeModel.Commands"
@@ -17,8 +16,7 @@
                         Executed="test_executed">
         </CommandBinding>-->
     </Window.CommandBindings>
-    
-        <Window.Resources>
+    <Window.Resources>
         <commands:generate_config_command x:Key="generate_config_command"/>
 
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
@@ -86,7 +84,6 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
-        
     </Window.Resources>
 
     <Grid x:Name="object_list">
@@ -110,7 +107,7 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <TreeView x:Name="tree_main" Grid.Row="0">
                     <TreeView.Resources>
@@ -160,7 +157,7 @@
                 </Grid>
             </Grid>
 
-            <GridSplitter HorizontalAlignment="Stretch"  Grid.Column="1"/>
+            <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1"/>
 
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
@@ -199,8 +196,7 @@
                             <RowDefinition Height="0*"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <Button x:Name="btn_save" Content="Enregistrer">
-                            </Button>
+                            <Button x:Name="btn_save" Content="Enregistrer"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

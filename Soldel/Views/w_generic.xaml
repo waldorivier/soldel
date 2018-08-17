@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:model="clr-namespace:mupeModel"
         xmlns:views="clr-namespace:mupeModel.Views"
+        xmlns:converters="clr-namespace:mupeModel.Views.Converters"
         xmlns:templates="clr-namespace:mupeModel.Views.Templates"
         xmlns:commands="clr-namespace:mupeModel.Commands"
         mc:Ignorable="d"
         Title="GENERIC" Height="600" Width="600">
     
     <Window.CommandBindings>
-        <CommandBinding Command="command:" 
+        <!--<CommandBinding Command = "" 
                         CanExecute="test_can_execute"
                         Executed="test_executed">
-        </CommandBinding>
+        </CommandBinding>-->
     </Window.CommandBindings>
     
         <Window.Resources>
-        <command:generate_config_command x:Key="generate_config_command"/>
-        
-        <views:ewa_model_view_converter x:Key="ewa_converter"/>
+        <commands:generate_config_command x:Key="generate_config_command"/>
+
+        <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
         <DataTemplateSelector x:Key="EwaTemplateSelector"/>
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
@@ -120,7 +121,7 @@
                                         <MenuItem Header="Générer la configuration" 
                                                   Command="{Binding Source={StaticResource generate_config_command}}"/>
                                         <MenuItem Header="Coller l'élément" 
-                                                  Command="command:test_command.Test"
+                                                  Command=""
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
                             </StackPanel.ContextMenu>
@@ -132,7 +133,7 @@
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Copier l'élément" 
-                                                  Command="command:test_command.Test"
+                                                  Command=""
                                                   CommandParameter="{Binding pe_muta_id}"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
@@ -175,28 +176,21 @@
                     </Grid.RowDefinitions>
                     <ContentControl Content="{Binding}" Grid.Row="0">
                         <ContentControl.ContentTemplateSelector>
-                            <template:ewa_template_selector>
-                            </template:ewa_template_selector>
+                            <templates:w_generic_detail_template_selector/>
                         </ContentControl.ContentTemplateSelector>
                     </ContentControl>
-                    <Grid x:Name="g_detail_crud" Grid.Row="1">
-                        <StackPanel>
-                            <Button x:Name="btn_detail_save" Content="Sauvegarder">
-                            </Button>
-                        </StackPanel>
-                    </Grid>
                 </Grid>
 
                 <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1"/>
 
-                <Grid x:Name="g_list"  Grid.Row="2">
+                <Grid x:Name="g_list" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid x:Name="dg_list" Grid.Row="0" 
-                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource ewa_converter}}">
+                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}">
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="1">
@@ -205,7 +199,7 @@
                             <RowDefinition Height="0*"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <Button x:Name="btn_save_list" Content="Sauvegarder la liste">
+                            <Button x:Name="btn_save" Content="Enregistrer">
                             </Button>
                         </StackPanel>
                     </Grid>

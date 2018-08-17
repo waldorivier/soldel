@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace mupeModel.Command {
+namespace mupeModel.Commands {
     public class generate_config_command : ICommand {
         event EventHandler ICommand.CanExecuteChanged {
             add {

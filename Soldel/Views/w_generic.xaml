@@ -9,17 +9,21 @@
         xmlns:commands="clr-namespace:mupeModel.Commands"
         mc:Ignorable="d"
         Title="GENERIC" Height="600" Width="600">
-    
+
     <Window.CommandBindings>
-        <!--<CommandBinding Command = "" 
-                        CanExecute="test_can_execute"
-                        Executed="test_executed">
-        </CommandBinding>-->
+        <CommandBinding Command="commands:attr_command.copy"
+                        CanExecute="copy_attr_can_execute"
+                        Executed="copy_attr_executed"/>
+        
+        <CommandBinding Command="commands:muta_command.copy"
+                        CanExecute="copy_muta_can_execute"
+                        Executed="copy_muta_executed"/>
     </Window.CommandBindings>
+    
     <Window.Resources>
         <commands:generate_config_command x:Key="generate_config_command"/>
-
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
+
         <DataTemplateSelector x:Key="EwaTemplateSelector"/>
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
@@ -117,8 +121,8 @@
                                     <ContextMenu>
                                         <MenuItem Header="Générer la configuration" 
                                                   Command="{Binding Source={StaticResource generate_config_command}}"/>
-                                        <MenuItem Header="Coller l'élément" 
-                                                  Command=""
+                                        <MenuItem Header="Coller la mutation" 
+                                                  Command="commands:muta_command.copy"
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
                             </StackPanel.ContextMenu>
@@ -129,26 +133,40 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Copier l'élément" 
-                                                  Command=""
+                                        <MenuItem Header="Copier la mutation" 
+                                                  Command="commands:muta_command.copy"
                                                   CommandParameter="{Binding pe_muta_id}"/>
+                                        <MenuItem Header="Coller l'attribut" 
+                                                  Command="commands:attr_command.copy"
+                                                  CommandParameter="coller_element"/>
                                     </ContextMenu>
-                                </StackPanel.ContextMenu>
+                                  </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
+                        
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_attr}" ItemsSource="{Binding pe_libl_list}">
                             <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Copier l'attribut" 
+                                                  Command="commands:attr_command.copy"
+                                                  CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding nom_attr}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
+                        
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding libf_attr}"/>
                             </StackPanel>
-                        </DataTemplate>                            
+                        </DataTemplate>                      
+                        
                     </TreeView.Resources>
                 </TreeView>
+                
                 <Grid x:Name="g_tree_crud" Grid.Row="1">
                     <StackPanel>
                         <Button x:Name="btn_tree_add"  Content="Ajouter un élément"/>

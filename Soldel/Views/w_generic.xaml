@@ -14,12 +14,12 @@
         <CommandBinding Command="commands:attr_command.copy"
                         CanExecute="copy_attr_can_execute"
                         Executed="copy_attr_executed"/>
-        
+
         <CommandBinding Command="commands:muta_command.copy"
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
     </Window.CommandBindings>
-    
+
     <Window.Resources>
         <commands:generate_config_command x:Key="generate_config_command"/>
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
@@ -125,8 +125,8 @@
                                                   Command="commands:muta_command.copy"
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
-                            </StackPanel.ContextMenu>
-                            <TextBlock Text="{Binding no_ip}" />
+                                </StackPanel.ContextMenu>
+                                <TextBlock Text="{Binding no_ip}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
@@ -140,11 +140,11 @@
                                                   Command="commands:attr_command.copy"
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
-                                  </StackPanel.ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        
+
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_attr}" ItemsSource="{Binding pe_libl_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
@@ -157,16 +157,16 @@
                                 <TextBlock Text="{Binding nom_attr}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        
+
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding libf_attr}"/>
                             </StackPanel>
-                        </DataTemplate>                      
-                        
+                        </DataTemplate>
+
                     </TreeView.Resources>
                 </TreeView>
-                
+
                 <Grid x:Name="g_tree_crud" Grid.Row="1">
                     <StackPanel>
                         <Button x:Name="btn_tree_add"    Content="Ajouter un élément"/>
@@ -179,9 +179,10 @@
 
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="268*"/>
                     <RowDefinition Height="5"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="140*"/>
+                    <RowDefinition Height="127*"/>
                 </Grid.RowDefinitions>
                 <Grid x:Name="g_detail" 
                       DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" Grid.Row="0">
@@ -198,7 +199,7 @@
 
                 <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1"/>
 
-                <Grid x:Name="g_list" Grid.Row="2">
+                <Grid x:Name="g_list" Grid.Row="2" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="20"/>
@@ -209,7 +210,7 @@
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="1">
-                            <Button x:Name="btn_save" Content="Enregistrer"/>
+                        <Button x:Name="btn_save" Content="Enregistrer"/>
                     </Grid>
                 </Grid>
             </Grid>

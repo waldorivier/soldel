@@ -15,16 +15,13 @@ using System.Windows.Shapes;
 using mupeModel.Utils;
 using NHibernate;
 
-namespace Soldel.Views
-{
+namespace Soldel.Views {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class uc_select_connection : UserControl
-    {
+    public partial class uc_select_connection:UserControl {
         public ISession session { get; set; }
-        public uc_select_connection()
-        {
+        public uc_select_connection() {
             InitializeComponent();
 
             cb_connection.ItemsSource = hibernate_util.get_instance().get_connections();
@@ -32,19 +29,16 @@ namespace Soldel.Views
             cb_ip_list.DropDownOpened += Cb_ip_list_DropDownOpened;
         }
 
-        private void Cb_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void Cb_connection_SelectionChanged(object sender,SelectionChangedEventArgs e) {
             ComboBox cbConnection = (ComboBox)sender;
             String connectionString = (String)cbConnection.SelectedValue;
             session = hibernate_util.get_instance().get_session(connectionString);
         }
 
-        private void Cb_ip_list_DropDownOpened(object sender, EventArgs e)
-        {
-            List<int> ips = new List<int>() { 4250, 5750 };
+        private void Cb_ip_list_DropDownOpened(object sender,EventArgs e) {
+            List<int> ips = new List<int>() { 4250,5750 };
 
-            if (session != null)
-            {
+            if(session != null) {
                 // cb_ip_list.ItemsSource = CollectionViewSource.GetDefaultView(ips);
                 cb_ip_list.ItemsSource = session.CreateSQLQuery("SELECT NO_IP FROM PE_IP order by NO_IP asc").List();
             }

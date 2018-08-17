@@ -21,7 +21,7 @@
             </local:uc_elca>
         </Grid>
 
-        <GridSplitter VerticalContentAlignment="Stretch" Grid.Column="1"/>
+        <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1"/>
 
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
@@ -34,7 +34,7 @@
             <local:uc_find_element x:Name="uc_find_element" Grid.Row="1" Margin="0,0,0,10">
             </local:uc_find_element>
         </Grid>
-        
+
         <GridSplitter HorizontalAlignment="Stretch" Grid.Column="3"/>
 
         <Grid Grid.Column="4">

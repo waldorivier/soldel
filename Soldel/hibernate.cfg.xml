@@ -9,8 +9,8 @@
 		</property>
 
 		<property name="connection.driver_class">
-			NHibernate.Driver.MySqlDataDriver
-			<!--NHibernate.Driver.OracleDataClientDriver-->
+			<!--NHibernate.Driver.MySqlDataDriver-->
+			NHibernate.Driver.OracleDataClientDriver
 		</property>
 
 		<!--<property name="adonet.factory_class">NHibernate.AdoNet.MySqlClientBatchingBatcherFactory</property> -->
@@ -31,8 +31,8 @@
 		-->
 
 		<property name="show_sql">False</property>
-		<property name="dialect">NHibernate.Dialect.MySQL5Dialect</property>
-    <!--<property name="dialect">NHibernate.Dialect.Oracle10gDialect</property>-->
+		<!--<property name="dialect">NHibernate.Dialect.MySQL5Dialect</property>-->
+    <property name="dialect">NHibernate.Dialect.Oracle10gDialect</property>
 		<property name="hbm2ddl.keywords">true</property>
 		<property name="cache.use_query_cache">true</property>
 

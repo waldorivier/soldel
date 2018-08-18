@@ -21,7 +21,7 @@
             </local:uc_elca>
         </Grid>
 
-        <GridSplitter VerticalContentAlignment="Stretch" Grid.Column="1"/>
+        <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1"/>
 
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>

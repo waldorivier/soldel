@@ -38,7 +38,7 @@ namespace Soldel.Views {
 
             btn_tree_add.Click += Btn_tree_add_Click;
             btn_tree_delete.Click += Btn_tree_delete_Click;
-            btn_save.Click += Btn_save_Click;
+            btn_update.Click += Btn_update_Click;
         }
 
         private void Cb_database_SelectionChanged(object sender,SelectionChangedEventArgs e) {
@@ -49,6 +49,8 @@ namespace Soldel.Views {
             List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
 
+            List<pe_ip> ips = session.CreateCriteria<mupeModel.pe_ip>().List<mupeModel.pe_ip>().ToList();
+            
             build_tree(object_list.ToList<object>());
         }
 
@@ -178,7 +180,7 @@ namespace Soldel.Views {
             }
         }
 
-        private void Btn_save_Click(object sender,RoutedEventArgs e) {
+        private void Btn_update_Click(object sender,RoutedEventArgs e) {
             ITransaction transaction = null;
             if(g_detail.DataContext != null) {
                 try {

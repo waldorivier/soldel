@@ -18,7 +18,7 @@
       <column name="libe_muta" not-null="true" length="160" sql-type="varchar" />
     </property>
     <property name="libi_muta" type="String">
-      <column name="libi_muta" not-null="true" length="160" sql-type="varchar" />
+      <column name="libi_muta" not-null="true" length="160" sql-type="varchar" /> 
     </property>
     <property name="no_ip" type="Int32">
       <column name="no_ip" not-null="true" precision="11" scale="0" sql-type="int" />

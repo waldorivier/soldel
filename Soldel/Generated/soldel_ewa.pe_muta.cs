@@ -28,7 +28,7 @@ namespace mupeModel {
         private int? _muta_order;
         private string _liste_tycas;
         private string _type_grmu;
-        private mupeModel.pe_ip _pe_ip;
+        private pe_ip _pe_ip;
         private IList<pe_gmmu> _pe_gmmu_list = new List<pe_gmmu>();
         private IList<pe_attr> _pe_attr_list = new List<pe_attr>();
 
@@ -307,7 +307,7 @@ namespace mupeModel {
             set => this._pe_attr_list = value;
         }
 
-        public virtual mupeModel.pe_ip pe_ip {
+        public virtual pe_ip pe_ip {
             get =>
                 this._pe_ip;
             set {

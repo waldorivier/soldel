@@ -209,7 +209,7 @@
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="1">
-                            <Button x:Name="btn_save" Content="Enregistrer"/>
+                        <Button x:Name="btn_update" Content="Enregistrer les modifications"/>
                     </Grid>
                 </Grid>
             </Grid>

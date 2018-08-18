@@ -18,11 +18,14 @@ namespace Soldel.Views {
     /// </summary>
     public partial class w_main : Window {
         public w_main() {
-            InitializeComponent();
+            try {
+                InitializeComponent();
 
-            btn_elca.Click += Btn_elca_Click;
-            btn_elsi.Click += Btn_elsi_Click;
-            btn_ewa.Click += Btn_ewa_Click;
+                btn_elca.Click += Btn_elca_Click;
+                btn_elsi.Click += Btn_elsi_Click;
+                btn_ewa.Click += Btn_ewa_Click;
+            } catch (Exception ex) {
+                MessageBox.Show(ex.StackTrace);            }
         }
 
         private void Btn_ewa_Click(object sender, RoutedEventArgs e) {

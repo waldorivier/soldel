@@ -14,13 +14,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace mupeModel {
 
     /// <summary>
     /// There are no comments for pe_cfgd, Soldel in the schema.
     /// </summary>
-    public partial class pe_cfgd : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_cfgd : INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -272,6 +274,14 @@ namespace mupeModel {
             var handler = this.PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            return null;
+        }
+
+        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
         }
     }
 }

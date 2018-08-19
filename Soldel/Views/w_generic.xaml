@@ -23,13 +23,19 @@
     <Window.Resources>
         <commands:generate_config_command x:Key="generate_config_command"/>
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
+        <converters:w_generic_tree_multi_list_converter x:Key="w_generic_tree_multi_list_converter"/>
 
-        <DataTemplateSelector x:Key="EwaTemplateSelector"/>
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
                 <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
                 </TextBox>
                 <TextBox Text = "{Binding Path=libf_grmu, Mode=TwoWay}">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="pe_cfgd_template" DataType="pe_cfgd">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=cfg_xml, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
         </DataTemplate>
@@ -115,7 +121,15 @@
                 </Grid.RowDefinitions>
                 <TreeView x:Name="tree_main" Grid.Row="0">
                     <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}" ItemsSource="{Binding pe_muta_list}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}">
+                            <HierarchicalDataTemplate.ItemsSource>
+                                <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
+                                              ConverterParameter=", CONFIGS">
+                                    <Binding Path="pe_muta_list"/>
+                                    <Binding Path="pe_cfgd_list"/>
+                                </MultiBinding>
+                            </HierarchicalDataTemplate.ItemsSource>
+                            
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
@@ -157,13 +171,27 @@
                                 <TextBlock Text="{Binding nom_attr}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type converters:folder_node}" 
+                                                  ItemsSource="{Binding child_nodes}">
+                            <StackPanel Orientation="Horizontal">
+                               <TextBlock Text="{Binding name}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
                         
+                                              
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding libf_attr}"/>
                             </StackPanel>
-                        </DataTemplate>                      
-                        
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:pe_cfgd}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding cfg_xml}"/>
+                            </StackPanel>
+                        </DataTemplate>
+
                     </TreeView.Resources>
                 </TreeView>
                 

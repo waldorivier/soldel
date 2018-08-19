@@ -49,8 +49,6 @@ namespace Soldel.Views {
             List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
             var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
 
-            List<pe_ip> ips = session.CreateCriteria<mupeModel.pe_ip>().List<mupeModel.pe_ip>().ToList();
-            
             build_tree(object_list.ToList<object>());
         }
 

@@ -35,8 +35,17 @@
         </DataTemplate>
         <DataTemplate x:Key="pe_cfgd_template" DataType="pe_cfgd">
             <StackPanel>
-                <TextBox Text = "{Binding Path=cfg_xml, Mode=TwoWay}">
-                </TextBox>
+                <TextBox Text = "{Binding Path=pe_cfgt.dadval}"/>
+                <TextBox Text = "{Binding Path=pe_cfgt.description, Mode=TwoWay}"/>
+                <Expander>
+                    <Expander.Content>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock TextWrapping="Wrap" 
+                                       Text="{Binding Path=cfg_xml}">
+                            </TextBlock>
+                        </ScrollViewer>
+                    </Expander.Content>
+                </Expander>                
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="pe_muta_template" DataType="pe_muta">
@@ -188,7 +197,7 @@
 
                         <DataTemplate DataType="{x:Type model:pe_cfgd}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding cfg_xml}"/>
+                                <TextBlock Text="{Binding Path=pe_cfgt.description}"/>
                             </StackPanel>
                         </DataTemplate>
 

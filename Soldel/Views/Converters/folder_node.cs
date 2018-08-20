@@ -8,7 +8,8 @@ namespace mupeModel.Views.Converters {
 
     internal class folder_node:IValueConverter {
           object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) =>
-            this.child_nodes;
+            // this.child_nodes;
+            null;
 
         object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
             throw new NotImplementedException();

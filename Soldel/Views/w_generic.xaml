@@ -37,16 +37,17 @@
             <StackPanel>
                 <TextBox Text = "{Binding Path=pe_cfgt.dadval}"/>
                 <TextBox Text = "{Binding Path=pe_cfgt.description, Mode=TwoWay}"/>
-                <Expander>
-                    <Expander.Content>
+                <!--<Expander>
+                    <Expander.Content>-->
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <TextBlock TextWrapping="Wrap" 
-                                       Text="{Binding Path=cfg_xml}">
+                                   Text="{Binding Path=cfg_xml}">
                             </TextBlock>
                         </ScrollViewer>
-                    </Expander.Content>
-                </Expander>                
+                    <!--</Expander.Content>
+                </Expander>-->
             </StackPanel>
+          
         </DataTemplate>
         <DataTemplate x:Key="pe_muta_template" DataType="pe_muta">
             <StackPanel>

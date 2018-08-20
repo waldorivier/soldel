@@ -33,22 +33,24 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="pe_cfgd_template" DataType="pe_cfgd">
             <StackPanel>
                 <TextBox Text = "{Binding Path=pe_cfgt.dadval}"/>
                 <TextBox Text = "{Binding Path=pe_cfgt.description, Mode=TwoWay}"/>
-                <!--<Expander>
-                    <Expander.Content>-->
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <TextBlock TextWrapping="Wrap" 
-                                   Text="{Binding Path=cfg_xml}">
-                            </TextBlock>
+                <Expander Header="XML">
+                    <Expander.Content>
+                        <ScrollViewer VerticalScrollBarVisibility="Visible"
+                                      CanContentScroll="True">
+                            <TextBox Height="200"
+                                     Text="{Binding Path=cfg_xml}">
+                            </TextBox>
                         </ScrollViewer>
-                    <!--</Expander.Content>
-                </Expander>-->
+                    </Expander.Content> 
+                </Expander>
             </StackPanel>
-          
         </DataTemplate>
+
         <DataTemplate x:Key="pe_muta_template" DataType="pe_muta">
             <StackPanel>
                 <TextBox Text = "{Binding Path=tyeven, Mode=TwoWay}">

@@ -112,6 +112,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\attr_command.cs" />
+    <Compile Include="Command\libl_command.cs" />
     <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />

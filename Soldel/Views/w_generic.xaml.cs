@@ -26,6 +26,8 @@ namespace Soldel.Views {
     /// </summary>
     public partial class w_generic : Window {
         private pe_attr clip_attr;
+        private pe_libl clip_libl;
+
         private ISession session;
 
         public w_generic() {
@@ -126,14 +128,14 @@ namespace Soldel.Views {
             try {
                 pe_muta muta = this.tree_main.SelectedValue as pe_muta;
                 if(muta != null) {
-                    transaction = this.session.BeginTransaction();
+                    transaction = session.BeginTransaction();
 
                     pe_attr attr = attr_to_copy.shallow_copy(muta);
                     muta.add_attr(attr);
                     session.Save(muta);
+                    session.Refresh(muta);
 
                     transaction.Commit();
-                    tree_main.Items.Refresh();
                 }
             } catch(Exception exception) {
                 if(transaction != null) {
@@ -145,6 +147,39 @@ namespace Soldel.Views {
             }
         }
 
+        private void copy_libl(pe_libl libl_to_copy) {
+            ITransaction transaction = null;
+            try {
+                pe_attr attr = tree_main.SelectedValue as pe_attr;
+                if(attr != null) {
+                    transaction = session.BeginTransaction();
+
+                    pe_libl libl = libl_to_copy.shallow_copy();
+                    libl.no_ip = attr.pe_muta.no_ip;
+
+                    // suppprimer l'ancien libellé et le remplacer par la copie
+                    pe_libl libl_ = attr.pe_libl_list.First();
+                    attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
+                    session.Delete(libl_);
+
+                    session.Save(libl);
+                    transaction.Commit();
+
+                    session.Refresh(attr.pe_muta.pe_ip);
+                    var libl_list = attr.pe_libl_list;
+
+                    // TODO : améliorer pour ne rafraichir que la partie concernéeS
+                    tree_main.Items.Refresh();
+                }
+            } catch(Exception exception) {
+                if(transaction != null) {
+                    if(transaction != null) {
+                        transaction.Rollback();
+                    }
+                    MessageBox.Show(exception.StackTrace);
+                }
+            }
+        }
         //---------------------------------------------------------------------
         // TODO : encapsuler de manière générique
         // on ne supprime que la relation
@@ -236,6 +271,25 @@ namespace Soldel.Views {
             } else if(clip_attr != null) {
                 copy_attr(clip_attr);
                 clip_attr = null;
+            }
+        }
+
+        private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+            if(e.Parameter.ToString().Equals("coller_element")) {
+                e.CanExecute = clip_libl != null;
+            } else {
+                e.CanExecute = clip_libl == null;
+            }
+        }
+        private void copy_libl_executed(object sender,ExecutedRoutedEventArgs e) {
+            if(!e.Parameter.ToString().Equals("coller_element")) {
+                pe_libl parameter = e.Parameter as pe_libl;
+                if(parameter != null) {
+                    clip_libl = parameter;
+                }
+            } else if(clip_libl != null) {
+                copy_libl(clip_libl);
+                clip_libl = null;
             }
         }
     }

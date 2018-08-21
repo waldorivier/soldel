@@ -18,6 +18,11 @@
         <CommandBinding Command="commands:muta_command.copy"
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
+
+        <CommandBinding Command="commands:libl_command.copy"
+                        CanExecute="copy_libl_can_execute"
+                        Executed="copy_libl_executed"/>
+
     </Window.CommandBindings>
     
     <Window.Resources>
@@ -38,16 +43,17 @@
             <StackPanel>
                 <TextBox Text = "{Binding Path=pe_cfgt.dadval}"/>
                 <TextBox Text = "{Binding Path=pe_cfgt.description, Mode=TwoWay}"/>
-                <Expander Header="XML">
+                <Border BorderBrush="LightGray" BorderThickness="1">
+                    <Expander Header="XML">
                     <Expander.Content>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible"
-                                      CanContentScroll="True">
-                            <TextBox Height="200"
-                                     Text="{Binding Path=cfg_xml}">
-                            </TextBox>
-                        </ScrollViewer>
-                    </Expander.Content> 
-                </Expander>
+                            <ScrollViewer VerticalScrollBarVisibility="Visible" 
+                                          MaxHeight="150"
+                                          CanContentScroll="True">
+                                <TextBlock  Text="{Binding Path=cfg_xml}"/>
+                            </ScrollViewer>
+                        </Expander.Content> 
+                    </Expander>
+                </Border>    
             </StackPanel>
         </DataTemplate>
 
@@ -178,6 +184,9 @@
                                         <MenuItem Header="Copier l'attribut" 
                                                   Command="commands:attr_command.copy"
                                                   CommandParameter="{Binding}"/>
+                                        <MenuItem Header="Coller le libellé" 
+                                                  Command="commands:libl_command.copy"
+                                                  CommandParameter="coller_element"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding nom_attr}"/>
@@ -194,6 +203,13 @@
                                               
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Copier le libellé" 
+                                                  Command="commands:libl_command.copy"
+                                                  CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding libf_attr}"/>
                             </StackPanel>
                         </DataTemplate>

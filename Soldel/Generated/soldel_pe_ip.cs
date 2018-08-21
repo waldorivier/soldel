@@ -3,10 +3,17 @@ namespace mupeModel {
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
-  
-    public class pe_ip:INotifyPropertyChanging, INotifyPropertyChanged {
+    using System.Globalization;
+    using System.Windows.Data;
+
+    public class pe_ip:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
+
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
+
         private int _no_ip = 0;
+        private string _nomf_ip = @"";
+        private string _abgregf_ip = @"";
+
         private ISet<pe_libl> _pe_libl_list = new HashSet<pe_libl>();
         private IList<pe_muta> _pe_muta_list = new List<pe_muta>();
         private IList<pe_cfgt> _pe_cfgt_list = new List<pe_cfgt>();
@@ -17,7 +24,7 @@ namespace mupeModel {
 
         public virtual void add_grmu(pe_grmu grmu) {
             grmu.pe_ip = this;
-            grmu.no_ip = this.no_ip;
+            grmu.no_ip = no_ip;
             this.pe_grmu_list.Add(grmu);
         }
 
@@ -67,7 +74,7 @@ namespace mupeModel {
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual int no_ip {
+         public virtual int no_ip {
             get =>
                 this._no_ip;
             set {
@@ -75,6 +82,28 @@ namespace mupeModel {
                     this.SendPropertyChanging();
                     this._no_ip = value;
                     this.SendPropertyChanged("no_ip");
+                }
+            }
+        }
+        public virtual string nomf_ip {
+            get =>
+                this._nomf_ip;
+            set {
+                if(this._nomf_ip != value) {
+                    this.SendPropertyChanging();
+                    this._nomf_ip = value;
+                    this.SendPropertyChanged("nomf_ip");
+                }
+            }
+        }
+        public virtual string abregf_ip {
+            get =>
+                this._abgregf_ip;
+            set {
+                if(this._abgregf_ip != value) {
+                    this.SendPropertyChanging();
+                    this._abgregf_ip = value;
+                    this.SendPropertyChanged("abregf_ip");
                 }
             }
         }
@@ -97,6 +126,14 @@ namespace mupeModel {
         public virtual IList<pe_grmu> pe_grmu_list {
             get => this._pe_grmu_list;
             set => this._pe_grmu_list = value;
+        }
+
+        object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) {
+            return null;
+        }
+
+        object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
+            throw new NotImplementedException();
         }
     }
 }

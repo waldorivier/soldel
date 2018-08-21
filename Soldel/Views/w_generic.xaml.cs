@@ -48,8 +48,8 @@ namespace Soldel.Views {
             String connectionString = (String)cbConnection.SelectedValue;
             session = hibernate_util.get_instance().get_session(connectionString);
 
-            List<pe_grmu> grmus = session.CreateCriteria<pe_grmu>().List<pe_grmu>().ToList();
-            var object_list = (from grmu in grmus orderby grmu.no_ip ascending select grmu).ToList();
+            List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().ToList();
+            var object_list = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
 
             build_tree(object_list.ToList<object>());
         }
@@ -159,8 +159,10 @@ namespace Soldel.Views {
 
                     // suppprimer l'ancien libellé et le remplacer par la copie
                     pe_libl libl_ = attr.pe_libl_list.First();
-                    attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
-                    session.Delete(libl_);
+                    if(libl_ != null) { 
+                        attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
+                        session.Delete(libl_);
+                    }
 
                     session.Save(libl);
                     transaction.Commit();
@@ -168,7 +170,7 @@ namespace Soldel.Views {
                     session.Refresh(attr.pe_muta.pe_ip);
                     var libl_list = attr.pe_libl_list;
 
-                    // TODO : améliorer pour ne rafraichir que la partie concernéeS
+                    // TODO : améliorer pour ne rafraichir que la partie concernée
                     tree_main.Items.Refresh();
                 }
             } catch(Exception exception) {
@@ -180,6 +182,7 @@ namespace Soldel.Views {
                 }
             }
         }
+
         //---------------------------------------------------------------------
         // TODO : encapsuler de manière générique
         // on ne supprime que la relation
@@ -201,7 +204,6 @@ namespace Soldel.Views {
                     session.Delete(gmmu);
                     transaction.Commit();
                     tree_main.Items.Refresh();
-
                 }
             } catch(Exception ex) {
                 if(transaction != null) {
@@ -233,7 +235,7 @@ namespace Soldel.Views {
         }
 
         //---------------------------------------------------------------------
-        // Command HANDLER
+        // COMMAND HANDLER
         //---------------------------------------------------------------------
         private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             object data = Clipboard.GetData("String");

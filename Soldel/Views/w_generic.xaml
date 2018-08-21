@@ -30,6 +30,15 @@
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
         <converters:w_generic_tree_multi_list_converter x:Key="w_generic_tree_multi_list_converter"/>
 
+        <DataTemplate x:Key="pe_ip_template" DataType="pe_ip">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=no_ip, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=nomg_ip, Mode=TwoWay}">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
+        
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
                 <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
@@ -139,6 +148,25 @@
                 </Grid.RowDefinitions>
                 <TreeView x:Name="tree_main" Grid.Row="0">
                     <TreeView.Resources>
+
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
+                            <HierarchicalDataTemplate.ItemsSource>
+                                <Binding Path="pe_grmu_list"/>
+                            </HierarchicalDataTemplate.ItemsSource>
+
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Générer la configuration" 
+                                                  Command="{Binding Source={StaticResource generate_config_command}}"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
+                                <TextBlock Text="{Binding no_ip}" />
+                                <TextBlock Text=" : " />
+                                <TextBlock Text="{Binding abregf_ip}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}">
                             <HierarchicalDataTemplate.ItemsSource>
                                 <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
@@ -151,8 +179,6 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Générer la configuration" 
-                                                  Command="{Binding Source={StaticResource generate_config_command}}"/>
                                         <MenuItem Header="Coller la mutation" 
                                                   Command="commands:muta_command.copy"
                                                   CommandParameter="coller_element"/>
@@ -161,6 +187,7 @@
                             <TextBlock Text="{Binding no_ip}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
+                        
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>

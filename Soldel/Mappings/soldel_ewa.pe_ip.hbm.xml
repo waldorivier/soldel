@@ -5,6 +5,12 @@
       <column name="no_ip" not-null="true" sql-type="int" />
       <generator class="assigned" />
     </id>
+    <property name="nomf_ip" type="String">
+      <column name="nomf_ip" not-null="false" length="1" sql-type="varchar" />
+    </property>
+        <property name="abregf_ip" type="String">
+      <column name="abregf_ip" not-null="false" length="1" sql-type="varchar" />
+    </property>
     <set name="pe_libl_list" cascade="all" inverse="true">
       <key>
         <column name="no_ip" />

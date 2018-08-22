@@ -160,12 +160,22 @@ namespace mupeModel.Utils {
             string[] a_type_names = { "System.String","System.Boolean","System.DateTime","System.Decimal","System.Int32" };
 
             var properties = copy_from.GetType().GetProperties();
-            foreach(var p in properties.Where(prop => prop.CanRead &&
-                                                      prop.CanWrite &&
-                                                      a_type_names.Contains(prop.PropertyType.FullName))) {
+            foreach(var property in properties) {
+                try {
+                    string str = null;
+                    Type underlyingType = Nullable.GetUnderlyingType(property.PropertyType);
+                    if(underlyingType != null) {
+                        str = underlyingType.ToString();
+                    } else {
+                        str = property.PropertyType.ToString();
+                    }
 
-                object copyValue = p.GetValue(copy_from);
-                p.SetValue(copy_to,copyValue);
+                    if(a_type_names.Contains<string>(str)) {
+                        object obj2 = property.GetValue(copy_from);
+                        property.SetValue(copy_to,obj2);
+                    }
+                } catch(Exception) {
+                }
             }
         }
     }

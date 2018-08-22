@@ -58,8 +58,8 @@ namespace mupeModel {
             null;
 
         public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
-            pe_muta muta = this.shallow_copy(muta_id,ip);
-            foreach(pe_attr _attr in this.pe_attr_list) {
+            pe_muta muta = shallow_copy(muta_id,ip);
+            foreach(pe_attr _attr in pe_attr_list) {
                 muta.add_attr(_attr.shallow_copy(muta));
             }
             return muta;
@@ -87,15 +87,13 @@ namespace mupeModel {
         }
 
         public virtual pe_muta shallow_copy(string muta_id,mupeModel.pe_ip ip) {
-            pe_muta _muta = new pe_muta();
-            copy_object.copy<pe_muta>(this,_muta);
-            _muta.pe_muta_id = muta_id;
-            _muta.pe_ip = ip;
-            DateTime? nullable = new DateTime?(DateTime.Now);
-            _muta.dh_cre = nullable;
-            _muta.dh_maj = nullable;
-            _muta.user_cre = _muta.user_maj = hibernate_util.get_instance().get_user();
-            return _muta;
+            pe_muta copy = new pe_muta();
+            copy_object.copy<pe_muta>(this, copy);
+
+            copy.pe_muta_id = muta_id;
+            copy.pe_ip = ip;
+   
+            return copy;
         }
 
         public virtual string pe_muta_id {

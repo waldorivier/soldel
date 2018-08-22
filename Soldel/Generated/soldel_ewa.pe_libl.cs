@@ -485,8 +485,6 @@ namespace mupeModel {
 
             copy.no_ip = 0;
 
-            copy.dh_maj = copy.dh_cre = DateTime.Today;
-            copy.user_cre = copy.user_maj = hibernate_util.get_instance().get_user();
             return copy;
         }
     }

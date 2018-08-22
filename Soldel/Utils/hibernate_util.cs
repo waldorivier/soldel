@@ -156,13 +156,24 @@ namespace mupeModel.Utils {
             if(copy_from == null || copy_to == null)
                 throw new Exception("Must not specify null parameters");
 
-            // ne copier que les propriétés des types ci-dessous
-            string[] a_type_names = { "System.String","System.Boolean","System.DateTime","System.Decimal","System.Int32" };
+            // ce sont les types de base des propriétés que l'on veut copier
+            string[] a_types_names = { "System.String","System.Boolean","System.DateTime","System.Decimal","System.Int32" };
+
+            // ce sont les propriétés que l'on veut exlure de la copie 
+            IList<string> properties_to_exclude = new List<string>() { "user_cre","user_maj","dh_cre","dh_maj" };
 
             var properties = copy_from.GetType().GetProperties();
             foreach(var property in properties) {
+
+                if(properties_to_exclude.Contains(property.Name)) {
+                    continue;
+                }
+
                 try {
                     string str = null;
+
+                    // pour les nullables (en particulier), il faut extraire le type sous-jacent : NULLABLE<Int32> => Int32
+
                     Type underlyingType = Nullable.GetUnderlyingType(property.PropertyType);
                     if(underlyingType != null) {
                         str = underlyingType.ToString();
@@ -170,7 +181,7 @@ namespace mupeModel.Utils {
                         str = property.PropertyType.ToString();
                     }
 
-                    if(a_type_names.Contains<string>(str)) {
+                    if(a_types_names.Contains<string>(str)) {
                         object obj2 = property.GetValue(copy_from);
                         property.SetValue(copy_to,obj2);
                     }

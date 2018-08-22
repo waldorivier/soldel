@@ -504,17 +504,16 @@ namespace mupeModel {
         public virtual pe_attr shallow_copy(pe_muta muta) {
             var copy = new pe_attr();
 
-            copy_object.copy<pe_attr>(this, copy);
+            copy_object.copy<pe_attr>(this,copy);
 
             copy.pe_muta_id = muta.pe_muta_id;
             copy.pe_muta = muta;
 
             // copie des libellés qui sont référencés par l'ip
-
-            copy.pe_muta.pe_ip.add_libl(pe_libl_list.First().shallow_copy());
-
-            copy.dh_maj = copy.dh_cre = DateTime.Today;
-            copy.user_cre = copy.user_maj = hibernate_util.get_instance().get_user();
+            if(pe_libl_list.Count > 0) { 
+                copy.pe_muta.pe_ip.add_libl(pe_libl_list.First().shallow_copy());
+            }
+                     
             return copy;
         }
     }

@@ -22,7 +22,6 @@
         <CommandBinding Command="commands:libl_command.copy"
                         CanExecute="copy_libl_can_execute"
                         Executed="copy_libl_executed"/>
-
     </Window.CommandBindings>
     
     <Window.Resources>
@@ -45,6 +44,8 @@
                 </TextBox>
                 <TextBox Text = "{Binding Path=libf_grmu, Mode=TwoWay}">
                 </TextBox>
+                <TextBox Text = "{Binding Path=pe_grmu_id, Mode=TwoWay}">
+                </TextBox>
             </StackPanel>
         </DataTemplate>
         
@@ -56,7 +57,7 @@
                     <Expander Header="XML">
                     <Expander.Content>
                             <ScrollViewer VerticalScrollBarVisibility="Visible" 
-                                          MaxHeight="150"
+                                          MaxHeight="300"
                                           CanContentScroll="True">
                                 <TextBlock  Text="{Binding Path=cfg_xml}"/>
                             </ScrollViewer>
@@ -175,7 +176,6 @@
                                     <Binding Path="pe_cfgd_list"/>
                                 </MultiBinding>
                             </HierarchicalDataTemplate.ItemsSource>
-                            
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
@@ -184,7 +184,7 @@
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
                             </StackPanel.ContextMenu>
-                            <TextBlock Text="{Binding no_ip}" />
+                            <TextBlock Text="{Binding libf_grmu}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         

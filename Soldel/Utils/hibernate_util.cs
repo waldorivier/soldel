@@ -68,6 +68,7 @@ namespace mupeModel.Utils {
 
                                         "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
                                         "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
+                                        "Data Source=OUTCASP; User Id = prod_tetra; Password=prod_tetra",
 
                                         "Data Source=outsrc; User Id = prod_1; Password=prod_1",
                                         "Data Source=OUTSRC; User Id = prod_2; Password = prod_2",

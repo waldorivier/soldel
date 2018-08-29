@@ -68,6 +68,8 @@ namespace mupeModel.Utils {
 
                                         "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
                                         "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
+
+                                        "Data Source=ASP2;User Id=prod_cpju;Password=prod_cpju",
                                         "Data Source=OUTCASP; User Id = prod_tetra; Password=prod_tetra",
 
                                         "Data Source=outsrc; User Id = prod_1; Password=prod_1",
@@ -75,10 +77,17 @@ namespace mupeModel.Utils {
                                         "Data Source=OUTSRC; User Id = prod_3; Password = prod_3",
                                         "Data Source=OUTSRC; User Id = prod_5; Password = prod_5",
 
+                                        "Data Source=OUTSRC; User Id = prod_bien; Password=prod_bien",
+                                        "Data Source=OUTSRC; User Id = prod_cicr; Password=prod_cicr",
+                                        "Data Source=OUTSRC; User Id = prod_chop; Password=prod_chop",
+                                        "Data Source=OUTSRC; User Id = prod_dentsply; Password=prod_dentsply",
+                                        "Data Source=OUTSRC; User Id = prod_martigny; Password=prod_martigny",
+                                        "Data Source=OUTSRC; User Id = prod_mikr; Password=prod_mikr",
                                         "Data Source=OUTSRC; User Id = prod_mps; Password=prod_mps",
                                         "Data Source=OUTSRC; User Id = prod_naef; Password=prod_naef",
                                         "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
                                         "Data Source=OUTSRC; User Id = prod_thomreut; Password=prod_thomreut",
+                                        "Data Source=SWSTAFF;User Id=prod_usse;Password=prod_usse",
                                         };
     }
 

@@ -48,7 +48,7 @@ namespace Soldel.Views {
             String connectionString = (String)cbConnection.SelectedValue;
             session = hibernate_util.get_instance().get_session(connectionString);
 
-            List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().ToList();
+            List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
             var object_list = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
 
             build_tree(object_list.ToList<object>());
@@ -61,20 +61,18 @@ namespace Soldel.Views {
         // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
 
         private void Btn_tree_add_Click(object sender,RoutedEventArgs e) {
-
             ITransaction transaction = null;
+
             try {
                 transaction = session.BeginTransaction();
-                if(this.tree_main.SelectedValue is pe_grmu) {
-                    pe_grmu selectedValue = tree_main.SelectedValue as pe_grmu;
-                    pe_muta muta = new pe_muta {
+                if(this.tree_main.SelectedValue is pe_ip) {
+                    pe_ip selectedValue = tree_main.SelectedValue as pe_ip;
+                    pe_grmu grmu = new pe_grmu {
                         no_ip = selectedValue.no_ip,
-                        pe_muta_id = generate_muta_id()
+                        pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
                     };
 
-                    session.Save(muta);
-                    pe_gmmu _gmmu = new pe_gmmu(selectedValue,muta);
-                    session.Save(_gmmu);
+                    session.Save(grmu);
                     transaction.Commit();
                     tree_main.Items.Refresh();
                 }
@@ -100,7 +98,7 @@ namespace Soldel.Views {
                     pe_ip ip = session.Get<pe_ip>(grmu.no_ip);
                     pe_muta muta_to_copy = session.Get<pe_muta>(element_id);
 
-                    string str = generate_muta_id();
+                    string str = hibernate_util.get_instance().generate_muta_id();
                     pe_muta muta = muta_to_copy.deep_copy(str,ip);
 
                     ip.add_muta(muta);
@@ -229,10 +227,7 @@ namespace Soldel.Views {
                 }
             }
         }
-
-        private string generate_muta_id() {
-            return session.CreateSQLQuery("SELECT MAX (to_number(pe_muta_id)) + 1 from pe_muta").UniqueResult().ToString();
-        }
+        
 
         //---------------------------------------------------------------------
         // COMMAND HANDLER

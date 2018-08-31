@@ -73,6 +73,7 @@ namespace mupeModel {
         /// </summary>
         public pe_grmu() {
             this._pe_grmu_id = @"";
+            this._libf_grmu = this.libd_grmu = this._libe_grmu = this._libi_grmu = "libelle nouveau groupe de mutation(s)";
             this._pe_cfgd_list = new List<pe_cfgd>();
             this._pe_gmmu_list = new List<pe_gmmu>();
             this._pe_gmes_list = new List<pe_gmes>();

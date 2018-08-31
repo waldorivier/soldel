@@ -112,6 +112,14 @@ namespace mupeModel.Utils {
         public IList<pe_dict> get_dict_libelles() {
             return dict_libelles;
         }
+
+        public string generate_muta_id() {
+            return get_current_session().CreateSQLQuery("SELECT MAX (to_number(pe_muta_id)) + 1 from pe_muta").UniqueResult().ToString();
+        }
+
+        public string generate_grmu_id() {
+            return get_current_session().CreateSQLQuery("SELECT MAX (to_number(pe_grmu_id)) + 1 from pe_grmu").UniqueResult().ToString();
+        }
     }
 
 

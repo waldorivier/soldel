@@ -102,8 +102,8 @@ namespace mupeModel {
         /// </summary>
         public pe_attr() {
             this._pe_muta_id = @"";
-            this._nom_attr = @"";
-            this._clatit_attr = @"";
+            this._nom_attr = @"NEWATT";
+            this._clatit_attr = @"base";
             OnCreated();
         }
 

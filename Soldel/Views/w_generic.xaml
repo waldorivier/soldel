@@ -14,7 +14,11 @@
         <CommandBinding Command="commands:attr_command.copy"
                         CanExecute="copy_attr_can_execute"
                         Executed="copy_attr_executed"/>
-        
+
+        <CommandBinding Command="commands:attr_command.add"
+                        CanExecute="copy_muta_can_execute"
+                        Executed="copy_muta_executed"/>
+
         <CommandBinding Command="commands:muta_command.copy"
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
@@ -33,7 +37,7 @@
             <StackPanel>
                 <TextBox Text = "{Binding Path=no_ip, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=nomg_ip, Mode=TwoWay}">
+                <TextBox Text = "{Binding Path=nomf_ip, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
         </DataTemplate>

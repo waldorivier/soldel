@@ -65,14 +65,27 @@ namespace Soldel.Views {
 
             try {
                 transaction = session.BeginTransaction();
-                if(this.tree_main.SelectedValue is pe_ip) {
-                    pe_ip selectedValue = tree_main.SelectedValue as pe_ip;
-                    pe_grmu grmu = new pe_grmu {
-                        no_ip = selectedValue.no_ip,
-                        pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
-                    };
 
-                    session.Save(grmu);
+                var selected = tree_main.SelectedValue;
+                if(selected != null) {
+                    if(selected is pe_ip) {
+                        var ip = selected as pe_ip;
+
+                        pe_grmu grmu = new pe_grmu {
+                            no_ip = ip.no_ip,
+                            pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
+                        };
+
+                        session.Save(grmu);
+
+                    } else if(selected is pe_muta) {
+                        var muta = selected as pe_muta;
+
+                        // pe_attr attr = new pe_attr { nom_attr = "TXACTR"};
+                        // muta.add_attr(attr);
+                        // session.Save(muta);
+                    }
+
                     transaction.Commit();
                     tree_main.Items.Refresh();
                 }
@@ -124,16 +137,16 @@ namespace Soldel.Views {
         private void copy_attr(pe_attr attr_to_copy) {
             ITransaction transaction = null;
             try {
-                pe_muta muta = this.tree_main.SelectedValue as pe_muta;
+                pe_muta muta = tree_main.SelectedValue as pe_muta;
                 if(muta != null) {
                     transaction = session.BeginTransaction();
 
                     pe_attr attr = attr_to_copy.shallow_copy(muta);
                     muta.add_attr(attr);
                     session.Save(muta);
-                    session.Refresh(muta);
 
                     transaction.Commit();
+                    session.Refresh(muta);
                 }
             } catch(Exception exception) {
                 if(transaction != null) {
@@ -169,7 +182,7 @@ namespace Soldel.Views {
                     var libl_list = attr.pe_libl_list;
 
                     // TODO : améliorer pour ne rafraichir que la partie concernée
-                    tree_main.Items.Refresh();
+                    // tree_main.Items.Refresh();
                 }
             } catch(Exception exception) {
                 if(transaction != null) {

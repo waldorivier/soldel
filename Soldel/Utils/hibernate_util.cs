@@ -120,6 +120,10 @@ namespace mupeModel.Utils {
         public string generate_grmu_id() {
             return get_current_session().CreateSQLQuery("SELECT MAX (to_number(pe_grmu_id)) + 1 from pe_grmu").UniqueResult().ToString();
         }
+        public string generate_attr_id() {
+            return get_current_session().CreateSQLQuery("SELECT MAX (to_number(pe_attr_id)) + 1 from pe_attr").UniqueResult().ToString();
+        }
+
     }
 
 

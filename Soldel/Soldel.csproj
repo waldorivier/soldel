@@ -149,6 +149,9 @@
     <Compile Include="Views\uc_select_connection.xaml.cs">
       <DependentUpon>uc_select_connection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\w_chatbot_box.xaml.cs">
+      <DependentUpon>w_chatbot_box.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\w_generic.xaml.cs">
       <DependentUpon>w_generic.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\uc_select_connection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_chatbot_box.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

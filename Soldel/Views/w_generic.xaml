@@ -39,8 +39,10 @@
                 </TextBox>
                 <TextBox Text = "{Binding Path=libf_dict, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=clatit_dict, Mode=TwoWay}">
-                </TextBox>
+                <ComboBox Text="CLASSE" 
+                          ItemsSource  = "{Binding Path=classe_list}" 
+                          SelectedItem = "{Binding Path=clatit_dict, Mode=TwoWay}">
+                </ComboBox>
                 <TextBox Text = "{Binding Path=tydata_dict, Mode=TwoWay}">
                 </TextBox>
                 <TextBox Text = "{Binding Path=format_dict, Mode=TwoWay}">
@@ -164,9 +166,9 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <TreeView x:Name="tree_main" Grid.Row="0">
+                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2">
                     <TreeView.Resources>
 
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
@@ -249,20 +251,7 @@
                                <TextBlock Text="{Binding name}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-
-                        <DataTemplate DataType="{x:Type model:pe_dict}">
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel.ContextMenu>
-                                    <ContextMenu>
-                                    </ContextMenu>
-                                </StackPanel.ContextMenu>
-                                <TextBlock Text="{Binding nom_dict}"/>
-                                <TextBlock Text=" : " />
-                                <TextBlock Text="{Binding clatit_dict}" />
-                            </StackPanel>
-                        </DataTemplate>
-
-
+                       
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
@@ -282,30 +271,48 @@
                             </StackPanel>
                         </DataTemplate>
 
+                        <HierarchicalDataTemplate DataType="{x:Type model:global}" ItemsSource="{Binding dict_list}">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
+                                <TextBlock Text="{Binding dict_list_name}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:pe_dict}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=nom_dict}"/>
+                                <TextBlock Text=" : " />
+                                <TextBlock Text="{Binding clatit_dict}" />
+                            </StackPanel>
+                        </DataTemplate>
+
                     </TreeView.Resources>
                 </TreeView>
                 
-                <Grid x:Name="g_tree_crud" Grid.Row="1">
+                <Grid x:Name="g_tree_crud" Grid.Row="1" Margin="2">
                     <StackPanel>
-                        <Button x:Name="btn_tree_add"    Content="Ajouter un élément"/>
+                        <Button x:Name="btn_tree_add" Content="Ajouter un élément"/>
                         <Button x:Name="btn_tree_delete" Content="Supprimer un élément"/>
                     </StackPanel>
                 </Grid>
             </Grid>
 
-            <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1"/>
+            <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" Margin="2"/>
 
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="2" Margin="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid x:Name="g_detail" 
-                      DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" Grid.Row="0">
+                      DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" Grid.Row="0" Margin="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
                     <ContentControl Content="{Binding}" Grid.Row="0">
                         <ContentControl.ContentTemplateSelector>
@@ -314,20 +321,22 @@
                     </ContentControl>
                 </Grid>
 
-                <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1"/>
+                <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" Margin="2"/>
 
-                <Grid x:Name="g_list" Grid.Row="2">
+                <Grid x:Name="g_list" Grid.Row="2" Margin="2">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid x:Name="dg_list" Grid.Row="0" 
+                    <DataGrid x:Name="dg_list" Grid.Row="0" Margin="2"
                         ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}">
                     </DataGrid>
 
-                    <Grid x:Name="g_list_crud" Grid.Row="1">
-                        <Button x:Name="btn_update" Content="Enregistrer les modifications"/>
+                    <Grid x:Name="g_list_crud" Grid.Row="1" Margin="2">
+                        <StackPanel>
+                            <Button x:Name="btn_update" Content="Enregistrer les modifications"/>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </Grid>

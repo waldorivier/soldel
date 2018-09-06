@@ -18,6 +18,7 @@ using mupeModel.Utils;
 using mupeModel;
 using NHibernate;
 using NHibernate.Criterion;
+using mupeModel.Views;
 
 namespace Soldel.Views {
 
@@ -52,8 +53,12 @@ namespace Soldel.Views {
             // ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
             // tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
 
-            List<pe_dict> dicts = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList();
-            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(dicts);
+            // TODO : à encapsuler
+            var global = new global() {
+                dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
+                dict_list_name = "Dictionnaire des attributs"
+            };
+            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global>() { global });
         }
 
         // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
@@ -82,6 +87,11 @@ namespace Soldel.Views {
                         // pe_attr attr = new pe_attr { nom_attr = "TXACTR"};
                         // muta.add_attr(attr);
                         // session.Save(muta);
+
+                    } else if(selected is global) {
+
+                        new chatbot_box().ShowDialog();
+
                     }
 
                     transaction.Commit();

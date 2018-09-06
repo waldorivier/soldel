@@ -15,60 +15,55 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-namespace mupeModel
-{
+namespace mupeModel {
 
     /// <summary>
     /// There are no comments for pe_assu, Soldel in the schema.
     /// </summary>
     public partial class pe_assu {
-    
+
         #region Extensibility Method Definitions
-        
+
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
 
-        public override bool Equals(object obj)
-        {
-          pe_assu toCompare = obj as pe_assu;
-          if (toCompare == null)
-          {
-            return false;
-          }
+        public override bool Equals(object obj) {
+            pe_assu toCompare = obj as pe_assu;
+            if(toCompare == null) {
+                return false;
+            }
 
-          if (!Object.Equals(this.no_ip, toCompare.no_ip))
-            return false;
-          if (!Object.Equals(this.nperso, toCompare.nperso))
-            return false;
-          if (!Object.Equals(this.no_plan, toCompare.no_plan))
-            return false;
-          if (!Object.Equals(this.no_cas, toCompare.no_cas))
-            return false;
-          if (!Object.Equals(this.nassur, toCompare.nassur))
-            return false;
-          
-          return true;
+            if(!Object.Equals(this.no_ip,toCompare.no_ip))
+                return false;
+            if(!Object.Equals(this.nperso,toCompare.nperso))
+                return false;
+            if(!Object.Equals(this.no_plan,toCompare.no_plan))
+                return false;
+            if(!Object.Equals(this.no_cas,toCompare.no_cas))
+                return false;
+            if(!Object.Equals(this.nassur,toCompare.nassur))
+                return false;
+
+            return true;
         }
 
-        public override int GetHashCode()
-        {
-          int hashCode = 13;
-          hashCode = (hashCode * 7) + no_ip.GetHashCode();
-          hashCode = (hashCode * 7) + nperso.GetHashCode();
-          hashCode = (hashCode * 7) + no_plan.GetHashCode();
-          hashCode = (hashCode * 7) + no_cas.GetHashCode();
-          hashCode = (hashCode * 7) + nassur.GetHashCode();
-          return hashCode;
+        public override int GetHashCode() {
+            int hashCode = 13;
+            hashCode = (hashCode * 7) + no_ip.GetHashCode();
+            hashCode = (hashCode * 7) + nperso.GetHashCode();
+            hashCode = (hashCode * 7) + no_plan.GetHashCode();
+            hashCode = (hashCode * 7) + no_cas.GetHashCode();
+            hashCode = (hashCode * 7) + nassur.GetHashCode();
+            return hashCode;
         }
-        
+
         #endregion
         /// <summary>
         /// There are no comments for pe_assu constructor in the schema.
         /// </summary>
-        public pe_assu()
-        {
+        public pe_assu() {
             this.no_ip = 0;
             this.nperso = @"";
             this.no_plan = 0;
@@ -77,252 +72,227 @@ namespace mupeModel
             OnCreated();
         }
 
-    
+
         /// <summary>
         /// There are no comments for no_ip in the schema.
         /// </summary>
-        public virtual int no_ip
-        {
+        public virtual int no_ip {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for nperso in the schema.
         /// </summary>
-        public virtual string nperso
-        {
+        public virtual string nperso {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for no_plan in the schema.
         /// </summary>
-        public virtual int no_plan
-        {
+        public virtual int no_plan {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for no_cas in the schema.
         /// </summary>
-        public virtual int no_cas
-        {
+        public virtual int no_cas {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for nassur in the schema.
         /// </summary>
-        public virtual int nassur
-        {
+        public virtual int nassur {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for u_version in the schema.
         /// </summary>
-        public virtual string u_version
-        {
+        public virtual string u_version {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_assu_id in the schema.
         /// </summary>
-        public virtual string pe_assu_id
-        {
+        public virtual string pe_assu_id {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for daffil in the schema.
         /// </summary>
-        public virtual System.DateTime daffil
-        {
+        public virtual System.DateTime daffil {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dtdroi in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dtdroi
-        {
+        public virtual System.Nullable<System.DateTime> dtdroi {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dtsorx in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dtsorx
-        {
+        public virtual System.Nullable<System.DateTime> dtsorx {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dtverx in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dtverx
-        {
+        public virtual System.Nullable<System.DateTime> dtverx {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dtindx in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dtindx
-        {
+        public virtual System.Nullable<System.DateTime> dtindx {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dtfind in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dtfind
-        {
+        public virtual System.Nullable<System.DateTime> dtfind {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_even_id in the schema.
         /// </summary>
-        public virtual string pe_even_id
-        {
+        public virtual string pe_even_id {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for pe_donndr_id in the schema.
         /// </summary>
-        public virtual string pe_donndr_id
-        {
+        public virtual string pe_donndr_id {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dtverf in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dtverf
-        {
+        public virtual System.Nullable<System.DateTime> dtverf {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for stexto in the schema.
         /// </summary>
-        public virtual string stexto
-        {
+        public virtual string stexto {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dextou in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dextou
-        {
+        public virtual System.Nullable<System.DateTime> dextou {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for user_cre in the schema.
         /// </summary>
-        public virtual string user_cre
-        {
+        public virtual string user_cre {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for user_maj in the schema.
         /// </summary>
-        public virtual string user_maj
-        {
+        public virtual string user_maj {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dh_cre in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dh_cre
-        {
+        public virtual System.Nullable<System.DateTime> dh_cre {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for dh_maj in the schema.
         /// </summary>
-        public virtual System.Nullable<System.DateTime> dh_maj
-        {
+        public virtual System.Nullable<System.DateTime> dh_maj {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for cgmanu in the schema.
         /// </summary>
-        public virtual string cgmanu
-        {
+        public virtual string cgmanu {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for cmodem in the schema.
         /// </summary>
-        public virtual string cmodem
-        {
+        public virtual string cmodem {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for bloquerimpr in the schema.
         /// </summary>
-        public virtual string bloquerimpr
-        {
+        public virtual string bloquerimpr {
             get;
             set;
         }

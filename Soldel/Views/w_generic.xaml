@@ -16,8 +16,8 @@
                         Executed="copy_attr_executed"/>
 
         <CommandBinding Command="commands:attr_command.add"
-                        CanExecute="copy_muta_can_execute"
-                        Executed="copy_muta_executed"/>
+                        CanExecute="add_attr_can_execute"
+                        Executed="add_attr_executed"/>
 
         <CommandBinding Command="commands:muta_command.copy"
                         CanExecute="copy_muta_can_execute"
@@ -32,6 +32,21 @@
         <commands:generate_config_command x:Key="generate_config_command"/>
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
         <converters:w_generic_tree_multi_list_converter x:Key="w_generic_tree_multi_list_converter"/>
+
+        <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
+            <StackPanel>
+                <TextBox Text = "{Binding Path=nom_dict, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libf_dict, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=clatit_dict, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=tydata_dict, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=format_dict, Mode=TwoWay}">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
 
         <DataTemplate x:Key="pe_ip_template" DataType="pe_ip">
             <StackPanel>
@@ -128,7 +143,7 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid x:Name="object_list">
+    <Grid x:Name="list_main">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
@@ -199,6 +214,10 @@
                                         <MenuItem Header="Copier la mutation" 
                                                   Command="commands:muta_command.copy"
                                                   CommandParameter="{Binding pe_muta_id}"/>
+
+                                        <MenuItem Header="Ajouter un attribut" 
+                                                  Command="commands:attr_command.add"/>
+
                                         <MenuItem Header="Coller l'attribut" 
                                                   Command="commands:attr_command.copy"
                                                   CommandParameter="coller_element"/>
@@ -230,8 +249,20 @@
                                <TextBlock Text="{Binding name}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        
-                                              
+
+                        <DataTemplate DataType="{x:Type model:pe_dict}">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
+                                <TextBlock Text="{Binding nom_dict}"/>
+                                <TextBlock Text=" : " />
+                                <TextBlock Text="{Binding clatit_dict}" />
+                            </StackPanel>
+                        </DataTemplate>
+
+
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>

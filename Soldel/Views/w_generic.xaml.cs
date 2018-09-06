@@ -48,14 +48,12 @@ namespace Soldel.Views {
             String connectionString = (String)cbConnection.SelectedValue;
             session = hibernate_util.get_instance().get_session(connectionString);
 
-            List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
-            var object_list = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+            // List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
+            // ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+            // tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
 
-            build_tree(object_list.ToList<object>());
-        }
-
-        private void build_tree(List<object> objects) {
-            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(objects);
+            List<pe_dict> dicts = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList();
+            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(dicts);
         }
 
         // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
@@ -301,6 +299,19 @@ namespace Soldel.Views {
                 copy_libl(clip_libl);
                 clip_libl = null;
             }
+        }
+
+        private void add_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+            e.CanExecute = clip_libl == null;
+        }
+
+        private void add_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+            List<pe_dict> dicts = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList();
+
+            var w_dict = new w_generic();
+
+            w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(dicts);
+            w_dict.ShowDialog();
         }
     }
 }

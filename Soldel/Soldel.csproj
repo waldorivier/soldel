@@ -115,6 +115,7 @@
     <Compile Include="Command\libl_command.cs" />
     <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
+    <Compile Include="Generated\global.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />
     <Compile Include="Generated\soldel.pe_elem.cs" />

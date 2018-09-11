@@ -19,15 +19,13 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Margin="2">
-            <StackPanel>
-                <TextBox>
-                </TextBox>
-            </StackPanel>
+            <TextBox>
+            </TextBox>
         </Grid>
         <Grid Grid.Row="2" Margin="2">
-            <StackPanel>
-                <Button x:Name="btn_tree_add" Content="Ajouter un élément"/>
-                <Button x:Name="btn_tree_delete" Content="Supprimer un élément"/>
+            <StackPanel >
+                <Button x:Name="btn_tree_add" Content="Continuer"/>
+                <Button x:Name="btn_tree_delete" Content="Annuler"/>
             </StackPanel>
         </Grid>
     </Grid>

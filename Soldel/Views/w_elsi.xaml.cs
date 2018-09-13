@@ -24,39 +24,42 @@ namespace Soldel.Views {
     /// <summary>
     /// Logique d'interaction pour Window1.xaml
     /// </summary>
-    public partial class w_elsi : Window {
+    public partial class w_elsi:Window {
         private ISession session;
         private Grammar grammar = new Grammar();
         private Parser parser = new Parser();
-        private int noIp; 
+        List<IDictionary<string,string>> dicts = new List<IDictionary<string,string>>();
+        private int noIp;
         public string columnFilterHistory;
 
         public w_elsi() {
             InitializeComponent();
 
-            uc_select_connection.AddHandler(ComboBox.SelectionChangedEvent, new RoutedEventHandler(Cb_ip_list_SelectionChanged));
+            uc_select_connection.AddHandler(ComboBox.SelectionChangedEvent,new RoutedEventHandler(Cb_ip_list_SelectionChanged));
 
             tb_personne.TextChanged += Tb_personne_TextChanged;
-            btn_reload_personne.Click += Btn_reload_personne_Click;
             tb_column_filter.LostFocus += Tb_column_filter_LostFocus;
         }
 
+        private void export_xl_click(object sender, RoutedEventArgs e) {
+        }
+
+        private void reload_personne_click(object sender, RoutedEventArgs e) {
+            String nperso = tb_personne.Text;
+            if(nperso != null) {
+                read_pers_assu_elsi(nperso);
+            }
+        }
+
         private void Cb_ip_list_SelectionChanged(object sender, RoutedEventArgs e) {
-            if (uc_select_connection.cb_ip_list.SelectedValue != null) {
+            if(uc_select_connection.cb_ip_list.SelectedValue != null) {
                 noIp = (int)uc_select_connection.cb_ip_list.SelectedValue;
             }
         }
 
-        private void Btn_reload_personne_Click(object sender, RoutedEventArgs e) {
-            String nperso = tb_personne.Text;
-            if (nperso != null) {
-                read_pers_assu_elsi(nperso);
-            }
-        }
-        
         private void Tb_personne_TextChanged(object sender, TextChangedEventArgs e) {
             String nperso = tb_personne.Text;
-            if (nperso != null) {
+            if(nperso != null) {
                 read_pers_assu_elsi(nperso);
             }
         }
@@ -70,24 +73,25 @@ namespace Soldel.Views {
 
             dg_elsi_simple.ItemsSource = null;
             dg_elsi_multiple.ItemsSource = null;
+            dicts.Clear();
 
-            var assus_a = uc_select_connection.session.CreateCriteria<pe_assu>().Add(Restrictions.Eq("nperso", nperso))
-                                               .Add(Restrictions.Eq("no_ip", noIp))
+            var assus_a = uc_select_connection.session.CreateCriteria<pe_assu>().Add(Restrictions.Eq("nperso",nperso))
+                                               .Add(Restrictions.Eq("no_ip",noIp))
                                                .List<pe_assu>()
                                                .Select(a => a.pe_assu_id).
                                                ToArray<string>();
 
-            List<pe_elsi> elsis = uc_select_connection.session.CreateCriteria<pe_elsi>().Add(Restrictions.In("pe_assu_id", assus_a))
+            List<pe_elsi> elsis = uc_select_connection.session.CreateCriteria<pe_elsi>().Add(Restrictions.In("pe_assu_id",assus_a))
                                                                    .AddOrder(Order.Desc("dtmutx"))
                                                                    .AddOrder(Order.Desc("nositu"))
                                                                    .List<pe_elsi>().ToList();
 
-            if (elsis.Count > 0) {
-                List<IDictionary<string, string>> dicts = new List<IDictionary<string, string>>();
+            if(elsis.Count > 0) {
+                
                 List<TokenTree> tokenTrees = new List<TokenTree>();
-                foreach (pe_elsi elsi in elsis) {
+                foreach(pe_elsi elsi in elsis) {
                     var elsiTree = new TokenTree();
-                    elsiTree.Tokens = parser.parse(new StringBuilder(elsi.liste_elsi), grammar).ToList();
+                    elsiTree.Tokens = parser.parse(new StringBuilder(elsi.liste_elsi),grammar).ToList();
                     elsiTree.build();
                     dicts.Add(elsiTree.asDictionary());
                     tokenTrees.Add(elsiTree);
@@ -101,13 +105,13 @@ namespace Soldel.Views {
                 dg_elsi_multiple.ItemsSource = CollectionViewSource.GetDefaultView(extension_method.to_data_table(dicts));
             }
         }
-        private void Tb_column_filter_LostFocus(object sender, RoutedEventArgs e) {
-            if (columnFilterHistory != null) {
+        private void Tb_column_filter_LostFocus(object sender,RoutedEventArgs e) {
+            if(columnFilterHistory != null) {
                 Regex regColumnFilterH = new Regex(@columnFilterHistory);
                 dg_elsi_multiple.Columns.Where(c => !regColumnFilterH.IsMatch(c.Header.ToString())).ToList().ForEach(c => c.Visibility = Visibility.Visible);
             }
 
-            if (@tb_column_filter != null) {
+            if(@tb_column_filter != null) {
                 Regex regColumnFilter = new Regex(@tb_column_filter.Text);
                 dg_elsi_multiple.Columns.Where(c => !regColumnFilter.IsMatch(c.Header.ToString())).ToList().ForEach(c => c.Visibility = Visibility.Hidden);
                 dg_elsi_multiple.Visibility = Visibility.Visible;

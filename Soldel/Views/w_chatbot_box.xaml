@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:mupeModel.Views"
+        xmlns:commands="clr-namespace:mupeModel.Commands"
         mc:Ignorable="d"
         Title="chatbot_box" Height="300" Width="300">
+    <Window.CommandBindings>
+        <CommandBinding Command="commands:chat_box_command.validate"
+                        CanExecute="validate_can_execute"
+                        Executed="validate_executed"/>
+    </Window.CommandBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -14,18 +20,16 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="2">
             <StackPanel>
-                <TextBlock>
-                </TextBlock>
+                <TextBlock  x:Name="question"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Margin="2">
-            <TextBox>
-            </TextBox>
+            <TextBox x:Name="response"/>
         </Grid>
         <Grid Grid.Row="2" Margin="2">
             <StackPanel >
-                <Button x:Name="btn_tree_add" Content="Continuer"/>
-                <Button x:Name="btn_tree_delete" Content="Annuler"/>
+                <Button x:Name="btn_validate" Content="Valdider" Command="commands:chat_box_command.validate"/>
+                <Button x:Name="btn_cancel" Content="Annuler"/>
             </StackPanel>
         </Grid>
     </Grid>

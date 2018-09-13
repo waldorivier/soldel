@@ -25,11 +25,12 @@ namespace Soldel.Views {
     /// <summary>
     /// Logique d'interaction pour w_generic.xaml
     /// </summary>
-    public partial class w_generic : Window {
+    public partial class w_generic:Window {
         private pe_attr clip_attr;
         private pe_libl clip_libl;
 
         private ISession session;
+        private bool test_dictionary = true;
 
         public w_generic() {
             InitializeComponent();
@@ -47,18 +48,23 @@ namespace Soldel.Views {
         private void Cb_database_SelectionChanged(object sender,SelectionChangedEventArgs e) {
             ComboBox cbConnection = (ComboBox)sender;
             String connectionString = (String)cbConnection.SelectedValue;
-            session = hibernate_util.get_instance().get_session(connectionString);
 
-            // List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
-            // ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-            // tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
+            if((session = hibernate_util.get_instance().get_session(connectionString)) != null) {
 
-            // TODO : à encapsuler
-            var global = new global() {
-                dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
-                dict_list_name = "Dictionnaire des attributs"
-            };
-            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global>() { global });
+                if(!test_dictionary) {
+                    List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
+                    ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+
+                    tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
+                } else {
+                    var global = new global() {
+                        dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
+                        dict_list_name = "Dictionnaire des attributs"
+                    };
+
+                    tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global>() { global });
+                }
+            }
         }
 
         // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
@@ -90,8 +96,8 @@ namespace Soldel.Views {
 
                     } else if(selected is global) {
 
+                        // en l'état, il n'y a que le dictionnaire des attributs        
                         new chatbot_box().ShowDialog();
-
                     }
 
                     transaction.Commit();
@@ -248,11 +254,9 @@ namespace Soldel.Views {
                 }
             }
         }
-        
 
-        //---------------------------------------------------------------------
-        // COMMAND HANDLER
-        //---------------------------------------------------------------------
+        #region COMMAND HANDLER
+
         private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             object data = Clipboard.GetData("String");
             if(e.Parameter.ToString().Equals("coller_element")) {
@@ -323,6 +327,8 @@ namespace Soldel.Views {
             w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(dicts);
             w_dict.ShowDialog();
         }
+
+        #endregion
     }
 }
 

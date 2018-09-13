@@ -15,6 +15,5 @@ namespace mupeModel.Commands {
             get => add_;
             set => add_ = value;
         }
-
     }
 }

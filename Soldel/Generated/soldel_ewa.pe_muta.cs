@@ -39,7 +39,14 @@ namespace mupeModel {
             this._tyeven = "NAN";
         }
 
-        public virtual void add_attr(pe_attr attr) {
+        //public virtual void add_attr(pe_attr attr) {
+        //    attr.pe_muta = this;
+        //    attr.pe_muta_id = this.pe_muta_id;
+        //    this._pe_attr_list.Add(attr);
+        //}
+
+        public virtual void add_attr(object child) {
+            pe_attr attr = (pe_attr)child;
             attr.pe_muta = this;
             attr.pe_muta_id = this.pe_muta_id;
             this._pe_attr_list.Add(attr);

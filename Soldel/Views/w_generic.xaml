@@ -26,8 +26,13 @@
         <CommandBinding Command="commands:libl_command.copy"
                         CanExecute="copy_libl_can_execute"
                         Executed="copy_libl_executed"/>
+        
+        <CommandBinding Command="commands:dict_command.select"
+                        CanExecute="dict_select_can_execute"
+                        Executed="dict_select_executed"/>
+
     </Window.CommandBindings>
-    
+
     <Window.Resources>
         <commands:generate_config_command x:Key="generate_config_command"/>
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
@@ -58,7 +63,7 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
                 <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
@@ -69,22 +74,22 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="pe_cfgd_template" DataType="pe_cfgd">
             <StackPanel>
                 <TextBox Text = "{Binding Path=pe_cfgt.dadval}"/>
                 <TextBox Text = "{Binding Path=pe_cfgt.description, Mode=TwoWay}"/>
                 <Border BorderBrush="LightGray" BorderThickness="1">
                     <Expander Header="XML">
-                    <Expander.Content>
+                        <Expander.Content>
                             <ScrollViewer VerticalScrollBarVisibility="Visible" 
                                           MaxHeight="300"
                                           CanContentScroll="True">
                                 <TextBlock  Text="{Binding Path=cfg_xml}"/>
                             </ScrollViewer>
-                        </Expander.Content> 
+                        </Expander.Content>
                     </Expander>
-                </Border>    
+                </Border>
             </StackPanel>
         </DataTemplate>
 
@@ -166,9 +171,8 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2">
+                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2" Grid.ColumnSpan="2">
                     <TreeView.Resources>
 
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
@@ -204,11 +208,11 @@
                                                   Command="commands:muta_command.copy"
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
-                            </StackPanel.ContextMenu>
-                            <TextBlock Text="{Binding libf_grmu}" />
+                                </StackPanel.ContextMenu>
+                                <TextBlock Text="{Binding libf_grmu}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        
+
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
@@ -224,11 +228,11 @@
                                                   Command="commands:attr_command.copy"
                                                   CommandParameter="coller_element"/>
                                     </ContextMenu>
-                                  </StackPanel.ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        
+
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_attr}" ItemsSource="{Binding pe_libl_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
@@ -248,10 +252,10 @@
                         <HierarchicalDataTemplate DataType="{x:Type converters:folder_node}" 
                                                   ItemsSource="{Binding child_nodes}">
                             <StackPanel Orientation="Horizontal">
-                               <TextBlock Text="{Binding name}"/>
+                                <TextBlock Text="{Binding name}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                       
+
                         <DataTemplate DataType="{x:Type model:pe_libl}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
@@ -271,7 +275,7 @@
                             </StackPanel>
                         </DataTemplate>
 
-                        <HierarchicalDataTemplate DataType="{x:Type model:global}" ItemsSource="{Binding dict_list}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:global_dict}" ItemsSource="{Binding dict_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
@@ -283,6 +287,13 @@
 
                         <DataTemplate DataType="{x:Type model:pe_dict}">
                             <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Sélectionner et copier" 
+                                                  Command="commands:dict_command.select"
+                                                  CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding Path=nom_dict}"/>
                                 <TextBlock Text=" : " />
                                 <TextBlock Text="{Binding clatit_dict}" />
@@ -291,18 +302,11 @@
 
                     </TreeView.Resources>
                 </TreeView>
-                
-                <Grid x:Name="g_tree_crud" Grid.Row="1" Margin="2">
-                    <StackPanel>
-                        <Button x:Name="btn_tree_add" Content="Ajouter un élément"/>
-                        <Button x:Name="btn_tree_delete" Content="Supprimer un élément"/>
-                    </StackPanel>
-                </Grid>
             </Grid>
 
-            <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" Margin="2"/>
+            <GridSplitter x:Name="sv"  HorizontalAlignment="Stretch" Grid.Column="1" Margin="2"/>
 
-            <Grid Grid.Column="2" Margin="2">
+            <Grid x:Name="detail" Grid.Column="2" Margin="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="5"/>

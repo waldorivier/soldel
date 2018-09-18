@@ -111,12 +111,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\dict_command.cs" />
     <Compile Include="Command\chat_box_command .cs" />
     <Compile Include="Command\attr_command.cs" />
     <Compile Include="Command\libl_command.cs" />
     <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
-    <Compile Include="Generated\global.cs" />
+    <Compile Include="Generated\global_dict.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />
     <Compile Include="Generated\soldel.pe_elem.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Generated\soldel_ewa.pe_libl.cs" />
     <Compile Include="Generated\soldel_ewa.pe_muta.cs" />
     <Compile Include="Utils\audit_interceptor.cs" />
+    <Compile Include="Utils\persister.cs" />
     <Compile Include="Utils\hibernate_util.cs" />
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />

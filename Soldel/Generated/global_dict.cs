@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace mupeModel {
-    class global : IValueConverter {
+    class global_dict : IValueConverter {
 
         private string _dict_list_name; 
 
         private IList<pe_dict> _dict_list;
         private IList<pe_libl> _libl_list;
 
-        public global() {
+        public global_dict() {
             _dict_list = new List<pe_dict>();
             _libl_list = new List<pe_libl>();
         }

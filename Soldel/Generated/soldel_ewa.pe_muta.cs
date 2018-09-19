@@ -9,7 +9,7 @@ namespace mupeModel {
     using System.Threading;
     using System.Windows.Data;
 
-    public class pe_muta:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
+    public class pe_muta:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_persistant {
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
         private string _pe_muta_id = "";
         private string _u_version;
@@ -39,17 +39,14 @@ namespace mupeModel {
             this._tyeven = "NAN";
         }
 
-        //public virtual void add_attr(pe_attr attr) {
-        //    attr.pe_muta = this;
-        //    attr.pe_muta_id = this.pe_muta_id;
-        //    this._pe_attr_list.Add(attr);
-        //}
+        public virtual void add_child(object child) {
 
-        public virtual void add_attr(object child) {
-            pe_attr attr = (pe_attr)child;
-            attr.pe_muta = this;
-            attr.pe_muta_id = this.pe_muta_id;
-            this._pe_attr_list.Add(attr);
+            var attr = child as pe_attr;
+            if(attr != null) {
+                attr.pe_muta = this;
+                attr.pe_muta_id = this.pe_muta_id;
+                this._pe_attr_list.Add(attr);
+            }
         }
 
         public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
@@ -67,7 +64,7 @@ namespace mupeModel {
         public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
             pe_muta muta = shallow_copy(muta_id,ip);
             foreach(pe_attr _attr in pe_attr_list) {
-                muta.add_attr(_attr.shallow_copy(muta));
+                muta.add_child(_attr.shallow_copy(muta));
             }
             return muta;
         }

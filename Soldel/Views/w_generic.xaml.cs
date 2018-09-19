@@ -163,7 +163,7 @@ namespace Soldel.Views {
                     transaction = session.BeginTransaction();
 
                     pe_attr attr = attr_to_copy.shallow_copy(muta);
-                    muta.add_attr(attr);
+                    muta.add_child(attr);
                     session.Save(muta);
 
                     transaction.Commit();
@@ -362,14 +362,14 @@ namespace Soldel.Views {
         delegate void add_child(object child);
 
         private void dict_select_executed(object sender,ExecutedRoutedEventArgs e) {
+
             pe_dict dict = e.Parameter as pe_dict;
 
             pe_attr attr = new pe_attr();
             attr.nom_attr = dict.nom_dict;
             attr.clatit_attr = dict.clatit_dict;
 
-            add_child a = clip_muta.add_attr;
-            persister.add_child(a, attr);
+            new persistant_controller(session).add_child(clip_muta, attr);
         }
 
         #endregion

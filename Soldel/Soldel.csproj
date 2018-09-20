@@ -139,7 +139,7 @@
     <Compile Include="Generated\soldel_ewa.pe_libl.cs" />
     <Compile Include="Generated\soldel_ewa.pe_muta.cs" />
     <Compile Include="Utils\audit_interceptor.cs" />
-    <Compile Include="Utils\persistant_controller.cs" />
+    <Compile Include="Generated\persistant_controller.cs" />
     <Compile Include="Utils\hibernate_util.cs" />
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />

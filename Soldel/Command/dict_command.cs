@@ -3,17 +3,17 @@ namespace mupeModel.Commands {
     using System.Windows.Input;
 
     public static class dict_command {
-        private static RoutedUICommand select_ = new RoutedUICommand("select", "select", typeof(dict_command), null);
-        private static RoutedUICommand add_ = new RoutedUICommand("add","add",typeof(dict_command),null);
+        private static RoutedUICommand _select = new RoutedUICommand("select", "select", typeof(dict_command), null);
+        private static RoutedUICommand _add = new RoutedUICommand("add","add",typeof(dict_command),null);
 
         public static RoutedUICommand select {
-            get => select_;
-            set => select_ = value;
+            get => _select;
+            set => _select = value;
         }
 
         public static RoutedUICommand add {
-            get => add_;
-            set => add_ = value;
+            get => _add;
+            set => _add = value;
         }
     }
 }

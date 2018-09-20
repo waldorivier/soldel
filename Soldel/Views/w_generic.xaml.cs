@@ -19,6 +19,7 @@ using mupeModel;
 using NHibernate;
 using NHibernate.Criterion;
 using mupeModel.Views;
+using System.Collections.ObjectModel;
 
 namespace Soldel.Views {
 
@@ -27,11 +28,11 @@ namespace Soldel.Views {
     /// </summary>
     public partial class w_generic:Window {
 
-        private pe_attr clip_attr;
-        private pe_libl clip_libl;
-        private pe_muta clip_muta;
+        private pe_attr _clip_attr;
+        private pe_libl _clip_libl;
+        private pe_muta _clip_muta;
 
-        private ISession session;
+        private ISession _session;
         private bool test_dictionary = false;
 
         public w_generic() {
@@ -51,22 +52,10 @@ namespace Soldel.Views {
             ComboBox cb_onnection = (ComboBox)sender;
             String connection_string = (String)cb_onnection.SelectedValue;
 
-            if((session = hibernate_util.get_instance().get_session(connection_string)) != null) {
-                if(!test_dictionary) {
-                    List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
-                    ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-
-                    tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
-
-                } else {
-                    var global_dict = new global_dict() {
-                        dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
-                        dict_list_name = "Dictionnaire des attributs"
-                    };
-
-                    clip_muta = session.Load<pe_muta>("687");
-                    tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
-                }
+            if((_session = hibernate_util.get_instance().get_session(connection_string)) != null) {
+                List<pe_ip> ips = _session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
+                ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+                tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
             }
         }
 
@@ -77,7 +66,7 @@ namespace Soldel.Views {
             ITransaction transaction = null;
 
             try {
-                transaction = session.BeginTransaction();
+                transaction = _session.BeginTransaction();
 
                 var selected = tree_main.SelectedValue;
                 if(selected != null) {
@@ -89,7 +78,7 @@ namespace Soldel.Views {
                             pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
                         };
 
-                        session.Save(grmu);
+                        _session.Save(grmu);
 
                     } else if(selected is pe_muta) {
                         var muta = selected as pe_muta;
@@ -125,22 +114,23 @@ namespace Soldel.Views {
             try {
                 var grmu = tree_main.SelectedValue as pe_grmu;
                 if(grmu != null) {
-                    transaction = session.BeginTransaction();
+                    transaction = _session.BeginTransaction();
 
-                    pe_ip ip = session.Get<pe_ip>(grmu.no_ip);
-                    pe_muta muta_to_copy = session.Get<pe_muta>(element_id);
+                    pe_ip ip = _session.Get<pe_ip>(grmu.no_ip);
+                    pe_muta muta_to_copy = _session.Get<pe_muta>(element_id);
 
                     string str = hibernate_util.get_instance().generate_muta_id();
                     pe_muta muta = muta_to_copy.deep_copy(str,ip);
 
                     ip.add_muta(muta);
                     pe_gmmu gmmu = new pe_gmmu(grmu,muta);
-                    session.Save(gmmu);
+                    _session.Save(gmmu);
 
-                    session.Save(ip);
+                    _session.Save(ip);
 
                     transaction.Commit();
-                    session.Refresh(gmmu);
+                    _session.Refresh(gmmu);
+
                     tree_main.Items.Refresh();
                 }
             } catch(Exception ex) {
@@ -153,38 +143,13 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_attr(pe_attr attr_to_copy) {
-
-            ITransaction transaction = null;
-            try {
-                pe_muta muta = tree_main.SelectedValue as pe_muta;
-                if(muta != null) {
-                    transaction = session.BeginTransaction();
-
-                    pe_attr attr = attr_to_copy.shallow_copy(muta);
-                    muta.add_child(attr);
-                    session.Save(muta);
-
-                    transaction.Commit();
-                    session.Refresh(muta);
-                }
-            } catch(Exception exception) {
-                if(transaction != null) {
-                    if(transaction != null) {
-                        transaction.Rollback();
-                    }
-                    MessageBox.Show(exception.StackTrace);
-                }
-            }
-        }
-
-        private void copy_libl(pe_libl libl_to_copy) {
+         private void copy_libl(pe_libl libl_to_copy) {
 
             ITransaction transaction = null;
             try {
                 pe_attr attr = tree_main.SelectedValue as pe_attr;
                 if(attr != null) {
-                    transaction = session.BeginTransaction();
+                    transaction = _session.BeginTransaction();
 
                     pe_libl libl = libl_to_copy.shallow_copy();
                     libl.no_ip = attr.pe_muta.no_ip;
@@ -193,17 +158,16 @@ namespace Soldel.Views {
                     pe_libl libl_ = attr.pe_libl_list.First();
                     if(libl_ != null) {
                         attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
-                        session.Delete(libl_);
+                        _session.Delete(libl_);
                     }
 
-                    session.Save(libl);
+                    _session.Save(libl);
                     transaction.Commit();
 
-                    session.Refresh(attr.pe_muta.pe_ip);
+                    _session.Refresh(attr.pe_muta.pe_ip);
                     var libl_list = attr.pe_libl_list;
 
-                    // TODO : améliorer pour ne rafraichir que la partie concernée
-                    // tree_main.Items.Refresh();
+                    tree_main.Items.Refresh();
                 }
             } catch(Exception exception) {
                 if(transaction != null) {
@@ -226,7 +190,7 @@ namespace Soldel.Views {
             try {
                 var muta = tree_main.SelectedValue as pe_muta;
                 if(muta != null) {
-                    transaction = session.BeginTransaction();
+                    transaction = _session.BeginTransaction();
 
                     // TODO : ce n'est pas complet, car il faut choisir un des gmmus.....!
 
@@ -234,7 +198,7 @@ namespace Soldel.Views {
                     gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);
                     muta.pe_gmmu_list.Remove(gmmu);
 
-                    session.Delete(gmmu);
+                    _session.Delete(gmmu);
                     transaction.Commit();
                     tree_main.Items.Refresh();
                 }
@@ -252,8 +216,8 @@ namespace Soldel.Views {
             ITransaction transaction = null;
             if(g_detail.DataContext != null) {
                 try {
-                    transaction = session.BeginTransaction();
-                    session.Save(g_detail.DataContext);
+                    transaction = _session.BeginTransaction();
+                    _session.Save(g_detail.DataContext);
                     transaction.Commit();
                 } catch(Exception ex) {
                     if(transaction != null)
@@ -263,7 +227,81 @@ namespace Soldel.Views {
             }
         }
 
-        #region COMMAND HANDLER
+        #region ATTRIBUT
+
+
+        private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+
+            if(e.Parameter.ToString().Equals("coller_element")) {
+                e.CanExecute = _clip_attr != null;
+            } else {
+                e.CanExecute = _clip_attr == null;
+            }
+        }
+
+        private void copy_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+
+            if(!e.Parameter.ToString().Equals("coller_element")) {
+                pe_attr parameter = e.Parameter as pe_attr;
+                if(parameter != null) {
+                    _clip_attr = parameter;
+                }
+            } else if(_clip_attr != null) {
+                pe_muta muta = tree_main.SelectedValue as pe_muta;
+                if(muta != null) {
+                    new persistant_controller(_session).add_child(muta, _clip_attr.shallow_copy(muta));
+                    tree_main.Items.Refresh();
+
+                    _clip_attr = null;
+                }
+            }
+        }
+
+        private void add_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+
+            e.CanExecute = true;
+        }
+
+        private void add_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+
+            pe_muta muta = e.Parameter as pe_muta;
+            if(muta != null) {
+                var global_dict = new global_dict() {
+                    dict_list = _session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
+                    dict_list_name = "Dictionnaire des attributs"
+                };
+
+                var w_dict = new w_generic();
+                w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
+                w_dict.cb_connection.Visibility = Visibility.Collapsed;
+
+                w_dict._clip_muta = muta;
+                w_dict._session = _session;
+
+                w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
+                w_dict.ShowDialog();
+
+                // tree_main.Items.Refresh();
+             }
+        }
+
+        private void delete_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+
+            e.CanExecute = true;
+        }
+
+        private void delete_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+
+            pe_attr attr = e.Parameter as pe_attr;
+            if(attr != null) {
+                new persistant_controller(_session).delete(attr.pe_muta,attr);
+                tree_main.Items.Refresh();
+            }
+        }
+
+        #endregion
+
+        #region MUTATION
 
         private void copy_muta_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
@@ -286,33 +324,16 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        #endregion
 
-            if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = clip_attr != null;
-            } else {
-                e.CanExecute = clip_attr == null;
-            }
-        }
+        #region LIBL
 
-        private void copy_attr_executed(object sender,ExecutedRoutedEventArgs e) {
-
-            if(!e.Parameter.ToString().Equals("coller_element")) {
-                pe_attr parameter = e.Parameter as pe_attr;
-                if(parameter != null) {
-                    clip_attr = parameter;
-                }
-            } else if(clip_attr != null) {
-                copy_attr(clip_attr);
-                clip_attr = null;
-            }
-        }
         private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
             if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = clip_libl != null;
+                e.CanExecute = _clip_libl != null;
             } else {
-                e.CanExecute = clip_libl == null;
+                e.CanExecute = _clip_libl == null;
             }
         }
         private void copy_libl_executed(object sender,ExecutedRoutedEventArgs e) {
@@ -320,44 +341,21 @@ namespace Soldel.Views {
             if(!e.Parameter.ToString().Equals("coller_element")) {
                 pe_libl parameter = e.Parameter as pe_libl;
                 if(parameter != null) {
-                    clip_libl = parameter;
+                    _clip_libl = parameter;
                 }
-            } else if(clip_libl != null) {
-                copy_libl(clip_libl);
-                clip_libl = null;
+            } else if(_clip_libl != null) {
+                copy_libl(_clip_libl);
+                _clip_libl = null;
             }
         }
-        private void add_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
-            e.CanExecute = true;
-        }
+        #endregion
 
-        private void add_attr_executed(object sender,ExecutedRoutedEventArgs e) {
-
-            pe_muta muta = e.Parameter as pe_muta;
-            if(muta != null) {
-                var global_dict = new global_dict() {
-                    dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
-                    dict_list_name = "Dictionnaire des attributs"
-                };
-
-                var w_dict = new w_generic();
-                w_dict.cb_connection.Visibility = Visibility.Collapsed;
-
-                w_dict.clip_muta = muta;
-                w_dict.session = session;
-              
-                w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
-
-                w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
-
-                w_dict.ShowDialog();
-            }
-        }
+        #region DICT
 
         private void dict_select_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
-            e.CanExecute = (clip_muta != null);
+            e.CanExecute = (_clip_muta != null);
         }
 
         delegate void add_child(object child);
@@ -371,8 +369,8 @@ namespace Soldel.Views {
                 attr.nom_attr = dict.nom_dict;
                 attr.clatit_attr = dict.clatit_dict;
 
-                if (clip_muta.can_add_child(attr)) {
-                    new persistant_controller(session).add_child(clip_muta,attr);
+                if(_clip_muta.can_add_child(attr)) {
+                    new persistant_controller(_session).add_child(_clip_muta,attr);
 
                     this.Close();
                 }

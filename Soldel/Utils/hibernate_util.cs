@@ -18,7 +18,7 @@ namespace mupeModel.Utils {
         private IDictionary<string,ISessionFactory> session_factory_cache = new Dictionary<string,ISessionFactory>();
         private IDictionary<string,string> global_parameters;
         private IList<string> connections;
-        private IList<pe_dict> dict_libelles;
+        private IList<pe_libl> dict_libelles;
         private ISession current_session;
 
         private static hibernate_util hibernate_util_ = null;
@@ -99,8 +99,9 @@ namespace mupeModel.Utils {
             global_parameters = new Dictionary<string,string>();
             global_parameters.Add("USERNAME",System.Environment.GetEnvironmentVariable("USERNAME"));
         }
+
         private void load_global_libelles() {
-            // dict_libelles = get_current_session().CreateCriteria<pe_dict>().List<pe_dict>().ToList();
+            dict_libelles = get_current_session().CreateCriteria<pe_libl>().List<pe_libl>().ToList();
         }
 
         public IList<string> get_connections() {
@@ -113,7 +114,7 @@ namespace mupeModel.Utils {
             return user;
         }
 
-        public IList<pe_dict> get_dict_libelles() {
+        public IList<pe_libl> get_dict_libelles() {
             return dict_libelles;
         }
 
@@ -124,10 +125,10 @@ namespace mupeModel.Utils {
         public string generate_grmu_id() {
             return get_current_session().CreateSQLQuery("SELECT MAX (to_number(pe_grmu_id)) + 1 from pe_grmu").UniqueResult().ToString();
         }
+
         public string generate_attr_id() {
             return get_current_session().CreateSQLQuery("SELECT MAX (to_number(pe_attr_id)) + 1 from pe_attr").UniqueResult().ToString();
         }
-
     }
 
     public static class extension_method {
@@ -177,6 +178,7 @@ namespace mupeModel.Utils {
     }
 
     public static class copy_object {
+
         public static void copy<T>(T copy_from,T copy_to) {
             if(copy_from == null || copy_to == null)
                 throw new Exception("Must not specify null parameters");

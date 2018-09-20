@@ -21,7 +21,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_attr, Soldel in the schema.
     /// </summary>
-    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged, i_persistant {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -456,17 +456,7 @@ namespace mupeModel {
                 }
             }
         }
-        public virtual pe_dict pe_dict {
-            get {
-                try {
-                    return hibernate_util.get_instance().get_dict_libelles().
-                           Where<pe_dict>(x => x.nom_dict.Equals(nom_attr)).ToList<pe_dict>().Single<pe_dict>();
-                } catch {
-                    return null;
-                }
-            }
-        }
-
+       
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
@@ -515,6 +505,23 @@ namespace mupeModel {
             }
                      
             return copy;
+        }
+
+        void i_persistant.add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_persistant.can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_persistant.can_remove_me() {
+            return true;
+        }
+
+        void i_persistant.remove_me() {
+
+            this.pe_muta.pe_attr_list.Remove(this);
         }
     }
 }

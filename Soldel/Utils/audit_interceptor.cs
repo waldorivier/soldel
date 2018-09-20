@@ -7,6 +7,7 @@ namespace mupeModel.Utils {
         private int updates;
         private int creates;
         private int loads;
+        private int deletes;
 
         public override void AfterTransactionCompletion(ITransaction tx) {
             if(tx != null) {
@@ -20,6 +21,7 @@ namespace mupeModel.Utils {
         }
 
         public override void OnDelete(object entity,object id,object[] state,string[] propertyNames,IType[] types) {
+            this.updates++;
         }
 
         public override bool OnFlushDirty(object entity,object id,object[] currentState,object[] previousState,string[] propertyNames,IType[] types) {

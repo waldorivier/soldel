@@ -19,6 +19,10 @@
                         CanExecute="add_attr_can_execute"
                         Executed="add_attr_executed"/>
 
+        <CommandBinding Command="commands:attr_command.delete"
+                        CanExecute="delete_attr_can_execute"
+                        Executed="delete_attr_executed"/>
+
         <CommandBinding Command="commands:muta_command.copy"
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
@@ -119,6 +123,7 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="pe_attr_template" DataType="pe_attr">
             <StackPanel>
                 <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}"/>
@@ -138,6 +143,7 @@
                 </ComboBox>
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="pe_libl_template" DataType="pe_libl">
             <StackPanel>
                 <TextBox Text = "{Binding Path=libf_attr, Mode=TwoWay}">
@@ -253,6 +259,11 @@
                                         <MenuItem Header="Copier l'attribut" 
                                                   Command="commands:attr_command.copy"
                                                   CommandParameter="{Binding}"/>
+
+                                        <MenuItem Header="Supprimer l'attribut" 
+                                                  Command="commands:attr_command.delete"
+                                                  CommandParameter="{Binding}"/>
+
                                         <MenuItem Header="Coller le libellé" 
                                                   Command="commands:libl_command.copy"
                                                   CommandParameter="coller_element"/>

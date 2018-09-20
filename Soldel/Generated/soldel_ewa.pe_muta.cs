@@ -113,6 +113,14 @@ namespace mupeModel {
             return copy;
         }
 
+        bool i_persistant.can_remove_me() {
+            throw new NotImplementedException();
+        }
+
+        void i_persistant.remove_me() {
+            throw new NotImplementedException();
+        }
+
         public virtual string pe_muta_id {
             get =>
                 this._pe_muta_id;

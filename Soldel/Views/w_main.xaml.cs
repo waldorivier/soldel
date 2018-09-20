@@ -32,7 +32,7 @@ namespace Soldel.Views {
             new w_generic().ShowDialog();
         }
 
-        private void Btn_elca_Click(object sender, RoutedEventArgs e) {
+        private void Btn_elca_Click(object sender, RoutedEventArgs e) { 
             new w_compare().ShowDialog();
         }
 

@@ -30,7 +30,6 @@
         <CommandBinding Command="commands:dict_command.select"
                         CanExecute="dict_select_can_execute"
                         Executed="dict_select_executed"/>
-
     </Window.CommandBindings>
 
     <Window.Resources>
@@ -38,7 +37,18 @@
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
         <converters:w_generic_tree_multi_list_converter x:Key="w_generic_tree_multi_list_converter"/>
 
-        <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
+            <Style x:Key="tree_view_item_type" TargetType="TreeViewItem">
+                <Style.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=is_expanded}" Value="true" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="IsExpanded" Value="true"/>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
             <StackPanel>
                 <TextBox Text = "{Binding Path=nom_dict, Mode=TwoWay}">
                 </TextBox>
@@ -172,9 +182,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2" Grid.ColumnSpan="2">
+                
+                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2" Grid.ColumnSpan="2" 
+                          ItemContainerStyle="{StaticResource tree_view_item_type}">
+                    
                     <TreeView.Resources>
-
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
                             <HierarchicalDataTemplate.ItemsSource>
                                 <Binding Path="pe_grmu_list"/>
@@ -222,7 +234,8 @@
                                                   CommandParameter="{Binding pe_muta_id}"/>
 
                                         <MenuItem Header="Ajouter un attribut" 
-                                                  Command="commands:attr_command.add"/>
+                                                  Command="commands:attr_command.add"
+                                                  CommandParameter="{Binding}"/>
 
                                         <MenuItem Header="Coller l'attribut" 
                                                   Command="commands:attr_command.copy"

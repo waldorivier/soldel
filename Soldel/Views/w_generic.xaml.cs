@@ -32,7 +32,7 @@ namespace Soldel.Views {
         private pe_muta clip_muta;
 
         private ISession session;
-        private bool test_dictionary = true;
+        private bool test_dictionary = false;
 
         public w_generic() {
 
@@ -52,7 +52,6 @@ namespace Soldel.Views {
             String connection_string = (String)cb_onnection.SelectedValue;
 
             if((session = hibernate_util.get_instance().get_session(connection_string)) != null) {
-
                 if(!test_dictionary) {
                     List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                     ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
@@ -71,7 +70,7 @@ namespace Soldel.Views {
             }
         }
 
-        // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
+        // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte (en cours)
 
         private void Btn_tree_add_Click(object sender,RoutedEventArgs e) {
 
@@ -248,7 +247,6 @@ namespace Soldel.Views {
                 }
             }
         }
-
         private void Btn_update_Click(object sender,RoutedEventArgs e) {
 
             ITransaction transaction = null;
@@ -309,7 +307,6 @@ namespace Soldel.Views {
                 clip_attr = null;
             }
         }
-
         private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
             if(e.Parameter.ToString().Equals("coller_element")) {
@@ -337,25 +334,29 @@ namespace Soldel.Views {
 
         private void add_attr_executed(object sender,ExecutedRoutedEventArgs e) {
 
-            var global_dict = new global_dict() {
-                dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
-                dict_list_name = "Dictionnaire des attributs"
-            };
+            pe_muta muta = e.Parameter as pe_muta;
+            if(muta != null) {
+                var global_dict = new global_dict() {
+                    dict_list = session.CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).ToList(),
+                    dict_list_name = "Dictionnaire des attributs"
+                };
 
-            var w_dict = new w_generic();
+                var w_dict = new w_generic();
+                w_dict.cb_connection.Visibility = Visibility.Collapsed;
 
-            w_dict.clip_muta = tree_main.SelectedValue as pe_muta;
+                w_dict.clip_muta = muta;
+                w_dict.session = session;
+              
+                w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
 
-            w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(global_dict);
-            w_dict.cb_connection.Visibility = Visibility.Collapsed;
-            w_dict.detail.Visibility = Visibility.Collapsed;
-            w_dict.sv.Visibility = Visibility.Collapsed;
-            w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
+                w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
 
-            w_dict.ShowDialog();
+                w_dict.ShowDialog();
+            }
         }
 
         private void dict_select_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+
             e.CanExecute = (clip_muta != null);
         }
 
@@ -364,12 +365,18 @@ namespace Soldel.Views {
         private void dict_select_executed(object sender,ExecutedRoutedEventArgs e) {
 
             pe_dict dict = e.Parameter as pe_dict;
+            if(dict != null) {
+                pe_attr attr = new pe_attr();
 
-            pe_attr attr = new pe_attr();
-            attr.nom_attr = dict.nom_dict;
-            attr.clatit_attr = dict.clatit_dict;
+                attr.nom_attr = dict.nom_dict;
+                attr.clatit_attr = dict.clatit_dict;
 
-            new persistant_controller(session).add_child(clip_muta, attr);
+                if (clip_muta.can_add_child(attr)) {
+                    new persistant_controller(session).add_child(clip_muta,attr);
+
+                    this.Close();
+                }
+            }
         }
 
         #endregion

@@ -33,6 +33,7 @@ namespace Soldel.Views {
         public string columnFilterHistory;
 
         public w_elsi() {
+
             InitializeComponent();
 
             uc_select_connection.AddHandler(ComboBox.SelectionChangedEvent,new RoutedEventHandler(Cb_ip_list_SelectionChanged));
@@ -45,6 +46,7 @@ namespace Soldel.Views {
         }
 
         private void reload_personne_click(object sender, RoutedEventArgs e) {
+
             String nperso = tb_personne.Text;
             if(nperso != null) {
                 read_pers_assu_elsi(nperso);
@@ -52,12 +54,14 @@ namespace Soldel.Views {
         }
 
         private void Cb_ip_list_SelectionChanged(object sender, RoutedEventArgs e) {
+
             if(uc_select_connection.cb_ip_list.SelectedValue != null) {
                 noIp = (int)uc_select_connection.cb_ip_list.SelectedValue;
             }
         }
 
         private void Tb_personne_TextChanged(object sender, TextChangedEventArgs e) {
+
             String nperso = tb_personne.Text;
             if(nperso != null) {
                 read_pers_assu_elsi(nperso);
@@ -106,6 +110,7 @@ namespace Soldel.Views {
             }
         }
         private void Tb_column_filter_LostFocus(object sender,RoutedEventArgs e) {
+
             if(columnFilterHistory != null) {
                 Regex regColumnFilterH = new Regex(@columnFilterHistory);
                 dg_elsi_multiple.Columns.Where(c => !regColumnFilterH.IsMatch(c.Header.ToString())).ToList().ForEach(c => c.Visibility = Visibility.Visible);

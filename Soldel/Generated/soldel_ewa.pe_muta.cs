@@ -39,6 +39,18 @@ namespace mupeModel {
             this._tyeven = "NAN";
         }
 
+        public virtual bool can_add_child(object child) {
+
+            bool can_add = false;
+            var attr = child as pe_attr;
+            if(attr != null) {
+                attr.pe_muta_id = this.pe_muta_id;
+                can_add = !this.pe_attr_list.Contains(attr);
+            }
+
+            return can_add;
+        }
+
         public virtual void add_child(object child) {
 
             var attr = child as pe_attr;
@@ -50,6 +62,7 @@ namespace mupeModel {
         }
 
         public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
+
             try {
                 pe_muta _muta = (pe_muta)value;
                 return _muta.pe_attr_list;

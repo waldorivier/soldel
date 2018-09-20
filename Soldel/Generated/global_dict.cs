@@ -10,7 +10,6 @@ namespace mupeModel {
     class global_dict : IValueConverter {
 
         private string _dict_list_name; 
-
         private IList<pe_dict> _dict_list;
         private IList<pe_libl> _libl_list;
 
@@ -25,6 +24,8 @@ namespace mupeModel {
             get => _libl_list; set => _libl_list = value; }
         public string dict_list_name { get => _dict_list_name; set => _dict_list_name = value; }
 
+        public bool is_expanded => true;
+        
         // TODO : Convert un seul des liste
 
         object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) {

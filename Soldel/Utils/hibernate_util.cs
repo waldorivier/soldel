@@ -101,7 +101,8 @@ namespace mupeModel.Utils {
         }
 
         private void load_attr_dict_list() {
-            attr_dict_list = get_current_session().CreateCriteria<pe_dict>().List<pe_dict>().ToList();
+            attr_dict_list = get_current_session().CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).
+                                                                                             OrderBy(x => x.clatit_dict).ToList();
         }
 
         public IList<string> get_connections() {

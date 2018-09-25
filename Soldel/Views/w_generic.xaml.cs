@@ -200,7 +200,6 @@ namespace Soldel.Views {
 
                     _session.Delete(gmmu);
                     transaction.Commit();
-                    tree_main.Items.Refresh();
                 }
             } catch(Exception ex) {
                 if(transaction != null) {
@@ -281,7 +280,7 @@ namespace Soldel.Views {
 
             pe_attr attr = e.Parameter as pe_attr;
             if(attr != null) {
-                new persistant_controller(_session).delete(attr.pe_muta,attr);
+                new persistant_controller(_session).delete(attr.pe_muta, attr);
             }
         }
 

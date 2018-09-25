@@ -1,6 +1,7 @@
 namespace mupeModel {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
@@ -15,10 +16,10 @@ namespace mupeModel {
         private string _abgregf_ip = @"";
 
         private ISet<pe_libl> _pe_libl_list = new HashSet<pe_libl>();
-        private IList<pe_muta> _pe_muta_list = new List<pe_muta>();
-        private IList<pe_cfgt> _pe_cfgt_list = new List<pe_cfgt>();
-        private IList<pe_grmu> _pe_grmu_list = new List<pe_grmu>();
-               
+        private IList<pe_muta> _pe_muta_list = new ObservableCollection<pe_muta>();
+        private IList<pe_cfgt> _pe_cfgt_list = new ObservableCollection<pe_cfgt>();
+        private IList<pe_grmu> _pe_grmu_list = new ObservableCollection<pe_grmu>();
+
         public virtual event PropertyChangedEventHandler PropertyChanged;
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
@@ -58,23 +59,23 @@ namespace mupeModel {
 
         protected virtual void SendPropertyChanging() {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, emptyChangingEventArgs);
+            if(handler != null)
+                handler(this,emptyChangingEventArgs);
         }
 
         protected virtual void SendPropertyChanging(System.String propertyName) {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, new PropertyChangingEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangingEventArgs(propertyName));
         }
 
         protected virtual void SendPropertyChanged(System.String propertyName) {
             var handler = this.PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangedEventArgs(propertyName));
         }
 
-         public virtual int no_ip {
+        public virtual int no_ip {
             get =>
                 this._no_ip;
             set {
@@ -110,22 +111,38 @@ namespace mupeModel {
 
         public virtual ISet<pe_libl> pe_libl_list {
             get => this._pe_libl_list;
-            set => this._pe_libl_list = value;
+            set {
+                this.SendPropertyChanging();
+                this._pe_libl_list = value;
+                this.SendPropertyChanged("pe_libl_list");
+            }
         }
 
         public virtual IList<pe_muta> pe_muta_list {
             get => this._pe_muta_list;
-            set => this._pe_muta_list = value;
+            set {
+                this.SendPropertyChanging();
+                this._pe_muta_list = value;
+                this.SendPropertyChanged("pe_muta_list");
+            }
         }
 
         public virtual IList<pe_cfgt> pe_cfgt_list {
             get => this._pe_cfgt_list;
-            set => this._pe_cfgt_list = value;
+            set {
+                this.SendPropertyChanging();
+                this._pe_cfgt_list = value;
+                this.SendPropertyChanged("pe_cfgt_list");
+            }
         }
 
         public virtual IList<pe_grmu> pe_grmu_list {
             get => this._pe_grmu_list;
-            set => this._pe_grmu_list = value;
+            set {
+                this.SendPropertyChanging();
+                this._pe_grmu_list = value;
+                this.SendPropertyChanged("pe_grmu_list");
+            }
         }
 
         object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) {

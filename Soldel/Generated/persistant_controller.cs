@@ -14,9 +14,8 @@ namespace mupeModel.Utils {
         private ISession _session;
         private TreeView _view;
 
-        public persistant_controller(ISession session,TreeView view) {
+        public persistant_controller(ISession session) {
             _session = session;
-            _view = view;
         }
 
         public void add_child(i_persistant parent,object child) {
@@ -32,8 +31,6 @@ namespace mupeModel.Utils {
 
                     transaction.Commit();
                     _session.Refresh(parent);
-
-                    _view.Items.Refresh();
 
                 } catch(Exception ex) {
                     if(transaction != null) {
@@ -59,7 +56,6 @@ namespace mupeModel.Utils {
                     transaction.Commit();
                     _session.Refresh(parent);
 
-                    _view.Items.Refresh();
                 } catch(Exception ex) {
                     if(transaction != null) {
                         if(transaction != null)

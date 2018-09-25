@@ -192,10 +192,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
-                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2" Grid.ColumnSpan="2" 
-                          ItemContainerStyle="{StaticResource tree_view_item_type}">
-                    
+
+                <TreeView x:Name="tree_main" Grid.Row="0" Margin="2" Grid.ColumnSpan="2"
+                    ItemContainerStyle="{StaticResource tree_view_item_type}">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
                             <HierarchicalDataTemplate.ItemsSource>

@@ -16,6 +16,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.Globalization;
+using System.Collections.ObjectModel;
+using mupeModel.Utils;
 
 namespace mupeModel {
 
@@ -58,6 +60,8 @@ namespace mupeModel {
 
         private IList<pe_gmes> _pe_gmes_list;
 
+        private IList<pe_muta> _pe_muta_list;
+
         private pe_ip _pe_ip;
 
         #region Extensibility Method Definitions
@@ -74,9 +78,10 @@ namespace mupeModel {
         public pe_grmu() {
             this._pe_grmu_id = @"";
             this._libf_grmu = this.libd_grmu = this._libe_grmu = this._libi_grmu = "libelle nouveau groupe de mutation(s)";
-            this._pe_cfgd_list = new List<pe_cfgd>();
-            this._pe_gmmu_list = new List<pe_gmmu>();
-            this._pe_gmes_list = new List<pe_gmes>();
+            this._pe_cfgd_list = new ObservableCollection<pe_cfgd>();
+            this._pe_gmmu_list = new ObservableCollection<pe_gmmu>();
+            this._pe_gmes_list = new ObservableCollection<pe_gmes>();
+            this._pe_muta_list = new ObservableCollection<pe_muta>();
             OnCreated();
         }
 
@@ -96,8 +101,7 @@ namespace mupeModel {
                 }
             }
         }
-
-
+        
         /// <summary>
         /// There are no comments for u_version in the schema.
         /// </summary>
@@ -311,6 +315,7 @@ namespace mupeModel {
             }
             set {
                 this._pe_cfgd_list = value;
+                this.SendPropertyChanged("pe_cfgd_list");
             }
         }
 
@@ -324,10 +329,10 @@ namespace mupeModel {
             }
             set {
                 this._pe_gmmu_list = value;
+                this.SendPropertyChanged("pe_gmmu_list");
             }
         }
-
-
+        
         /// <summary>
         /// There are no comments for pe_gmes_list in the schema.
         /// </summary>
@@ -337,6 +342,7 @@ namespace mupeModel {
             }
             set {
                 this._pe_gmes_list = value;
+                this.SendPropertyChanged("pe_gmes_list");
             }
         }
 
@@ -377,7 +383,12 @@ namespace mupeModel {
 
         public virtual IList<pe_muta> pe_muta_list {
             get {
-                return (from g in this.pe_gmmu_list select g.pe_muta).ToList<pe_muta>();
+                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip & 
+                                                                                                                            x.type_grmu.Equals(type_grmu)).ToList<pe_muta>();
+                return _pe_muta_list;
+            }
+            set {
+                this.SendPropertyChanged("pe_muta_list");
             }
         }
 

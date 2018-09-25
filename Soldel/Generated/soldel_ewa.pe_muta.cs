@@ -29,10 +29,12 @@ namespace mupeModel {
         private string _liste_tycas;
         private string _type_grmu;
         private pe_ip _pe_ip;
-        private IList<pe_gmmu> _pe_gmmu_list = new List<pe_gmmu>();
-        private IList<pe_attr> _pe_attr_list = new List<pe_attr>();
-        
-        // private IList<pe_attr> _pe_attr_list = new ObservableCollection<pe_attr>();
+
+        // private IList<pe_gmmu> _pe_gmmu_list = new List<pe_gmmu>();
+        // private IList<pe_attr> _pe_attr_list = new List<pe_attr>();
+
+        private IList<pe_gmmu> _pe_gmmu_list = new ObservableCollection<pe_gmmu>();
+        private IList<pe_attr> _pe_attr_list = new ObservableCollection<pe_attr>();
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
         public virtual event PropertyChangingEventHandler PropertyChanging;
@@ -324,12 +326,18 @@ namespace mupeModel {
 
         public virtual IList<pe_gmmu> pe_gmmu_list {
             get => this._pe_gmmu_list;
-            set => this._pe_gmmu_list = value;
+            set {
+                this._pe_gmmu_list = value;
+                this.SendPropertyChanged("pe_gmmu_list");
+            }
         }
 
         public virtual IList<pe_attr> pe_attr_list {
             get => this._pe_attr_list;
-            set => this._pe_attr_list = value;
+            set {
+                this._pe_attr_list = value;
+                this.SendPropertyChanged("pe_attr_list");
+            }
         }
 
         public virtual pe_ip pe_ip {

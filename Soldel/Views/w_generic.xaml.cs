@@ -53,9 +53,10 @@ namespace Soldel.Views {
             String connection_string = (String)cb_onnection.SelectedValue;
 
             if((_session = hibernate_util.get_instance().get_session(connection_string)) != null) {
+
                 List<pe_ip> ips = _session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-                tree_main.ItemsSource = CollectionViewSource.GetDefaultView(ips);
+                tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
         }
 
@@ -129,7 +130,8 @@ namespace Soldel.Views {
                     transaction.Commit();
                     _session.Refresh(gmmu);
 
-                    tree_main.Items.Refresh();
+                    // notifier la liste des mutations de la modification survenue
+                    grmu.pe_muta_list = null;    
                 }
             } catch(Exception ex) {
                 if(transaction != null) {
@@ -141,7 +143,7 @@ namespace Soldel.Views {
             }
         }
 
-         private void copy_libl(pe_libl libl_to_copy) {
+        private void copy_libl(pe_libl libl_to_copy) {
 
             ITransaction transaction = null;
             try {
@@ -211,13 +213,13 @@ namespace Soldel.Views {
         }
         private void Btn_update_Click(object sender,RoutedEventArgs e) {
 
-            new persistant_controller(_session, tree_main).update(g_detail.DataContext);
+            new persistant_controller(_session).update(g_detail.DataContext);
         }
 
         #region ATTRIBUT
 
 
-        private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+        private void copy_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
             if(e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = _attr != null;
@@ -236,7 +238,7 @@ namespace Soldel.Views {
             } else if(_attr != null) {
                 pe_muta muta = tree_main.SelectedValue as pe_muta;
                 if(muta != null) {
-                    new persistant_controller(_session, tree_main).add_child(muta, _attr.shallow_copy(muta));
+                    new persistant_controller(_session).add_child(muta,_attr.shallow_copy(muta));
                     _attr = null;
                 }
             }
@@ -266,7 +268,7 @@ namespace Soldel.Views {
                 w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
                 w_dict.ShowDialog();
 
-                new persistant_controller(_session, tree_main).add_child(muta, w_dict._attr);
+                new persistant_controller(_session).add_child(muta, w_dict._attr);
             }
         }
 
@@ -275,11 +277,11 @@ namespace Soldel.Views {
             e.CanExecute = true;
         }
 
-        private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+        private void delete_attr_executed(object sender,ExecutedRoutedEventArgs e) {
 
             pe_attr attr = e.Parameter as pe_attr;
             if(attr != null) {
-                new persistant_controller(_session, tree_main).delete(attr.pe_muta,attr);
+                new persistant_controller(_session).delete(attr.pe_muta,attr);
             }
         }
 
@@ -316,9 +318,10 @@ namespace Soldel.Views {
         private void refresh_muta_executed(object sender,ExecutedRoutedEventArgs e) {
 
             var muta = tree_main.SelectedItem as pe_muta;
-           
+
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            if (source != null) {
+            if(source != null) {
+                source.Items.Refresh();
             }
         }
 
@@ -364,7 +367,7 @@ namespace Soldel.Views {
                     nom_attr = dict.nom_dict,
                     clatit_attr = dict.clatit_dict,
                 };
-                   
+
                 this.Close();
             }
         }

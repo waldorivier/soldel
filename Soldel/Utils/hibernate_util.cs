@@ -18,7 +18,7 @@ namespace mupeModel.Utils {
         private IDictionary<string,ISessionFactory> session_factory_cache = new Dictionary<string,ISessionFactory>();
         private IDictionary<string,string> global_parameters;
         private IList<string> connections;
-        private IList<pe_libl> dict_libelles;
+        private IList<pe_dict> attr_dict_list;
         private ISession current_session;
 
         private static hibernate_util hibernate_util_ = null;
@@ -49,7 +49,7 @@ namespace mupeModel.Utils {
                 this.session_factory_cache.Add(connection_string,factory);
             }
             this.current_session = factory.OpenSession();
-            this.load_global_libelles();
+            this.load_attr_dict_list();
             return this.current_session;
         }
 
@@ -100,8 +100,8 @@ namespace mupeModel.Utils {
             global_parameters.Add("USERNAME",System.Environment.GetEnvironmentVariable("USERNAME"));
         }
 
-        private void load_global_libelles() {
-            dict_libelles = get_current_session().CreateCriteria<pe_libl>().List<pe_libl>().ToList();
+        private void load_attr_dict_list() {
+            attr_dict_list = get_current_session().CreateCriteria<pe_dict>().List<pe_dict>().ToList();
         }
 
         public IList<string> get_connections() {
@@ -114,8 +114,8 @@ namespace mupeModel.Utils {
             return user;
         }
 
-        public IList<pe_libl> get_dict_libelles() {
-            return dict_libelles;
+        public IList<pe_dict> get_attr_dict_list() {
+            return attr_dict_list;
         }
 
         public string generate_muta_id() {

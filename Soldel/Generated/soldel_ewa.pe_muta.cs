@@ -2,6 +2,7 @@ namespace mupeModel {
     using mupeModel.Utils;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
@@ -30,6 +31,8 @@ namespace mupeModel {
         private pe_ip _pe_ip;
         private IList<pe_gmmu> _pe_gmmu_list = new List<pe_gmmu>();
         private IList<pe_attr> _pe_attr_list = new List<pe_attr>();
+        
+        // private IList<pe_attr> _pe_attr_list = new ObservableCollection<pe_attr>();
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
         public virtual event PropertyChangingEventHandler PropertyChanging;

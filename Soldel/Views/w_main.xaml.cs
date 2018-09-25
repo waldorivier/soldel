@@ -24,6 +24,7 @@ namespace Soldel.Views {
                 btn_elca.Click += Btn_elca_Click;
                 btn_elsi.Click += Btn_elsi_Click;
                 btn_ewa.Click += Btn_ewa_Click;
+
             } catch (Exception ex) {
                 MessageBox.Show(ex.StackTrace);            }
         }

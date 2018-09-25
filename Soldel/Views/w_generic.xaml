@@ -27,6 +27,10 @@
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
 
+        <CommandBinding Command="commands:muta_command.refresh"
+                        CanExecute="refresh_muta_can_execute"
+                        Executed="refresh_muta_executed"/>
+
         <CommandBinding Command="commands:libl_command.copy"
                         CanExecute="copy_libl_can_execute"
                         Executed="copy_libl_executed"/>
@@ -235,6 +239,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
+                                        <MenuItem Header="Actualiser" 
+                                                  Command="commands:muta_command.refresh"/>
+
                                         <MenuItem Header="Copier la mutation" 
                                                   Command="commands:muta_command.copy"
                                                   CommandParameter="{Binding pe_muta_id}"/>

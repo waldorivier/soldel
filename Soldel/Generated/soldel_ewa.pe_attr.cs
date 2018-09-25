@@ -21,7 +21,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_attr, Soldel in the schema.
     /// </summary>
-    public partial class pe_attr : INotifyPropertyChanging, INotifyPropertyChanged, i_persistant {
+    public partial class pe_attr:INotifyPropertyChanging, INotifyPropertyChanged, i_persistant {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -74,15 +74,15 @@ namespace mupeModel {
 
         public override bool Equals(object obj) {
             pe_attr toCompare = obj as pe_attr;
-            if (toCompare == null) {
+            if(toCompare == null) {
                 return false;
             }
 
-            if (!Object.Equals(this.pe_muta_id, toCompare.pe_muta_id))
+            if(!Object.Equals(this.pe_muta_id,toCompare.pe_muta_id))
                 return false;
-            if (!Object.Equals(this.nom_attr, toCompare.nom_attr))
+            if(!Object.Equals(this.nom_attr,toCompare.nom_attr))
                 return false;
-            if (!Object.Equals(this.clatit_attr, toCompare.clatit_attr))
+            if(!Object.Equals(this.clatit_attr,toCompare.clatit_attr))
                 return false;
 
             return true;
@@ -116,7 +116,7 @@ namespace mupeModel {
                 return this._pe_muta_id;
             }
             set {
-                if (this._pe_muta_id != value) {
+                if(this._pe_muta_id != value) {
                     this.SendPropertyChanging();
                     this._pe_muta_id = value;
                     this.SendPropertyChanged("pe_muta_id");
@@ -133,7 +133,7 @@ namespace mupeModel {
                 return this._nom_attr;
             }
             set {
-                if (this._nom_attr != value) {
+                if(this._nom_attr != value) {
                     this.SendPropertyChanging();
                     this._nom_attr = value;
                     this.SendPropertyChanged("nom_attr");
@@ -150,7 +150,7 @@ namespace mupeModel {
                 return this._clatit_attr;
             }
             set {
-                if (this._clatit_attr != value) {
+                if(this._clatit_attr != value) {
                     this.SendPropertyChanging();
                     this._clatit_attr = value;
                     this.SendPropertyChanged("clatit_attr");
@@ -167,7 +167,7 @@ namespace mupeModel {
                 return this._u_version;
             }
             set {
-                if (this._u_version != value) {
+                if(this._u_version != value) {
                     this.SendPropertyChanging();
                     this._u_version = value;
                     this.SendPropertyChanged("u_version");
@@ -184,7 +184,7 @@ namespace mupeModel {
                 return this._check_attr;
             }
             set {
-                if (this._check_attr != value) {
+                if(this._check_attr != value) {
                     this.SendPropertyChanging();
                     this._check_attr = value;
                     this.SendPropertyChanged("check_attr");
@@ -201,7 +201,7 @@ namespace mupeModel {
                 return this._val_def;
             }
             set {
-                if (this._val_def != value) {
+                if(this._val_def != value) {
                     this.SendPropertyChanging();
                     this._val_def = value;
                     this.SendPropertyChanged("val_def");
@@ -218,7 +218,7 @@ namespace mupeModel {
                 return this._visibilite;
             }
             set {
-                if (this._visibilite != value) {
+                if(this._visibilite != value) {
                     this.SendPropertyChanging();
                     this._visibilite = value;
                     this.SendPropertyChanged("visibilite");
@@ -235,7 +235,7 @@ namespace mupeModel {
                 return this._identifiant;
             }
             set {
-                if (this._identifiant != value) {
+                if(this._identifiant != value) {
                     this.SendPropertyChanging();
                     this._identifiant = value;
                     this.SendPropertyChanged("identifiant");
@@ -252,7 +252,7 @@ namespace mupeModel {
                 return this._oblig_fac;
             }
             set {
-                if (this._oblig_fac != value) {
+                if(this._oblig_fac != value) {
                     this.SendPropertyChanging();
                     this._oblig_fac = value;
                     this.SendPropertyChanged("oblig_fac");
@@ -269,7 +269,7 @@ namespace mupeModel {
                 return this._log;
             }
             set {
-                if (this._log != value) {
+                if(this._log != value) {
                     this.SendPropertyChanging();
                     this._log = value;
                     this.SendPropertyChanged("log");
@@ -286,7 +286,7 @@ namespace mupeModel {
                 return this._donnee_traite;
             }
             set {
-                if (this._donnee_traite != value) {
+                if(this._donnee_traite != value) {
                     this.SendPropertyChanging();
                     this._donnee_traite = value;
                     this.SendPropertyChanged("donnee_traite");
@@ -303,7 +303,7 @@ namespace mupeModel {
                 return this._position;
             }
             set {
-                if (this._position != value) {
+                if(this._position != value) {
                     this.SendPropertyChanging();
                     this._position = value;
                     this.SendPropertyChanged("position");
@@ -320,7 +320,7 @@ namespace mupeModel {
                 return this._groupe;
             }
             set {
-                if (this._groupe != value) {
+                if(this._groupe != value) {
                     this.SendPropertyChanging();
                     this._groupe = value;
                     this.SendPropertyChanged("groupe");
@@ -337,7 +337,7 @@ namespace mupeModel {
                 return this._user_cre;
             }
             set {
-                if (this._user_cre != value) {
+                if(this._user_cre != value) {
                     this.SendPropertyChanging();
                     this._user_cre = value;
                     this.SendPropertyChanged("user_cre");
@@ -354,7 +354,7 @@ namespace mupeModel {
                 return this._dh_cre;
             }
             set {
-                if (this._dh_cre != value) {
+                if(this._dh_cre != value) {
                     this.SendPropertyChanging();
                     this._dh_cre = value;
                     this.SendPropertyChanged("dh_cre");
@@ -371,7 +371,7 @@ namespace mupeModel {
                 return this._user_maj;
             }
             set {
-                if (this._user_maj != value) {
+                if(this._user_maj != value) {
                     this.SendPropertyChanging();
                     this._user_maj = value;
                     this.SendPropertyChanged("user_maj");
@@ -388,7 +388,7 @@ namespace mupeModel {
                 return this._dh_maj;
             }
             set {
-                if (this._dh_maj != value) {
+                if(this._dh_maj != value) {
                     this.SendPropertyChanging();
                     this._dh_maj = value;
                     this.SendPropertyChanged("dh_maj");
@@ -405,7 +405,7 @@ namespace mupeModel {
                 return this._copy_to;
             }
             set {
-                if (this._copy_to != value) {
+                if(this._copy_to != value) {
                     this.SendPropertyChanging();
                     this._copy_to = value;
                     this.SendPropertyChanged("copy_to");
@@ -422,7 +422,7 @@ namespace mupeModel {
                 return this._from_db;
             }
             set {
-                if (this._from_db != value) {
+                if(this._from_db != value) {
                     this.SendPropertyChanging();
                     this._from_db = value;
                     this.SendPropertyChanged("from_db");
@@ -438,7 +438,7 @@ namespace mupeModel {
                 return this._pe_muta;
             }
             set {
-                if (this._pe_muta != value) {
+                if(this._pe_muta != value) {
                     this.SendPropertyChanging();
                     this._pe_muta = value;
                     this.SendPropertyChanged("pe_muta");
@@ -448,46 +448,60 @@ namespace mupeModel {
 
         public virtual IList<pe_libl> pe_libl_list {
             get {
-                try {
-                    return pe_muta.pe_ip.pe_libl_list.
-                           Where<pe_libl>(x => x.nom_attr.Equals(nom_attr)).ToList<pe_libl>();
-                } catch {
-                    return null;
+                IList<pe_libl> libl_list = null;
+
+                libl_list = pe_muta.pe_ip.pe_libl_list.Where<pe_libl>(x => x.nom_attr.Equals(nom_attr)).ToList<pe_libl>();
+                if(libl_list == null) {
+                    
+                    // rechercher dans le dictionnaire des attributs
+                    var dict = hibernate_util.get_instance().get_attr_dict_list().Where<pe_dict>(x => x.nom_dict.Equals(nom_attr) &
+                                                                                                 x.clatit_dict.Equals(clatit_attr)).ToList<pe_dict>().First();
+
+                    if(dict != null) {
+                        libl_list = new List<pe_libl>();
+                        libl_list.Add(new pe_libl() {
+                            libf_attr = dict.libf_dict,
+                            libd_attr = dict.libd_dict,
+                            libe_attr = dict.libe_dict,
+                            libi_attr = dict.libi_dict
+                        });
+                    }
                 }
+                return libl_list;
             }
         }
-       
+
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void SendPropertyChanging() {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, emptyChangingEventArgs);
+            if(handler != null)
+                handler(this,emptyChangingEventArgs);
         }
 
         protected virtual void SendPropertyChanging(System.String propertyName) {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, new PropertyChangingEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangingEventArgs(propertyName));
         }
 
         protected virtual void SendPropertyChanged(System.String propertyName) {
             var handler = this.PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangedEventArgs(propertyName));
         }
 
         public virtual IList<String> visibility_list {
             get {
-                return new List<String>() { " ", "F", "T", "D" };
+                return new List<String>() { " ","F","T","D" };
             }
         }
 
         public virtual IList<String> true_false_list {
             get {
-                return new List<String>() { " ", "F", "T" };
+                return new List<String>() { " ","F","T" };
             }
         }
 
@@ -500,10 +514,10 @@ namespace mupeModel {
             copy.pe_muta = muta;
 
             // copie des libellés qui sont référencés par l'ip
-            if(pe_libl_list.Count > 0) { 
+            if(pe_libl_list.Count > 0) {
                 copy.pe_muta.pe_ip.add_libl(pe_libl_list.First().shallow_copy());
             }
-                     
+
             return copy;
         }
 

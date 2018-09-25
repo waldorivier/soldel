@@ -5,18 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace mupeModel.Utils {
 
     class persistant_controller {
 
         private ISession _session;
+        private TreeView _view;
 
-        public persistant_controller(ISession session) {
+        public persistant_controller(ISession session,TreeView view) {
             _session = session;
+            _view = view;
         }
 
-        public void add_child(i_persistant parent, object child) {
+        public void add_child(i_persistant parent,object child) {
 
             ITransaction transaction = null;
 
@@ -30,6 +33,8 @@ namespace mupeModel.Utils {
                     transaction.Commit();
                     _session.Refresh(parent);
 
+                    _view.Items.Refresh();
+
                 } catch(Exception ex) {
                     if(transaction != null) {
                         if(transaction != null)
@@ -40,28 +45,47 @@ namespace mupeModel.Utils {
             }
         }
 
-        internal void delete(i_persistant parent, i_persistant elem) {
+        internal void delete(i_persistant parent, i_persistant child) {
 
             ITransaction transaction = null;
 
-            if(elem.can_remove_me()) {
+            if(child.can_remove_me()) {
                 try {
 
                     transaction = _session.BeginTransaction();
-                    elem.remove_me();
-                    _session.Delete(elem);
+                    child.remove_me();
+                    _session.Delete(child);
 
                     transaction.Commit();
                     _session.Refresh(parent);
 
+                    _view.Items.Refresh();
                 } catch(Exception ex) {
                     if(transaction != null) {
                         if(transaction != null)
                             transaction.Rollback();
                     }
+
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        internal void update(object elem) {
+
+            ITransaction transaction = null;
+
+            try {
+                transaction = _session.BeginTransaction();
+                _session.Save(elem);
+                transaction.Commit();
+            } catch(Exception ex) {
+                if(transaction != null)
+                    transaction.Rollback();
+
+                MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }

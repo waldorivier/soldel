@@ -65,6 +65,10 @@ namespace mupeModel {
         /// </summary>
         public pe_dict() {
             this._pe_dict_id = @"";
+            this._libf_dict = this.libd_dict = this._libe_dict = this._libi_dict = "NAN";
+            this._clatit_dict = "base";
+            this._nom_dict = @"NAN";
+
             OnCreated();
         }
 
@@ -344,5 +348,14 @@ namespace mupeModel {
                 return new List<String>() { "base","PE_CCLI" };
             }
         }
+
+
+        public virtual IList<String> tydata_list {
+            get {
+                return new List<String>() { "S", "N", "D"};
+            }
+        }
+        
+        public virtual bool is_expanded => false;
     }
 }

@@ -56,6 +56,7 @@ namespace Soldel.Views {
 
                 List<pe_ip> ips = _session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+
                 tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
         }
@@ -131,7 +132,7 @@ namespace Soldel.Views {
                     _session.Refresh(gmmu);
 
                     // notifier la liste des mutations de la modification survenue
-                    grmu.pe_muta_list = null;    
+                    grmu.pe_muta_list = null;
                 }
             } catch(Exception ex) {
                 if(transaction != null) {
@@ -167,7 +168,6 @@ namespace Soldel.Views {
                     _session.Refresh(attr.pe_muta.pe_ip);
                     var libl_list = attr.pe_libl_list;
 
-                    tree_main.Items.Refresh();
                 }
             } catch(Exception exception) {
                 if(transaction != null) {
@@ -248,7 +248,9 @@ namespace Soldel.Views {
             e.CanExecute = true;
         }
 
-        private void add_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void add_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
 
             pe_muta muta = e.Parameter as pe_muta;
             if(muta != null) {
@@ -276,11 +278,11 @@ namespace Soldel.Views {
             e.CanExecute = true;
         }
 
-        private void delete_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_attr attr = e.Parameter as pe_attr;
             if(attr != null) {
-                new persistant_controller(_session).delete(attr.pe_muta, attr);
+                new persistant_controller(_session).delete(attr.pe_muta,attr);
             }
         }
 
@@ -321,35 +323,32 @@ namespace Soldel.Views {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
         }
 
-        private void validate_muta_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void re_order_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = true;
         }
 
-        private void validate_muta_executed(object sender,ExecutedRoutedEventArgs e) {
+        // TODO implémenter dans les validations rules
+        private void re_order_attr_executed(object sender,ExecutedRoutedEventArgs e) {
 
-            var muta = tree_main.SelectedItem as pe_muta;
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
 
-            try {
-                foreach(var attr in muta.pe_attr_list) {
-
-                    // règle 1 : pas de position null (position est en effet Nullable)
-                    if(attr.position is null) {
-                        throw new Exception("une postion doit être renseignée pour l'attribut :" + attr.nom_attr);
-                    }
-                }
-            } catch(Exception e) {
-
-
+            int i = 1;
+            foreach(var item in source.Items) {
+                var attr = item as pe_attr;
+                if(attr != null) {
+                    int position = attr.position;
+                    attr.position = i;
+                    i++;
+                } 
             }
+        }
 
-}
+        #endregion
 
-#endregion
+        #region LIBL
 
-#region LIBL
-
-private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
             if(e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = _libl != null;
@@ -390,6 +389,17 @@ private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
                 this.Close();
             }
+        }
+
+        private void dict_add_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+
+            e.CanExecute = true;
+        }
+
+        private void dict_add_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            pe_dict dict = new pe_dict() { pe_dict_id = hibernate_util.get_instance().generate_dict_id() };
+            new persistant_controller(hibernate_util.get_instance().get_current_session()).update(dict);
         }
 
         #endregion

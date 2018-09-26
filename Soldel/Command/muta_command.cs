@@ -7,6 +7,7 @@ namespace mupeModel.Commands {
         private static RoutedUICommand _copy = new RoutedUICommand("copy", "copy", typeof(muta_command), null);
         private static RoutedUICommand _refresh = new RoutedUICommand("refresh", "refresh",typeof(muta_command),null);
         private static RoutedUICommand _validate = new RoutedUICommand("validate", "validate",typeof(muta_command),null);
+        private static RoutedUICommand _re_order_attr = new RoutedUICommand("re_order_attr","re_order_attr",typeof(muta_command),null);
 
         public static RoutedUICommand copy {
             get => _copy;
@@ -21,6 +22,11 @@ namespace mupeModel.Commands {
         public static RoutedUICommand validate {
             get => _validate;
             set => _validate = value;
+        }
+
+        public static RoutedUICommand re_order_attr{
+            get => _re_order_attr;
+            set => _re_order_attr = value;
         }
     }
 }

@@ -30,9 +30,6 @@ namespace mupeModel {
         private string _type_grmu;
         private pe_ip _pe_ip;
 
-        // private IList<pe_gmmu> _pe_gmmu_list = new List<pe_gmmu>();
-        // private IList<pe_attr> _pe_attr_list = new List<pe_attr>();
-
         private IList<pe_gmmu> _pe_gmmu_list = new ObservableCollection<pe_gmmu>();
         private IList<pe_attr> _pe_attr_list = new ObservableCollection<pe_attr>();
 
@@ -40,53 +37,10 @@ namespace mupeModel {
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public pe_muta() {
-            this._libf_muta = this.libd_muta = this._libe_muta = this._libi_muta = "libelle nouvelle mutation";
+            this._libf_muta = this.libd_muta = this._libe_muta = this._libi_muta = "NAN";
             this._tyeven = "NAN";
         }
-
-        public virtual bool can_add_child(object child) {
-
-            bool can_add = false;
-            var attr = child as pe_attr;
-            if(attr != null) {
-                attr.pe_muta_id = this.pe_muta_id;
-                can_add = !this.pe_attr_list.Contains(attr);
-            }
-
-            return can_add;
-        }
-
-        public virtual void add_child(object child) {
-
-            var attr = child as pe_attr;
-            if(attr != null) {
-                attr.pe_muta = this;
-                attr.pe_muta_id = this.pe_muta_id;
-                this._pe_attr_list.Add(attr);
-            }
-        }
-
-        public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
-
-            try {
-                pe_muta _muta = (pe_muta)value;
-                return _muta.pe_attr_list;
-            } catch {
-            }
-            return null;
-        }
-
-        public virtual object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) =>
-            null;
-
-        public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
-            pe_muta muta = shallow_copy(muta_id,ip);
-            foreach(pe_attr _attr in pe_attr_list) {
-                muta.add_child(_attr.shallow_copy(muta));
-            }
-            return muta;
-        }
-
+        
         protected virtual void SendPropertyChanged(string propertyName) {
             PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if(propertyChanged != null) {
@@ -108,23 +62,7 @@ namespace mupeModel {
             }
         }
 
-        public virtual pe_muta shallow_copy(string muta_id,mupeModel.pe_ip ip) {
-            pe_muta copy = new pe_muta();
-            copy_object.copy<pe_muta>(this, copy);
-
-            copy.pe_muta_id = muta_id;
-            copy.pe_ip = ip;
-   
-            return copy;
-        }
-
-        bool i_persistant.can_remove_me() {
-            throw new NotImplementedException();
-        }
-
-        void i_persistant.remove_me() {
-            throw new NotImplementedException();
-        }
+    
 
         public virtual string pe_muta_id {
             get =>
@@ -351,5 +289,73 @@ namespace mupeModel {
                 }
             }
         }
+
+
+        #region I_PERSISTANT_CONVERT_COPY
+
+        bool i_persistant.can_remove_me() {
+            throw new NotImplementedException();
+        }
+
+        void i_persistant.remove_me() {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_add_child(object child) {
+
+            bool can_add = false;
+            var attr = child as pe_attr;
+            if(attr != null) {
+                attr.pe_muta_id = this.pe_muta_id;
+                can_add = !this.pe_attr_list.Contains(attr);
+            }
+
+            return can_add;
+        }
+
+        public virtual void add_child(object child) {
+
+            var attr = child as pe_attr;
+            if(attr != null) {
+                attr.pe_muta = this;
+                attr.pe_muta_id = this.pe_muta_id;
+                this._pe_attr_list.Add(attr);
+            }
+        }
+
+        public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
+
+            try {
+                pe_muta _muta = (pe_muta)value;
+                return _muta.pe_attr_list;
+            } catch {
+            }
+            return null;
+        }
+
+        public virtual object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) =>
+            null;
+
+        public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
+            pe_muta muta = shallow_copy(muta_id,ip);
+            foreach(pe_attr _attr in pe_attr_list) {
+                muta.add_child(_attr.shallow_copy(muta));
+            }
+            return muta;
+        }
+
+        public virtual pe_muta shallow_copy(string muta_id,mupeModel.pe_ip ip) {
+            pe_muta copy = new pe_muta();
+            copy_object.copy<pe_muta>(this,copy);
+
+            copy.pe_muta_id = muta_id;
+            copy.pe_ip = ip;
+
+            return copy;
+        }
+
+        #endregion
+
+        public virtual bool is_expanded => false;
     }
 }

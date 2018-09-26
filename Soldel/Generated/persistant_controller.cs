@@ -18,7 +18,7 @@ namespace mupeModel.Utils {
             _session = session;
         }
 
-        public void add_child(i_persistant parent,object child) {
+        public void add_child(i_persistant parent, object child) {
 
             ITransaction transaction = null;
 
@@ -81,7 +81,6 @@ namespace mupeModel.Utils {
 
                 MessageBox.Show(ex.Message);
             }
-
         }
     }
 }

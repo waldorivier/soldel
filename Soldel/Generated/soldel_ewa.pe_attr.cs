@@ -47,7 +47,7 @@ namespace mupeModel {
 
         private string _donnee_traite;
 
-        private System.Nullable<int> _position;
+        private int _position;
 
         private string _groupe;
 
@@ -102,7 +102,7 @@ namespace mupeModel {
         /// </summary>
         public pe_attr() {
             this._pe_muta_id = @"";
-            this._nom_attr = @"NEWATT";
+            this._nom_attr = @"NAN";
             this._clatit_attr = @"base";
             OnCreated();
         }
@@ -298,7 +298,7 @@ namespace mupeModel {
         /// <summary>
         /// There are no comments for position in the schema.
         /// </summary>
-        public virtual System.Nullable<int> position {
+        public virtual int position {
             get {
                 return this._position;
             }
@@ -451,8 +451,8 @@ namespace mupeModel {
                 IList<pe_libl> libl_list = null;
 
                 libl_list = pe_muta.pe_ip.pe_libl_list.Where<pe_libl>(x => x.nom_attr.Equals(nom_attr)).ToList<pe_libl>();
-                if(libl_list == null) {
-                    
+                if(libl_list.Count == 0) {
+
                     // rechercher dans le dictionnaire des attributs
                     var dict = hibernate_util.get_instance().get_attr_dict_list().Where<pe_dict>(x => x.nom_dict.Equals(nom_attr) &
                                                                                                  x.clatit_dict.Equals(clatit_attr)).ToList<pe_dict>().First();
@@ -521,6 +521,8 @@ namespace mupeModel {
             return copy;
         }
 
+        #region I_PERSISTANT
+
         void i_persistant.add_child(object child) {
             throw new NotImplementedException();
         }
@@ -537,5 +539,9 @@ namespace mupeModel {
 
             this.pe_muta.pe_attr_list.Remove(this);
         }
+
+        #endregion  
+
+        public virtual bool is_expanded => false;
     }
 }

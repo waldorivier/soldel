@@ -27,21 +27,22 @@
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
 
-        <CommandBinding Command="commands:muta_command.refresh"
-                        CanExecute="refresh_muta_can_execute"
-                        Executed="refresh_muta_executed"/>
-
-        <CommandBinding Command="commands:muta_command.validate"
-                        CanExecute="validate_muta_can_execute"
-                        Executed="validate_muta_executed"/>
+        <CommandBinding Command="commands:muta_command.re_order_attr"
+                        CanExecute="re_order_attr_can_execute"
+                        Executed="re_order_attr_executed"/>
 
         <CommandBinding Command="commands:libl_command.copy"
                         CanExecute="copy_libl_can_execute"
                         Executed="copy_libl_executed"/>
-        
+
         <CommandBinding Command="commands:dict_command.select"
                         CanExecute="dict_select_can_execute"
                         Executed="dict_select_executed"/>
+
+        <CommandBinding Command="commands:dict_command.add"
+                        CanExecute="dict_add_can_execute"
+                        Executed="dict_add_executed"/>
+
     </Window.CommandBindings>
 
     <Window.Resources>
@@ -49,29 +50,37 @@
         <converters:w_generic_list_converter x:Key="w_generic_list_converter"/>
         <converters:w_generic_tree_multi_list_converter x:Key="w_generic_tree_multi_list_converter"/>
 
-            <Style x:Key="tree_view_item_type" TargetType="TreeViewItem">
-                <Style.Triggers>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding Path=is_expanded}" Value="true" />
-                        </MultiDataTrigger.Conditions>
-                        <Setter Property="IsExpanded" Value="true"/>
-                    </MultiDataTrigger>
-                </Style.Triggers>
-            </Style>
+        <Style x:Key="tree_view_item_type" TargetType="TreeViewItem">
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=is_expanded}" Value="true" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="IsExpanded" Value="true"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
 
-            <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
+        <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
             <StackPanel>
                 <TextBox Text = "{Binding Path=nom_dict, Mode=TwoWay}">
                 </TextBox>
                 <TextBox Text = "{Binding Path=libf_dict, Mode=TwoWay}">
                 </TextBox>
+                <TextBox Text = "{Binding Path=libd_dict, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libe_dict, Mode=TwoWay}">
+                </TextBox>
+                <TextBox Text = "{Binding Path=libi_dict, Mode=TwoWay}">
+                </TextBox>
                 <ComboBox Text="CLASSE" 
                           ItemsSource  = "{Binding Path=classe_list}" 
                           SelectedItem = "{Binding Path=clatit_dict, Mode=TwoWay}">
                 </ComboBox>
-                <TextBox Text = "{Binding Path=tydata_dict, Mode=TwoWay}">
-                </TextBox>
+                <ComboBox Text="TYPE DATA" 
+                          ItemsSource  = "{Binding Path=tydata_list}" 
+                          SelectedItem = "{Binding Path=tydata_dict, Mode=TwoWay}">
+                </ComboBox>
                 <TextBox Text = "{Binding Path=format_dict, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
@@ -107,7 +116,7 @@
                             <ScrollViewer VerticalScrollBarVisibility="Visible" 
                                           MaxHeight="300"
                                           CanContentScroll="True">
-                                <TextBlock  Text="{Binding Path=cfg_xml}"/>
+                                <TextBlock Text="{Binding Path=cfg_xml}"/>
                             </ScrollViewer>
                         </Expander.Content>
                     </Expander>
@@ -131,7 +140,7 @@
                 </TextBox>
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="pe_attr_template" DataType="pe_attr">
             <StackPanel>
                 <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}"/>
@@ -151,7 +160,7 @@
                 </ComboBox>
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="pe_libl_template" DataType="pe_libl">
             <StackPanel>
                 <TextBox Text = "{Binding Path=libf_attr, Mode=TwoWay}">
@@ -221,7 +230,7 @@
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}">
                             <HierarchicalDataTemplate.ItemsSource>
                                 <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
-                                              ConverterParameter=", CONFIGS">
+                                              ConverterParameter=",CONFIGS">
                                     <Binding Path="pe_muta_list"/>
                                     <Binding Path="pe_cfgd_list"/>
                                 </MultiBinding>
@@ -242,8 +251,8 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Valider" 
-                                                  Command="commands:muta_command.validate"/>
+                                        <MenuItem Header="Réordonner " 
+                                                  Command="commands:muta_command.re_order_attr"/>
 
                                         <MenuItem Header="Copier la mutation" 
                                                   Command="commands:muta_command.copy"
@@ -313,6 +322,8 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
+                                        <MenuItem Header="Ajouter un élément " 
+                                                  Command="commands:dict_command.add"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding dict_list_name}"/>
@@ -338,7 +349,7 @@
                 </TreeView>
             </Grid>
 
-            <GridSplitter x:Name="sv"  HorizontalAlignment="Stretch" Grid.Column="1" Margin="2"/>
+            <GridSplitter x:Name="sv" HorizontalAlignment="Stretch" Width="10" Background="Azure" Grid.Column="1" Margin="2"/>
 
             <Grid x:Name="detail" Grid.Column="2" Margin="2">
                 <Grid.RowDefinitions>
@@ -363,15 +374,17 @@
 
                 <Grid x:Name="g_list" Grid.Row="2" Margin="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
+                        <RowDefinition Height="145*"/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="61*"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid x:Name="dg_list" Grid.Row="0" Margin="2"
-                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}">
+                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
                     </DataGrid>
 
-                    <Grid x:Name="g_list_crud" Grid.Row="1" Margin="2">
+                    <Grid x:Name="g_list_crud" Grid.Row="3" Margin="2">
                         <StackPanel>
                             <Button x:Name="btn_update" Content="Enregistrer les modifications"/>
                         </StackPanel>

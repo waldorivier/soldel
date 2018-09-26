@@ -404,5 +404,7 @@ namespace mupeModel {
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             return null;
         }
+
+        public virtual bool is_expanded => false;
     }
 }

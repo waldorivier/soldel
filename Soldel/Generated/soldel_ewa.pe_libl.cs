@@ -487,5 +487,7 @@ namespace mupeModel {
 
             return copy;
         }
+
+        public  virtual bool is_expanded => true;
     }
 }

@@ -319,16 +319,37 @@ namespace Soldel.Views {
             var muta = tree_main.SelectedItem as pe_muta;
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            if(source != null) {
-                source.Items.Refresh();
-            }
         }
 
-        #endregion
+        private void validate_muta_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
-        #region LIBL
+            e.CanExecute = true;
+        }
 
-        private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void validate_muta_executed(object sender,ExecutedRoutedEventArgs e) {
+
+            var muta = tree_main.SelectedItem as pe_muta;
+
+            try {
+                foreach(var attr in muta.pe_attr_list) {
+
+                    // règle 1 : pas de position null (position est en effet Nullable)
+                    if(attr.position is null) {
+                        throw new Exception("une postion doit être renseignée pour l'attribut :" + attr.nom_attr);
+                    }
+                }
+            } catch(Exception e) {
+
+
+            }
+
+}
+
+#endregion
+
+#region LIBL
+
+private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
             if(e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = _libl != null;

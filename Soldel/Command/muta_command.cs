@@ -4,18 +4,23 @@ namespace mupeModel.Commands {
 
     public static class muta_command {
 
-        private static RoutedUICommand copy_ = new RoutedUICommand("copy", "copy", typeof(muta_command), null);
-        private static RoutedUICommand refresh_ = new RoutedUICommand("refresh","refresh",typeof(muta_command),null);
+        private static RoutedUICommand _copy = new RoutedUICommand("copy", "copy", typeof(muta_command), null);
+        private static RoutedUICommand _refresh = new RoutedUICommand("refresh", "refresh",typeof(muta_command),null);
+        private static RoutedUICommand _validate = new RoutedUICommand("validate", "validate",typeof(muta_command),null);
 
         public static RoutedUICommand copy {
-            get => copy_;
-            set => copy_ = value;
+            get => _copy;
+            set => _copy = value;
         }
 
         public static RoutedUICommand refresh {
-            get => refresh_;
-            set => refresh_ = value;
+            get => _refresh;
+            set => _refresh = value;
         }
 
+        public static RoutedUICommand validate {
+            get => _validate;
+            set => _validate = value;
+        }
     }
 }

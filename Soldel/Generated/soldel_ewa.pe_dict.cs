@@ -345,7 +345,7 @@ namespace mupeModel {
 
         public virtual IList<String> classe_list {
             get {
-                return new List<String>() { "base","PE_CCLI" };
+                return new List<String>() { "base", "PE_CCLI", "PE_ELEV" };
             }
         }
 

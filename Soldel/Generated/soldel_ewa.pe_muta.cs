@@ -10,7 +10,7 @@ namespace mupeModel {
     using System.Threading;
     using System.Windows.Data;
 
-    public class pe_muta:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_persistant {
+    public class pe_muta:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
         private string _pe_muta_id = "";
         private string _u_version;
@@ -63,7 +63,6 @@ namespace mupeModel {
         }
 
     
-
         public virtual string pe_muta_id {
             get =>
                 this._pe_muta_id;
@@ -291,13 +290,17 @@ namespace mupeModel {
         }
 
 
-        #region I_PERSISTANT_CONVERT_COPY
+        #region I_SOLDEL
 
-        bool i_persistant.can_remove_me() {
+        bool i_soldel.is_persistant() {
+            return true;
+        }
+        
+        bool i_soldel.can_remove_me() {
             throw new NotImplementedException();
         }
 
-        void i_persistant.remove_me() {
+        void i_soldel.remove_me() {
             throw new NotImplementedException();
         }
 
@@ -353,6 +356,7 @@ namespace mupeModel {
 
             return copy;
         }
+         
 
         #endregion
 

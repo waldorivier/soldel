@@ -21,7 +21,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_attr, Soldel in the schema.
     /// </summary>
-    public partial class pe_attr:INotifyPropertyChanging, INotifyPropertyChanged, i_persistant {
+    public partial class pe_attr:INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -457,15 +457,15 @@ namespace mupeModel {
                     var dict = hibernate_util.get_instance().get_attr_dict_list().Where<pe_dict>(x => x.nom_dict.Equals(nom_attr) &
                                                                                                  x.clatit_dict.Equals(clatit_attr)).ToList<pe_dict>().First();
 
-                    if(dict != null) {
-                        libl_list = new List<pe_libl>();
-                        libl_list.Add(new pe_libl() {
-                            libf_attr = dict.libf_dict,
-                            libd_attr = dict.libd_dict,
-                            libe_attr = dict.libe_dict,
-                            libi_attr = dict.libi_dict
-                        });
-                    }
+                    //if(dict != null) {
+                    //    libl_list = new List<pe_libl>();
+                    //    libl_list.Add(new pe_libl() {
+                    //        libf_attr = dict.libf_dict,
+                    //        libd_attr = dict.libd_dict,
+                    //        libe_attr = dict.libe_dict,
+                    //        libi_attr = dict.libi_dict
+                    //    });
+                    //}
                 }
                 return libl_list;
             }
@@ -521,21 +521,25 @@ namespace mupeModel {
             return copy;
         }
 
-        #region I_PERSISTANT
+        #region I_SOLDEL
 
-        void i_persistant.add_child(object child) {
-            throw new NotImplementedException();
-        }
-
-        bool i_persistant.can_add_child(object child) {
-            throw new NotImplementedException();
-        }
-
-        bool i_persistant.can_remove_me() {
+        bool i_soldel.is_persistant() {
             return true;
         }
 
-        void i_persistant.remove_me() {
+        void i_soldel.add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.can_remove_me() {
+            return true;
+        }
+
+        void i_soldel.remove_me() {
 
             this.pe_muta.pe_attr_list.Remove(this);
         }

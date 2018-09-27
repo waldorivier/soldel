@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace mupeModel {
-    class global_dict : IValueConverter, INotifyPropertyChanged {
+    class global_dict : IValueConverter, INotifyPropertyChanged, i_soldel {
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
@@ -63,6 +63,26 @@ namespace mupeModel {
 
         object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
             return null;
+        }
+
+        void i_soldel.add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.can_remove_me() {
+            throw new NotImplementedException();
+        }
+
+        void i_soldel.remove_me() {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.is_persistant() {
+            return false;
         }
     }
 }

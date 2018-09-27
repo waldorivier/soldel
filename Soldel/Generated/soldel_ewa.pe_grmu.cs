@@ -383,7 +383,7 @@ namespace mupeModel {
 
         public virtual IList<pe_muta> pe_muta_list {
             get {
-                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip & 
+                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip &
                                                                                                                             x.type_grmu.Equals(type_grmu)).ToList<pe_muta>();
                 return _pe_muta_list;
             }

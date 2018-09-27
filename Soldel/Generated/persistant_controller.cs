@@ -18,7 +18,7 @@ namespace mupeModel.Utils {
             _session = session;
         }
 
-        public void add_child(i_persistant parent, object child) {
+        public void add_child(i_soldel parent, object child) {
 
             ITransaction transaction = null;
 
@@ -27,10 +27,14 @@ namespace mupeModel.Utils {
                     transaction = _session.BeginTransaction();
 
                     parent.add_child(child);
-                    _session.Save(parent);
+
+                    if (parent.is_persistant())
+                        _session.Save(parent);
 
                     transaction.Commit();
-                    _session.Refresh(parent);
+
+                    if(parent.is_persistant())
+                        _session.Refresh(parent);
 
                 } catch(Exception ex) {
                     if(transaction != null) {
@@ -42,7 +46,7 @@ namespace mupeModel.Utils {
             }
         }
 
-        internal void delete(i_persistant parent, i_persistant child) {
+        internal void delete(i_soldel parent,i_soldel child) {
 
             ITransaction transaction = null;
 

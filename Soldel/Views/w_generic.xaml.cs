@@ -237,7 +237,7 @@ namespace Soldel.Views {
             } else if(_attr != null) {
                 pe_muta muta = tree_main.SelectedValue as pe_muta;
                 if(muta != null) {
-                    new persistant_controller(_session).add_child(muta,_attr.shallow_copy(muta));
+                    new persistant_controller(_session).add_child(muta, _attr.shallow_copy(muta));
                     _attr = null;
                 }
             }
@@ -282,7 +282,7 @@ namespace Soldel.Views {
 
             pe_attr attr = e.Parameter as pe_attr;
             if(attr != null) {
-                new persistant_controller(_session).delete(attr.pe_muta,attr);
+                new persistant_controller(_session).delete(attr.pe_muta, attr);
             }
         }
 

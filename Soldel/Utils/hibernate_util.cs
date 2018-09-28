@@ -60,12 +60,14 @@ namespace mupeModel.Utils {
                                         "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
                                         "Data Source = LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
 
+                                        "Data Source=QCASP2; User ID = qc_ssph; Password = qc_ssph",
                                         "Data Source=QALIC; User ID = qa_cpne; Password = qa_cpne",
                                         "Data Source=QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
                                         "Data Source=QCASP1; User Id = qc_bcn; Password = qc_bcn",
                                         "Data Source=QCASP1; User Id = qc_cap; Password = qc_cap",
                                         "Data Source=OUTCATST; User Id = qc_lausanne; Password = qc_lausanne",
-                                        
+
+                                        "Data Source=ASP2; User ID = prod_ssph; Password = prod_ssph",
                                         "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
                                         "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
                                         "Data Source=ASP1; User Id = prod_vsao2; Password = prod_vsao2",

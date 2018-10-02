@@ -30,7 +30,11 @@ namespace Soldel.Views {
         }
 
         private void Btn_ewa_Click(object sender, RoutedEventArgs e) {
-            new w_generic().ShowDialog();
+            try {
+                new w_generic().ShowDialog();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Btn_elca_Click(object sender, RoutedEventArgs e) { 

@@ -18,6 +18,7 @@ using System.Windows.Data;
 using System.Globalization;
 using System.Collections.ObjectModel;
 using mupeModel.Utils;
+using NHibernate.Criterion;
 
 namespace mupeModel {
 
@@ -383,8 +384,13 @@ namespace mupeModel {
 
         public virtual IList<pe_muta> pe_muta_list {
             get {
-                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip &
-                                                                                                                            x.type_grmu.Equals(type_grmu)).ToList<pe_muta>();
+                string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
+
+                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
+
+                // _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip &
+                //  x.type_grmu.Equals(type_grmu)                                                                                                                  
+
                 return _pe_muta_list;
             }
             set {

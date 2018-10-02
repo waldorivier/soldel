@@ -111,6 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\grmu_command.cs" />
     <Compile Include="Command\dict_command.cs" />
     <Compile Include="Command\chat_box_command .cs" />
     <Compile Include="Command\attr_command.cs" />

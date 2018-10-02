@@ -7,7 +7,7 @@ namespace mupeModel {
     using System.Globalization;
     using System.Windows.Data;
 
-    public class pe_ip:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
+    public class pe_ip:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
 
@@ -151,6 +151,31 @@ namespace mupeModel {
 
         object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
             throw new NotImplementedException();
+        }
+
+        void i_soldel.add_child(object child) {
+         
+            var grmu = child as pe_grmu;
+            if(grmu != null) {
+                grmu.pe_ip = this;
+                this._pe_grmu_list.Add(grmu);
+            }
+        }
+    
+        bool i_soldel.can_add_child(object child) {
+            return true;
+        }
+
+        bool i_soldel.can_remove_me() {
+            throw new NotImplementedException();
+        }
+
+        void i_soldel.remove_me() {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.is_persistant() {
+            return true;
         }
 
         public virtual bool is_expanded => false;

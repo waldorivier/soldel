@@ -24,7 +24,7 @@ namespace mupeModel.Commands {
             set => _validate = value;
         }
 
-        public static RoutedUICommand re_order_attr{
+        public static RoutedUICommand re_order_attr {
             get => _re_order_attr;
             set => _re_order_attr = value;
         }

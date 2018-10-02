@@ -454,8 +454,14 @@ namespace mupeModel {
                 if(libl_list.Count == 0) {
 
                     // rechercher dans le dictionnaire des attributs
-                    var dict = hibernate_util.get_instance().get_attr_dict_list().Where<pe_dict>(x => x.nom_dict.Equals(nom_attr) &
-                                                                                                 x.clatit_dict.Equals(clatit_attr)).ToList<pe_dict>().First();
+                    try {
+                        var dict = hibernate_util.get_instance().get_attr_dict_list().Where<pe_dict>(x => x.nom_dict.Equals(nom_attr) &
+                                                                                                     x.clatit_dict.Equals(clatit_attr)).ToList<pe_dict>().First();
+                    } catch (Exception ex ) {
+
+                        throw (new Exception("L'attribut -> " + nom_attr + " " + clatit_attr + " n'a pas de correpondance dans le dictionnaire"));
+
+                    }
 
                     //if(dict != null) {
                     //    libl_list = new List<pe_libl>();

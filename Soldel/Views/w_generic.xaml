@@ -11,6 +11,19 @@
         Title="GENERIC" Height="600" Width="600">
 
     <Window.CommandBindings>
+
+        <CommandBinding Command="commands:grmu_command.add"
+                        CanExecute="add_grmu_can_execute"
+                        Executed="add_grmu_executed"/>
+
+        <CommandBinding Command="commands:muta_command.copy"
+                        CanExecute="copy_muta_can_execute"
+                        Executed="copy_muta_executed"/>
+
+        <CommandBinding Command="commands:muta_command.re_order_attr"
+                        CanExecute="re_order_attr_can_execute"
+                        Executed="re_order_attr_executed"/>
+
         <CommandBinding Command="commands:attr_command.copy"
                         CanExecute="copy_attr_can_execute"
                         Executed="copy_attr_executed"/>
@@ -22,14 +35,6 @@
         <CommandBinding Command="commands:attr_command.delete"
                         CanExecute="delete_attr_can_execute"
                         Executed="delete_attr_executed"/>
-
-        <CommandBinding Command="commands:muta_command.copy"
-                        CanExecute="copy_muta_can_execute"
-                        Executed="copy_muta_executed"/>
-
-        <CommandBinding Command="commands:muta_command.re_order_attr"
-                        CanExecute="re_order_attr_can_execute"
-                        Executed="re_order_attr_executed"/>
 
         <CommandBinding Command="commands:libl_command.copy"
                         CanExecute="copy_libl_can_execute"
@@ -221,6 +226,9 @@
                                     <ContextMenu>
                                         <MenuItem Header="Générer la configuration" 
                                                   Command="{Binding Source={StaticResource generate_config_command}}"/>
+                                        <MenuItem Header="Ajouter un groupe" 
+                                                  Command="commands:grmu_command.add"
+                                                  CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding no_ip}" />

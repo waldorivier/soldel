@@ -190,6 +190,23 @@ namespace Soldel.Views {
             }
         }
 
+        private void re_order_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+
+            e.CanExecute = true;
+        }
+
+        private void re_order_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            pe_grmu grmu = e.Parameter as pe_grmu;
+            if(grmu != null) {
+                int i = 1;
+                foreach(var muta in grmu.pe_muta_list.OrderBy(x => x.muta_order)) {
+                    muta.muta_order = i;
+                    i++;
+                }
+            }
+        }
+
         #endregion
 
         #region MUTATION
@@ -207,7 +224,7 @@ namespace Soldel.Views {
         private void copy_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
             if(!e.Parameter.ToString().Equals("coller_element")) {
-                Clipboard.SetData("String",e.Parameter.ToString());
+                Clipboard.SetData("String", e.Parameter.ToString());
             } else {
                 string data = Clipboard.GetData("String") as string;
                 copy_muta(data);
@@ -236,7 +253,6 @@ namespace Soldel.Views {
             foreach(var item in source.Items) {
                 var attr = item as pe_attr;
                 if(attr != null) {
-                    int position = attr.position;
                     attr.position = i;
                     i++;
                 }
@@ -246,7 +262,6 @@ namespace Soldel.Views {
         #endregion
 
         #region ATTRIBUT
-
 
         private void copy_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
 
@@ -315,8 +330,7 @@ namespace Soldel.Views {
         }
 
         #endregion
-
-     
+             
         #region LIBL
 
         private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
@@ -374,6 +388,7 @@ namespace Soldel.Views {
         }
 
         #endregion
+
     }
 }
 

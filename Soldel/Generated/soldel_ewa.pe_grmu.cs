@@ -393,6 +393,8 @@ namespace mupeModel {
 
                 return _pe_muta_list;
             }
+
+            // tricks pour permettre de notifier une modification de la liste 
             set {
                 this.SendPropertyChanged("pe_muta_list");
             }

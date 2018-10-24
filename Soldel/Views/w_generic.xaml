@@ -16,6 +16,10 @@
                         CanExecute="add_grmu_can_execute"
                         Executed="add_grmu_executed"/>
 
+        <CommandBinding Command="commands:grmu_command.re_order_muta"
+                        CanExecute="re_order_muta_can_execute"
+                        Executed="re_order_muta_executed"/>
+
         <CommandBinding Command="commands:muta_command.copy"
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
@@ -229,6 +233,7 @@
                                         <MenuItem Header="Ajouter un groupe" 
                                                   Command="commands:grmu_command.add"
                                                   CommandParameter="{Binding}"/>
+                                    
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding no_ip}" />
@@ -251,9 +256,19 @@
                                         <MenuItem Header="Coller la mutation" 
                                                   Command="commands:muta_command.copy"
                                                   CommandParameter="coller_element"/>
+                                        <MenuItem Header="Réordonner" 
+                                                  Command="commands:grmu_command.re_order_muta"
+                                                  CommandParameter="{Binding}"
+                                                  ToolTipOpening="MenuItem_ToolTipOpening">
+                                            <MenuItem.ToolTip>
+                                                <ToolTip>
+                                                    Réordonne l'ordre des mutations
+                                                </ToolTip>
+                                            </MenuItem.ToolTip>
+                                        </MenuItem>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
-                                <TextBlock Text="{Binding libf_grmu}" />
+                                <TextBlock Text="{Binding libf_grmu}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
@@ -261,7 +276,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Réordonner " 
+                                        <MenuItem Header="Réordonner" 
                                                   Command="commands:muta_command.re_order_attr"/>
 
                                         <MenuItem Header="Copier la mutation" 

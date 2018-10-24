@@ -25,7 +25,7 @@ namespace mupeModel {
         private DateTime? _dh_cre;
         private string _user_maj;
         private DateTime? _dh_maj;
-        private int? _muta_order;
+        private int _muta_order;
         private string _liste_tycas;
         private string _type_grmu;
         private pe_ip _pe_ip;
@@ -223,13 +223,11 @@ namespace mupeModel {
             }
         }
 
-        public virtual int? muta_order {
+        public virtual int muta_order {
             get =>
                 this._muta_order;
             set {
-                int? nullable = this._muta_order;
-                int? nullable2 = value;
-                if((nullable.GetValueOrDefault() == nullable2.GetValueOrDefault()) ? (nullable.HasValue != nullable2.HasValue) : true) {
+                if(this._muta_order != value) {
                     this.SendPropertyChanging();
                     this._muta_order = value;
                     this.SendPropertyChanged("muta_order");

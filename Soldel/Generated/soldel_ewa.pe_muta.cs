@@ -354,8 +354,7 @@ namespace mupeModel {
 
             return copy;
         }
-         
-
+        
         #endregion
 
         public virtual bool is_expanded => false;

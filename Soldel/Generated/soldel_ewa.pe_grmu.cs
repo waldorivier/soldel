@@ -388,15 +388,9 @@ namespace mupeModel {
 
                 _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
 
-                // _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip &
-                //  x.type_grmu.Equals(type_grmu)                                                                                                                  
+                // _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip & x.type_grmu.Equals(type_grmu)).ToList();
 
                 return _pe_muta_list;
-            }
-
-            // tricks pour permettre de notifier une modification de la liste 
-            set {
-                this.SendPropertyChanged("pe_muta_list");
             }
         }
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,7 +47,7 @@ namespace mupeModel.Utils {
             }
         }
 
-        internal void delete(i_soldel parent,i_soldel child) {
+        internal void delete(i_soldel parent, i_soldel child) {
 
             ITransaction transaction = null;
 
@@ -66,7 +67,7 @@ namespace mupeModel.Utils {
                             transaction.Rollback();
                     }
 
-                    MessageBox.Show(ex.Message);
+                    throw ex;
                 }
             }
         }
@@ -83,7 +84,7 @@ namespace mupeModel.Utils {
                 if(transaction != null)
                     transaction.Rollback();
 
-                MessageBox.Show(ex.Message);
+                throw ex;
             }
         }
     }

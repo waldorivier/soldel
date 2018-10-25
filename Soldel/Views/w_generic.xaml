@@ -24,6 +24,14 @@
                         CanExecute="copy_muta_can_execute"
                         Executed="copy_muta_executed"/>
 
+        <CommandBinding Command="commands:muta_command.paste"
+                        CanExecute="paste_muta_can_execute"
+                        Executed="paste_muta_executed"/>
+
+        <CommandBinding Command="commands:muta_command.refresh"
+                        CanExecute="refresh_muta_can_execute"
+                        Executed="refresh_muta_executed"/>
+
         <CommandBinding Command="commands:muta_command.re_order_attr"
                         CanExecute="re_order_attr_can_execute"
                         Executed="re_order_attr_executed"/>
@@ -31,6 +39,10 @@
         <CommandBinding Command="commands:attr_command.copy"
                         CanExecute="copy_attr_can_execute"
                         Executed="copy_attr_executed"/>
+
+        <CommandBinding Command="commands:attr_command.paste"
+                        CanExecute="paste_attr_can_execute"
+                        Executed="paste_attr_executed"/>
 
         <CommandBinding Command="commands:attr_command.add"
                         CanExecute="add_attr_can_execute"
@@ -63,7 +75,7 @@
             <Style.Triggers>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=is_expanded}" Value="true" />
+                        <Condition Binding="{Binding Path=is_expanded}" Value="true"/>
                     </MultiDataTrigger.Conditions>
                     <Setter Property="IsExpanded" Value="true"/>
                 </MultiDataTrigger>
@@ -218,7 +230,7 @@
                 <TreeView x:Name="tree_main" 
                           IsTextSearchEnabled="True"
                           Grid.Row="0" Margin="2" Grid.ColumnSpan="2"
-                    ItemContainerStyle="{StaticResource tree_view_item_type}">
+                          ItemContainerStyle="{StaticResource tree_view_item_type}">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
                             <HierarchicalDataTemplate.ItemsSource>
@@ -254,12 +266,11 @@
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Coller la mutation" 
-                                                  Command="commands:muta_command.copy"
-                                                  CommandParameter="coller_element"/>
+                                                  Command="commands:muta_command.paste"
+                                                  CommandParameter="{Binding}"/>
                                         <MenuItem Header="Réordonner" 
                                                   Command="commands:grmu_command.re_order_muta"
-                                                  CommandParameter="{Binding}"
-                                                  ToolTipOpening="MenuItem_ToolTipOpening">
+                                                  CommandParameter="{Binding}">
                                             <MenuItem.ToolTip>
                                                 <ToolTip>
                                                     Réordonne l'ordre des mutations
@@ -272,6 +283,12 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_gmmu}" ItemsSource="{Binding pe_muta_list}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding pe_muta.libf_muta}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
@@ -281,15 +298,20 @@
 
                                         <MenuItem Header="Copier la mutation" 
                                                   Command="commands:muta_command.copy"
-                                                  CommandParameter="{Binding pe_muta_id}"/>
+                                                  CommandParameter="{Binding}"/>
 
                                         <MenuItem Header="Ajouter un attribut" 
                                                   Command="commands:attr_command.add"
                                                   CommandParameter="{Binding}"/>
 
                                         <MenuItem Header="Coller l'attribut" 
-                                                  Command="commands:attr_command.copy"
-                                                  CommandParameter="coller_element"/>
+                                                  Command="commands:attr_command.paste"
+                                                  CommandParameter="{Binding}"/>
+
+                                        <MenuItem Header="Actualiser" 
+                                                  Command="commands:muta_command.refresh"
+                                                  CommandParameter="{Binding}"/>
+
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
@@ -306,7 +328,7 @@
 
                                         <MenuItem Header="Supprimer l'attribut" 
                                                   Command="commands:attr_command.delete"
-                                                  CommandParameter="{Binding}"/>
+                                                  CommandParameter="{Binding pe_muta}"/>
 
                                         <MenuItem Header="Coller le libellé" 
                                                   Command="commands:libl_command.copy"
@@ -406,7 +428,7 @@
                     </Grid.RowDefinitions>
 
                     <DataGrid x:Name="dg_list" Grid.Row="0" Margin="2"
-                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
+                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedItem, Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="3" Margin="2">

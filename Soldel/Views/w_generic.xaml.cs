@@ -61,43 +61,6 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_muta(string element_id) {
-
-            ITransaction transaction = null;
-
-            try {
-                var grmu = tree_main.SelectedValue as pe_grmu;
-                if(grmu != null) {
-                    transaction = _session.BeginTransaction();
-
-                    pe_ip ip = _session.Get<pe_ip>(grmu.no_ip);
-                    pe_muta muta_to_copy = _session.Get<pe_muta>(element_id);
-
-                    string str = hibernate_util.get_instance().generate_muta_id();
-                    pe_muta muta = muta_to_copy.deep_copy(str,ip);
-
-                    ip.add_muta(muta);
-                    pe_gmmu gmmu = new pe_gmmu(grmu, muta);
-                    _session.Save(gmmu);
-
-                    _session.Save(ip);
-
-                    transaction.Commit();
-                    _session.Refresh(gmmu);
-
-                    // notifier la liste des mutations de la modification survenue
-                    grmu.pe_muta_list = null;
-                }
-            } catch(Exception ex) {
-                if(transaction != null) {
-                    if(transaction != null)
-                        transaction.Rollback();
-
-                    MessageBox.Show(ex.StackTrace);
-                }
-            }
-        }
-
         private void copy_libl(pe_libl libl_to_copy) {
 
             ITransaction transaction = null;
@@ -137,7 +100,7 @@ namespace Soldel.Views {
         // TODO : encapsuler de manière générique
         // on ne supprime que la relation
         //---------------------------------------------------------------------
-        private void Btn_tree_delete_Click(object sender,RoutedEventArgs e) {
+        private void Btn_tree_delete_Click(object sender, RoutedEventArgs e) {
 
             ITransaction transaction = null;
 
@@ -164,7 +127,7 @@ namespace Soldel.Views {
                 }
             }
         }
-        private void Btn_update_Click(object sender,RoutedEventArgs e) {
+        private void Btn_update_Click(object sender, RoutedEventArgs e) {
 
             new persistant_controller(_session).update(g_detail.DataContext);
         }
@@ -211,24 +174,36 @@ namespace Soldel.Views {
 
         #region MUTATION
 
-        private void copy_muta_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
-            object data = Clipboard.GetData("String");
-            if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = data != null;
-            } else {
-                e.CanExecute = data == null;
-            }
+            e.CanExecute = _muta == null;
         }
 
         private void copy_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            if(!e.Parameter.ToString().Equals("coller_element")) {
-                Clipboard.SetData("String", e.Parameter.ToString());
-            } else {
-                string data = Clipboard.GetData("String") as string;
-                copy_muta(data);
-                Clipboard.Clear();
+            _muta = e.Parameter as pe_muta;
+        }
+        private void paste_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+
+            e.CanExecute = _muta != null;
+        }
+
+        private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            if(_muta != null) {
+                pe_grmu grmu = e.Parameter as pe_grmu;
+
+                pe_muta muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
+                new persistant_controller(_session).update(muta);
+                
+                pe_gmmu gmmu = new pe_gmmu(grmu, muta);
+                new persistant_controller(_session).update(gmmu);
+
+                _muta = null;
+
+                TreeViewItem source = e.OriginalSource as TreeViewItem;
+                source.ItemsSource = null;
+                source.ItemsSource = dg_list.ItemsSource = grmu.pe_muta_list;
             }
         }
 
@@ -237,15 +212,21 @@ namespace Soldel.Views {
             e.CanExecute = true;
         }
 
-        private void refresh_muta_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void refresh_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            pe_muta muta = e.Parameter as pe_muta;
+
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            source.ItemsSource = null;
+            source.ItemsSource = muta.pe_attr_list;
         }
 
-        private void re_order_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void re_order_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = true;
         }
 
-        private void re_order_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void re_order_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
 
@@ -263,32 +244,34 @@ namespace Soldel.Views {
 
         #region ATTRIBUT
 
-        private void copy_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
-            if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = _attr != null;
-            } else {
-                e.CanExecute = _attr == null;
-            }
+            e.CanExecute = _attr == null;
         }
 
-        private void copy_attr_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void copy_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            if(!e.Parameter.ToString().Equals("coller_element")) {
-                pe_attr parameter = e.Parameter as pe_attr;
-                if(parameter != null) {
-                    _attr = parameter;
-                }
-            } else if(_attr != null) {
-                pe_muta muta = tree_main.SelectedValue as pe_muta;
-                if(muta != null) {
-                    new persistant_controller(_session).add_child(muta, _attr.shallow_copy(muta));
-                    _attr = null;
-                }
-            }
+            _attr = e.Parameter as pe_attr;
         }
 
-        private void add_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void paste_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+
+            e.CanExecute = _attr != null;
+        }
+
+        private void paste_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            pe_muta muta = e.Parameter as pe_muta;
+            new persistant_controller(_session).add_child(muta, _attr.shallow_copy(muta));
+            _attr = null;
+
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            source.ItemsSource = null;
+            source.ItemsSource = muta.pe_attr_list;
+            dg_list.ItemsSource = muta.pe_attr_list;
+        }
+
+        private void add_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = true;
         }
@@ -296,44 +279,54 @@ namespace Soldel.Views {
         private void add_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_muta muta = e.Parameter as pe_muta;
-            if(muta != null) {
-                var global_dict = new global_dict() {
-                    dict_list = hibernate_util.get_instance().get_attr_dict_list(),
-                    dict_list_name = "DICTIONNAIRE DES ATTRIBUTS"
-                };
 
-                var w_dict = new w_generic();
-                w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
-                w_dict.cb_connection.Visibility = Visibility.Collapsed;
+            var global_dict = new global_dict() {
+                dict_list = hibernate_util.get_instance().get_attr_dict_list(),
+                dict_list_name = "DICTIONNAIRE DES ATTRIBUTS"
+            };
 
-                w_dict._muta = muta;
-                w_dict._session = _session;
+            var w_dict = new w_generic();
+            w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
 
-                w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
-                w_dict.ShowDialog();
+            w_dict.cb_connection.Visibility = Visibility.Collapsed;
 
-                new persistant_controller(_session).add_child(muta, w_dict._attr);
-            }
+            w_dict._muta = muta;
+            w_dict._session = _session;
+
+            w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
+            w_dict.ShowDialog();
+
+            new persistant_controller(_session).add_child(muta, w_dict._attr);
+
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            source.ItemsSource = null;
+            source.ItemsSource = muta.pe_attr_list;
+            dg_list.ItemsSource = muta.pe_attr_list;
         }
 
-        private void delete_attr_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void delete_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = true;
         }
 
         private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            pe_attr attr = e.Parameter as pe_attr;
-            if(attr != null) {
-                new persistant_controller(_session).delete(attr.pe_muta, attr);
-            }
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            pe_attr attr = source.DataContext as pe_attr;
+            pe_muta muta = e.Parameter as pe_muta;
+
+            new persistant_controller(_session).delete(muta, attr);
+
+            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
+            parent.ItemsSource = null;
+            parent.ItemsSource = muta.pe_attr_list;
         }
 
         #endregion
              
         #region LIBL
 
-        private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             if(e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = _libl != null;
@@ -341,7 +334,7 @@ namespace Soldel.Views {
                 e.CanExecute = _libl == null;
             }
         }
-        private void copy_libl_executed(object sender,ExecutedRoutedEventArgs e) {
+        private void copy_libl_executed(object sender, ExecutedRoutedEventArgs e) {
 
             if(!e.Parameter.ToString().Equals("coller_element")) {
                 pe_libl parameter = e.Parameter as pe_libl;
@@ -358,7 +351,7 @@ namespace Soldel.Views {
 
         #region DICT
 
-        private void dict_select_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void dict_select_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = (_muta != null);
         }
@@ -376,7 +369,7 @@ namespace Soldel.Views {
             }
         }
 
-        private void dict_add_can_execute(object sender,CanExecuteRoutedEventArgs e) {
+        private void dict_add_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = true;
         }
@@ -389,6 +382,39 @@ namespace Soldel.Views {
 
         #endregion
 
+        #region TREE_VIEW
+
+        private void tree_view_selected(object sender, RoutedEventArgs e) {
+
+            pe_muta muta = tree_main.SelectedValue as pe_muta;
+            if(muta != null) {
+                TreeViewItem source = e.OriginalSource as TreeViewItem;
+                if(source != null) {
+                    source.ItemsSource = null;
+                    source.ItemsSource = muta.pe_attr_list;
+                }
+            }
+
+            pe_grmu grmu = tree_main.SelectedValue as pe_grmu;
+            if(grmu != null) {
+                TreeViewItem source = e.OriginalSource as TreeViewItem;
+                if(source != null) {
+                    source.ItemsSource = null;
+                    source.ItemsSource = grmu.pe_muta_list;
+                }
+            }
+        }
+
+        public ItemsControl GetSelectedTreeViewItemParent(TreeViewItem item) {
+            DependencyObject parent = VisualTreeHelper.GetParent(item);
+            while(!(parent is TreeViewItem || parent is TreeView)) {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return parent as ItemsControl;
+        }
+
+        #endregion
     }
 }
 

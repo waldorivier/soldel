@@ -23,7 +23,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_gmmu, Soldel in the schema.
     /// </summary>
-    public partial class pe_gmmu:INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_gmmu:INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -265,6 +265,27 @@ namespace mupeModel {
             var handler = this.PropertyChanged;
             if(handler != null)
                 handler(this,new PropertyChangedEventArgs(propertyName));
+        }
+
+        void i_soldel.add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        bool i_soldel.can_remove_me() {
+            return true;
+        }
+
+        void i_soldel.remove_me() {
+            pe_grmu.pe_gmmu_list.Remove(this);
+            pe_muta.pe_gmmu_list.Remove(this);
+        }
+
+        bool i_soldel.is_persistant() {
+            throw new NotImplementedException();
         }
 
         public virtual IList<pe_muta> pe_muta_list {

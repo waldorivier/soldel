@@ -28,9 +28,9 @@
                         CanExecute="paste_muta_can_execute"
                         Executed="paste_muta_executed"/>
 
-        <CommandBinding Command="commands:muta_command.refresh"
-                        CanExecute="refresh_muta_can_execute"
-                        Executed="refresh_muta_executed"/>
+        <CommandBinding Command="commands:muta_command.delete"
+                        CanExecute="delete_muta_can_execute"
+                        Executed="delete_muta_executed"/>
 
         <CommandBinding Command="commands:muta_command.re_order_attr"
                         CanExecute="re_order_attr_can_execute"
@@ -259,6 +259,7 @@
                                 <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
                                               ConverterParameter=",CONFIGS">
                                     <Binding Path="pe_muta_list"/>
+                                    <!--<Binding Path="pe_gmmu_list"/>-->
                                     <Binding Path="pe_cfgd_list"/>
                                 </MultiBinding>
                             </HierarchicalDataTemplate.ItemsSource>
@@ -308,10 +309,9 @@
                                                   Command="commands:attr_command.paste"
                                                   CommandParameter="{Binding}"/>
 
-                                        <MenuItem Header="Actualiser" 
-                                                  Command="commands:muta_command.refresh"
-                                                  CommandParameter="{Binding}"/>
-
+                                        <MenuItem Header="Supprimer la mutation" 
+                                                  Command="commands:muta_command.delete"/>
+                                       
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
@@ -327,9 +327,8 @@
                                                   CommandParameter="{Binding}"/>
 
                                         <MenuItem Header="Supprimer l'attribut" 
-                                                  Command="commands:attr_command.delete"
-                                                  CommandParameter="{Binding pe_muta}"/>
-
+                                                  Command="commands:attr_command.delete"/>
+                                        
                                         <MenuItem Header="Coller le libellé" 
                                                   Command="commands:libl_command.copy"
                                                   CommandParameter="coller_element"/>

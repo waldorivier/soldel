@@ -295,11 +295,10 @@ namespace mupeModel {
         }
         
         bool i_soldel.can_remove_me() {
-            throw new NotImplementedException();
+            return pe_gmmu_list.Count == 0;
         }
 
         void i_soldel.remove_me() {
-            throw new NotImplementedException();
         }
 
         public virtual bool can_add_child(object child) {

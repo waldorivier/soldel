@@ -42,12 +42,35 @@ namespace mupeModel.Utils {
                         if(transaction != null)
                             transaction.Rollback();
                     }
-                    MessageBox.Show(ex.Message);
+                    throw ex;
                 }
             }
         }
 
         internal void delete(i_soldel parent, i_soldel child) {
+
+            ITransaction transaction = null;
+
+            if(child.can_remove_me()) {
+                try {
+                    transaction = _session.BeginTransaction();
+                    child.remove_me();
+                    _session.Delete(child);
+
+                    transaction.Commit();
+                    if (parent != null)
+                        _session.Refresh(parent);
+
+                } catch(Exception ex) {
+                    if(transaction != null)
+                        transaction.Rollback();
+
+                    throw ex;
+                }
+            }
+        }
+
+        internal void delete(i_soldel parent_1, i_soldel parent_2, i_soldel child) {
 
             ITransaction transaction = null;
 
@@ -59,18 +82,17 @@ namespace mupeModel.Utils {
                     _session.Delete(child);
 
                     transaction.Commit();
-                    _session.Refresh(parent);
+                    _session.Refresh(parent_1);
 
                 } catch(Exception ex) {
-                    if(transaction != null) {
-                        if(transaction != null)
-                            transaction.Rollback();
-                    }
+                    if(transaction != null)
+                        transaction.Rollback();
 
                     throw ex;
                 }
             }
         }
+
 
         internal void update(object elem) {
 

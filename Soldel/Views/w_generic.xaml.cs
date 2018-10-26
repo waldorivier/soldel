@@ -96,37 +96,6 @@ namespace Soldel.Views {
             }
         }
 
-        //---------------------------------------------------------------------
-        // TODO : encapsuler de manière générique
-        // on ne supprime que la relation
-        //---------------------------------------------------------------------
-        private void Btn_tree_delete_Click(object sender, RoutedEventArgs e) {
-
-            ITransaction transaction = null;
-
-            try {
-                var muta = tree_main.SelectedValue as pe_muta;
-                if(muta != null) {
-                    transaction = _session.BeginTransaction();
-
-                    // TODO : ce n'est pas complet, car il faut choisir un des gmmus.....!
-
-                    var gmmu = muta.pe_gmmu_list[0];
-                    gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);
-                    muta.pe_gmmu_list.Remove(gmmu);
-
-                    _session.Delete(gmmu);
-                    transaction.Commit();
-                }
-            } catch(Exception ex) {
-                if(transaction != null) {
-                    if(transaction != null)
-                        transaction.Rollback();
-
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
         private void Btn_update_Click(object sender, RoutedEventArgs e) {
 
             new persistant_controller(_session).update(g_detail.DataContext);
@@ -207,18 +176,30 @@ namespace Soldel.Views {
             }
         }
 
-        private void refresh_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+        private void delete_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             e.CanExecute = true;
         }
 
-        private void refresh_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+        private void delete_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            pe_muta muta = e.Parameter as pe_muta;
+            persistant_controller persistant_controller = new persistant_controller(_session);
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            source.ItemsSource = null;
-            source.ItemsSource = muta.pe_attr_list;
+            pe_muta muta = source.DataContext as pe_muta;
+
+            // comme gmmu ne fait pas partie de l'arbre (pour des questions de visibilité)
+            // le grmu n'est accessible que par l'élément parent de la mutation 
+
+            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
+            pe_grmu grmu = parent.DataContext as pe_grmu;
+            pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
+            
+            persistant_controller.delete(null, gmmu);
+            persistant_controller.delete(null, muta);
+            
+            parent.ItemsSource = null;
+            parent.ItemsSource = grmu.pe_muta_list;
         }
 
         private void re_order_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -313,7 +294,7 @@ namespace Soldel.Views {
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
             pe_attr attr = source.DataContext as pe_attr;
-            pe_muta muta = e.Parameter as pe_muta;
+            pe_muta muta = attr.pe_muta;
 
             new persistant_controller(_session).delete(muta, attr);
 

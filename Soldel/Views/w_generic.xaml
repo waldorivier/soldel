@@ -74,12 +74,13 @@
         <Style x:Key="tree_view_item_type" TargetType="TreeViewItem">
             <Style.Triggers>
                 <MultiDataTrigger>
+                    <Setter Property="IsExpanded" Value="true"/>
                     <MultiDataTrigger.Conditions>
                         <Condition Binding="{Binding Path=is_expanded}" Value="true"/>
                     </MultiDataTrigger.Conditions>
-                    <Setter Property="IsExpanded" Value="true"/>
                 </MultiDataTrigger>
             </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding Path=tree_view_item_foreground}"/>
         </Style>
 
         <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">

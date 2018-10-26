@@ -29,6 +29,7 @@ namespace mupeModel {
         private string _liste_tycas;
         private string _type_grmu;
         private pe_ip _pe_ip;
+        private string _tree_view_item_foreground;
 
         private IList<pe_gmmu> _pe_gmmu_list = new ObservableCollection<pe_gmmu>();
         private IList<pe_attr> _pe_attr_list = new ObservableCollection<pe_attr>();
@@ -357,5 +358,15 @@ namespace mupeModel {
         #endregion
 
         public virtual bool is_expanded => false;
+
+        public virtual string tree_view_item_foreground {
+            
+            get {
+                if (pe_gmmu_list.Count > 1)
+                    return "red";
+
+                return "black";
+            }
+        }
     }
 }

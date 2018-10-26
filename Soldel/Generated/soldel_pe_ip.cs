@@ -46,7 +46,7 @@ namespace mupeModel {
             if(_ip == null) {
                 return false;
             }
-            if(!object.Equals(this._no_ip,_ip._no_ip)) {
+            if(!object.Equals(this.no_ip, _ip.no_ip)) {
                 return false;
             }
             return true;
@@ -54,7 +54,7 @@ namespace mupeModel {
 
         public override int GetHashCode() {
             int num = 13;
-            return ((num * 7) + this._no_ip.GetHashCode());
+            return ((num * 7) + this.no_ip.GetHashCode());
         }
 
         protected virtual void SendPropertyChanging() {

@@ -159,14 +159,22 @@ namespace Soldel.Views {
 
         private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
+            persistant_controller persistant_controller = new persistant_controller(_session);
+
             if(_muta != null) {
+                pe_muta muta = null;
                 pe_grmu grmu = e.Parameter as pe_grmu;
 
-                pe_muta muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
-                new persistant_controller(_session).update(muta);
-                
-                pe_gmmu gmmu = new pe_gmmu(grmu, muta);
-                new persistant_controller(_session).update(gmmu);
+                // TODO : à compléter  
+                // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
+
+                if(!_muta.pe_ip.Equals(grmu.pe_ip)) {
+                    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(),grmu.pe_ip);
+                    persistant_controller.update(muta);
+                }
+
+                pe_gmmu gmmu = new pe_gmmu(grmu, muta ?? _muta);
+                persistant_controller.update(gmmu);
 
                 _muta = null;
 

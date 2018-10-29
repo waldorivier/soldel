@@ -386,9 +386,7 @@ namespace mupeModel {
             get {
                 string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
 
-                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
-
-                // _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().List<pe_muta>().Where(x => x.no_ip == no_ip & x.type_grmu.Equals(type_grmu)).ToList();
+                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id", ar_muta_id)).List<pe_muta>();
 
                 return _pe_muta_list;
             }

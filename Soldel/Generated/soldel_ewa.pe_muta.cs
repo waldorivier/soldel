@@ -287,8 +287,7 @@ namespace mupeModel {
                 }
             }
         }
-
-
+        
         #region I_SOLDEL
 
         bool i_soldel.is_persistant() {
@@ -350,6 +349,7 @@ namespace mupeModel {
             copy_object.copy<pe_muta>(this,copy);
 
             copy.pe_muta_id = muta_id;
+            copy.no_ip = ip.no_ip;
             copy.pe_ip = ip;
 
             return copy;
@@ -360,9 +360,8 @@ namespace mupeModel {
         public virtual bool is_expanded => false;
 
         public virtual string tree_view_item_foreground {
-            
-            get {
-                if (pe_gmmu_list.Count > 1)
+            get { 
+                if (this.pe_gmmu_list.Count > 1)
                     return "red";
 
                 return "black";

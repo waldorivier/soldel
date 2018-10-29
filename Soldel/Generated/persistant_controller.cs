@@ -102,6 +102,7 @@ namespace mupeModel.Utils {
                 transaction = _session.BeginTransaction();
                 _session.Save(elem);
                 transaction.Commit();
+                _session.Refresh(elem);
             } catch(Exception ex) {
                 if(transaction != null)
                     transaction.Rollback();

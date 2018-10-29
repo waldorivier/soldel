@@ -180,7 +180,7 @@ namespace Soldel.Views {
 
                 TreeViewItem source = e.OriginalSource as TreeViewItem;
                 source.ItemsSource = null;
-                source.ItemsSource = dg_list.ItemsSource = grmu.pe_muta_list;
+                source.ItemsSource = grmu.pe_muta_list;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Soldel.Views {
             
             persistant_controller.delete(null, gmmu);
             persistant_controller.delete(null, muta);
-            
+
             parent.ItemsSource = null;
             parent.ItemsSource = grmu.pe_muta_list;
         }
@@ -404,6 +404,10 @@ namespace Soldel.Views {
         }
 
         #endregion
+
+        private void tree_main_SelectedItemChanged(object sender,RoutedPropertyChangedEventArgs<object> e) {
+
+        }
     }
 }
 

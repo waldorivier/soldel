@@ -81,6 +81,7 @@
                 </MultiDataTrigger>
             </Style.Triggers>
             <Setter Property="Foreground" Value="{Binding Path=tree_view_item_foreground}"/>
+            <EventSetter Event="Selected" Handler="tree_view_selected"/>
         </Style>
 
         <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">

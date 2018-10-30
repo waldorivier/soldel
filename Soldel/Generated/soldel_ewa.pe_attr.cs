@@ -21,7 +21,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_attr, Soldel in the schema.
     /// </summary>
-    public partial class pe_attr:INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
+    public partial class pe_attr:soldel, INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -549,8 +549,17 @@ namespace mupeModel {
             this.pe_muta.pe_attr_list.Remove(this);
         }
 
-        #endregion  
+        #endregion
 
-        public virtual bool is_expanded => false;
+        #region DATAGRID
+
+        public static IList<string> columns_to_display = new List<string>() { "user_maj", "dh_maj", "nom_attr", "clatit_attr",
+                                                                              "val_def", "visibilite", "identifiant", "oblig_fac",
+                                                                              "log", "donnee_traite", "position"};
+
+
+        public static IList<string> columns_read_only = new List<string>() { "nom_attr", "clatit_attr"};
+
+        #endregion
     }
 }

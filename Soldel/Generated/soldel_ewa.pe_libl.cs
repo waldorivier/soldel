@@ -21,7 +21,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_libl, Soldel in the schema.
     /// </summary>
-    public partial class pe_libl:INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_libl: soldel, INotifyPropertyChanging, INotifyPropertyChanged {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -487,7 +487,5 @@ namespace mupeModel {
 
             return copy;
         }
-
-        public  virtual bool is_expanded => true;
     }
 }

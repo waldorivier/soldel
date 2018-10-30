@@ -86,7 +86,7 @@
 
         <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
             <StackPanel>
-                <TextBox Text = "{Binding Path=nom_dict, Mode=TwoWay}">
+                <TextBox Text = "{Binding nom_dict, Mode=TwoWay}">
                 </TextBox>
                 <TextBox Text = "{Binding Path=libf_dict, Mode=TwoWay}">
                 </TextBox>
@@ -120,12 +120,28 @@
 
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
+                <Label Content="Description :"/>
                 <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
                 </TextBox>
+                <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
+                </TextBox>
+                <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_grmu, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=pe_grmu_id, Mode=TwoWay}">
+                <Label Content="Libellé de :"/>
+                <TextBox Text = "{Binding Path=libd_grmu, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé en :"/>
+                <TextBox Text = "{Binding Path=libe_grmu, Mode=TwoWay}">
+                </TextBox>
+                <Label Content="Libellé it :"/>
+                <TextBox Text = "{Binding Path=libi_grmu, Mode=TwoWay}">
+                </TextBox>
+                <Label Content="Type :"/>
+                <ComboBox Text="type_grmu" 
+                          ItemsSource  = "{Binding Path=type_grmu_list}" 
+                          SelectedItem = "{Binding Path=type_grmu, Mode=TwoWay}">
+                </ComboBox>
             </StackPanel>
         </DataTemplate>
 
@@ -149,16 +165,22 @@
 
         <DataTemplate x:Key="pe_muta_template" DataType="pe_muta">
             <StackPanel>
+                <Label Content="Type event :"/>
                 <TextBox Text = "{Binding Path=tyeven, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Extension type event :"/>
                 <TextBox Text = "{Binding Path=exttyeven, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_muta, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé de :"/>
                 <TextBox Text = "{Binding Path=libd_muta, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé en :"/>
                 <TextBox Text = "{Binding Path=libe_muta, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé it :"/>
                 <TextBox Text = "{Binding Path=libi_muta, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
@@ -261,7 +283,6 @@
                                 <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
                                               ConverterParameter=",CONFIGS">
                                     <Binding Path="pe_muta_list"/>
-                                    <!--<Binding Path="pe_gmmu_list"/>-->
                                     <Binding Path="pe_cfgd_list"/>
                                 </MultiBinding>
                             </HierarchicalDataTemplate.ItemsSource>
@@ -428,8 +449,12 @@
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid x:Name="dg_list" Grid.Row="0" Margin="2"
-                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedItem, Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
+                    <DataGrid x:Name="dg_list" Grid.Row="0" Margin="2" 
+                              AutoGeneratingColumn="dg_list_auto_generating_column"
+                              IsReadOnly="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              ItemsSource="{Binding ElementName=tree_main, Path=SelectedItem, Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="3" Margin="2">

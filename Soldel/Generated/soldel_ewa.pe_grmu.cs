@@ -25,7 +25,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_grmu, Soldel in the schema.
     /// </summary>
-    public partial class pe_grmu : INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
+    public partial class pe_grmu:soldel, INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -95,14 +95,14 @@ namespace mupeModel {
                 return this._pe_grmu_id;
             }
             set {
-                if (this._pe_grmu_id != value) {
+                if(this._pe_grmu_id != value) {
                     this.SendPropertyChanging();
                     this._pe_grmu_id = value;
                     this.SendPropertyChanged("pe_grmu_id");
                 }
             }
         }
-        
+
         /// <summary>
         /// There are no comments for u_version in the schema.
         /// </summary>
@@ -111,7 +111,7 @@ namespace mupeModel {
                 return this._u_version;
             }
             set {
-                if (this._u_version != value) {
+                if(this._u_version != value) {
                     this.SendPropertyChanging();
                     this._u_version = value;
                     this.SendPropertyChanged("u_version");
@@ -128,7 +128,7 @@ namespace mupeModel {
                 return this._libf_grmu;
             }
             set {
-                if (this._libf_grmu != value) {
+                if(this._libf_grmu != value) {
                     this.SendPropertyChanging();
                     this._libf_grmu = value;
                     this.SendPropertyChanged("libf_grmu");
@@ -145,7 +145,7 @@ namespace mupeModel {
                 return this._libd_grmu;
             }
             set {
-                if (this._libd_grmu != value) {
+                if(this._libd_grmu != value) {
                     this.SendPropertyChanging();
                     this._libd_grmu = value;
                     this.SendPropertyChanged("libd_grmu");
@@ -162,7 +162,7 @@ namespace mupeModel {
                 return this._libe_grmu;
             }
             set {
-                if (this._libe_grmu != value) {
+                if(this._libe_grmu != value) {
                     this.SendPropertyChanging();
                     this._libe_grmu = value;
                     this.SendPropertyChanged("libe_grmu");
@@ -179,7 +179,7 @@ namespace mupeModel {
                 return this._libi_grmu;
             }
             set {
-                if (this._libi_grmu != value) {
+                if(this._libi_grmu != value) {
                     this.SendPropertyChanging();
                     this._libi_grmu = value;
                     this.SendPropertyChanged("libi_grmu");
@@ -196,7 +196,7 @@ namespace mupeModel {
                 return this._description;
             }
             set {
-                if (this._description != value) {
+                if(this._description != value) {
                     this.SendPropertyChanging();
                     this._description = value;
                     this.SendPropertyChanged("description");
@@ -213,7 +213,7 @@ namespace mupeModel {
                 return this._no_ip;
             }
             set {
-                if (this._no_ip != value) {
+                if(this._no_ip != value) {
                     this.SendPropertyChanging();
                     this._no_ip = value;
                     this.SendPropertyChanged("no_ip");
@@ -230,7 +230,7 @@ namespace mupeModel {
                 return this._type_grmu;
             }
             set {
-                if (this._type_grmu != value) {
+                if(this._type_grmu != value) {
                     this.SendPropertyChanging();
                     this._type_grmu = value;
                     this.SendPropertyChanged("type_grmu");
@@ -247,7 +247,7 @@ namespace mupeModel {
                 return this._user_cre;
             }
             set {
-                if (this._user_cre != value) {
+                if(this._user_cre != value) {
                     this.SendPropertyChanging();
                     this._user_cre = value;
                     this.SendPropertyChanged("user_cre");
@@ -264,7 +264,7 @@ namespace mupeModel {
                 return this._dh_cre;
             }
             set {
-                if (this._dh_cre != value) {
+                if(this._dh_cre != value) {
                     this.SendPropertyChanging();
                     this._dh_cre = value;
                     this.SendPropertyChanged("dh_cre");
@@ -281,7 +281,7 @@ namespace mupeModel {
                 return this._user_maj;
             }
             set {
-                if (this._user_maj != value) {
+                if(this._user_maj != value) {
                     this.SendPropertyChanging();
                     this._user_maj = value;
                     this.SendPropertyChanged("user_maj");
@@ -298,7 +298,7 @@ namespace mupeModel {
                 return this._dh_maj;
             }
             set {
-                if (this._dh_maj != value) {
+                if(this._dh_maj != value) {
                     this.SendPropertyChanging();
                     this._dh_maj = value;
                     this.SendPropertyChanged("dh_maj");
@@ -333,7 +333,7 @@ namespace mupeModel {
                 this.SendPropertyChanged("pe_gmmu_list");
             }
         }
-        
+
         /// <summary>
         /// There are no comments for pe_gmes_list in the schema.
         /// </summary>
@@ -352,7 +352,7 @@ namespace mupeModel {
                 return this._pe_ip;
             }
             set {
-                if (this._pe_ip != value) {
+                if(this._pe_ip != value) {
                     this.SendPropertyChanging();
                     this._pe_ip = value;
                     this.SendPropertyChanged("pe_ip");
@@ -366,33 +366,33 @@ namespace mupeModel {
 
         protected virtual void SendPropertyChanging() {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, emptyChangingEventArgs);
+            if(handler != null)
+                handler(this,emptyChangingEventArgs);
         }
 
         protected virtual void SendPropertyChanging(System.String propertyName) {
             var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, new PropertyChangingEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangingEventArgs(propertyName));
         }
 
         protected virtual void SendPropertyChanged(System.String propertyName) {
             var handler = this.PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            if(handler != null)
+                handler(this,new PropertyChangedEventArgs(propertyName));
         }
 
         public virtual IList<pe_muta> pe_muta_list {
             get {
                 string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
 
-                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id", ar_muta_id)).List<pe_muta>();
+                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
 
                 return _pe_muta_list;
             }
         }
 
-        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+        public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
             try {
                 pe_grmu grmu = (pe_grmu)value;
                 return grmu.pe_muta_list;
@@ -401,10 +401,14 @@ namespace mupeModel {
             return null;
         }
 
-        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+        public virtual object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
             return null;
         }
 
-        public virtual bool is_expanded => false;
+        public virtual IList<String> type_grmu_list {
+            get {
+                return new List<String>() { "01", "03" };
+            }
+        }
     }
 }

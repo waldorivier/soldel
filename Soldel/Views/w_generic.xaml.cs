@@ -20,6 +20,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using mupeModel.Views;
 using System.Collections.ObjectModel;
+using mupeModel.Views.Converters;
 
 namespace Soldel.Views {
 
@@ -167,6 +168,7 @@ namespace Soldel.Views {
 
                 // TODO : à compléter  
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
+                // si l'on ne veut pas copier une référence, il faut copier une mutation despuis une autre ip
 
                 if(!_muta.pe_ip.Equals(grmu.pe_ip)) {
                     muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(),grmu.pe_ip);
@@ -373,6 +375,9 @@ namespace Soldel.Views {
 
         #region TREE_VIEW
 
+        // TODO : lorsque les collections Observables seront intégrées, ce genre de mise à jour devrait pouvoir
+        // être éliminés
+
         private void tree_view_selected(object sender, RoutedEventArgs e) {
 
             pe_muta muta = tree_main.SelectedValue as pe_muta;
@@ -388,8 +393,17 @@ namespace Soldel.Views {
             if(grmu != null) {
                 TreeViewItem source = e.OriginalSource as TreeViewItem;
                 if(source != null) {
-                    source.ItemsSource = null;
-                    source.ItemsSource = grmu.pe_muta_list;
+
+                    List<object> l = new List<object>(); 
+                    foreach (var x in grmu.pe_muta_list) {
+                        l.Add(x);
+                    }
+
+                    folder_node folder = new folder_node();
+                    folder.child_nodes = grmu.pe_cfgd_list;
+                    l.Add(folder);
+                    
+                    source.ItemsSource = l;
                 }
             }
         }
@@ -405,9 +419,37 @@ namespace Soldel.Views {
 
         #endregion
 
-        private void tree_main_SelectedItemChanged(object sender,RoutedPropertyChangedEventArgs<object> e) {
+        #region DATAGRID
 
-        }
+        private void dg_list_auto_generating_column(object sender, DataGridAutoGeneratingColumnEventArgs e) {
+
+            DataGrid dg = sender as DataGrid;
+            if(dg != null) {
+                if (dg.ItemsSource != null) {
+                    if (dg.ItemsSource as IList<pe_attr> != null) { 
+                        if(!pe_attr.columns_to_display.Contains(e.Column.Header)) {
+                            e.Cancel = true;
+                        }
+
+                        if(!pe_attr.columns_read_only.Contains(e.Column.Header)) {
+                            e.Column.IsReadOnly = true;
+                        }
+                    }
+                    if(dg.ItemsSource as IList<pe_muta> != null) {
+                        if(!pe_muta.columns_to_display.Contains(e.Column.Header)) {
+                            e.Cancel = true;
+                        }
+                    }
+                    if(dg.ItemsSource as IList<pe_dict> != null) {
+                        if(!pe_dict.columns_to_display.Contains(e.Column.Header)) {
+                            e.Cancel = true;
+                        }
+                    }
+                }
+            }
+         }
+
+        #endregion
     }
 }
 

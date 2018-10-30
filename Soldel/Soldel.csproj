@@ -120,6 +120,7 @@
     <Compile Include="Command\generate_config_command.cs" />
     <Compile Include="Generated\global_dict.cs" />
     <Compile Include="Generated\i_soldel.cs" />
+    <Compile Include="Generated\soldel.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />
     <Compile Include="Generated\soldel.pe_elem.cs" />

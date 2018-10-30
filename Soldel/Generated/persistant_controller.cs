@@ -70,30 +70,6 @@ namespace mupeModel.Utils {
             }
         }
 
-        internal void delete(i_soldel parent_1, i_soldel parent_2, i_soldel child) {
-
-            ITransaction transaction = null;
-
-            if(child.can_remove_me()) {
-                try {
-
-                    transaction = _session.BeginTransaction();
-                    child.remove_me();
-                    _session.Delete(child);
-
-                    transaction.Commit();
-                    _session.Refresh(parent_1);
-
-                } catch(Exception ex) {
-                    if(transaction != null)
-                        transaction.Rollback();
-
-                    throw ex;
-                }
-            }
-        }
-
-
         internal void update(object elem) {
 
             ITransaction transaction = null;

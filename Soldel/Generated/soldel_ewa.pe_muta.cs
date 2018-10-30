@@ -6,11 +6,12 @@ namespace mupeModel {
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Windows.Data;
 
-    public class pe_muta:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
+    public class pe_muta:soldel, INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
         private string _pe_muta_id = "";
         private string _u_version;
@@ -29,8 +30,7 @@ namespace mupeModel {
         private string _liste_tycas;
         private string _type_grmu;
         private pe_ip _pe_ip;
-        private string _tree_view_item_foreground;
-
+        
         private IList<pe_gmmu> _pe_gmmu_list = new ObservableCollection<pe_gmmu>();
         private IList<pe_attr> _pe_attr_list = new ObservableCollection<pe_attr>();
 
@@ -354,12 +354,12 @@ namespace mupeModel {
 
             return copy;
         }
-        
+
         #endregion
 
-        public virtual bool is_expanded => false;
+        #region TREEVIEW
 
-        public virtual string tree_view_item_foreground {
+        public virtual new string tree_view_item_foreground {
             get { 
                 if (this.pe_gmmu_list.Count > 1)
                     return "red";
@@ -367,5 +367,14 @@ namespace mupeModel {
                 return "black";
             }
         }
+
+        #endregion
+
+        #region DATAGRID
+
+        public static IList<string> columns_to_display = new List<string>() { "user_maj", "dh_maj", "tyeven", "exttyeven",
+                                                                              "muta_order", "libf_muta", "libd_muta", "libe_muta", "libi_muta", "type_grmu"};
+
+        #endregion
     }
 }

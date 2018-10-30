@@ -8,7 +8,7 @@ namespace mupeModel.Views.Converters {
     using System.Windows.Data;
 
     internal class w_generic_tree_multi_list_converter:IMultiValueConverter {
-        public object Convert(object[] values,Type targetType,object parameter,CultureInfo culture) {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             string str = (parameter as string) ?? "";
             char[] separator = new char[] { ',' };
             List<string> list = (from f in str.Split(separator) select f.Trim()).ToList<string>();

@@ -7,7 +7,7 @@ namespace mupeModel {
     using System.Globalization;
     using System.Windows.Data;
 
-    public class pe_ip:INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
+    public class pe_ip: soldel, INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
 

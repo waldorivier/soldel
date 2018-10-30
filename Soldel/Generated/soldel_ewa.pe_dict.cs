@@ -20,7 +20,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_dict, Soldel in the schema.
     /// </summary>
-    public partial class pe_dict:INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class pe_dict:soldel, INotifyPropertyChanging, INotifyPropertyChanged {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -349,13 +349,18 @@ namespace mupeModel {
             }
         }
 
-
         public virtual IList<String> tydata_list {
             get {
                 return new List<String>() { "S", "N", "D"};
             }
         }
-        
-        public virtual bool is_expanded => false;
+
+        #region DATAGRID
+
+        public static IList<string> columns_to_display = new List<string>() { "user_maj", "dh_maj", "clatit_dict", "tydata_dict", "format_dict",
+                                                                              "libf_dict", "libd_dict", "libe_dict", "libi_dict"};
+
+        #endregion
+
     }
 }

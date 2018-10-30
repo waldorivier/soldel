@@ -177,7 +177,5 @@ namespace mupeModel {
         bool i_soldel.is_persistant() {
             return true;
         }
-
-        public virtual bool is_expanded => false;
     }
 }

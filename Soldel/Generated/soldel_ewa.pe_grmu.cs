@@ -384,9 +384,11 @@ namespace mupeModel {
 
         public virtual IList<pe_muta> pe_muta_list {
             get {
-                string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
+                if(pe_gmmu_list.Count > 0) {
 
-                _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
+                    string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
+                    _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
+                }
 
                 return _pe_muta_list;
             }

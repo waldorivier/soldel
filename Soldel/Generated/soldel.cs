@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 namespace mupeModel {
     public class soldel {
 
+        public virtual IList<String> true_false_list {
+            get {
+                return new List<String>() { " ","F","T" };
+            }
+        }
 
         #region TREEVIEW
 

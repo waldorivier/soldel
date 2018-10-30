@@ -86,26 +86,30 @@
 
         <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
             <StackPanel>
+                <Label Content="Nom :"/>
                 <TextBox Text = "{Binding nom_dict, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_dict, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé de :"/>
                 <TextBox Text = "{Binding Path=libd_dict, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé en :"/>
                 <TextBox Text = "{Binding Path=libe_dict, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé it :"/>
                 <TextBox Text = "{Binding Path=libi_dict, Mode=TwoWay}">
                 </TextBox>
-                <ComboBox Text="CLASSE" 
-                          ItemsSource  = "{Binding Path=classe_list}" 
+                <Label Content="Classe :"/>
+                <ComboBox Text="clatit_dict" 
+                          ItemsSource  = "{Binding Path=clatit_dict_list}" 
                           SelectedItem = "{Binding Path=clatit_dict, Mode=TwoWay}">
                 </ComboBox>
-                <ComboBox Text="TYPE DATA" 
+                <ComboBox Text="Type de donnée" 
                           ItemsSource  = "{Binding Path=tydata_list}" 
                           SelectedItem = "{Binding Path=tydata_dict, Mode=TwoWay}">
                 </ComboBox>
-                <TextBox Text = "{Binding Path=format_dict, Mode=TwoWay}">
-                </TextBox>
             </StackPanel>
         </DataTemplate>
 
@@ -123,8 +127,6 @@
                 <Label Content="Description :"/>
                 <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
                 </TextBox>
-                <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
-                </TextBox>
                 <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_grmu, Mode=TwoWay}">
                 </TextBox>
@@ -137,7 +139,7 @@
                 <Label Content="Libellé it :"/>
                 <TextBox Text = "{Binding Path=libi_grmu, Mode=TwoWay}">
                 </TextBox>
-                <Label Content="Type :"/>
+                <Label Content="Type grmu :"/>
                 <ComboBox Text="type_grmu" 
                           ItemsSource  = "{Binding Path=type_grmu_list}" 
                           SelectedItem = "{Binding Path=type_grmu, Mode=TwoWay}">
@@ -147,10 +149,12 @@
 
         <DataTemplate x:Key="pe_cfgd_template" DataType="pe_cfgd">
             <StackPanel>
+                <Label Content="Date validité :"/>
                 <TextBox Text = "{Binding Path=pe_cfgt.dadval}"/>
+                <Label Content="Description :"/>
                 <TextBox Text = "{Binding Path=pe_cfgt.description, Mode=TwoWay}"/>
                 <Border BorderBrush="LightGray" BorderThickness="1">
-                    <Expander Header="XML">
+                    <Expander Header="CONTENU">
                         <Expander.Content>
                             <ScrollViewer VerticalScrollBarVisibility="Visible" 
                                           MaxHeight="300"
@@ -165,10 +169,11 @@
 
         <DataTemplate x:Key="pe_muta_template" DataType="pe_muta">
             <StackPanel>
-                <Label Content="Type event :"/>
+                <Label Content="Type mutation :"/>
                 <TextBox Text = "{Binding Path=tyeven, Mode=TwoWay}">
                 </TextBox>
-                <Label Content="Extension type event :"/>
+                <Label Content="Mutation no :" ToolTip="numéro unique (dans le groupe de mutations) en cas de cohexistence de plusieurs mutations de même type">
+                </Label>
                 <TextBox Text = "{Binding Path=exttyeven, Mode=TwoWay}">
                 </TextBox>
                 <Label Content="Libellé fr :"/>
@@ -188,40 +193,71 @@
 
         <DataTemplate x:Key="pe_attr_template" DataType="pe_attr">
             <StackPanel>
+                <Label Content="Position :"/>
+                <TextBox Text = "{Binding Path=position, Mode=TwoWay}"/>
+                <Label Content="Nom :"/>
                 <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}"/>
+                <Label Content="Classe :"/>
                 <TextBox Text = "{Binding Path=clatit_attr, Mode=TwoWay}"/>
-                <TextBox Text = "{Binding Path=check_attr, Mode=TwoWay}">
-                </TextBox>
-                <TextBox Text = "{Binding Path=val_def, Mode=TwoWay}">
-                </TextBox>
-                <ComboBox Text="visibilite" 
-                          ItemsSource  = "{Binding Path=visibility_list}" 
-                          SelectedItem = "{Binding Path=visibilite, Mode=TwoWay}">
-                </ComboBox>
+                <Label Content="Identifiant :"/>
                 <ComboBox Text="identifiant" 
                           ItemsSource = "{Binding Path=true_false_list}" 
                           SelectedItem = "{Binding Path=identifiant, Mode=TwoWay}"
                           FontStyle="Normal" FontWeight="Bold">
+                </ComboBox>
+                <TextBox Text = "{Binding Path=clatit_attr, Mode=TwoWay}"/>
+                <Label Content="Valeur par défaut :"/>
+                <ComboBox Text="val_def" 
+                          ItemsSource = "{Binding Path=true_false_list}" 
+                          SelectedItem = "{Binding Path=val_def, Mode=TwoWay}">
+                </ComboBox>
+                <Label Content="Visibilité :"/>
+                <ComboBox Text="visibilite" 
+                          ItemsSource  = "{Binding Path=visibility_list}" 
+                          SelectedItem = "{Binding Path=visibilite, Mode=TwoWay}">
+                </ComboBox>
+                <Label Content="Obligatoire :"/>
+                <ComboBox Text="oblig_fac" 
+                          ItemsSource = "{Binding Path=true_false_list}" 
+                          SelectedItem = "{Binding Path=oblig_fac, Mode=TwoWay}">
+                </ComboBox>
+                <Label Content="Donnée traitée :"/>
+                <ComboBox Text="donnee_traite" 
+                          ItemsSource = "{Binding Path=true_false_list}" 
+                          SelectedItem = "{Binding Path=donnee_traite, Mode=TwoWay}">
+                </ComboBox>
+                <Label Content="Inscription dans le fichier de log :"/>
+                <ComboBox Text="log" 
+                          ItemsSource = "{Binding Path=true_false_list}" 
+                          SelectedItem = "{Binding Path=log, Mode=TwoWay}">
                 </ComboBox>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="pe_libl_template" DataType="pe_libl">
             <StackPanel>
+                <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_attr, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé de :"/>
                 <TextBox Text = "{Binding Path=libd_attr, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé en :"/>
                 <TextBox Text = "{Binding Path=libe_attr, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Libellé it :"/>
                 <TextBox Text = "{Binding Path=libi_attr, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Liste valeurs fr :"/>
                 <TextBox Text = "{Binding Path=lif_valeur, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Liste valeurs de :"/>
                 <TextBox Text = "{Binding Path=lid_valeur, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Liste valeurs en :"/>
                 <TextBox Text = "{Binding Path=lie_valeur, Mode=TwoWay}">
                 </TextBox>
+                <Label Content="Liste valeurs it :"/>
                 <TextBox Text = "{Binding Path=lii_valeur, Mode=TwoWay}">
                 </TextBox>
             </StackPanel>
@@ -432,11 +468,16 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
-                    <ContentControl Content="{Binding}" Grid.Row="0">
-                        <ContentControl.ContentTemplateSelector>
-                            <templates:w_generic_detail_template_selector/>
-                        </ContentControl.ContentTemplateSelector>
-                    </ContentControl>
+                    <Border Margin="2" BorderThickness="1" BorderBrush="LightSlateGray">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                                      HorizontalScrollBarVisibility="Auto">
+                            <ContentControl Content="{Binding}" Grid.Row="0">
+                                <ContentControl.ContentTemplateSelector>
+                                    <templates:w_generic_detail_template_selector/>
+                                </ContentControl.ContentTemplateSelector>
+                            </ContentControl>
+                        </ScrollViewer>
+                    </Border>
                 </Grid>
 
                 <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" Margin="2"/>

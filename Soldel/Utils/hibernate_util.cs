@@ -94,6 +94,7 @@ namespace mupeModel.Utils {
                                         "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
                                         "Data Source=OUTSRC; User Id = prod_pictet; Password=prod_pictet",
                                         "Data Source=OUTSRC; User Id = prod_thomreut; Password=prod_thomreut",
+                                        "Data Source=OUTCASP; User Id = prod_med; Password=prod_med",
                                         "Data Source=SWSTAFF;User Id=prod_usse;Password=prod_usse",
                                         };
         }

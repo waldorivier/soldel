@@ -431,7 +431,7 @@ namespace Soldel.Views {
                             e.Cancel = true;
                         }
 
-                        if(!pe_attr.columns_read_only.Contains(e.Column.Header)) {
+                        if(pe_attr.columns_read_only.Contains(e.Column.Header)) {
                             e.Column.IsReadOnly = true;
                         }
                     }

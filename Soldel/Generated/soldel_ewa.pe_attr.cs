@@ -497,20 +497,8 @@ namespace mupeModel {
             if(handler != null)
                 handler(this,new PropertyChangedEventArgs(propertyName));
         }
-
-        public virtual IList<String> visibility_list {
-            get {
-                return new List<String>() { " ","F","T","D" };
-            }
-        }
-
-        public virtual IList<String> true_false_list {
-            get {
-                return new List<String>() { " ","F","T" };
-            }
-        }
-
-        public virtual pe_attr shallow_copy(pe_muta muta) {
+           
+       public virtual pe_attr shallow_copy(pe_muta muta) {
             var copy = new pe_attr();
 
             copy_object.copy<pe_attr>(this,copy);
@@ -550,6 +538,12 @@ namespace mupeModel {
         }
 
         #endregion
+
+        public virtual IList<String> visibility_list {
+            get {
+                return new List<String>() { " ","F","T","D" };
+            }
+        }
 
         #region DATAGRID
 

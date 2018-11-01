@@ -314,8 +314,26 @@ namespace Soldel.Views {
         }
 
         #endregion
-             
+
         #region LIBL
+
+        private void add_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
+
+            pe_attr attr = parent.DataContext as pe_attr;
+            if(attr != null) {
+                e.CanExecute = attr.pe_libl_list.Count == 0;
+            }
+        }
+
+        private void add_libl_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
+            
+        }
 
         private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
@@ -380,15 +398,6 @@ namespace Soldel.Views {
 
         private void tree_view_selected(object sender, RoutedEventArgs e) {
 
-            pe_muta muta = tree_main.SelectedValue as pe_muta;
-            if(muta != null) {
-                TreeViewItem source = e.OriginalSource as TreeViewItem;
-                if(source != null) {
-                    source.ItemsSource = null;
-                    source.ItemsSource = muta.pe_attr_list;
-                }
-            }
-
             pe_grmu grmu = tree_main.SelectedValue as pe_grmu;
             if(grmu != null) {
                 TreeViewItem source = e.OriginalSource as TreeViewItem;
@@ -404,6 +413,15 @@ namespace Soldel.Views {
                     l.Add(folder);
                     
                     source.ItemsSource = l;
+                }
+            }
+
+            pe_muta muta = tree_main.SelectedValue as pe_muta;
+            if(muta != null) {
+                TreeViewItem source = e.OriginalSource as TreeViewItem;
+                if(source != null) {
+                    source.ItemsSource = null;
+                    source.ItemsSource = muta.pe_attr_list;
                 }
             }
         }

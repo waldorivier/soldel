@@ -56,6 +56,10 @@
                         CanExecute="copy_libl_can_execute"
                         Executed="copy_libl_executed"/>
 
+        <CommandBinding Command="commands:libl_command.add"
+                        CanExecute="add_libl_can_execute"
+                        Executed="add_libl_executed"/>
+
         <CommandBinding Command="commands:dict_command.select"
                         CanExecute="dict_select_can_execute"
                         Executed="dict_select_executed"/>
@@ -100,13 +104,14 @@
                 </TextBox>
                 <Label Content="Libellé it :"/>
                 <TextBox Text = "{Binding Path=libi_dict, Mode=TwoWay}">
-                </TextBox>
+                </TextBox>  
                 <Label Content="Classe :"/>
                 <ComboBox Text="clatit_dict" 
                           ItemsSource  = "{Binding Path=clatit_dict_list}" 
                           SelectedItem = "{Binding Path=clatit_dict, Mode=TwoWay}">
                 </ComboBox>
-                <ComboBox Text="Type de donnée" 
+                <Label Content="Type de donnée :"/>
+                <ComboBox Text="tydata_dict" 
                           ItemsSource  = "{Binding Path=tydata_list}" 
                           SelectedItem = "{Binding Path=tydata_dict, Mode=TwoWay}">
                 </ComboBox>
@@ -124,6 +129,9 @@
 
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
+                <Label Content="ID :"/>
+                <TextBox Text = "{Binding Path=pe_grmu_id, Mode=TwoWay}">
+                </TextBox>
                 <Label Content="Description :"/>
                 <TextBox Text = "{Binding Path=description, Mode=TwoWay}">
                 </TextBox>
@@ -196,9 +204,9 @@
                 <Label Content="Position :"/>
                 <TextBox Text = "{Binding Path=position, Mode=TwoWay}"/>
                 <Label Content="Nom :"/>
-                <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}"/>
+                <TextBox Text = "{Binding Path=nom_attr, Mode=OneWay}"/>
                 <Label Content="Classe :"/>
-                <TextBox Text = "{Binding Path=clatit_attr, Mode=TwoWay}"/>
+                <TextBox Text = "{Binding Path=clatit_attr, Mode=OneWay}"/>
                 <Label Content="Identifiant :"/>
                 <ComboBox Text="identifiant" 
                           ItemsSource = "{Binding Path=true_false_list}" 
@@ -387,7 +395,10 @@
 
                                         <MenuItem Header="Supprimer l'attribut" 
                                                   Command="commands:attr_command.delete"/>
-                                        
+
+                                        <MenuItem Header="Ajouter un libellé" 
+                                                  Command="commands:libl_command.add"/>
+
                                         <MenuItem Header="Coller le libellé" 
                                                   Command="commands:libl_command.copy"
                                                   CommandParameter="coller_element"/>

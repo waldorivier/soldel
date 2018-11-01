@@ -153,6 +153,8 @@ namespace mupeModel {
             throw new NotImplementedException();
         }
 
+        #region I_SOLDEL
+
         void i_soldel.add_child(object child) {
          
             var grmu = child as pe_grmu;
@@ -177,5 +179,7 @@ namespace mupeModel {
         bool i_soldel.is_persistant() {
             return true;
         }
+
+        #endregion
     }
 }

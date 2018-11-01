@@ -372,7 +372,7 @@ namespace mupeModel {
 
         #region DATAGRID
 
-        public static IList<string> columns_to_display = new List<string>() { "user_maj", "dh_maj", "tyeven", "exttyeven",
+        public static IList<string> columns_to_display = new List<string>() { "user_maj", "dh_maj", "tyeven", "exttyeven", "pe_muta_id",
                                                                               "muta_order", "libf_muta", "libd_muta", "libe_muta", "libi_muta", "type_grmu"};
 
         #endregion

@@ -439,8 +439,7 @@ namespace mupeModel {
                 }
             }
         }
-
-
+        
         /// <summary>
         /// There are no comments for dh_maj in the schema.
         /// </summary>

@@ -56,9 +56,6 @@ namespace mupeModel.Utils {
         private void load_connections() {
             //connections = new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;SslMode=none" };
             connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
-                                        "Data Source=OUTSTST; User Id = tst_2; Password = tst_2",
-                                        "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
-                                        "Data Source=LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
                                         "Data Source=LABCIT; User ID = PEDEV96_DATA; Password = PEDEV96_DATA",
 
                                         "Data Source=QCASP2; User ID = qc_ssph; Password = qc_ssph",

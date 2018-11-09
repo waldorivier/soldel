@@ -56,7 +56,10 @@ namespace Soldel.Views {
             if((_session = hibernate_util.get_instance().get_session(connection_string)) != null) {
 
                 List<pe_ip> ips = _session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
+                
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+
+                // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
 
                 tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
@@ -166,7 +169,6 @@ namespace Soldel.Views {
                 pe_muta muta = null;
                 pe_grmu grmu = e.Parameter as pe_grmu;
 
-                // TODO : à compléter  
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
                 // si l'on ne veut pas copier une référence, il faut copier une mutation despuis une autre ip
 
@@ -181,8 +183,10 @@ namespace Soldel.Views {
                 _muta = null;
 
                 TreeViewItem source = e.OriginalSource as TreeViewItem;
-                source.ItemsSource = null;
-                source.ItemsSource = grmu.pe_muta_list;
+
+                source.Items.Refresh();
+                // source.ItemsSource = null;
+                // source.ItemsSource = grmu.pe_muta_list;
             }
         }
 
@@ -208,8 +212,9 @@ namespace Soldel.Views {
             persistant_controller.delete(null, gmmu);
             persistant_controller.delete(null, muta);
 
-            parent.ItemsSource = null;
-            parent.ItemsSource = grmu.pe_muta_list;
+            parent.Items.Refresh();
+            // parent.ItemsSource = null;
+            // parent.ItemsSource = grmu.pe_muta_list;
         }
 
         private void re_order_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -255,11 +260,6 @@ namespace Soldel.Views {
             pe_muta muta = e.Parameter as pe_muta;
             new persistant_controller(_session).add_child(muta, _attr.shallow_copy(muta));
             _attr = null;
-
-            TreeViewItem source = e.OriginalSource as TreeViewItem;
-            source.ItemsSource = null;
-            source.ItemsSource = muta.pe_attr_list;
-            dg_list.ItemsSource = muta.pe_attr_list;
         }
 
         private void add_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -288,12 +288,7 @@ namespace Soldel.Views {
             w_dict.ShowDialog();
 
             new persistant_controller(_session).add_child(muta, w_dict._attr);
-
-            TreeViewItem source = e.OriginalSource as TreeViewItem;
-            source.ItemsSource = null;
-            source.ItemsSource = muta.pe_attr_list;
-            dg_list.ItemsSource = muta.pe_attr_list;
-        }
+         }
 
         private void delete_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
@@ -303,14 +298,11 @@ namespace Soldel.Views {
         private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
+         
             pe_attr attr = source.DataContext as pe_attr;
             pe_muta muta = attr.pe_muta;
 
             new persistant_controller(_session).delete(muta, attr);
-
-            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
-            parent.ItemsSource = null;
-            parent.ItemsSource = muta.pe_attr_list;
         }
 
         #endregion
@@ -394,35 +386,39 @@ namespace Soldel.Views {
         #region TREE_VIEW
 
         // TODO : lorsque les collections Observables seront intégrées, ce genre de mise à jour devrait pouvoir
-        // être éliminés
+        // être éliminé
 
         private void tree_view_selected(object sender, RoutedEventArgs e) {
+            try {
+                pe_grmu grmu = tree_main.SelectedValue as pe_grmu;
+                if(grmu != null) {
+                    TreeViewItem source = e.OriginalSource as TreeViewItem;
+                    if(source != null) {
+                        List<object> l = new List<object>();
+                        foreach(var x in grmu.pe_muta_list) {
+                            l.Add(x);
+                        }
 
-            pe_grmu grmu = tree_main.SelectedValue as pe_grmu;
-            if(grmu != null) {
-                TreeViewItem source = e.OriginalSource as TreeViewItem;
-                if(source != null) {
+                        folder_node folder = new folder_node();
+                        folder.child_nodes = grmu.pe_cfgd_list;
+                        l.Add(folder);
 
-                    List<object> l = new List<object>(); 
-                    foreach (var x in grmu.pe_muta_list) {
-                        l.Add(x);
+                        source.ItemsSource = l;
                     }
-
-                    folder_node folder = new folder_node();
-                    folder.child_nodes = grmu.pe_cfgd_list;
-                    l.Add(folder);
-                    
-                    source.ItemsSource = l;
                 }
-            }
 
-            pe_muta muta = tree_main.SelectedValue as pe_muta;
-            if(muta != null) {
-                TreeViewItem source = e.OriginalSource as TreeViewItem;
-                if(source != null) {
-                    source.ItemsSource = null;
-                    source.ItemsSource = muta.pe_attr_list;
+                pe_muta muta = tree_main.SelectedValue as pe_muta;
+                if(muta != null) {
+                    TreeViewItem source = e.OriginalSource as TreeViewItem;
+                    if(source != null) {
+                        if(source.DataContext as pe_muta != null) {
+                            source.ItemsSource = null;
+                            source.ItemsSource = muta.pe_attr_list;
+                        }
+                    }
                 }
+            } catch(Exception ex) {
+                throw new Exception("Une exception s'est produite dans w_generic.xaml.cs / tree_view_selected");
             }
         }
 

@@ -506,7 +506,7 @@
                               IsReadOnly="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
-                              ItemsSource="{Binding ElementName=tree_main, Path=SelectedItem, Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
+                              ItemsSource="{Binding ElementName=tree_main, Path=SelectedItem,  Converter={StaticResource w_generic_list_converter}}" Grid.RowSpan="3">
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="3" Margin="2">

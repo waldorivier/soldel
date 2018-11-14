@@ -11,7 +11,7 @@ namespace mupeModel {
     using System.Threading;
     using System.Windows.Data;
 
-    public class pe_muta:soldel, INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
+    public class pe_muta:soldel, INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
         private string _pe_muta_id = "";
         private string _u_version;
@@ -62,8 +62,7 @@ namespace mupeModel {
                 propertyChanging(this,new PropertyChangingEventArgs(propertyName));
             }
         }
-
-    
+            
         public virtual string pe_muta_id {
             get =>
                 this._pe_muta_id;
@@ -322,21 +321,9 @@ namespace mupeModel {
                 this._pe_attr_list.Add(attr);
             }
         }
-
-        public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
-
-            try {
-                pe_muta _muta = (pe_muta)value;
-                return _muta.pe_attr_list;
-            } catch {
-            }
-            return null;
-        }
-
-        public virtual object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) =>
-            null;
-
+                
         public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
+
             pe_muta muta = shallow_copy(muta_id,ip);
             foreach(pe_attr _attr in pe_attr_list) {
                 muta.add_child(_attr.shallow_copy(muta));
@@ -345,6 +332,7 @@ namespace mupeModel {
         }
 
         public virtual pe_muta shallow_copy(string muta_id,mupeModel.pe_ip ip) {
+
             pe_muta copy = new pe_muta();
             copy_object.copy<pe_muta>(this,copy);
 

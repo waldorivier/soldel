@@ -57,7 +57,7 @@
       <one-to-many class="pe_gmmu" />
     </bag>
     <!--<bag name="pe_attr_list" cascade="all-delete-orphan" inverse="true" generic="true">-->
-    <bag name="pe_attr_list" cascade="all-delete-orphan" inverse="true" generic="true" 
+    <bag name="pe_attr_list" cascade="all-delete-orphan" inverse="true"
          collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_attr]], NHibernate.Collection.Observable">
       <key>
         <column name="pe_muta_id" />

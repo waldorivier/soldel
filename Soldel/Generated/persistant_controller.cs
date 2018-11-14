@@ -19,6 +19,8 @@ namespace mupeModel.Utils {
             _session = session;
         }
 
+        public ISession session { get => _session;}
+
         public void add_child(i_soldel parent, object child) {
 
             ITransaction transaction = null;
@@ -38,10 +40,10 @@ namespace mupeModel.Utils {
                         _session.Refresh(parent);
 
                 } catch(Exception ex) {
-                    if(transaction != null) {
+                    if(transaction != null) 
                         if(transaction != null)
                             transaction.Rollback();
-                    }
+                    
                     throw ex;
                 }
             }

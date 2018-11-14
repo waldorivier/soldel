@@ -27,14 +27,18 @@ namespace Soldel.Views {
     /// <summary>
     /// Logique d'interaction pour w_generic.xaml
     /// </summary>
-    public partial class w_generic:Window {
+    public partial class w_generic : Window {
+
+        private TreeViewItem _tree_view_item;
 
         private pe_attr _attr;
         private pe_libl _libl;
         private pe_muta _muta;
+        private persistant_controller _persistant_controller;
 
-        private ISession _session;
-        private bool test_dictionary = false;
+        internal persistant_controller persistant_controller {
+            get => _persistant_controller;
+            set => _persistant_controller = value; }
 
         public w_generic() {
 
@@ -48,15 +52,16 @@ namespace Soldel.Views {
             btn_update.Click += Btn_update_Click;
         }
 
-        private void Cb_database_SelectionChanged(object sender,SelectionChangedEventArgs e) {
+        private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 
+            ISession session;
             ComboBox cb_onnection = (ComboBox)sender;
             String connection_string = (String)cb_onnection.SelectedValue;
 
-            if((_session = hibernate_util.get_instance().get_session(connection_string)) != null) {
+            if ((session = hibernate_util.get_instance().get_session(connection_string)) != null) {
+                persistant_controller = new persistant_controller(session);
 
-                List<pe_ip> ips = _session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
-                
+                List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
 
                 // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
@@ -69,30 +74,33 @@ namespace Soldel.Views {
 
             ITransaction transaction = null;
             try {
+
+                ISession session = persistant_controller.session;
+
                 pe_attr attr = tree_main.SelectedValue as pe_attr;
-                if(attr != null) {
-                    transaction = _session.BeginTransaction();
+                if (attr != null) {
+                    transaction = session.BeginTransaction();
 
                     pe_libl libl = libl_to_copy.shallow_copy();
                     libl.no_ip = attr.pe_muta.no_ip;
 
                     // suppprimer l'ancien libellé et le remplacer par la copie
                     pe_libl libl_ = attr.pe_libl_list.First();
-                    if(libl_ != null) {
+                    if (libl_ != null) {
                         attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
-                        _session.Delete(libl_);
+                        session.Delete(libl_);
                     }
 
-                    _session.Save(libl);
+                    session.Save(libl);
                     transaction.Commit();
 
-                    _session.Refresh(attr.pe_muta.pe_ip);
+                    session.Refresh(attr.pe_muta.pe_ip);
                     var libl_list = attr.pe_libl_list;
 
                 }
-            } catch(Exception exception) {
-                if(transaction != null) {
-                    if(transaction != null) {
+            } catch (Exception exception) {
+                if (transaction != null) {
+                    if (transaction != null) {
                         transaction.Rollback();
                     }
                     MessageBox.Show(exception.StackTrace);
@@ -101,42 +109,38 @@ namespace Soldel.Views {
         }
 
         private void Btn_update_Click(object sender, RoutedEventArgs e) {
-
-            new persistant_controller(_session).update(g_detail.DataContext);
+            persistant_controller.update(g_detail.DataContext);
         }
 
         #region GRMU
 
         private void add_grmu_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
-
 
         private void add_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_ip ip = e.Parameter as pe_ip;
-            if(ip != null) {
+            if (ip != null) {
                 pe_grmu grmu = new pe_grmu {
                     no_ip = ip.no_ip,
                     pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
                 };
 
-                new persistant_controller(_session).add_child(ip, grmu);
+                persistant_controller.add_child(ip, grmu);
             }
         }
 
         private void re_order_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
 
         private void re_order_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_grmu grmu = e.Parameter as pe_grmu;
-            if(grmu != null) {
+            if (grmu != null) {
                 int i = 1;
-                foreach(var muta in grmu.pe_muta_list.OrderBy(x => x.muta_order)) {
+                foreach (var muta in grmu.pe_muta_list.OrderBy(x => x.pe_muta_id)) {
                     muta.muta_order = i;
                     i++;
                 }
@@ -148,77 +152,62 @@ namespace Soldel.Views {
         #region MUTATION
 
         private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = _muta == null;
         }
 
         private void copy_muta_executed(object sender, ExecutedRoutedEventArgs e) {
-
             _muta = e.Parameter as pe_muta;
         }
         private void paste_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = _muta != null;
         }
 
         private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            persistant_controller persistant_controller = new persistant_controller(_session);
-
-            if(_muta != null) {
+            if (_muta != null) {
                 pe_muta muta = null;
                 pe_grmu grmu = e.Parameter as pe_grmu;
 
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
-                // si l'on ne veut pas copier une référence, il faut copier une mutation despuis une autre ip
+                // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
 
-                if(!_muta.pe_ip.Equals(grmu.pe_ip)) {
-                    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(),grmu.pe_ip);
+                if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
+                    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
                     persistant_controller.update(muta);
                 }
 
                 pe_gmmu gmmu = new pe_gmmu(grmu, muta ?? _muta);
                 persistant_controller.update(gmmu);
 
+                // provoque une mise à jour de la liste ! 
+
+                grmu.pe_muta_list = null;
+
                 _muta = null;
-
-                TreeViewItem source = e.OriginalSource as TreeViewItem;
-
-                source.Items.Refresh();
-                // source.ItemsSource = null;
-                // source.ItemsSource = grmu.pe_muta_list;
             }
         }
 
         private void delete_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
 
         private void delete_muta_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            persistant_controller persistant_controller = new persistant_controller(_session);
-
             TreeViewItem source = e.OriginalSource as TreeViewItem;
             pe_muta muta = source.DataContext as pe_muta;
 
-            // comme gmmu ne fait pas partie de l'arbre (pour des questions de visibilité)
-            // le grmu n'est accessible que par l'élément parent de la mutation 
+            // REM : étant donné que gmmu n'est pas visible dans l'arbre (pour alléger la représentation)
+            // le grmu n'est accessible que par l'élément vue (view) parent de la mutation 
 
-            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
+            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
             pe_grmu grmu = parent.DataContext as pe_grmu;
             pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
-            
+
             persistant_controller.delete(null, gmmu);
             persistant_controller.delete(null, muta);
-
-            parent.Items.Refresh();
-            // parent.ItemsSource = null;
-            // parent.ItemsSource = grmu.pe_muta_list;
         }
 
         private void re_order_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
 
@@ -227,9 +216,9 @@ namespace Soldel.Views {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
 
             int i = 1;
-            foreach(var item in source.Items) {
+            foreach (var item in source.Items) {
                 var attr = item as pe_attr;
-                if(attr != null) {
+                if (attr != null) {
                     attr.position = i;
                     i++;
                 }
@@ -241,29 +230,25 @@ namespace Soldel.Views {
         #region ATTRIBUT
 
         private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = _attr == null;
         }
 
         private void copy_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-
             _attr = e.Parameter as pe_attr;
         }
 
         private void paste_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = _attr != null;
         }
 
         private void paste_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_muta muta = e.Parameter as pe_muta;
-            new persistant_controller(_session).add_child(muta, _attr.shallow_copy(muta));
+            persistant_controller.add_child(muta, _attr.shallow_copy(muta));
             _attr = null;
         }
 
         private void add_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
 
@@ -277,32 +262,27 @@ namespace Soldel.Views {
             };
 
             var w_dict = new w_generic();
+            w_dict.persistant_controller = persistant_controller;
             w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
-
             w_dict.cb_connection.Visibility = Visibility.Collapsed;
 
             w_dict._muta = muta;
-            w_dict._session = _session;
-
             w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
             w_dict.ShowDialog();
 
-            new persistant_controller(_session).add_child(muta, w_dict._attr);
-         }
+            persistant_controller.add_child(muta, w_dict._attr);
+        }
 
         private void delete_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
 
         private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            TreeViewItem source = e.OriginalSource as TreeViewItem;
-         
-            pe_attr attr = source.DataContext as pe_attr;
+            pe_attr attr = e.Parameter as pe_attr;
             pe_muta muta = attr.pe_muta;
 
-            new persistant_controller(_session).delete(muta, attr);
+            persistant_controller.delete(muta, attr);
         }
 
         #endregion
@@ -312,10 +292,10 @@ namespace Soldel.Views {
         private void add_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
+            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
 
             pe_attr attr = parent.DataContext as pe_attr;
-            if(attr != null) {
+            if (attr != null) {
                 e.CanExecute = attr.pe_libl_list.Count == 0;
             }
         }
@@ -323,13 +303,12 @@ namespace Soldel.Views {
         private void add_libl_executed(object sender, ExecutedRoutedEventArgs e) {
 
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            TreeViewItem parent = GetSelectedTreeViewItemParent(source) as TreeViewItem;
-            
+            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
         }
 
         private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
 
-            if(e.Parameter.ToString().Equals("coller_element")) {
+            if (e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = _libl != null;
             } else {
                 e.CanExecute = _libl == null;
@@ -337,12 +316,12 @@ namespace Soldel.Views {
         }
         private void copy_libl_executed(object sender, ExecutedRoutedEventArgs e) {
 
-            if(!e.Parameter.ToString().Equals("coller_element")) {
+            if (!e.Parameter.ToString().Equals("coller_element")) {
                 pe_libl parameter = e.Parameter as pe_libl;
-                if(parameter != null) {
+                if (parameter != null) {
                     _libl = parameter;
                 }
-            } else if(_libl != null) {
+            } else if (_libl != null) {
                 copy_libl(_libl);
                 _libl = null;
             }
@@ -353,14 +332,13 @@ namespace Soldel.Views {
         #region DICT
 
         private void dict_select_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = (_muta != null);
         }
 
         private void dict_select_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_dict dict = e.Parameter as pe_dict;
-            if(dict != null) {
+            if (dict != null) {
                 _attr = new pe_attr() {
                     nom_attr = dict.nom_dict,
                     clatit_attr = dict.clatit_dict,
@@ -371,60 +349,75 @@ namespace Soldel.Views {
         }
 
         private void dict_add_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             e.CanExecute = true;
         }
 
         private void dict_add_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_dict dict = new pe_dict() { pe_dict_id = hibernate_util.get_instance().generate_dict_id() };
-            new persistant_controller(hibernate_util.get_instance().get_current_session()).update(dict);
+            _persistant_controller.update(dict);
         }
 
         #endregion
 
         #region TREE_VIEW
 
-        // TODO : lorsque les collections Observables seront intégrées, ce genre de mise à jour devrait pouvoir
-        // être éliminé
+        private void tree_view_selected_item_changed(object sender, RoutedPropertyChangedEventArgs<object> e) {
 
-        private void tree_view_selected(object sender, RoutedEventArgs e) {
-            try {
-                pe_grmu grmu = tree_main.SelectedValue as pe_grmu;
-                if(grmu != null) {
-                    TreeViewItem source = e.OriginalSource as TreeViewItem;
-                    if(source != null) {
-                        List<object> l = new List<object>();
-                        foreach(var x in grmu.pe_muta_list) {
-                            l.Add(x);
-                        }
-
-                        folder_node folder = new folder_node();
-                        folder.child_nodes = grmu.pe_cfgd_list;
-                        l.Add(folder);
-
-                        source.ItemsSource = l;
+            TreeViewItem current_tree_view_item = this.Tag as TreeViewItem;
+            pe_grmu grmu = e.NewValue as pe_grmu;
+            if (grmu != null) {
+                if (current_tree_view_item != null) {
+                    List<object> l = new List<object>();
+                    foreach (var x in grmu.pe_muta_list) {
+                        l.Add(x);
                     }
-                }
 
-                pe_muta muta = tree_main.SelectedValue as pe_muta;
-                if(muta != null) {
-                    TreeViewItem source = e.OriginalSource as TreeViewItem;
-                    if(source != null) {
-                        if(source.DataContext as pe_muta != null) {
-                            source.ItemsSource = null;
-                            source.ItemsSource = muta.pe_attr_list;
-                        }
-                    }
+                    folder_node folder = new folder_node();
+                    folder.child_nodes = grmu.pe_cfgd_list;
+                    l.Add(folder);
+
+                    current_tree_view_item.ItemsSource = l;
                 }
-            } catch(Exception ex) {
-                throw new Exception("Une exception s'est produite dans w_generic.xaml.cs / tree_view_selected");
+                dg_list.ItemsSource = grmu.pe_muta_list;
             }
+
+            pe_muta muta = e.NewValue as pe_muta;
+            if (muta != null) {
+                current_tree_view_item.ItemsSource = muta.pe_attr_list;
+                try {
+                    dg_list.ItemsSource = muta.pe_attr_list;
+
+                // le datagrid provoque une execption lors d'un changement de type d'objet contenu
+                } catch (Exception ex) {
+                    dg_list.ItemsSource = null;
+                    dg_list.ItemsSource = muta.pe_attr_list;
+                }
+            }
+
+            global_dict dict = e.NewValue as global_dict;
+            if (dict != null) {
+                current_tree_view_item.ItemsSource = dict.dict_list;
+                try {
+                    dg_list.ItemsSource = dict.dict_list;
+
+                    // le datagrid provoque une execption lors d'un changement de type d'objet contenu
+                } catch (Exception ex) {
+                    dg_list.ItemsSource = null;
+                    dg_list.ItemsSource = dict.dict_list;
+                }
+            }
+
         }
 
-        public ItemsControl GetSelectedTreeViewItemParent(TreeViewItem item) {
+        private void tree_view_selected_item(object sender, RoutedEventArgs e) {
+            this.Tag = e.OriginalSource;
+        }
+        
+        private ItemsControl get_selected_tree_view_item_parent(TreeViewItem item) {
+
             DependencyObject parent = VisualTreeHelper.GetParent(item);
-            while(!(parent is TreeViewItem || parent is TreeView)) {
+            while (!(parent is TreeViewItem || parent is TreeView)) {
                 parent = VisualTreeHelper.GetParent(parent);
             }
 
@@ -438,33 +431,34 @@ namespace Soldel.Views {
         private void dg_list_auto_generating_column(object sender, DataGridAutoGeneratingColumnEventArgs e) {
 
             DataGrid dg = sender as DataGrid;
-            if(dg != null) {
+            if (dg != null) {
                 if (dg.ItemsSource != null) {
-                    if (dg.ItemsSource as IList<pe_attr> != null) { 
-                        if(!pe_attr.columns_to_display.Contains(e.Column.Header)) {
+                    if (dg.ItemsSource as IList<pe_attr> != null) {
+                        if (!pe_attr.columns_to_display.Contains(e.Column.Header)) {
                             e.Cancel = true;
                         }
 
-                        if(pe_attr.columns_read_only.Contains(e.Column.Header)) {
+                        if (pe_attr.columns_read_only.Contains(e.Column.Header)) {
                             e.Column.IsReadOnly = true;
                         }
                     }
-                    if(dg.ItemsSource as IList<pe_muta> != null) {
-                        if(!pe_muta.columns_to_display.Contains(e.Column.Header)) {
+                    if (dg.ItemsSource as IList<pe_muta> != null) {
+                        if (!pe_muta.columns_to_display.Contains(e.Column.Header)) {
                             e.Cancel = true;
                         }
                     }
-                    if(dg.ItemsSource as IList<pe_dict> != null) {
-                        if(!pe_dict.columns_to_display.Contains(e.Column.Header)) {
+                    if (dg.ItemsSource as IList<pe_dict> != null) {
+                        if (!pe_dict.columns_to_display.Contains(e.Column.Header)) {
                             e.Cancel = true;
                         }
                     }
                 }
             }
-         }
+        }
 
         #endregion
-    }
+
+    }       
 }
 
 

@@ -17,7 +17,8 @@
       </key>
       <one-to-many class="pe_libl" />
     </set>
-    <bag name="pe_muta_list" cascade="all" inverse="true" generic="true">
+    <bag name="pe_muta_list" cascade="all" inverse="true" generic="true"
+         collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_muta]], NHibernate.Collection.Observable">
       <key>
         <column name="no_ip" />
       </key>

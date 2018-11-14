@@ -149,7 +149,6 @@
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />
     <Compile Include="Views\Converters\folder_node.cs" />
-    <Compile Include="Views\Converters\w_generic_list_converter.cs" />
     <Compile Include="Views\Converters\w_generic_tree_multi_list_converter.cs" />
     <Compile Include="Views\Templates\w_generic_detail_template_selector.cs" />
     <Compile Include="Views\uc_find_element.xaml.cs">

@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Dynamic;
 using mupeModel;
+using System.Collections.ObjectModel;
 
 namespace mupeModel.Utils {
     public class hibernate_util {
@@ -90,6 +91,7 @@ namespace mupeModel.Utils {
                                         "Data Source=OUTSRC; User Id = prod_naef; Password=prod_naef",
                                         "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
                                         "Data Source=OUTSRC; User Id = prod_pictet; Password=prod_pictet",
+                                        "Data Source=OUTSRC; User Id = prod_sse; Password=prod_sse",
                                         "Data Source=OUTSRC; User Id = prod_thomreut; Password=prod_thomreut",
                                         "Data Source=OUTCASP; User Id = prod_med; Password=prod_med",
                                         "Data Source=SWSTAFF;User Id=prod_usse;Password=prod_usse",
@@ -105,7 +107,6 @@ namespace mupeModel.Utils {
             attr_dict_list = get_current_session().CreateCriteria<pe_dict>().List<pe_dict>().OrderBy(x => x.nom_dict).
                                                                                              OrderBy(x => x.clatit_dict).ToList();
         }
-
         public IList<string> get_connections() {
             return connections;
         }
@@ -117,7 +118,7 @@ namespace mupeModel.Utils {
         }
 
         public IList<pe_dict> get_attr_dict_list() {
-            return attr_dict_list;
+            return new ObservableCollection<pe_dict>(attr_dict_list);
         }
 
         public string generate_muta_id() {

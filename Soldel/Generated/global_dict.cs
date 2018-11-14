@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace mupeModel {
-    class global_dict : IValueConverter, INotifyPropertyChanged, i_soldel {
+    class global_dict : INotifyPropertyChanged, i_soldel {
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,8 +30,7 @@ namespace mupeModel {
                 SendPropertyChanged("dict_list");
             }
         }
-
-
+        
         public IList<pe_libl> libl_list {
             get => _libl_list;
 
@@ -53,16 +52,6 @@ namespace mupeModel {
             if(propertyChanged != null) {
                 propertyChanged(this,new PropertyChangedEventArgs(propertyName));
             }
-        }
-
-        // TODO : Convertir toutes les listes
-
-        object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) {
-            return _dict_list;
-        }
-
-        object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
-            return null;
         }
 
         void i_soldel.add_child(object child) {

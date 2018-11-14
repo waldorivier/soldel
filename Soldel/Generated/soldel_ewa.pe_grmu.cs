@@ -25,7 +25,7 @@ namespace mupeModel {
     /// <summary>
     /// There are no comments for pe_grmu, Soldel in the schema.
     /// </summary>
-    public partial class pe_grmu:soldel, INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter {
+    public partial class pe_grmu:soldel, INotifyPropertyChanging, INotifyPropertyChanged {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -305,8 +305,7 @@ namespace mupeModel {
                 }
             }
         }
-
-
+        
         /// <summary>
         /// There are no comments for pe_cfgd_list in the schema.
         /// </summary>
@@ -382,31 +381,27 @@ namespace mupeModel {
                 handler(this,new PropertyChangedEventArgs(propertyName));
         }
 
+        protected virtual IList<pe_muta> initialize_muta_list() {
+
+            if (pe_gmmu_list.Count > 0) {
+
+                string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
+                return hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id", ar_muta_id)).List<pe_muta>();
+            }
+            return null;
+        }
+
         public virtual IList<pe_muta> pe_muta_list {
             get {
-                if(pe_gmmu_list.Count > 0) {
+                return initialize_muta_list();
+            }
 
-                    string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
-                    _pe_muta_list = hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id",ar_muta_id)).List<pe_muta>();
-                }
-
-                return _pe_muta_list;
+            set {
+                _pe_muta_list = initialize_muta_list();
+                this.SendPropertyChanged("pe_muta_list");
             }
         }
-
-        public virtual object Convert(object value,Type targetType,object parameter,CultureInfo culture) {
-            try {
-                pe_grmu grmu = (pe_grmu)value;
-                return grmu.pe_muta_list;
-            } catch {
-            }
-            return null;
-        }
-
-        public virtual object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
-            return null;
-        }
-
+         
         public virtual IList<String> type_grmu_list {
             get {
                 return new List<String>() { "01", "03" };

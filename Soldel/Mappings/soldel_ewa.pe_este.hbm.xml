@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_este" table="pe_este">
+    <id name="pe_este_id" type="Int32">
+      <column name="pe_este_id" not-null="true" sql-type="int" />
+      <generator class="assigned" />
+    </id>
+    <property name="nom_este_1" type="String">
+      <column name="nom_este_1" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="nom_este_2" type="String">
+      <column name="nom_este_2" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="nom_este_3" type="String">
+      <column name="nom_este_3" not-null="false" length="1" sql-type="varchar" />
+    </property>
+      <property name="libf_este" type="String">
+      <column name="libf_este" not-null="false" length="1" sql-type="varchar" />
+    </property>
+   </class>
+</hibernate-mapping>

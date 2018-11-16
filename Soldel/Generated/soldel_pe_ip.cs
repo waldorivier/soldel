@@ -7,7 +7,7 @@ namespace mupeModel {
     using System.Globalization;
     using System.Windows.Data;
 
-    public class pe_ip: soldel, INotifyPropertyChanging, INotifyPropertyChanged, IValueConverter, i_soldel {
+    public class pe_ip: soldel, INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(string.Empty);
 
@@ -16,6 +16,7 @@ namespace mupeModel {
         private string _abgregf_ip = @"";
 
         private ISet<pe_libl> _pe_libl_list = new HashSet<pe_libl>();
+        private IList<pe_este> _pe_este_list = new ObservableCollection<pe_este>();
         private IList<pe_muta> _pe_muta_list = new ObservableCollection<pe_muta>();
         private IList<pe_cfgt> _pe_cfgt_list = new ObservableCollection<pe_cfgt>();
         private IList<pe_grmu> _pe_grmu_list = new ObservableCollection<pe_grmu>();
@@ -117,6 +118,14 @@ namespace mupeModel {
                 this.SendPropertyChanged("pe_libl_list");
             }
         }
+        public virtual IList<pe_este> pe_este_list {
+            get => this._pe_este_list;
+            set {
+                this.SendPropertyChanging();
+                this._pe_este_list = value;
+                this.SendPropertyChanged("pe_este_list");
+            }
+        }
 
         public virtual IList<pe_muta> pe_muta_list {
             get => this._pe_muta_list;
@@ -143,14 +152,6 @@ namespace mupeModel {
                 this._pe_grmu_list = value;
                 this.SendPropertyChanged("pe_grmu_list");
             }
-        }
-
-        object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) {
-            return null;
-        }
-
-        object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
-            throw new NotImplementedException();
         }
 
         #region I_SOLDEL

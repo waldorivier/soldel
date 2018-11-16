@@ -180,7 +180,6 @@ namespace Soldel.Views {
                 persistant_controller.update(gmmu);
 
                 // provoque une mise à jour de la liste ! 
-
                 grmu.pe_muta_list = null;
 
                 _muta = null;
@@ -368,14 +367,16 @@ namespace Soldel.Views {
             pe_grmu grmu = e.NewValue as pe_grmu;
             if (grmu != null) {
                 if (current_tree_view_item != null) {
-                    List<object> l = new List<object>();
-                    foreach (var x in grmu.pe_muta_list) {
-                        l.Add(x);
-                    }
 
-                    folder_node folder = new folder_node();
-                    folder.child_nodes = grmu.pe_cfgd_list;
-                    l.Add(folder);
+                    List<object> l = new List<object>();
+
+                    folder_node folder_muta = new folder_node();
+                    folder_muta.child_nodes = grmu.pe_muta_list;
+                    l.Add(folder_muta);
+
+                    folder_node folder_grmu = new folder_node();
+                    folder_grmu.child_nodes = grmu.pe_cfgd_list;
+                    l.Add(folder_grmu);
 
                     current_tree_view_item.ItemsSource = l;
                 }
@@ -388,7 +389,7 @@ namespace Soldel.Views {
                 try {
                     dg_list.ItemsSource = muta.pe_attr_list;
 
-                // le datagrid provoque une execption lors d'un changement de type d'objet contenu
+                // le datagrid provoque une exception lorsque le type de d'objet affiché change
                 } catch (Exception ex) {
                     dg_list.ItemsSource = null;
                     dg_list.ItemsSource = muta.pe_attr_list;

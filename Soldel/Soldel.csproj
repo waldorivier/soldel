@@ -137,6 +137,7 @@
     <Compile Include="Generated\soldel_ewa.pe_cfgd.cs" />
     <Compile Include="Generated\soldel_ewa.pe_cfgt.cs" />
     <Compile Include="Generated\soldel_ewa.pe_dict.cs" />
+    <Compile Include="Generated\soldel_pe_este.cs" />
     <Compile Include="Generated\soldel_pe_ip.cs" />
     <Compile Include="Generated\soldel_ewa.pe_gmes.cs" />
     <Compile Include="Generated\soldel_ewa.pe_gmmu.cs" />
@@ -308,6 +309,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_ip.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_este.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

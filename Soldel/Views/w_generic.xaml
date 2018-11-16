@@ -125,6 +125,25 @@
             </StackPanel>
         </DataTemplate>
 
+        <DataTemplate x:Key="pe_este_template" DataType="pe_este">
+
+            <StackPanel>
+                <Label Content="ID :"/>
+                <TextBox Text = "{Binding Path=pe_este_id}">
+                </TextBox>
+                <Label Content="Niveau 1 :"/>
+                <TextBox Text = "{Binding Path=nom_este_1}">
+                </TextBox>
+                <Label Content="Niveau 2 :"/>
+                <TextBox Text = "{Binding Path=nom_este_2}">
+                </TextBox>
+                <Label Content="Libellé :"/>
+                <TextBox Text = "{Binding Path=libf_este}">
+                </TextBox>
+            </StackPanel>
+        </DataTemplate>
+
+
         <DataTemplate x:Key="pe_grmu_template" DataType="pe_grmu">
             <StackPanel>
                 <Label Content="ID :"/>
@@ -302,9 +321,12 @@
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
                             <HierarchicalDataTemplate.ItemsSource>
-                                <Binding Path="pe_grmu_list"/>
+                                <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
+                                              ConverterParameter="GROUPES,EMPLOYEURS">
+                                    <Binding Path="pe_grmu_list"/>
+                                    <Binding Path="pe_este_list"/>
+                                </MultiBinding>
                             </HierarchicalDataTemplate.ItemsSource>
-
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
@@ -319,6 +341,12 @@
                                 <TextBlock Text="{Binding no_ip}" />
                                 <TextBlock Text=" : " />
                                 <TextBlock Text="{Binding abregf_ip}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_este}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding libf_este}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 

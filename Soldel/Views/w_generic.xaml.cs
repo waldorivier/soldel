@@ -197,7 +197,7 @@ namespace Soldel.Views {
 
             // REM : étant donné que gmmu n'est pas visible dans l'arbre (pour alléger la représentation)
             // le grmu n'est accessible que par l'élément vue (view) parent de la mutation 
-
+    
             TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
             pe_grmu grmu = parent.DataContext as pe_grmu;
             pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
@@ -366,13 +366,12 @@ namespace Soldel.Views {
             TreeViewItem current_tree_view_item = this.Tag as TreeViewItem;
             pe_grmu grmu = e.NewValue as pe_grmu;
             if (grmu != null) {
+
                 if (current_tree_view_item != null) {
 
                     List<object> l = new List<object>();
-
-                    folder_node folder_muta = new folder_node();
-                    folder_muta.child_nodes = grmu.pe_muta_list;
-                    l.Add(folder_muta);
+                                      
+                    l.AddRange(grmu.pe_muta_list);
 
                     folder_node folder_grmu = new folder_node();
                     folder_grmu.child_nodes = grmu.pe_cfgd_list;

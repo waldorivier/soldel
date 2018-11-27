@@ -385,8 +385,12 @@ namespace mupeModel {
 
             if (pe_gmmu_list.Count > 0) {
 
-                string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
-                return hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id", ar_muta_id)).List<pe_muta>();
+                var mutas = (from x in this.pe_gmmu_list select x.pe_muta).ToList();
+
+                // string[] ar_muta_id = (from g in pe_gmmu_list select g.pe_muta_id).ToArray();
+                // return hibernate_util.get_instance().get_current_session().CreateCriteria<pe_muta>().Add(Restrictions.In("pe_muta_id", ar_muta_id)).List<pe_muta>();
+
+                return mutas;
             }
             return null;
         }
@@ -397,7 +401,7 @@ namespace mupeModel {
             }
 
             set {
-                _pe_muta_list = initialize_muta_list();
+                // _pe_muta_list = initialize_muta_list();
                 this.SendPropertyChanged("pe_muta_list");
             }
         }

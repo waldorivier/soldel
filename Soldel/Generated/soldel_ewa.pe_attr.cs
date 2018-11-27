@@ -548,7 +548,7 @@ namespace mupeModel {
 
         public static IList<string> columns_to_display = new List<string>() { "user_maj", "dh_maj", "nom_attr", "clatit_attr",
                                                                               "val_def", "visibilite", "identifiant", "oblig_fac",
-                                                                              "log", "donnee_traite", "position"};
+                                                                              "log", "donnee_traite", "position", "copy_to", "from_db"};
 
 
         public static IList<string> columns_read_only = new List<string>() { "nom_attr", "clatit_attr"};

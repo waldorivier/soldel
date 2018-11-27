@@ -64,6 +64,7 @@ namespace mupeModel.Utils {
                                         "Data Source=QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
                                         "Data Source=QCASP1; User Id = qc_bcn; Password = qc_bcn",
                                         "Data Source=QCASP1; User Id = qc_cap; Password = qc_cap",
+                                        "Data Source=QCASP1; User Id = qc_ctrleng_cap; Password = qc_ctrleng_cap",
                                         "Data Source=OUTCATST; User Id = qc_lausanne; Password = qc_lausanne",
 
                                         "Data Source=ASP2; User ID = prod_ssph; Password = prod_ssph",

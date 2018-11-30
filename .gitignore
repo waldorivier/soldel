@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /Model/cpcl_passage_cot_fact.sql
 /Soldel/docs
+/Soldel/Utils/hibernate_util_LOCAL.cs

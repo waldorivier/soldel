@@ -34,22 +34,36 @@ namespace Soldel.Views {
             DataTable d2 = uc_elca_2._dt_filtered;
 
             if (d1 != null & d2 != null) {
-                var intersection = d1.AsEnumerable().Intersect(d2.AsEnumerable(), new elcaComparer());
-                var intersection_proj = from dr in intersection select new elcaProjection(dr.Field<String>("nom_elem"), dr.Field<String>("nom_logi"));
 
-                var difference_1 = d1.AsEnumerable().Except(d2.AsEnumerable(), new elcaComparer());
-                var difference_1_proj = from dr in difference_1 select new elcaProjection(dr.Field<String>("nom_elem"), dr.Field<String>("nom_logi"));
+                try {
+                    var intersection = d1.AsEnumerable().Intersect(d2.AsEnumerable(), new elcaComparer());
+                    var intersection_proj = from dr in intersection select new elcaProjection(dr.Field<String>("nom_elem"), 
+                                                                                              dr.Field<String>("nom_logi"), 
+                                                                                              dr.Field<String>("no_cas"),
+                                                                                              dr.Field<String>("pe_chai_ddv"));
 
-                var difference_2 = d2.AsEnumerable().Except(d1.AsEnumerable(), new elcaComparer());
-                var difference_2_proj = from dr in difference_2 select new elcaProjection(dr.Field<String>("nom_elem"), dr.Field<String>("nom_logi"));
+                    var difference_1 = d1.AsEnumerable().Except(d2.AsEnumerable(), new elcaComparer());
+                    var difference_1_proj = from dr in difference_1 select new elcaProjection(dr.Field<String>("nom_elem"),
+                                                                                              dr.Field<String>("nom_logi"),
+                                                                                              dr.Field<String>("no_cas"),
+                                                                                              dr.Field<String>("pe_chai_ddv"));
 
-                w_compare_result result = new w_compare_result();
+                    var difference_2 = d2.AsEnumerable().Except(d1.AsEnumerable(), new elcaComparer());
+                    var difference_2_proj = from dr in difference_2 select new elcaProjection(dr.Field<String>("nom_elem"),
+                                                                                              dr.Field<String>("nom_logi"),
+                                                                                              dr.Field<String>("no_cas"),
+                                                                                              dr.Field<String>("pe_chai_ddv"));
 
-                result.g_intersect.ItemsSource = CollectionViewSource.GetDefaultView(intersection_proj);
-                result.g_difference_1.ItemsSource = CollectionViewSource.GetDefaultView(difference_1_proj.Count() > 0 ? difference_1_proj : null);
-                result.g_difference_2.ItemsSource = CollectionViewSource.GetDefaultView(difference_2_proj.Count() > 0 ? difference_2_proj : null);
+                    w_compare_result result = new w_compare_result();
 
-                result.ShowDialog();
+                    result.g_intersect.ItemsSource = CollectionViewSource.GetDefaultView(intersection_proj);
+                    result.g_difference_1.ItemsSource = CollectionViewSource.GetDefaultView(difference_1_proj.Count() > 0 ? difference_1_proj : null);
+                    result.g_difference_2.ItemsSource = CollectionViewSource.GetDefaultView(difference_2_proj.Count() > 0 ? difference_2_proj : null);
+
+                    result.ShowDialog();
+                }catch (Exception ex) {
+                    var message = ex.Message;
+                }
             }
         }
 
@@ -62,7 +76,9 @@ namespace Soldel.Views {
                         return x.Field<String>("nom_elem").Equals(y.Field<String>("nom_elem"));
                     } else {
                         return x.Field<String>("nom_elem").Equals(y.Field<String>("nom_elem")) &&
-                               x.Field<String>("nom_logi").Equals(y.Field<String>("nom_logi"));
+                               x.Field<String>("nom_logi").Equals(y.Field<String>("nom_logi")) &&
+                               x.Field<String>("no_cas").Equals(y.Field<String>("no_cas")) &&
+                               x.Field<String>("pe_chai_ddv").Equals(y.Field<String>("pe_chai_ddv"));
                     }
                 } else {
                     return false;

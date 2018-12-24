@@ -33,17 +33,17 @@ namespace Soldel.Views {
 
         private pe_attr _attr;
         private pe_libl _libl;
-        private pe_muta _muta;
+        public  pe_muta _muta;
         private persistant_controller _persistant_controller;
 
         internal persistant_controller persistant_controller {
             get => _persistant_controller;
-            set => _persistant_controller = value; }
+            set => _persistant_controller = value;
+        }
 
         public w_generic() {
 
             InitializeComponent();
-
             Clipboard.Clear();
 
             cb_connection.SelectionChanged += Cb_database_SelectionChanged;
@@ -53,7 +53,6 @@ namespace Soldel.Views {
         }
 
         private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-
             ISession session;
             ComboBox cb_onnection = (ComboBox)sender;
             String connection_string = (String)cb_onnection.SelectedValue;
@@ -71,7 +70,6 @@ namespace Soldel.Views {
         }
 
         private void copy_libl(pe_libl libl_to_copy) {
-
             ITransaction transaction = null;
             try {
 
@@ -119,7 +117,6 @@ namespace Soldel.Views {
         }
 
         private void add_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_ip ip = e.Parameter as pe_ip;
             if (ip != null) {
                 pe_grmu grmu = new pe_grmu {
@@ -136,7 +133,6 @@ namespace Soldel.Views {
         }
 
         private void re_order_muta_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_grmu grmu = e.Parameter as pe_grmu;
             if (grmu != null) {
                 int i = 1;
@@ -158,18 +154,33 @@ namespace Soldel.Views {
         private void copy_muta_executed(object sender, ExecutedRoutedEventArgs e) {
             _muta = e.Parameter as pe_muta;
         }
+
         private void paste_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = _muta != null;
         }
 
-        private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+        private delegate void option_1();
+      
+        public void paste_muta_reference() {
 
+        }
+
+        public void paste_muta_deep() {
+
+
+        }
+
+
+        private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
             if (_muta != null) {
                 pe_muta muta = null;
                 pe_grmu grmu = e.Parameter as pe_grmu;
 
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
                 // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
+
+                var chatbot_box = new chatbot_box(null, null, "Ajouter une copie ou simplement une référence");
+                chatbot_box.Show();
 
                 if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
                     muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
@@ -181,7 +192,6 @@ namespace Soldel.Views {
 
                 // provoque une mise à jour de la liste ! 
                 grmu.pe_muta_list = null;
-
                 _muta = null;
             }
         }
@@ -191,13 +201,12 @@ namespace Soldel.Views {
         }
 
         private void delete_muta_executed(object sender, ExecutedRoutedEventArgs e) {
-
             TreeViewItem source = e.OriginalSource as TreeViewItem;
             pe_muta muta = source.DataContext as pe_muta;
 
             // REM : étant donné que gmmu n'est pas visible dans l'arbre (pour alléger la représentation)
             // le grmu n'est accessible que par l'élément vue (view) parent de la mutation 
-    
+
             TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
             pe_grmu grmu = parent.DataContext as pe_grmu;
             pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
@@ -211,7 +220,6 @@ namespace Soldel.Views {
         }
 
         private void re_order_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-
             TreeViewItem source = e.OriginalSource as TreeViewItem;
 
             int i = 1;
@@ -252,7 +260,6 @@ namespace Soldel.Views {
         }
 
         private void add_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_muta muta = e.Parameter as pe_muta;
 
             var global_dict = new global_dict() {
@@ -277,7 +284,6 @@ namespace Soldel.Views {
         }
 
         private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_attr attr = e.Parameter as pe_attr;
             pe_muta muta = attr.pe_muta;
 
@@ -289,7 +295,6 @@ namespace Soldel.Views {
         #region LIBL
 
         private void add_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             TreeViewItem source = e.OriginalSource as TreeViewItem;
             TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
 
@@ -300,13 +305,11 @@ namespace Soldel.Views {
         }
 
         private void add_libl_executed(object sender, ExecutedRoutedEventArgs e) {
-
             TreeViewItem source = e.OriginalSource as TreeViewItem;
             TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
         }
 
         private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-
             if (e.Parameter.ToString().Equals("coller_element")) {
                 e.CanExecute = _libl != null;
             } else {
@@ -314,7 +317,6 @@ namespace Soldel.Views {
             }
         }
         private void copy_libl_executed(object sender, ExecutedRoutedEventArgs e) {
-
             if (!e.Parameter.ToString().Equals("coller_element")) {
                 pe_libl parameter = e.Parameter as pe_libl;
                 if (parameter != null) {
@@ -335,14 +337,12 @@ namespace Soldel.Views {
         }
 
         private void dict_select_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_dict dict = e.Parameter as pe_dict;
             if (dict != null) {
                 _attr = new pe_attr() {
                     nom_attr = dict.nom_dict,
                     clatit_attr = dict.clatit_dict,
                 };
-
                 this.Close();
             }
         }
@@ -352,7 +352,6 @@ namespace Soldel.Views {
         }
 
         private void dict_add_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_dict dict = new pe_dict() { pe_dict_id = hibernate_util.get_instance().generate_dict_id() };
             _persistant_controller.update(dict);
         }
@@ -362,22 +361,21 @@ namespace Soldel.Views {
         #region TREE_VIEW
 
         private void tree_view_selected_item_changed(object sender, RoutedPropertyChangedEventArgs<object> e) {
-
             TreeViewItem current_tree_view_item = this.Tag as TreeViewItem;
             pe_grmu grmu = e.NewValue as pe_grmu;
             if (grmu != null) {
+                if (grmu.pe_muta_list != null) {
+                    if (current_tree_view_item != null) {
+                        List<object> l = new List<object>();
 
-                if (current_tree_view_item != null) {
+                        l.AddRange(grmu.pe_muta_list);
 
-                    List<object> l = new List<object>();
-                                      
-                    l.AddRange(grmu.pe_muta_list);
+                        folder_node folder_grmu = new folder_node();
+                        folder_grmu.child_nodes = grmu.pe_cfgd_list;
+                        l.Add(folder_grmu);
 
-                    folder_node folder_grmu = new folder_node();
-                    folder_grmu.child_nodes = grmu.pe_cfgd_list;
-                    l.Add(folder_grmu);
-
-                    current_tree_view_item.ItemsSource = l;
+                        current_tree_view_item.ItemsSource = l;
+                    }
                 }
                 dg_list.ItemsSource = grmu.pe_muta_list;
             }
@@ -388,7 +386,7 @@ namespace Soldel.Views {
                 try {
                     dg_list.ItemsSource = muta.pe_attr_list;
 
-                // le datagrid provoque une exception lorsque le type de d'objet affiché change
+                    // le datagrid provoque une exception lorsque le type de d'objet affiché change
                 } catch (Exception ex) {
                     dg_list.ItemsSource = null;
                     dg_list.ItemsSource = muta.pe_attr_list;
@@ -401,26 +399,23 @@ namespace Soldel.Views {
                 try {
                     dg_list.ItemsSource = dict.dict_list;
 
-                    // le datagrid provoque une execption lors d'un changement de type d'objet contenu
+                    // le datagrid provoque une execption lors d'un changement du type d'objet contenu
                 } catch (Exception ex) {
                     dg_list.ItemsSource = null;
                     dg_list.ItemsSource = dict.dict_list;
                 }
             }
-
         }
 
         private void tree_view_selected_item(object sender, RoutedEventArgs e) {
             this.Tag = e.OriginalSource;
         }
-        
-        private ItemsControl get_selected_tree_view_item_parent(TreeViewItem item) {
 
+        private ItemsControl get_selected_tree_view_item_parent(TreeViewItem item) {
             DependencyObject parent = VisualTreeHelper.GetParent(item);
             while (!(parent is TreeViewItem || parent is TreeView)) {
                 parent = VisualTreeHelper.GetParent(parent);
             }
-
             return parent as ItemsControl;
         }
 
@@ -429,7 +424,6 @@ namespace Soldel.Views {
         #region DATAGRID
 
         private void dg_list_auto_generating_column(object sender, DataGridAutoGeneratingColumnEventArgs e) {
-
             DataGrid dg = sender as DataGrid;
             if (dg != null) {
                 if (dg.ItemsSource != null) {
@@ -455,10 +449,8 @@ namespace Soldel.Views {
                 }
             }
         }
-
         #endregion
-
-    }       
+    }
 }
 
 

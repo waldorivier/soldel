@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:commands="clr-namespace:mupeModel.Commands"
         mc:Ignorable="d"
-        Title="chatbot_box" Height="300" Width="300">
+        Title="CHATBOT" Height="210" Width="213.636">
     <Window.CommandBindings>
-        <CommandBinding Command="commands:chat_box_command.validate"
-                        CanExecute="validate_can_execute"
-                        Executed="validate_executed"/>
+        <CommandBinding Command="commands:chat_box_command.accept"
+                        CanExecute="accept_can_execute"
+                        Executed="accept_executed"/>
+        <CommandBinding Command="commands:chat_box_command.reject"
+                        CanExecute="reject_can_execute"
+                        Executed="reject_executed"/>
+        <CommandBinding Command="commands:chat_box_command.cancel"
+                        CanExecute="cancel_can_execute"
+                        Executed="cancel_executed"/>
+
+
     </Window.CommandBindings>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70   "/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="2">
             <StackPanel>
@@ -28,8 +36,9 @@
         </Grid>
         <Grid Grid.Row="2" Margin="2">
             <StackPanel >
-                <Button x:Name="btn_validate" Content="Valdider" Command="commands:chat_box_command.validate"/>
-                <Button x:Name="btn_cancel" Content="Annuler"/>
+                <Button x:Name="btn_accept" Content="Accepter" Command="commands:chat_box_command.accept"/>
+                <Button x:Name="btn_reject" Content="Refuser" Command="commands:chat_box_command.reject"/>
+                <Button x:Name="btn_cancel" Content="Annuler" Command="commands:chat_box_command.cancel"/>
             </StackPanel>
         </Grid>
     </Grid>

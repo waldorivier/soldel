@@ -4,17 +4,23 @@ namespace mupeModel.Commands {
 
     public static class chat_box_command {
 
-        private static RoutedUICommand validate_ = new RoutedUICommand("validate", "validate", typeof(attr_command), null);
-        private static RoutedUICommand cancel_ = new RoutedUICommand("add","add",typeof(attr_command),null);
+        private static RoutedUICommand _accept = new RoutedUICommand("accept", "accept", typeof(chat_box_command), null);
+        private static RoutedUICommand _reject = new RoutedUICommand("reject", "reject", typeof(chat_box_command), null);
+        private static RoutedUICommand _cancel = new RoutedUICommand("cancel", "cancel", typeof(chat_box_command), null);
 
-        public static RoutedUICommand validate {
-            get => validate_;
-            set => validate_ = value;
+        public static RoutedUICommand accept {
+            get => _accept;
+            set => _accept = value;
+        }
+
+        public static RoutedUICommand reject {
+            get => _reject;
+            set => _reject = value;
         }
 
         public static RoutedUICommand cancel {
-            get => cancel_;
-            set => cancel_ = value;
+            get => _cancel;
+            set => _cancel = value;
         }
     }
 }

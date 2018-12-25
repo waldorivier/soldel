@@ -392,5 +392,9 @@ namespace mupeModel {
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             return null;
         }
+
+        public virtual IList<pe_muta> datagrid_list {
+            get => pe_muta_list;
+        }
     }
 }

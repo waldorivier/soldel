@@ -7,7 +7,7 @@ namespace mupeModel.Views.Converters {
     using System.Windows.Data;
 
     internal class folder_node:IValueConverter {
-          object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) =>
+        object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) =>
             // this.child_nodes;
             null;
 

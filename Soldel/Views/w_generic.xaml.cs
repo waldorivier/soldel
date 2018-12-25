@@ -100,8 +100,8 @@ namespace Soldel.Views {
                     pe_ip ip = session.Get<pe_ip>(grmu.no_ip);
                     pe_muta muta_to_copy = session.Get<pe_muta>(element_id);
 
-                    string str = generate_muta_id();
-                    pe_muta muta = muta_to_copy.deep_copy(str,ip);
+                    string muta_id = generate_muta_id();
+                    pe_muta muta = muta_to_copy.deep_copy(muta_id, ip);
 
                     ip.add_muta(muta);
                     pe_gmmu gmmu = new pe_gmmu(grmu, muta);
@@ -111,7 +111,6 @@ namespace Soldel.Views {
 
                     transaction.Commit();
                     session.Refresh(gmmu);
-                    tree_main.Items.Refresh();
                 }
             } catch(Exception ex) {
                 if(transaction != null) {
@@ -133,9 +132,10 @@ namespace Soldel.Views {
                     pe_attr attr = attr_to_copy.shallow_copy(muta);
                     muta.add_attr(attr);
                     session.Save(muta);
-                    session.Refresh(muta);
 
                     transaction.Commit();
+                    session.Refresh(muta);
+                   
                 }
             } catch(Exception exception) {
                 if(transaction != null) {
@@ -203,7 +203,7 @@ namespace Soldel.Views {
 
                     session.Delete(gmmu);
                     transaction.Commit();
-                    tree_main.Items.Refresh();
+                    // tree_main.Items.Refresh();
                 }
             } catch(Exception ex) {
                 if(transaction != null) {
@@ -217,13 +217,13 @@ namespace Soldel.Views {
 
         private void Btn_update_Click(object sender,RoutedEventArgs e) {
             ITransaction transaction = null;
-            if(g_detail.DataContext != null) {
+            if (g_detail.DataContext != null) {
                 try {
                     transaction = session.BeginTransaction();
                     session.Save(g_detail.DataContext);
                     transaction.Commit();
-                } catch(Exception ex) {
-                    if(transaction != null)
+                } catch (Exception ex) {
+                    if (transaction != null)
                         transaction.Rollback();
                     MessageBox.Show(ex.Message);
                 }
@@ -231,7 +231,7 @@ namespace Soldel.Views {
         }
 
         private string generate_muta_id() {
-            return session.CreateSQLQuery("SELECT MAX (to_number(pe_muta_id)) + 1 from pe_muta").UniqueResult().ToString();
+            return session.CreateSQLQuery("SELECT max(pe_muta_id) + 1 from pe_muta;").UniqueResult().ToString();
         }
 
         //---------------------------------------------------------------------
@@ -293,6 +293,37 @@ namespace Soldel.Views {
                 copy_libl(clip_libl);
                 clip_libl = null;
             }
+        }
+
+        private void tree_main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+            var x = e.Source;
+
+            pe_grmu grmu = e.NewValue as pe_grmu;
+            if (grmu != null) {
+                dg_list.ItemsSource = null;
+                dg_list.ItemsSource = grmu.datagrid_list;
+            }
+
+            pe_muta muta = e.NewValue as pe_muta;
+            if (muta != null) {
+                dg_list.ItemsSource = null;
+                dg_list.ItemsSource = muta.datagrid_list;
+            }
+                    
+
+            pe_libl libl = e.NewValue as pe_libl;
+            if (libl != null) {
+                dg_list.ItemsSource = null;
+                // dg_list.ItemsSource = libl.datagrid_list;
+            }
+        }
+
+        private void tree_main_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+            var x = e.Source;
+        }
+
+        private void tree_main_GotFocus(object sender, RoutedEventArgs e) {
+            var x = e.Source;
         }
     }
 }

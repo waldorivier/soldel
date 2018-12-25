@@ -147,7 +147,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <TreeView x:Name="tree_main" Grid.Row="0">
+                <TreeView x:Name="tree_main" 
+                          GotFocus="tree_main_GotFocus"
+                          SelectedItemChanged="tree_main_SelectedItemChanged"
+                          Grid.Row="0">
                     <TreeView.Resources>
 
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
@@ -169,6 +172,7 @@
                         </HierarchicalDataTemplate>
 
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_grmu}">
+
                             <HierarchicalDataTemplate.ItemsSource>
                                 <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
                                               ConverterParameter=", CONFIGS">
@@ -188,7 +192,8 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         
-                        <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" ItemsSource="{Binding pe_attr_list}">
+                        <HierarchicalDataTemplate DataType="{x:Type model:pe_muta}" 
+                                                  ItemsSource="{Binding pe_attr_list}">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
@@ -202,6 +207,7 @@
                                   </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding tyeven}"/>
                             </StackPanel>
+                         
                         </HierarchicalDataTemplate>
                         
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_attr}" ItemsSource="{Binding pe_libl_list}">
@@ -266,6 +272,10 @@
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    
+                </Grid>
                 <Grid x:Name="g_detail" 
                       DataContext="{Binding ElementName=tree_main, Path=SelectedValue}" Grid.Row="0">
                     <Grid.RowDefinitions>
@@ -287,8 +297,9 @@
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid x:Name="dg_list" Grid.Row="0" 
-                        ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}">
+                    <!--ItemsSource="{Binding ElementName=tree_main, Path=SelectedValue, Converter={StaticResource w_generic_list_converter}}"-->
+
+                    <DataGrid x:Name="dg_list" Grid.Row="0">
                     </DataGrid>
 
                     <Grid x:Name="g_list_crud" Grid.Row="1">

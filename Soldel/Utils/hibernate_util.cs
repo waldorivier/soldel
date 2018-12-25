@@ -54,41 +54,41 @@ namespace mupeModel.Utils {
         }
 
         private void load_connections() {
-            //connections = new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;SslMode=none" };
-            connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
-                                        "Data Source=OUTSTST; User Id = tst_2; Password = tst_2",
-                                        "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
-                                        "Data Source = LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
+            connections = new List<String>() { "Server=localhost;Database=mupe;User Name=root;Password=waldo;SslMode=none" };
+            //connections = new List<String>() {"Data Source = LABCIT; User ID = PADEV96_DATA; Password = PADEV96_DATA",
+            //                            "Data Source=OUTSTST; User Id = tst_2; Password = tst_2",
+            //                            "Data Source=LABCITST; User Id = pedev_tst_a1; Password = pedev_tst_a1",
+            //                            "Data Source = LABCITST; User ID = PEDEV_TST_A1; Password = PEDEV_TST_A1",
 
-                                        "Data Source = QALIC; User ID = qa_cpne; Password = qa_cpne",
-                                        "Data Source = QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
-                                        "Data Source=QCASP1; User Id = qc_bcn; Password = qc_bcn",
-                                        "Data Source=QCASP1; User Id = qc_cap; Password = qc_cap",
-                                        "Data Source=OUTCATST; User Id = qc_lausanne; Password = qc_lausanne",
+            //                            "Data Source = QALIC; User ID = qa_cpne; Password = qa_cpne",
+            //                            "Data Source = QALIC; User ID = qa_cpne_2019; Password = qa_cpne_2019",
+            //                            "Data Source=QCASP1; User Id = qc_bcn; Password = qc_bcn",
+            //                            "Data Source=QCASP1; User Id = qc_cap; Password = qc_cap",
+            //                            "Data Source=OUTCATST; User Id = qc_lausanne; Password = qc_lausanne",
 
-                                        "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
-                                        "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
+            //                            "Data Source=ASP1;User Id=prod_cap;Password=prod_cap",
+            //                            "Data Source=outcasp;User Id=prod_lausanne;Password=prod_lausanne",
 
-                                        "Data Source=ASP2;User Id=prod_cpju;Password=prod_cpju",
-                                        "Data Source=OUTCASP; User Id = prod_tetra; Password=prod_tetra",
+            //                            "Data Source=ASP2;User Id=prod_cpju;Password=prod_cpju",
+            //                            "Data Source=OUTCASP; User Id = prod_tetra; Password=prod_tetra",
 
-                                        "Data Source=outsrc; User Id = prod_1; Password=prod_1",
-                                        "Data Source=OUTSRC; User Id = prod_2; Password = prod_2",
-                                        "Data Source=OUTSRC; User Id = prod_3; Password = prod_3",
-                                        "Data Source=OUTSRC; User Id = prod_5; Password = prod_5",
+            //                            "Data Source=outsrc; User Id = prod_1; Password=prod_1",
+            //                            "Data Source=OUTSRC; User Id = prod_2; Password = prod_2",
+            //                            "Data Source=OUTSRC; User Id = prod_3; Password = prod_3",
+            //                            "Data Source=OUTSRC; User Id = prod_5; Password = prod_5",
 
-                                        "Data Source=OUTSRC; User Id = prod_bien; Password=prod_bien",
-                                        "Data Source=OUTSRC; User Id = prod_cicr; Password=prod_cicr",
-                                        "Data Source=OUTSRC; User Id = prod_chop; Password=prod_chop",
-                                        "Data Source=OUTSRC; User Id = prod_dentsply; Password=prod_dentsply",
-                                        "Data Source=OUTSRC; User Id = prod_martigny; Password=prod_martigny",
-                                        "Data Source=OUTSRC; User Id = prod_mikr; Password=prod_mikr",
-                                        "Data Source=OUTSRC; User Id = prod_mps; Password=prod_mps",
-                                        "Data Source=OUTSRC; User Id = prod_naef; Password=prod_naef",
-                                        "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
-                                        "Data Source=OUTSRC; User Id = prod_thomreut; Password=prod_thomreut",
-                                        "Data Source=SWSTAFF;User Id=prod_usse;Password=prod_usse",
-                                        };
+            //                            "Data Source=OUTSRC; User Id = prod_bien; Password=prod_bien",
+            //                            "Data Source=OUTSRC; User Id = prod_cicr; Password=prod_cicr",
+            //                            "Data Source=OUTSRC; User Id = prod_chop; Password=prod_chop",
+            //                            "Data Source=OUTSRC; User Id = prod_dentsply; Password=prod_dentsply",
+            //                            "Data Source=OUTSRC; User Id = prod_martigny; Password=prod_martigny",
+            //                            "Data Source=OUTSRC; User Id = prod_mikr; Password=prod_mikr",
+            //                            "Data Source=OUTSRC; User Id = prod_mps; Password=prod_mps",
+            //                            "Data Source=OUTSRC; User Id = prod_naef; Password=prod_naef",
+            //                            "Data Source=OUTSRC; User Id = prod_optio1e; Password=prod_optio1e",
+            //                            "Data Source=OUTSRC; User Id = prod_thomreut; Password=prod_thomreut",
+            //                            "Data Source=SWSTAFF;User Id=prod_usse;Password=prod_usse",
+            //                             };
     }
 
     private void load_global_parameters() {

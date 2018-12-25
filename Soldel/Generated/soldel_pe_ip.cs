@@ -35,7 +35,7 @@ namespace mupeModel {
         }
 
         public virtual void add_muta(pe_muta muta) {
-            muta.pe_ip = this;
+            muta.pe_ip = this   ;
             muta.no_ip = this.no_ip;
             this.pe_muta_list.Add(muta);
         }

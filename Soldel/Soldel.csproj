@@ -71,10 +71,6 @@
     <Reference Include="NHibernate, Version=5.1.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.5.1.3\lib\net461\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\oracle\product\11.2.0\client_1\ODP.NET\bin\2.x\Oracle.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
@@ -244,6 +240,7 @@
   <ItemGroup>
     <EmbeddedResource Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -288,10 +285,25 @@
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_gmmu.hbm.xml" />
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_grmu.hbm.xml" />
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_libl.hbm.xml" />
-    <EmbeddedResource Include="Mappings\soldel_ewa.pe_muta.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_muta.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_ip.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="uNhAddIns.WPF.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoreHelpers\CoreHelpers.csproj">
+      <Project>{f4bdce2b-9911-48c9-9d5c-93cb14992966}</Project>
+      <Name>CoreHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObservableCollections\ObservableCollections.csproj">
+      <Project>{eb2f7fea-1b3b-4d0b-90cd-f5de6c46ae23}</Project>
+      <Name>ObservableCollections</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

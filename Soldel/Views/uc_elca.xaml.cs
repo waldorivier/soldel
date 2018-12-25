@@ -181,10 +181,14 @@ namespace Soldel.Views {
     public class elcaProjection {
         public string nom_elem { get; set; }
         public string nom_logi { get; set; }
-
-        public elcaProjection(string elem, string logi) {
+        public int no_cas { get; set; }
+        public DateTime pe_chai_ddv{ get; set; }
+        
+        public elcaProjection(string elem, string logi, string cas, string chai_ddv) {
             nom_elem = elem;
             nom_logi = logi;
+            no_cas = Int32.Parse(cas);
+            pe_chai_ddv = DateTime.Parse(chai_ddv);
         }
     }
 }

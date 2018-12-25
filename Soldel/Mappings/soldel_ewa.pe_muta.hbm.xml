@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
-  <class name="pe_muta" table="pe_muta" lazy="false">
+  <class name="pe_muta" table="pe_muta">
     <id name="pe_muta_id" type="String">
       <column name="pe_muta_id" default="''" not-null="true" length="10" sql-type="varchar" />
       <generator class="assigned" />
@@ -56,10 +56,10 @@
       </key>
       <one-to-many class="pe_gmmu" />
     </bag>
-    <bag name="pe_attr_list" cascade="all-delete-orphan" generic="true"
-         collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_attr]], NHibernate.Collection.Observable">
     <!--<bag name="pe_attr_list" cascade="all-delete-orphan" inverse="true" generic="true">-->
-       <key>
+    <bag name="pe_attr_list" cascade="all-delete-orphan" inverse="true"
+         collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_attr]], NHibernate.Collection.Observable">
+      <key>
         <column name="pe_muta_id" />
       </key>
       <one-to-many class="pe_attr" />

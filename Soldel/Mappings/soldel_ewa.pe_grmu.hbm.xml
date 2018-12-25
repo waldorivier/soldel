@@ -47,7 +47,8 @@
       </key>
       <one-to-many class="pe_cfgd" />
     </bag>
-    <bag name="pe_gmmu_list" inverse="true" cascade="save-update" generic="true">
+    <bag name="pe_gmmu_list" inverse="true" cascade="save-update" 
+         collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_gmmu]], NHibernate.Collection.Observable">
       <key>
         <column name="pe_grmu_id" />
       </key>

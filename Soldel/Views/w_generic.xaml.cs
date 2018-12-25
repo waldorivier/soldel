@@ -18,6 +18,9 @@ using mupeModel.Utils;
 using mupeModel;
 using NHibernate;
 using NHibernate.Criterion;
+using mupeModel.Views;
+using System.Collections.ObjectModel;
+using mupeModel.Views.Converters;
 
 namespace Soldel.Views {
 
@@ -25,133 +28,55 @@ namespace Soldel.Views {
     /// Logique d'interaction pour w_generic.xaml
     /// </summary>
     public partial class w_generic : Window {
-        private pe_attr clip_attr;
-        private pe_libl clip_libl;
 
-        private ISession session;
+        private TreeViewItem _tree_view_item;
+
+        private pe_attr _attr;
+        private pe_libl _libl;
+        public  pe_muta _muta;
+        private persistant_controller _persistant_controller;
+
+        internal persistant_controller persistant_controller {
+            get => _persistant_controller;
+            set => _persistant_controller = value;
+        }
 
         public w_generic() {
-            InitializeComponent();
 
+            InitializeComponent();
             Clipboard.Clear();
 
             cb_connection.SelectionChanged += Cb_database_SelectionChanged;
             cb_connection.ItemsSource = hibernate_util.get_instance().get_connections();
 
-            btn_tree_add.Click += Btn_tree_add_Click;
-            btn_tree_delete.Click += Btn_tree_delete_Click;
             btn_update.Click += Btn_update_Click;
         }
 
-        private void Cb_database_SelectionChanged(object sender,SelectionChangedEventArgs e) {
-            ComboBox cbConnection = (ComboBox)sender;
-            String connectionString = (String)cbConnection.SelectedValue;
-            session = hibernate_util.get_instance().get_session(connectionString);
+        private void Cb_database_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            ISession session;
+            ComboBox cb_onnection = (ComboBox)sender;
+            String connection_string = (String)cb_onnection.SelectedValue;
 
-            List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().ToList();
-            var object_list = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+            if ((session = hibernate_util.get_instance().get_session(connection_string)) != null) {
+                persistant_controller = new persistant_controller(session);
 
-            build_tree(object_list.ToList<object>());
-        }
+                List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
+                ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
 
-        private void build_tree(List<object> objects) {
-            tree_main.ItemsSource = CollectionViewSource.GetDefaultView(objects);
-        }
+                // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
 
-        // TODO : généralisation dès que les autres élément de l'arbre seront pris en compte
-
-        private void Btn_tree_add_Click(object sender,RoutedEventArgs e) {
-
-            ITransaction transaction = null;
-            try {
-                transaction = session.BeginTransaction();
-                if(this.tree_main.SelectedValue is pe_grmu) {
-                    pe_grmu selectedValue = tree_main.SelectedValue as pe_grmu;
-                    pe_muta muta = new pe_muta {
-                        no_ip = selectedValue.no_ip,
-                        pe_muta_id = generate_muta_id()
-                    };
-
-                    session.Save(muta);
-                    pe_gmmu _gmmu = new pe_gmmu(selectedValue,muta);
-                    session.Save(_gmmu);
-                    transaction.Commit();
-                    tree_main.Items.Refresh();
-                }
-            } catch(Exception exception) {
-                if(transaction != null) {
-                    if(transaction != null) {
-                        transaction.Rollback();
-                    }
-                    MessageBox.Show(exception.Message);
-                }
-            }
-        }
-
-        // TODO : encapsuler de manière générique
-        private void copy_muta(string element_id) {
-            ITransaction transaction = null;
-
-            try {
-                var grmu = tree_main.SelectedValue as pe_grmu;
-                if(grmu != null) {
-                    transaction = session.BeginTransaction();
-
-                    pe_ip ip = session.Get<pe_ip>(grmu.no_ip);
-                    pe_muta muta_to_copy = session.Get<pe_muta>(element_id);
-
-                    string muta_id = generate_muta_id();
-                    pe_muta muta = muta_to_copy.deep_copy(muta_id, ip);
-
-                    ip.add_muta(muta);
-                    pe_gmmu gmmu = new pe_gmmu(grmu, muta);
-                    session.Save(gmmu);
-
-                    session.Save(ip);
-
-                    transaction.Commit();
-                    session.Refresh(gmmu);
-                }
-            } catch(Exception ex) {
-                if(transaction != null) {
-                    if(transaction != null)
-                        transaction.Rollback();
-
-                    MessageBox.Show(ex.StackTrace);
-                }
-            }
-        }
-
-        private void copy_attr(pe_attr attr_to_copy) {
-            ITransaction transaction = null;
-            try {
-                pe_muta muta = this.tree_main.SelectedValue as pe_muta;
-                if(muta != null) {
-                    transaction = session.BeginTransaction();
-
-                    pe_attr attr = attr_to_copy.shallow_copy(muta);
-                    muta.add_attr(attr);
-                    session.Save(muta);
-
-                    transaction.Commit();
-                    session.Refresh(muta);
-                   
-                }
-            } catch(Exception exception) {
-                if(transaction != null) {
-                    if(transaction != null) {
-                        transaction.Rollback();
-                    }
-                    MessageBox.Show(exception.StackTrace);
-                }
+                tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
         }
 
         private void copy_libl(pe_libl libl_to_copy) {
             ITransaction transaction = null;
             try {
+
+                ISession session = persistant_controller.session;
+
                 pe_attr attr = tree_main.SelectedValue as pe_attr;
-                if(attr != null) {
+                if (attr != null) {
                     transaction = session.BeginTransaction();
 
                     pe_libl libl = libl_to_copy.shallow_copy();
@@ -159,7 +84,7 @@ namespace Soldel.Views {
 
                     // suppprimer l'ancien libellé et le remplacer par la copie
                     pe_libl libl_ = attr.pe_libl_list.First();
-                    if(libl_ != null) { 
+                    if (libl_ != null) {
                         attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
                         session.Delete(libl_);
                     }
@@ -170,12 +95,10 @@ namespace Soldel.Views {
                     session.Refresh(attr.pe_muta.pe_ip);
                     var libl_list = attr.pe_libl_list;
 
-                    // TODO : améliorer pour ne rafraichir que la partie concernée
-                    tree_main.Items.Refresh();
                 }
-            } catch(Exception exception) {
-                if(transaction != null) {
-                    if(transaction != null) {
+            } catch (Exception exception) {
+                if (transaction != null) {
+                    if (transaction != null) {
                         transaction.Rollback();
                     }
                     MessageBox.Show(exception.StackTrace);
@@ -183,148 +106,351 @@ namespace Soldel.Views {
             }
         }
 
-        //---------------------------------------------------------------------
-        // TODO : encapsuler de manière générique
-        // on ne supprime que la relation
-        //---------------------------------------------------------------------
-        private void Btn_tree_delete_Click(object sender,RoutedEventArgs e) {
-            ITransaction transaction = null;
+        private void Btn_update_Click(object sender, RoutedEventArgs e) {
+            persistant_controller.update(g_detail.DataContext);
+        }
 
-            try {
-                var muta = tree_main.SelectedValue as pe_muta;
-                if(muta != null) {
-                    transaction = session.BeginTransaction();
+        #region GRMU
 
-                    // TODO : ce n'est pas complet, car il faut choisir un des gmmus.....!
+        private void add_grmu_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
 
-                    var gmmu = muta.pe_gmmu_list[0];
-                    gmmu.pe_grmu.pe_gmmu_list.Remove(gmmu);
-                    muta.pe_gmmu_list.Remove(gmmu);
+        private void add_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
+            pe_ip ip = e.Parameter as pe_ip;
+            if (ip != null) {
+                pe_grmu grmu = new pe_grmu {
+                    no_ip = ip.no_ip,
+                    pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
+                };
 
-                    session.Delete(gmmu);
-                    transaction.Commit();
-                    // tree_main.Items.Refresh();
-                }
-            } catch(Exception ex) {
-                if(transaction != null) {
-                    if(transaction != null)
-                        transaction.Rollback();
+                persistant_controller.add_child(ip, grmu);
+            }
+        }
 
-                    MessageBox.Show(ex.Message);
+        private void re_order_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        private void re_order_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+            pe_grmu grmu = e.Parameter as pe_grmu;
+            if (grmu != null) {
+                int i = 1;
+                foreach (var muta in grmu.pe_muta_list.OrderBy(x => x.pe_muta_id)) {
+                    muta.muta_order = i;
+                    i++;
                 }
             }
         }
 
-        private void Btn_update_Click(object sender,RoutedEventArgs e) {
-            ITransaction transaction = null;
-            if (g_detail.DataContext != null) {
-                try {
-                    transaction = session.BeginTransaction();
-                    session.Save(g_detail.DataContext);
-                    transaction.Commit();
-                } catch (Exception ex) {
-                    if (transaction != null)
-                        transaction.Rollback();
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
+        #endregion
 
-        private string generate_muta_id() {
-            return session.CreateSQLQuery("SELECT max(pe_muta_id) + 1 from pe_muta;").UniqueResult().ToString();
-        }
+        #region MUTATION
 
-        //---------------------------------------------------------------------
-        // COMMAND HANDLER
-        //---------------------------------------------------------------------
         private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            object data = Clipboard.GetData("String");
-            if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = data != null;
-            } else {
-                e.CanExecute = data == null;
-            }
+            e.CanExecute = _muta == null;
         }
 
         private void copy_muta_executed(object sender, ExecutedRoutedEventArgs e) {
-            if(!e.Parameter.ToString().Equals("coller_element")) {
-                Clipboard.SetData("String",e.Parameter.ToString());
-            } else {
-                string data = Clipboard.GetData("String") as string;
-                copy_muta(data);
-                Clipboard.Clear();
+            _muta = e.Parameter as pe_muta;
+        }
+
+        private void paste_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = _muta != null;
+        }
+
+        private delegate void option_1();
+      
+        public void paste_muta_reference() {
+
+        }
+
+        public void paste_muta_deep() {
+
+
+        }
+
+
+        private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+            if (_muta != null) {
+                pe_muta muta = null;
+                pe_grmu grmu = e.Parameter as pe_grmu;
+
+                // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
+                // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
+
+                var chatbot_box = new chatbot_box(null, null, "Ajouter une copie ou simplement une référence");
+                chatbot_box.Show();
+
+                if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
+                    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
+                    persistant_controller.update(muta);
+                }
+
+                pe_gmmu gmmu = new pe_gmmu(grmu, muta ?? _muta);
+                persistant_controller.update(gmmu);
+
+                // provoque une mise à jour de la liste ! 
+                grmu.pe_muta_list = null;
+                _muta = null;
             }
         }
 
-        private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = clip_attr != null;
-            } else {
-                e.CanExecute = clip_attr == null;
+        private void delete_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        private void delete_muta_executed(object sender, ExecutedRoutedEventArgs e) {
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            pe_muta muta = source.DataContext as pe_muta;
+
+            // REM : étant donné que gmmu n'est pas visible dans l'arbre (pour alléger la représentation)
+            // le grmu n'est accessible que par l'élément vue (view) parent de la mutation 
+
+            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
+            pe_grmu grmu = parent.DataContext as pe_grmu;
+            pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
+
+            persistant_controller.delete(null, gmmu);
+            persistant_controller.delete(null, muta);
+        }
+
+        private void re_order_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        private void re_order_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+
+            int i = 1;
+            foreach (var item in source.Items) {
+                var attr = item as pe_attr;
+                if (attr != null) {
+                    attr.position = i;
+                    i++;
+                }
             }
+        }
+
+        #endregion
+
+        #region ATTRIBUT
+
+        private void copy_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = _attr == null;
         }
 
         private void copy_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-            if(!e.Parameter.ToString().Equals("coller_element")) {
-                pe_attr parameter = e.Parameter as pe_attr;
-                if(parameter != null) {
-                    clip_attr = parameter;
-                }
-            } else if(clip_attr != null) {
-                copy_attr(clip_attr);
-                clip_attr = null;
+            _attr = e.Parameter as pe_attr;
+        }
+
+        private void paste_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = _attr != null;
+        }
+
+        private void paste_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+
+            pe_muta muta = e.Parameter as pe_muta;
+            persistant_controller.add_child(muta, _attr.shallow_copy(muta));
+            _attr = null;
+        }
+
+        private void add_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        private void add_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+            pe_muta muta = e.Parameter as pe_muta;
+
+            var global_dict = new global_dict() {
+                dict_list = hibernate_util.get_instance().get_attr_dict_list(),
+                dict_list_name = "DICTIONNAIRE DES ATTRIBUTS"
+            };
+
+            var w_dict = new w_generic();
+            w_dict.persistant_controller = persistant_controller;
+            w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
+            w_dict.cb_connection.Visibility = Visibility.Collapsed;
+
+            w_dict._muta = muta;
+            w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
+            w_dict.ShowDialog();
+
+            persistant_controller.add_child(muta, w_dict._attr);
+        }
+
+        private void delete_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        private void delete_attr_executed(object sender, ExecutedRoutedEventArgs e) {
+            pe_attr attr = e.Parameter as pe_attr;
+            pe_muta muta = attr.pe_muta;
+
+            persistant_controller.delete(muta, attr);
+        }
+
+        #endregion
+
+        #region LIBL
+
+        private void add_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
+
+            pe_attr attr = parent.DataContext as pe_attr;
+            if (attr != null) {
+                e.CanExecute = attr.pe_libl_list.Count == 0;
             }
         }
 
-        private void copy_libl_can_execute(object sender,CanExecuteRoutedEventArgs e) {
-            if(e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = clip_libl != null;
+        private void add_libl_executed(object sender, ExecutedRoutedEventArgs e) {
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
+        }
+
+        private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            if (e.Parameter.ToString().Equals("coller_element")) {
+                e.CanExecute = _libl != null;
             } else {
-                e.CanExecute = clip_libl == null;
+                e.CanExecute = _libl == null;
             }
         }
-        private void copy_libl_executed(object sender,ExecutedRoutedEventArgs e) {
-            if(!e.Parameter.ToString().Equals("coller_element")) {
+        private void copy_libl_executed(object sender, ExecutedRoutedEventArgs e) {
+            if (!e.Parameter.ToString().Equals("coller_element")) {
                 pe_libl parameter = e.Parameter as pe_libl;
-                if(parameter != null) {
-                    clip_libl = parameter;
+                if (parameter != null) {
+                    _libl = parameter;
                 }
-            } else if(clip_libl != null) {
-                copy_libl(clip_libl);
-                clip_libl = null;
+            } else if (_libl != null) {
+                copy_libl(_libl);
+                _libl = null;
             }
         }
 
-        private void tree_main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-            var x = e.Source;
+        #endregion
 
+        #region DICT
+
+        private void dict_select_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = (_muta != null);
+        }
+
+        private void dict_select_executed(object sender, ExecutedRoutedEventArgs e) {
+            pe_dict dict = e.Parameter as pe_dict;
+            if (dict != null) {
+                _attr = new pe_attr() {
+                    nom_attr = dict.nom_dict,
+                    clatit_attr = dict.clatit_dict,
+                };
+                this.Close();
+            }
+        }
+
+        private void dict_add_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        private void dict_add_executed(object sender, ExecutedRoutedEventArgs e) {
+            pe_dict dict = new pe_dict() { pe_dict_id = hibernate_util.get_instance().generate_dict_id() };
+            _persistant_controller.update(dict);
+        }
+
+        #endregion
+
+        #region TREE_VIEW
+
+        private void tree_view_selected_item_changed(object sender, RoutedPropertyChangedEventArgs<object> e) {
+            TreeViewItem current_tree_view_item = this.Tag as TreeViewItem;
             pe_grmu grmu = e.NewValue as pe_grmu;
             if (grmu != null) {
-                dg_list.ItemsSource = null;
-                dg_list.ItemsSource = grmu.datagrid_list;
+                if (grmu.pe_muta_list != null) {
+                    if (current_tree_view_item != null) {
+                        List<object> l = new List<object>();
+
+                        l.AddRange(grmu.pe_muta_list);
+
+                        folder_node folder_grmu = new folder_node();
+                        folder_grmu.child_nodes = grmu.pe_cfgd_list;
+                        l.Add(folder_grmu);
+
+                        current_tree_view_item.ItemsSource = l;
+                    }
+                }
+                dg_list.ItemsSource = grmu.pe_muta_list;
             }
 
             pe_muta muta = e.NewValue as pe_muta;
             if (muta != null) {
-                dg_list.ItemsSource = null;
-                dg_list.ItemsSource = muta.datagrid_list;
+                current_tree_view_item.ItemsSource = muta.pe_attr_list;
+                try {
+                    dg_list.ItemsSource = muta.pe_attr_list;
+
+                    // le datagrid provoque une exception lorsque le type de d'objet affiché change
+                } catch (Exception ex) {
+                    dg_list.ItemsSource = null;
+                    dg_list.ItemsSource = muta.pe_attr_list;
+                }
             }
-                    
 
-            pe_libl libl = e.NewValue as pe_libl;
-            if (libl != null) {
-                dg_list.ItemsSource = null;
-                // dg_list.ItemsSource = libl.datagrid_list;
+            global_dict dict = e.NewValue as global_dict;
+            if (dict != null) {
+                current_tree_view_item.ItemsSource = dict.dict_list;
+                try {
+                    dg_list.ItemsSource = dict.dict_list;
+
+                    // le datagrid provoque une execption lors d'un changement du type d'objet contenu
+                } catch (Exception ex) {
+                    dg_list.ItemsSource = null;
+                    dg_list.ItemsSource = dict.dict_list;
+                }
             }
         }
 
-        private void tree_main_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            var x = e.Source;
+        private void tree_view_selected_item(object sender, RoutedEventArgs e) {
+            this.Tag = e.OriginalSource;
         }
 
-        private void tree_main_GotFocus(object sender, RoutedEventArgs e) {
-            var x = e.Source;
+        private ItemsControl get_selected_tree_view_item_parent(TreeViewItem item) {
+            DependencyObject parent = VisualTreeHelper.GetParent(item);
+            while (!(parent is TreeViewItem || parent is TreeView)) {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            return parent as ItemsControl;
         }
+
+        #endregion
+
+        #region DATAGRID
+
+        private void dg_list_auto_generating_column(object sender, DataGridAutoGeneratingColumnEventArgs e) {
+            DataGrid dg = sender as DataGrid;
+            if (dg != null) {
+                if (dg.ItemsSource != null) {
+                    if (dg.ItemsSource as IList<pe_attr> != null) {
+                        if (!pe_attr.columns_to_display.Contains(e.Column.Header)) {
+                            e.Cancel = true;
+                        }
+
+                        if (pe_attr.columns_read_only.Contains(e.Column.Header)) {
+                            e.Column.IsReadOnly = true;
+                        }
+                    }
+                    if (dg.ItemsSource as IList<pe_muta> != null) {
+                        if (!pe_muta.columns_to_display.Contains(e.Column.Header)) {
+                            e.Cancel = true;
+                        }
+                    }
+                    if (dg.ItemsSource as IList<pe_dict> != null) {
+                        if (!pe_dict.columns_to_display.Contains(e.Column.Header)) {
+                            e.Cancel = true;
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }
+
 

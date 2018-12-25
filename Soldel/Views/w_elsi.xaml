@@ -14,10 +14,10 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row = "0">
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="2">
                 <local:uc_select_connection x:Name="uc_select_connection"/>
                 <TextBox x:Name="tb_personne"/>
-                <Button x:Name="btn_reload_personne" Content="Relire la personne"/>
+                <Button x:Name="btn_reload_personne" Content="Relire la personne" ButtonBase.Click="reload_personne_click"/>
             </StackPanel>
         </Grid>
 
@@ -33,19 +33,19 @@
             </Grid>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1"/>
             <Grid Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120*"/>
-                    <ColumnDefinition Width="180*"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="tb_column_filter" Grid.Row="0" Height="20" Grid.ColumnSpan="2"/>
+                <StackPanel Grid.Row="0" Margin="2">
+                    <TextBox x:Name="tb_column_filter"/>
+                    <Button x:Name="btn_export_xl" Content="Exporter (XL)" Button.Click="export_xl_click"/>
+                </StackPanel>
                 <DataGrid EnableColumnVirtualization="True" 
                           AlternatingRowBackground="LightGray" 
-                          ScrollViewer.IsDeferredScrollingEnabled="true" 
-                          x:Name="dg_elsi_multiple" Grid.Row="1" Grid.ColumnSpan="2"/>
+                          ScrollViewer.IsDeferredScrollingEnabled="true"   
+                          ClipboardCopyMode="IncludeHeader"
+                          x:Name="dg_elsi_multiple" Grid.Row="1" Grid.ColumnSpan="2" Margin="2"/>
             </Grid>
         </Grid>
     </Grid>

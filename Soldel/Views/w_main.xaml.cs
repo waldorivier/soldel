@@ -27,15 +27,20 @@ namespace Soldel.Views {
                 btn_elca.Click += Btn_elca_Click;
                 btn_elsi.Click += Btn_elsi_Click;
                 btn_ewa.Click += Btn_ewa_Click;
+
             } catch (Exception ex) {
                 MessageBox.Show(ex.StackTrace);            }
         }
 
         private void Btn_ewa_Click(object sender, RoutedEventArgs e) {
-            new w_generic().ShowDialog();
+            try {
+                new w_generic().ShowDialog();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void Btn_elca_Click(object sender, RoutedEventArgs e) {
+        private void Btn_elca_Click(object sender, RoutedEventArgs e) { 
             new w_compare().ShowDialog();
         }
 

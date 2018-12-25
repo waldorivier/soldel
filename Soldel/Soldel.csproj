@@ -71,6 +71,13 @@
     <Reference Include="NHibernate, Version=5.1.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.5.1.3\lib\net461\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.Collection.Observable">
+      <HintPath>..\packages\ObservableCollections\bin\Debug\NHibernate.Collection.Observable.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\oracle\product\11.2.0\client_1\ODP.NET\bin\2.x\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
@@ -107,10 +114,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\grmu_command.cs" />
+    <Compile Include="Command\dict_command.cs" />
+    <Compile Include="Command\chat_box_command .cs" />
     <Compile Include="Command\attr_command.cs" />
     <Compile Include="Command\libl_command.cs" />
     <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
+    <Compile Include="Generated\global_dict.cs" />
+    <Compile Include="Generated\i_soldel.cs" />
+    <Compile Include="Generated\soldel.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />
     <Compile Include="Generated\soldel.pe_elem.cs" />
@@ -124,6 +137,7 @@
     <Compile Include="Generated\soldel_ewa.pe_cfgd.cs" />
     <Compile Include="Generated\soldel_ewa.pe_cfgt.cs" />
     <Compile Include="Generated\soldel_ewa.pe_dict.cs" />
+    <Compile Include="Generated\soldel_pe_este.cs" />
     <Compile Include="Generated\soldel_pe_ip.cs" />
     <Compile Include="Generated\soldel_ewa.pe_gmes.cs" />
     <Compile Include="Generated\soldel_ewa.pe_gmmu.cs" />
@@ -131,11 +145,11 @@
     <Compile Include="Generated\soldel_ewa.pe_libl.cs" />
     <Compile Include="Generated\soldel_ewa.pe_muta.cs" />
     <Compile Include="Utils\audit_interceptor.cs" />
-    <Compile Include="Utils\hibernate_util.cs" />
+    <Compile Include="Generated\persistant_controller.cs" />
+    <Compile Include="Utils\hibernate_util_LOCAL.cs" />
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />
     <Compile Include="Views\Converters\folder_node.cs" />
-    <Compile Include="Views\Converters\w_generic_list_converter.cs" />
     <Compile Include="Views\Converters\w_generic_tree_multi_list_converter.cs" />
     <Compile Include="Views\Templates\w_generic_detail_template_selector.cs" />
     <Compile Include="Views\uc_find_element.xaml.cs">
@@ -143,6 +157,9 @@
     </Compile>
     <Compile Include="Views\uc_select_connection.xaml.cs">
       <DependentUpon>uc_select_connection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\w_chatbot_box.xaml.cs">
+      <DependentUpon>w_chatbot_box.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\w_generic.xaml.cs">
       <DependentUpon>w_generic.xaml</DependentUpon>
@@ -168,6 +185,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\uc_select_connection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_chatbot_box.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,7 +261,6 @@
   <ItemGroup>
     <EmbeddedResource Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -285,25 +305,13 @@
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_gmmu.hbm.xml" />
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_grmu.hbm.xml" />
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_libl.hbm.xml" />
-    <EmbeddedResource Include="Mappings\soldel_ewa.pe_muta.hbm.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_muta.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_ip.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="uNhAddIns.WPF.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CoreHelpers\CoreHelpers.csproj">
-      <Project>{f4bdce2b-9911-48c9-9d5c-93cb14992966}</Project>
-      <Name>CoreHelpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ObservableCollections\ObservableCollections.csproj">
-      <Project>{eb2f7fea-1b3b-4d0b-90cd-f5de6c46ae23}</Project>
-      <Name>ObservableCollections</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_este.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

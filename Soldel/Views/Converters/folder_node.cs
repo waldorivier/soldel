@@ -6,9 +6,13 @@ namespace mupeModel.Views.Converters {
     using System.Runtime.CompilerServices;
     using System.Windows.Data;
 
-    internal class folder_node:IValueConverter {
+    internal class folder_node:soldel, IValueConverter {
+
+        public folder_node() {
+            name = "CONFIGS";
+        }  
+
         object IValueConverter.Convert(object value,Type targetType,object parameter,CultureInfo culture) =>
-            // this.child_nodes;
             null;
 
         object IValueConverter.ConvertBack(object value,Type targetType,object parameter,CultureInfo culture) {
@@ -18,5 +22,11 @@ namespace mupeModel.Views.Converters {
         public string name { get; internal set; }
 
         public IEnumerable child_nodes { get; internal set; }
+
+        public virtual new string tree_view_item_foreground {
+            get {
+                return "blue";
+            }
+        }
     }
 }

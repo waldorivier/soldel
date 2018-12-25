@@ -411,9 +411,5 @@ namespace mupeModel {
                 return new List<String>() { "01", "03" };
             }
         }
-
-        public virtual IList<pe_muta> datagrid_list {
-            get => pe_muta_list;
-        }
     }
 }

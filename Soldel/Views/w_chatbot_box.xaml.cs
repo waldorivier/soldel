@@ -19,10 +19,16 @@ namespace mupeModel.Views {
     /// </summary>
     public partial class chatbot_box : Window {
 
-        public chatbot_box(Delegate option_1, Delegate option_2, string question) {
-            InitializeComponent();
+        private Action _option_1;
+        private Action _option_2;
 
+        public chatbot_box (string question, Action option_1, Action option_2 ) {
+            InitializeComponent();
             init_dialog(question);
+
+            _option_1 = option_1;
+            _option_2 = option_2;
+
         }
 
         private void init_dialog(string question) {
@@ -32,10 +38,11 @@ namespace mupeModel.Views {
         #region COMMAND HANDLER
 
         private void accept_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            // e.CanExecute = (response.Text != "");
+            e.CanExecute = (response.Text != "");
         }
 
         private void accept_executed(object sender, ExecutedRoutedEventArgs e) {
+            _option_1();
         }
 
         private void reject_can_execute(object sender, CanExecuteRoutedEventArgs e) {

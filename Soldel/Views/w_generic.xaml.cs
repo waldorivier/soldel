@@ -165,9 +165,14 @@ namespace Soldel.Views {
 
         }
 
-        public void paste_muta_deep() {
+        public paste_muta_deep_copy(pe_grmu grmu) {
+            pe_muta muta = null;
+            pe_grmu _grmu = grmu;
 
-
+            return delegate {
+                muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
+                persistant_controller.update(muta);
+            };
         }
 
 

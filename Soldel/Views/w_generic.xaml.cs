@@ -34,12 +34,8 @@ namespace Soldel.Views {
         private pe_attr _attr;
         private pe_libl _libl;
         public  pe_muta _muta;
-        private persistant_controller _persistant_controller;
 
-        internal persistant_controller persistant_controller {
-            get => _persistant_controller;
-            set => _persistant_controller = value;
-        }
+        internal persistant_controller persistant_controller { get; set; }
 
         public w_generic() {
 
@@ -159,38 +155,53 @@ namespace Soldel.Views {
             e.CanExecute = _muta != null;
         }
 
-        private delegate void option_1();
+       public class muta_action {
+            private pe_muta _muta = null;
+            private pe_grmu _grmu = null;
+            private persistant_controller _persistant_controller = null;
+
+            public Action action_1;
+            public Action action_2;
+
+            public pe_muta muta { get => _muta; set => _muta = value; }
+
+            public muta_action(pe_grmu grmu, pe_muta muta) {
+                _muta = muta;
+                _grmu = grmu;
+                
+                action_1 = paste_muta_deep;
+                action_2 = paste_muta_reference;
+            }
+
+            private void paste_muta_deep() {
+                _muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), _grmu.pe_ip);
+                _persistant_controller.update(_muta);
+            }
+
+            private void paste_muta_reference() {
       
-        public void paste_muta_reference() {
-
+            }
         }
-
-        public paste_muta_deep_copy(pe_grmu grmu) {
-            pe_muta muta = null;
-            pe_grmu _grmu = grmu;
-
-            return delegate {
-                muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
-                persistant_controller.update(muta);
-            };
-        }
-
-
+     
         private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
             if (_muta != null) {
                 pe_muta muta = null;
                 pe_grmu grmu = e.Parameter as pe_grmu;
 
+                muta_action a = new muta_action(grmu, muta);
+
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
                 // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
 
-                var chatbot_box = new chatbot_box(null, null, "Ajouter une copie ou simplement une référence");
-                chatbot_box.Show();
+                var chatbot_box = new chatbot_box("Ajouter une copie ou simplement une référence", a.action_1, a.action_2);
+                chatbot_box.ShowDialog();
 
-                if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
-                    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
-                    persistant_controller.update(muta);
-                }
+                //if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
+                //    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
+                //    persistant_controller.update(muta);
+                //}
+
+                _muta = a.muta;
 
                 pe_gmmu gmmu = new pe_gmmu(grmu, muta ?? _muta);
                 persistant_controller.update(gmmu);
@@ -358,7 +369,7 @@ namespace Soldel.Views {
 
         private void dict_add_executed(object sender, ExecutedRoutedEventArgs e) {
             pe_dict dict = new pe_dict() { pe_dict_id = hibernate_util.get_instance().generate_dict_id() };
-            _persistant_controller.update(dict);
+            persistant_controller.update(dict);
         }
 
         #endregion

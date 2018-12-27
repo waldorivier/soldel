@@ -11,7 +11,7 @@
         <property name="abregf_ip" type="String">
       <column name="abregf_ip" not-null="false" length="1" sql-type="varchar" />
     </property>
-    <set name="pe_libl_list" cascade="all" inverse="true">
+    <!--<set name="pe_libl_list" cascade="all" inverse="true">
       <key>
         <column name="no_ip" />
       </key>
@@ -23,7 +23,7 @@
         <column name="no_ip" />
       </key>
       <one-to-many class="pe_este" />
-    </bag>
+    </bag>-->
     <bag name="pe_muta_list" cascade="all" inverse="true" generic="true"
          collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_muta]], NHibernate.Collection.Observable">
       <key>

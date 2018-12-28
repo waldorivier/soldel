@@ -108,8 +108,7 @@ namespace mupeModel {
                 }
             }
         }
-
-
+        
         /// <summary>
         /// There are no comments for pe_muta_id in the schema.
         /// </summary>

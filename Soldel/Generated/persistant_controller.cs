@@ -9,9 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace mupeModel.Utils {
-
     class persistant_controller {
-
         private ISession _session;
         private TreeView _view;
 
@@ -22,9 +20,7 @@ namespace mupeModel.Utils {
         public ISession session { get => _session;}
 
         public void add_child(i_soldel parent, object child) {
-
             ITransaction transaction = null;
-
             if(parent.can_add_child(child)) {
                 try {
                     transaction = _session.BeginTransaction();
@@ -50,9 +46,7 @@ namespace mupeModel.Utils {
         }
 
         internal void delete(i_soldel parent, i_soldel child) {
-
             ITransaction transaction = null;
-
             if(child.can_remove_me()) {
                 try {
                     transaction = _session.BeginTransaction();
@@ -73,9 +67,7 @@ namespace mupeModel.Utils {
         }
 
         internal void update(object elem) {
-
             ITransaction transaction = null;
-
             try {
                 transaction = _session.BeginTransaction();
                 _session.Save(elem);

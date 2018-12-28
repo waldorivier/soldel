@@ -23,7 +23,7 @@ using System.Collections.ObjectModel;
 using mupeModel.Views.Converters;
 
 namespace Soldel.Views {
-
+        
     /// <summary>
     /// Logique d'interaction pour w_generic.xaml
     /// </summary>
@@ -35,7 +35,7 @@ namespace Soldel.Views {
         private pe_libl _libl;
         public  pe_muta _muta;
 
-        internal persistant_controller persistant_controller { get; set; }
+        persistant_controller _persistant_controller;
 
         public w_generic() {
 
@@ -54,7 +54,7 @@ namespace Soldel.Views {
             String connection_string = (String)cb_onnection.SelectedValue;
 
             if ((session = hibernate_util.get_instance().get_session(connection_string)) != null) {
-                persistant_controller = new persistant_controller(session);
+                _persistant_controller = new persistant_controller(session);
 
                 List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
@@ -68,8 +68,7 @@ namespace Soldel.Views {
         private void copy_libl(pe_libl libl_to_copy) {
             ITransaction transaction = null;
             try {
-
-                ISession session = persistant_controller.session;
+                ISession session = _persistant_controller.session;
 
                 pe_attr attr = tree_main.SelectedValue as pe_attr;
                 if (attr != null) {
@@ -103,7 +102,7 @@ namespace Soldel.Views {
         }
 
         private void Btn_update_Click(object sender, RoutedEventArgs e) {
-            persistant_controller.update(g_detail.DataContext);
+           _persistant_controller.update(g_detail.DataContext);
         }
 
         #region GRMU
@@ -120,7 +119,7 @@ namespace Soldel.Views {
                     pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
                 };
 
-                persistant_controller.add_child(ip, grmu);
+                _persistant_controller.add_child(ip, grmu);
             }
         }
 
@@ -143,6 +142,35 @@ namespace Soldel.Views {
 
         #region MUTATION
 
+
+        public class muta_action {
+            private pe_muta _muta = null;
+            private pe_grmu _grmu = null;
+            private persistant_controller _persistant_controller = null;
+
+            public Action action_1;
+            public Action action_2;
+
+            public pe_muta muta { get => _muta; set => _muta = value; }
+            internal persistant_controller persistant_controller { get => _persistant_controller; set => _persistant_controller = value; }
+
+            public muta_action(pe_grmu grmu, pe_muta muta) {
+                _muta = muta;
+                _grmu = grmu;
+
+                action_1 = paste_muta_deep;
+                action_2 = paste_muta_reference;
+            }
+
+            private void paste_muta_deep() {
+                _muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), _grmu.pe_ip);
+                _persistant_controller.update(_muta);
+            }
+
+            private void paste_muta_reference() {
+            }
+        }
+
         private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = _muta == null;
         }
@@ -154,46 +182,18 @@ namespace Soldel.Views {
         private void paste_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = _muta != null;
         }
-
-       public class muta_action {
-            private pe_muta _muta = null;
-            private pe_grmu _grmu = null;
-            private persistant_controller _persistant_controller = null;
-
-            public Action action_1;
-            public Action action_2;
-
-            public pe_muta muta { get => _muta; set => _muta = value; }
-
-            public muta_action(pe_grmu grmu, pe_muta muta) {
-                _muta = muta;
-                _grmu = grmu;
-                
-                action_1 = paste_muta_deep;
-                action_2 = paste_muta_reference;
-            }
-
-            private void paste_muta_deep() {
-                _muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), _grmu.pe_ip);
-                _persistant_controller.update(_muta);
-            }
-
-            private void paste_muta_reference() {
-      
-            }
-        }
-     
+            
         private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
             if (_muta != null) {
-                pe_muta muta = null;
                 pe_grmu grmu = e.Parameter as pe_grmu;
 
-                muta_action a = new muta_action(grmu, muta);
+                muta_action a = new muta_action(grmu, _muta);
+                a.persistant_controller = _persistant_controller;
 
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
                 // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
 
-                var chatbot_box = new chatbot_box("Ajouter une copie ou simplement une référence", a.action_1, a.action_2);
+                var chatbot_box = new chatbot_box("Faire une copie ou ajoute simplement une référence", a.action_1, a.action_2);
                 chatbot_box.ShowDialog();
 
                 //if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
@@ -201,10 +201,8 @@ namespace Soldel.Views {
                 //    persistant_controller.update(muta);
                 //}
 
-                _muta = a.muta;
-
-                pe_gmmu gmmu = new pe_gmmu(grmu, muta ?? _muta);
-                persistant_controller.update(gmmu);
+                pe_gmmu gmmu = new pe_gmmu(grmu, a.muta  ?? _muta);
+                _persistant_controller.update(gmmu);
 
                 // provoque une mise à jour de la liste ! 
                 grmu.pe_muta_list = null;
@@ -227,8 +225,10 @@ namespace Soldel.Views {
             pe_grmu grmu = parent.DataContext as pe_grmu;
             pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
 
-            persistant_controller.delete(null, gmmu);
-            persistant_controller.delete(null, muta);
+            
+            // auncun de deux "parents" n'est actualisé : situation à remédier
+            _persistant_controller.delete(null, gmmu);
+            _persistant_controller.delete(null, muta);
         }
 
         private void re_order_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -267,7 +267,7 @@ namespace Soldel.Views {
         private void paste_attr_executed(object sender, ExecutedRoutedEventArgs e) {
 
             pe_muta muta = e.Parameter as pe_muta;
-            persistant_controller.add_child(muta, _attr.shallow_copy(muta));
+            _persistant_controller.add_child(muta, _attr.shallow_copy(muta));
             _attr = null;
         }
 
@@ -284,7 +284,7 @@ namespace Soldel.Views {
             };
 
             var w_dict = new w_generic();
-            w_dict.persistant_controller = persistant_controller;
+            w_dict._persistant_controller = _persistant_controller;
             w_dict.Title = "AJOUTER UN ATTRIBUT A LA MUTATION";
             w_dict.cb_connection.Visibility = Visibility.Collapsed;
 
@@ -292,7 +292,7 @@ namespace Soldel.Views {
             w_dict.tree_main.ItemsSource = CollectionViewSource.GetDefaultView(new List<global_dict>() { global_dict });
             w_dict.ShowDialog();
 
-            persistant_controller.add_child(muta, w_dict._attr);
+            _persistant_controller.add_child(muta, w_dict._attr);
         }
 
         private void delete_attr_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -303,7 +303,7 @@ namespace Soldel.Views {
             pe_attr attr = e.Parameter as pe_attr;
             pe_muta muta = attr.pe_muta;
 
-            persistant_controller.delete(muta, attr);
+            _persistant_controller.delete(muta, attr);
         }
 
         #endregion
@@ -369,7 +369,7 @@ namespace Soldel.Views {
 
         private void dict_add_executed(object sender, ExecutedRoutedEventArgs e) {
             pe_dict dict = new pe_dict() { pe_dict_id = hibernate_util.get_instance().generate_dict_id() };
-            persistant_controller.update(dict);
+            _persistant_controller.update(dict);
         }
 
         #endregion

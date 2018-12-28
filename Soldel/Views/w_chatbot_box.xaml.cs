@@ -43,13 +43,15 @@ namespace mupeModel.Views {
 
         private void accept_executed(object sender, ExecutedRoutedEventArgs e) {
             _option_1();
+            this.Close();
         }
 
         private void reject_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            // e.CanExecute = (response.Text != "");
+            e.CanExecute = (response.Text != "");
         }
 
         private void reject_executed(object sender, ExecutedRoutedEventArgs e) {
+            this.Close();
         }
 
         private void cancel_can_execute(object sender, CanExecuteRoutedEventArgs e) {

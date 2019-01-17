@@ -29,6 +29,8 @@ namespace mupeModel.Views {
             _option_1 = option_1;
             _option_2 = option_2;
 
+            this.btn_accept.Content = "Copier";
+            this.btn_reject.Content = "Ajouter une référence";
         }
 
         private void init_dialog(string question) {
@@ -39,15 +41,17 @@ namespace mupeModel.Views {
 
         private void accept_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = (response.Text != "");
+            e.CanExecute = true;
         }
 
         private void accept_executed(object sender, ExecutedRoutedEventArgs e) {
-            _option_1();
             this.Close();
+            _option_1();
         }
 
         private void reject_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = (response.Text != "");
+            e.CanExecute = true;    
         }
 
         private void reject_executed(object sender, ExecutedRoutedEventArgs e) {

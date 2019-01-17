@@ -16,7 +16,7 @@
             <StackPanel>
                 <Button x:Name="btn_elca" Content="Chaînages"/>
                 <Button x:Name="btn_elsi" Content="Eléments de situation"/>
-                <Button x:Name="btn_ewa" Content="Configuration EWA"/>
+                <Button x:Name="btn_ewa" Content="Configurations SSE"/>
             </StackPanel>
         </Grid>
     </Grid>

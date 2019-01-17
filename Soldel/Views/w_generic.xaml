@@ -427,7 +427,8 @@
                                                   CommandParameter="{Binding}"/>
 
                                         <MenuItem Header="Ajouter un libellé" 
-                                                  Command="commands:libl_command.add"/>
+                                                  Command="commands:libl_command.add"
+                                                  CommandParameter="{Binding}"/>
 
                                         <MenuItem Header="Coller le libellé" 
                                                   Command="commands:libl_command.copy"

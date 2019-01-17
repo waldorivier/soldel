@@ -101,7 +101,8 @@ namespace mupeModel {
         /// </summary>
         public pe_libl() {
             this._no_ip = 0;
-            this._nom_attr = @"";
+            this._nom_attr = @"NAN";
+            this._libf_attr = this._libd_attr = this._libe_attr = this._libi_attr = "NAN";
             OnCreated();
         }
 

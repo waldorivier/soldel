@@ -58,7 +58,6 @@ namespace Soldel.Views {
 
                 List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-
                 // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
 
                 tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
@@ -142,7 +141,6 @@ namespace Soldel.Views {
 
         #region MUTATION
 
-
         public class muta_action {
             private pe_muta _muta = null;
             private pe_grmu _grmu = null;
@@ -193,16 +191,17 @@ namespace Soldel.Views {
                 // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
                 // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
 
-                var chatbot_box = new chatbot_box("Faire une copie ou ajoute simplement une référence", a.action_1, a.action_2);
-                chatbot_box.ShowDialog();
+                var chatbot_box = new chatbot_box(
+                    "Faire une copie ou ajouter simplement une référence (ceci n'étant possible " +
+                    "que si l'IP source et identique à l'IP destination)", 
+                    a.action_1, 
+                    a.action_2);
 
-                //if (!_muta.pe_ip.Equals(grmu.pe_ip)) {
-                //    muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), grmu.pe_ip);
-                //    persistant_controller.update(muta);
-                //}
+                chatbot_box.ShowDialog();
 
                 pe_gmmu gmmu = new pe_gmmu(grmu, a.muta  ?? _muta);
                 _persistant_controller.update(gmmu);
+                _persistant_controller.session.Refresh(grmu);
 
                 // provoque une mise à jour de la liste ! 
                 grmu.pe_muta_list = null;
@@ -311,18 +310,18 @@ namespace Soldel.Views {
         #region LIBL
 
         private void add_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            TreeViewItem source = e.OriginalSource as TreeViewItem;
-            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
-
-            pe_attr attr = parent.DataContext as pe_attr;
+            pe_attr attr = e.Parameter as pe_attr;
             if (attr != null) {
                 e.CanExecute = attr.pe_libl_list.Count == 0;
-            }
+            }   
         }
 
         private void add_libl_executed(object sender, ExecutedRoutedEventArgs e) {
-            TreeViewItem source = e.OriginalSource as TreeViewItem;
-            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
+            pe_attr attr = e.Parameter as pe_attr;
+
+            pe_libl libl = new pe_libl();
+            libl.nom_attr = attr.nom_attr;
+            _persistant_controller.add_child(attr.pe_muta.pe_ip, libl);
         }
 
         private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {

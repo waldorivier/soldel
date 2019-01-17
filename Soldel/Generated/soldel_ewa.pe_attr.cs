@@ -460,16 +460,6 @@ namespace mupeModel {
                     } catch (Exception e ) {
                         throw (new Exception("L'attribut -> " + nom_attr + " " + clatit_attr + " n'a pas de correpondance dans le dictionnaire"));
                     }
-
-                    //if(dict != null) {
-                    //    libl_list = new List<pe_libl>();
-                    //    libl_list.Add(new pe_libl() {
-                    //        libf_attr = dict.libf_dict,
-                    //        libd_attr = dict.libd_dict,
-                    //        libe_attr = dict.libe_dict,
-                    //        libi_attr = dict.libi_dict
-                    //    });
-                    //}
                 }
                 return libl_list;
             }

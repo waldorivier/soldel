@@ -37,7 +37,7 @@ namespace mupeModel {
         }
 
         public virtual void add_muta(pe_muta muta) {
-            muta.pe_ip = this   ;
+            muta.pe_ip = this;
             muta.no_ip = this.no_ip;
             this.pe_muta_list.Add(muta);
         }
@@ -157,11 +157,17 @@ namespace mupeModel {
         #region I_SOLDEL
 
         void i_soldel.add_child(object child) {
-         
-            var grmu = child as pe_grmu;
-            if(grmu != null) {
-                grmu.pe_ip = this;
-                this._pe_grmu_list.Add(grmu);
+            var libl = child as pe_libl;
+            if (libl != null) {
+                this.add_libl(libl);
+            } else {
+                var grmu = child as pe_grmu;
+                if (grmu != null) {
+                    grmu.pe_ip = this;
+                    this._pe_grmu_list.Add(grmu);
+
+                    // this.add_grmu(grmu)
+                }
             }
         }
     

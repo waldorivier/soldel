@@ -32,8 +32,9 @@ namespace mupeModel.Utils {
 
                     transaction.Commit();
 
-                    if(parent.is_persistant())
-                        _session.Refresh(parent);
+                    if (parent.is_persistant())
+                        // _session.Refresh(parent);
+                        ;
 
                 } catch(Exception ex) {
                     if(transaction != null) 

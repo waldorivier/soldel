@@ -323,9 +323,10 @@
                         <HierarchicalDataTemplate DataType="{x:Type model:pe_ip}">
                             <HierarchicalDataTemplate.ItemsSource>
                                 <MultiBinding Converter="{StaticResource w_generic_tree_multi_list_converter}"
-                                              ConverterParameter="GROUPES,EMPLOYEURS">
+                                              ConverterParameter="GROUPES,EMPLOYEURS,LIBELLES">
                                     <Binding Path="pe_grmu_list"/>
                                     <Binding Path="pe_este_list"/>
+                                    <Binding Path="pe_libl_list"/>
                                 </MultiBinding>
                             </HierarchicalDataTemplate.ItemsSource>
                             <StackPanel Orientation="Horizontal">
@@ -496,7 +497,7 @@
                 </TreeView>
             </Grid>
 
-            <GridSplitter x:Name="sv" HorizontalAlignment="Stretch" Width="10" Background="Azure" Grid.Column="1" Margin="2"/>
+            <GridSplitter x:Name="sv" HorizontalAlignment="Stretch" Width="5" Background="Azure" Grid.Column="1" Margin="2"/>
 
             <Grid x:Name="detail" Grid.Column="2" Margin="2">
                 <Grid.RowDefinitions>

@@ -57,8 +57,8 @@ namespace Soldel.Views {
                 _persistant_controller = new persistant_controller(session);
 
                 List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
-                ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-                // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
+                //ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+                ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
 
                 tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
@@ -223,8 +223,7 @@ namespace Soldel.Views {
             TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
             pe_grmu grmu = parent.DataContext as pe_grmu;
             pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
-
-            
+                        
             // auncun de deux "parents" n'est actualisé : situation à remédier
             _persistant_controller.delete(null, gmmu);
             _persistant_controller.delete(null, muta);

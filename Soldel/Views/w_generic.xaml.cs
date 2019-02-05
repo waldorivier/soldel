@@ -34,6 +34,7 @@ namespace Soldel.Views {
         private pe_attr _attr;
         private pe_libl _libl;
         public  pe_muta _muta;
+        public  pe_grmu _grmu;
 
         persistant_controller _persistant_controller;
 
@@ -57,8 +58,8 @@ namespace Soldel.Views {
                 _persistant_controller = new persistant_controller(session);
 
                 List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
-                //ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-                ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
+                ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
+                // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
 
                 tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
@@ -120,6 +121,48 @@ namespace Soldel.Views {
 
                 _persistant_controller.add_child(ip, grmu);
             }
+        }
+
+        private void copy_grmu_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = _grmu == null;
+        }
+
+        private void copy_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
+            _grmu = e.Parameter as pe_grmu;
+        }
+
+        private void paste_grmu_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = _grmu != null;
+        }
+
+        private void paste_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
+            if (_grmu != null) {
+                pe_ip ip = e.Parameter as pe_ip;
+
+                var grmu_c = _grmu.shallow_copy(hibernate_util.get_instance().generate_grmu_id(), ip);
+                _persistant_controller.add_child(ip, grmu_c);
+
+                // copie de la configuration issue de la même ip; les mutations ne sont pas copiées mais
+                // seule une référence est ajoutée
+                if (_grmu.pe_ip.Equals(ip)) {
+                    foreach (var muta in _grmu.pe_muta_list) {
+                        pe_gmmu gmmu = new pe_gmmu(grmu_c, muta);
+                        _persistant_controller.update(gmmu);
+                    }
+                } else {
+                    var muta_id = Int32.Parse(hibernate_util.get_instance().generate_muta_id());
+                    foreach (var muta in _grmu.pe_muta_list) {
+                        var muta_c = muta.deep_copy(muta_id.ToString(), grmu_c.pe_ip);
+                        _persistant_controller.update(muta_c);
+
+                        pe_gmmu gmmu = new pe_gmmu(grmu_c, muta_c);
+                        _persistant_controller.update(gmmu);
+                        muta_id++;
+                    }
+                }
+                _persistant_controller.session.Refresh(grmu_c);
+            }
+            _grmu = null;
         }
 
         private void re_order_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -263,7 +306,6 @@ namespace Soldel.Views {
         }
 
         private void paste_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-
             pe_muta muta = e.Parameter as pe_muta;
             _persistant_controller.add_child(muta, _attr.shallow_copy(muta));
             _attr = null;
@@ -407,13 +449,18 @@ namespace Soldel.Views {
                 }
             }
 
+            pe_attr attr = e.NewValue as pe_attr;
+            if (attr != null) {
+                current_tree_view_item.ItemsSource = attr.pe_libl_list;
+            }
+            
             global_dict dict = e.NewValue as global_dict;
             if (dict != null) {
                 current_tree_view_item.ItemsSource = dict.dict_list;
                 try {
                     dg_list.ItemsSource = dict.dict_list;
 
-                    // le datagrid provoque une execption lors d'un changement du type d'objet contenu
+                // le datagrid provoque une exception lors d'un changement du type d'objet contenu
                 } catch (Exception ex) {
                     dg_list.ItemsSource = null;
                     dg_list.ItemsSource = dict.dict_list;

@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using NHibernate.Collection.Observable;
 
-
-
 namespace Soldel.Views {
     /// <summary>
     /// Interaction logic for Window1.xaml

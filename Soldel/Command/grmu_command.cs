@@ -6,12 +6,18 @@ namespace mupeModel.Commands {
 
         private static RoutedUICommand _copy = new RoutedUICommand("copy", "copy", typeof(grmu_command), null);
         private static RoutedUICommand _add = new RoutedUICommand("add", "add", typeof(grmu_command),null);
+        private static RoutedUICommand _paste = new RoutedUICommand("paste", "paste", typeof(grmu_command), null);
         private static RoutedUICommand _delete = new RoutedUICommand("delete", "delete" , typeof(grmu_command),null);
         private static RoutedUICommand _re_order_muta = new RoutedUICommand("re_order_muta", "re_order_muta", typeof(grmu_command),null);
 
         public static RoutedUICommand copy {
             get => _copy;
             set => _copy = value;
+        }
+
+        public static RoutedUICommand paste {
+            get => _paste;
+            set => _paste = value;
         }
 
         public static RoutedUICommand add {

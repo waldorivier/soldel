@@ -19,6 +19,7 @@ using System.Globalization;
 using System.Collections.ObjectModel;
 using mupeModel.Utils;
 using NHibernate.Criterion;
+using System.Windows.Input;
 
 namespace mupeModel {
 
@@ -409,5 +410,21 @@ namespace mupeModel {
         public virtual IList<pe_muta> datagrid_list {
             get => pe_muta_list;
         }
+
+        #region I_SOLDEL
+
+        public virtual pe_grmu shallow_copy(string grmu_id, mupeModel.pe_ip ip) {
+            pe_grmu copy = new pe_grmu();
+            copy_object.copy<pe_grmu>(this, copy);
+
+            copy.pe_grmu_id = grmu_id;
+            copy.no_ip = ip.no_ip;
+            copy.pe_ip = ip;
+
+            return copy;
+        }
+
+        #endregion
+        
     }
 }

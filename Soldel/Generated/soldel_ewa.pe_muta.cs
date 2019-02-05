@@ -301,7 +301,6 @@ namespace mupeModel {
         }
 
         public virtual bool can_add_child(object child) {
-
             bool can_add = false;
             var attr = child as pe_attr;
             if(attr != null) {
@@ -313,7 +312,6 @@ namespace mupeModel {
         }
 
         public virtual void add_child(object child) {
-
             var attr = child as pe_attr;
             if(attr != null) {
                 attr.pe_muta = this;
@@ -323,7 +321,6 @@ namespace mupeModel {
         }
                 
         public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
-
             pe_muta muta = shallow_copy(muta_id,ip);
             foreach(pe_attr _attr in pe_attr_list) {
                 muta.add_child(_attr.shallow_copy(muta));
@@ -331,8 +328,7 @@ namespace mupeModel {
             return muta;
         }
 
-        public virtual pe_muta shallow_copy(string muta_id,mupeModel.pe_ip ip) {
-
+        public virtual pe_muta shallow_copy(string muta_id, mupeModel.pe_ip ip) {
             pe_muta copy = new pe_muta();
             copy_object.copy<pe_muta>(this,copy);
 

@@ -31,7 +31,8 @@
       </key>
       <one-to-many class="pe_muta" />
     </bag>
-    <bag name="pe_grmu_list" cascade="all" inverse="true" generic="true">
+    <bag name="pe_grmu_list" cascade="all" inverse="true" generic="true"
+         collection-type="NHibernate.Collection.Observable.ObservableBagType`1[[mupeModel.pe_grmu]], NHibernate.Collection.Observable">
       <key>
         <column name="no_ip" />
       </key>

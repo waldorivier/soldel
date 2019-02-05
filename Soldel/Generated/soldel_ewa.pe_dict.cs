@@ -345,7 +345,7 @@ namespace mupeModel {
 
         public virtual IList<String> clatit_dict_list {
             get {
-                return new List<String>() { "base", "PE_CCLI", "PE_ELEV", "PE_SITU" };
+                return new List<String>() { "base", "bidon", "PE_CCLI", "PE_ELEV", "PE_SITU" };
             }
         }
 

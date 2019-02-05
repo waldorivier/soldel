@@ -35,7 +35,7 @@ namespace mupeModel.Utils {
                     if (parent.is_persistant())
                         // _session.Refresh(parent);
                         ;
-
+                      
                 } catch(Exception ex) {
                     if(transaction != null) 
                         if(transaction != null)

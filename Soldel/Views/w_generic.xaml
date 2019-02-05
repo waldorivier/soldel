@@ -15,6 +15,14 @@
         <CommandBinding Command="commands:grmu_command.add"
                         CanExecute="add_grmu_can_execute"
                         Executed="add_grmu_executed"/>
+        
+        <CommandBinding Command="commands:grmu_command.copy"
+                        CanExecute="copy_grmu_can_execute"
+                        Executed="copy_grmu_executed"/>
+
+        <CommandBinding Command="commands:grmu_command.paste"
+                        CanExecute="paste_grmu_can_execute"
+                        Executed="paste_grmu_executed"/>
 
         <CommandBinding Command="commands:grmu_command.re_order_muta"
                         CanExecute="re_order_muta_can_execute"
@@ -89,7 +97,7 @@
         <DataTemplate x:Key="pe_dict_template" DataType="pe_dict">
             <StackPanel>
                 <Label Content="Nom :"/>
-                <TextBox Text = "{Binding nom_dict, Mode=TwoWay}">
+                <TextBox Text = "{Binding nom_dict, Mode=TwoWay}" MaxLength="12">
                 </TextBox>
                 <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_dict, Mode=TwoWay}">
@@ -337,7 +345,9 @@
                                         <MenuItem Header="Ajouter un groupe" 
                                                   Command="commands:grmu_command.add"
                                                   CommandParameter="{Binding}"/>
-
+                                        <MenuItem Header="Coller le groupe" 
+                                                  Command="commands:grmu_command.paste"
+                                                  CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding no_ip}" />
@@ -363,6 +373,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.ContextMenu>
                                     <ContextMenu>
+                                        <MenuItem Header="Copier le groupe" 
+                                                  Command="commands:grmu_command.copy"
+                                                  CommandParameter="{Binding}"/>
                                         <MenuItem Header="Coller la mutation" 
                                                   Command="commands:muta_command.paste"
                                                   CommandParameter="{Binding}"/>

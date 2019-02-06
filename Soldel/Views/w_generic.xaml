@@ -269,6 +269,9 @@
 
         <DataTemplate x:Key="pe_libl_template" DataType="pe_libl">
             <StackPanel>
+                <Label Content="Nom libellé :"/>
+                <TextBox Text = "{Binding Path=nom_attr, Mode=TwoWay}">
+                </TextBox>
                 <Label Content="Libellé fr :"/>
                 <TextBox Text = "{Binding Path=libf_attr, Mode=TwoWay}">
                 </TextBox>

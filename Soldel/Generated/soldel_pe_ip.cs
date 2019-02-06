@@ -1,4 +1,5 @@
 namespace mupeModel {
+    using mupeModel.Utils;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -143,6 +144,32 @@ namespace mupeModel {
                 this._pe_cfgt_list = value;
                 this.SendPropertyChanged("pe_cfgt_list");
             }
+        }
+
+        public virtual void paste_grmu(pe_grmu grmu) {
+            var persistant_controller = new persistant_controller(hibernate_util.get_instance().get_current_session());
+            var grmu_c = grmu.shallow_copy(hibernate_util.get_instance().generate_grmu_id(), this);
+            persistant_controller.add_child(this, grmu_c);
+
+            // copie de la configuration issue de la même ip; les mutations ne sont pas copiées mais
+            // seule une référence est ajoutée
+            if (grmu.pe_ip.Equals(this)) {
+                foreach (var muta in grmu.pe_muta_list) {
+                    pe_gmmu gmmu = new pe_gmmu(grmu_c, muta);
+                    persistant_controller.update(gmmu);
+                }
+            } else {
+                var muta_id = Int32.Parse(hibernate_util.get_instance().generate_muta_id());
+                foreach (var muta in grmu.pe_muta_list) {
+                    var muta_c = muta.deep_copy(muta_id.ToString(), grmu_c.pe_ip);
+                    persistant_controller.update(muta_c);
+
+                    pe_gmmu gmmu = new pe_gmmu(grmu_c, muta_c);
+                    persistant_controller.update(gmmu);
+                    muta_id++;
+                }
+            }
+            persistant_controller.session.Refresh(grmu_c);
         }
 
         public virtual IList<pe_grmu> pe_grmu_list {

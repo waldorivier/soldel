@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using mupeModel.Utils;
 using NHibernate.Criterion;
 using System.Windows.Input;
+using mupeModel.Views;
 
 namespace mupeModel {
 
@@ -239,6 +240,8 @@ namespace mupeModel {
             }
         }
 
+       
+
 
         /// <summary>
         /// There are no comments for user_cre in the schema.
@@ -409,6 +412,56 @@ namespace mupeModel {
 
         public virtual IList<pe_muta> datagrid_list {
             get => pe_muta_list;
+        }
+
+        // TODO : proto devant encore être généralisé 
+        private class muta_action {
+            private pe_muta _muta = null;
+            private pe_grmu _grmu = null;
+            private persistant_controller _persistant_controller = null;
+
+            public Action action_1;
+            public Action action_2;
+
+            public pe_muta muta { get => _muta; set => _muta = value; }
+
+            public muta_action(pe_grmu grmu, pe_muta muta, persistant_controller persistant_controller) {
+                _muta = muta;
+                _grmu = grmu;
+                _persistant_controller = persistant_controller;
+
+                action_1 = paste_muta_deep;
+                action_2 = paste_muta_reference;
+            }
+
+            private void paste_muta_deep() {
+                _muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), _grmu.pe_ip);
+                _persistant_controller.update(_muta);
+            }
+
+            private void paste_muta_reference() {
+            }
+        }
+
+        public virtual void paste_muta(pe_muta muta) {
+            var persistant_controller = new persistant_controller(hibernate_util.get_instance().get_current_session());
+            muta_action muta_action = new muta_action(this, muta, persistant_controller);
+
+            // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
+            // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
+            var box = new chatbot_box (
+                "Faire une copie ou ajouter simplement une référence (ceci n'étant possible " +
+                "que si l'IP source et identique à l'IP destination)",
+                muta_action.action_1,
+                muta_action.action_2
+            ).ShowDialog();
+
+            pe_gmmu gmmu = new pe_gmmu(this, muta_action.muta ?? muta);
+            persistant_controller.update(gmmu);
+            persistant_controller.session.Refresh(this);
+
+            // provoque une mise à jour de la liste ! 
+            pe_muta_list = null;
         }
 
         #region I_SOLDEL

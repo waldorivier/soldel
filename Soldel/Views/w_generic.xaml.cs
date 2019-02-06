@@ -39,7 +39,6 @@ namespace Soldel.Views {
         persistant_controller _persistant_controller;
 
         public w_generic() {
-
             InitializeComponent();
             Clipboard.Clear();
 
@@ -118,7 +117,6 @@ namespace Soldel.Views {
                     no_ip = ip.no_ip,
                     pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
                 };
-
                 _persistant_controller.add_child(ip, grmu);
             }
         }
@@ -138,29 +136,7 @@ namespace Soldel.Views {
         private void paste_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
             if (_grmu != null) {
                 pe_ip ip = e.Parameter as pe_ip;
-
-                var grmu_c = _grmu.shallow_copy(hibernate_util.get_instance().generate_grmu_id(), ip);
-                _persistant_controller.add_child(ip, grmu_c);
-
-                // copie de la configuration issue de la même ip; les mutations ne sont pas copiées mais
-                // seule une référence est ajoutée
-                if (_grmu.pe_ip.Equals(ip)) {
-                    foreach (var muta in _grmu.pe_muta_list) {
-                        pe_gmmu gmmu = new pe_gmmu(grmu_c, muta);
-                        _persistant_controller.update(gmmu);
-                    }
-                } else {
-                    var muta_id = Int32.Parse(hibernate_util.get_instance().generate_muta_id());
-                    foreach (var muta in _grmu.pe_muta_list) {
-                        var muta_c = muta.deep_copy(muta_id.ToString(), grmu_c.pe_ip);
-                        _persistant_controller.update(muta_c);
-
-                        pe_gmmu gmmu = new pe_gmmu(grmu_c, muta_c);
-                        _persistant_controller.update(gmmu);
-                        muta_id++;
-                    }
-                }
-                _persistant_controller.session.Refresh(grmu_c);
+                ip.paste_grmu(_grmu);
             }
             _grmu = null;
         }
@@ -184,34 +160,6 @@ namespace Soldel.Views {
 
         #region MUTATION
 
-        public class muta_action {
-            private pe_muta _muta = null;
-            private pe_grmu _grmu = null;
-            private persistant_controller _persistant_controller = null;
-
-            public Action action_1;
-            public Action action_2;
-
-            public pe_muta muta { get => _muta; set => _muta = value; }
-            internal persistant_controller persistant_controller { get => _persistant_controller; set => _persistant_controller = value; }
-
-            public muta_action(pe_grmu grmu, pe_muta muta) {
-                _muta = muta;
-                _grmu = grmu;
-
-                action_1 = paste_muta_deep;
-                action_2 = paste_muta_reference;
-            }
-
-            private void paste_muta_deep() {
-                _muta = _muta.deep_copy(hibernate_util.get_instance().generate_muta_id(), _grmu.pe_ip);
-                _persistant_controller.update(_muta);
-            }
-
-            private void paste_muta_reference() {
-            }
-        }
-
         private void copy_muta_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = _muta == null;
         }
@@ -227,27 +175,7 @@ namespace Soldel.Views {
         private void paste_muta_executed(object sender, ExecutedRoutedEventArgs e) {
             if (_muta != null) {
                 pe_grmu grmu = e.Parameter as pe_grmu;
-
-                muta_action a = new muta_action(grmu, _muta);
-                a.persistant_controller = _persistant_controller;
-
-                // copie d'une mutation pour la même ip => seule la référence est ajoutée (pas de copie effectuée)
-                // si l'on ne veut pas ajouter une référence, il faut copier une mutation despuis une autre ip
-
-                var chatbot_box = new chatbot_box(
-                    "Faire une copie ou ajouter simplement une référence (ceci n'étant possible " +
-                    "que si l'IP source et identique à l'IP destination)", 
-                    a.action_1, 
-                    a.action_2);
-
-                chatbot_box.ShowDialog();
-
-                pe_gmmu gmmu = new pe_gmmu(grmu, a.muta  ?? _muta);
-                _persistant_controller.update(gmmu);
-                _persistant_controller.session.Refresh(grmu);
-
-                // provoque une mise à jour de la liste ! 
-                grmu.pe_muta_list = null;
+                grmu.paste_muta(_muta);
                 _muta = null;
             }
         }
@@ -263,8 +191,8 @@ namespace Soldel.Views {
             // REM : étant donné que gmmu n'est pas visible dans l'arbre (pour alléger la représentation)
             // le grmu n'est accessible que par l'élément vue (view) parent de la mutation 
 
-            TreeViewItem parent = get_selected_tree_view_item_parent(source) as TreeViewItem;
-            pe_grmu grmu = parent.DataContext as pe_grmu;
+            TreeViewItem grmu_item = get_selected_tree_view_item_parent(source) as TreeViewItem;
+            pe_grmu grmu = grmu_item.DataContext as pe_grmu;
             pe_gmmu gmmu = muta.pe_gmmu_list.Where(x => x.pe_grmu.Equals(grmu)).Single();
                         
             // auncun de deux "parents" n'est actualisé : situation à remédier

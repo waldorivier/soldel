@@ -348,20 +348,21 @@ namespace Soldel.Views {
             TreeViewItem current_tree_view_item = this.Tag as TreeViewItem;
             pe_grmu grmu = e.NewValue as pe_grmu;
             if (grmu != null) {
-                if (grmu.pe_muta_list != null) {
-                    if (current_tree_view_item != null) {
-                        List<object> l = new List<object>();
+                if (current_tree_view_item != null) {
+                    List<object> l = new List<object>();
 
+                    if(grmu.pe_muta_list != null)  
                         l.AddRange(grmu.pe_muta_list);
 
+                    if(grmu.pe_cfgd_list.Count > 0) {
                         folder_node folder_grmu = new folder_node();
                         folder_grmu.child_nodes = grmu.pe_cfgd_list;
                         l.Add(folder_grmu);
-
-                        current_tree_view_item.ItemsSource = l;
                     }
-                }
-                dg_list.ItemsSource = grmu.pe_muta_list;
+
+                    current_tree_view_item.ItemsSource = l;
+                 }
+                 dg_list.ItemsSource = grmu.pe_muta_list;
             }
 
             pe_muta muta = e.NewValue as pe_muta;

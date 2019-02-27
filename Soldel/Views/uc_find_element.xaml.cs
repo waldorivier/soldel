@@ -36,7 +36,7 @@ namespace Soldel.Views
             if(uc_select_connection.session != null)
             {
                 List<pe_elem> list = uc_select_connection.session.CreateCriteria<pe_elem>().List<pe_elem>().ToList();
-                cb_element.ItemsSource = CollectionViewSource.GetDefaultView(list);
+                // cb_element.ItemsSource = CollectionViewSource.GetDefaultView(list);
             }
 
         }

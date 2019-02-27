@@ -35,7 +35,7 @@ namespace Soldel.Views {
         private pe_libl _libl;
         public  pe_muta _muta;
         public  pe_grmu _grmu;
-
+        
         persistant_controller _persistant_controller;
 
         public w_generic() {
@@ -64,42 +64,6 @@ namespace Soldel.Views {
             }
         }
 
-        private void copy_libl(pe_libl libl_to_copy) {
-            ITransaction transaction = null;
-            try {
-                ISession session = _persistant_controller.session;
-
-                pe_attr attr = tree_main.SelectedValue as pe_attr;
-                if (attr != null) {
-                    transaction = session.BeginTransaction();
-
-                    pe_libl libl = libl_to_copy.shallow_copy();
-                    libl.no_ip = attr.pe_muta.no_ip;
-
-                    // suppprimer l'ancien libellé et le remplacer par la copie
-                    pe_libl libl_ = attr.pe_libl_list.First();
-                    if (libl_ != null) {
-                        attr.pe_muta.pe_ip.pe_libl_list.Remove(libl_);
-                        session.Delete(libl_);
-                    }
-
-                    session.Save(libl);
-                    transaction.Commit();
-
-                    session.Refresh(attr.pe_muta.pe_ip);
-                    var libl_list = attr.pe_libl_list;
-
-                }
-            } catch (Exception exception) {
-                if (transaction != null) {
-                    if (transaction != null) {
-                        transaction.Rollback();
-                    }
-                    MessageBox.Show(exception.StackTrace);
-                }
-            }
-        }
-
         private void Btn_update_Click(object sender, RoutedEventArgs e) {
            _persistant_controller.update(g_detail.DataContext);
         }
@@ -112,13 +76,11 @@ namespace Soldel.Views {
 
         private void add_grmu_executed(object sender, ExecutedRoutedEventArgs e) {
             pe_ip ip = e.Parameter as pe_ip;
-            if (ip != null) {
-                pe_grmu grmu = new pe_grmu {
+            pe_grmu grmu = new pe_grmu {
                     no_ip = ip.no_ip,
                     pe_grmu_id = hibernate_util.get_instance().generate_grmu_id()
-                };
-                _persistant_controller.add_child(ip, grmu);
-            }
+            };
+            _persistant_controller.add_child(ip, grmu);
         }
 
         private void copy_grmu_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -234,8 +196,10 @@ namespace Soldel.Views {
         }
 
         private void paste_attr_executed(object sender, ExecutedRoutedEventArgs e) {
-            pe_muta muta = e.Parameter as pe_muta;
-            _persistant_controller.add_child(muta, _attr.shallow_copy(muta));
+            if (_attr != null) {
+                pe_muta muta = e.Parameter as pe_muta;
+                _persistant_controller.add_child(muta, _attr.shallow_copy(muta));
+            }
             _attr = null;
         }
 
@@ -294,24 +258,25 @@ namespace Soldel.Views {
         }
 
         private void copy_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            if (e.Parameter.ToString().Equals("coller_element")) {
-                e.CanExecute = _libl != null;
-            } else {
-                e.CanExecute = _libl == null;
-            }
-        }
-        private void copy_libl_executed(object sender, ExecutedRoutedEventArgs e) {
-            if (!e.Parameter.ToString().Equals("coller_element")) {
-                pe_libl parameter = e.Parameter as pe_libl;
-                if (parameter != null) {
-                    _libl = parameter;
-                }
-            } else if (_libl != null) {
-                copy_libl(_libl);
-                _libl = null;
-            }
+            e.CanExecute = _libl == null;
         }
 
+        private void copy_libl_executed(object sender, ExecutedRoutedEventArgs e) {
+            _libl = e.Parameter as pe_libl;
+        }
+
+        private void paste_libl_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = _libl != null;
+        }
+
+        private void paste_libl_executed(object sender, ExecutedRoutedEventArgs e) {
+            if (_libl != null) { 
+                pe_attr attr = e.Parameter as pe_attr;
+                _persistant_controller.add_child(attr.pe_muta.pe_ip, _libl.shallow_copy());
+            }
+            _libl = null;
+        }
+        
         #endregion
 
         #region DICT
@@ -367,7 +332,9 @@ namespace Soldel.Views {
 
             pe_muta muta = e.NewValue as pe_muta;
             if (muta != null) {
+                muta.pe_attr_list = muta.pe_attr_list.OrderBy(x => x.position).ToList();
                 current_tree_view_item.ItemsSource = muta.pe_attr_list;
+
                 try {
                     dg_list.ItemsSource = muta.pe_attr_list;
 

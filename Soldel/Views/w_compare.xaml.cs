@@ -37,22 +37,22 @@ namespace Soldel.Views {
 
                 try {
                     var intersection = d1.AsEnumerable().Intersect(d2.AsEnumerable(), new elcaComparer());
-                    var intersection_proj = from dr in intersection select new elcaProjection(dr.Field<String>("nom_elem"), 
-                                                                                              dr.Field<String>("nom_logi"), 
-                                                                                              dr.Field<String>("no_cas"),
-                                                                                              dr.Field<String>("pe_chai_ddv"));
+                    var intersection_proj = from dr in intersection select new elcaProjection(dr.Field<String>("nom_elem"),
+                                                                                              dr.Field<String>("nom_logi"),
+                                                                                              dr.Field<String>("no_cas"));
+                                                                                              // dr.Field<String>("pe_chai_ddv"));
 
                     var difference_1 = d1.AsEnumerable().Except(d2.AsEnumerable(), new elcaComparer());
                     var difference_1_proj = from dr in difference_1 select new elcaProjection(dr.Field<String>("nom_elem"),
                                                                                               dr.Field<String>("nom_logi"),
-                                                                                              dr.Field<String>("no_cas"),
-                                                                                              dr.Field<String>("pe_chai_ddv"));
+                                                                                              dr.Field<String>("no_cas"));
+                                                                                              // dr.Field<String>("pe_chai_ddv"));
 
                     var difference_2 = d2.AsEnumerable().Except(d1.AsEnumerable(), new elcaComparer());
                     var difference_2_proj = from dr in difference_2 select new elcaProjection(dr.Field<String>("nom_elem"),
                                                                                               dr.Field<String>("nom_logi"),
-                                                                                              dr.Field<String>("no_cas"),
-                                                                                              dr.Field<String>("pe_chai_ddv"));
+                                                                                              dr.Field<String>("no_cas"));
+                                                                                              // dr.Field<String>("pe_chai_ddv"));
 
                     w_compare_result result = new w_compare_result();
 
@@ -77,8 +77,8 @@ namespace Soldel.Views {
                     } else {
                         return x.Field<String>("nom_elem").Equals(y.Field<String>("nom_elem")) &&
                                x.Field<String>("nom_logi").Equals(y.Field<String>("nom_logi")) &&
-                               x.Field<String>("no_cas").Equals(y.Field<String>("no_cas")) &&
-                               x.Field<String>("pe_chai_ddv").Equals(y.Field<String>("pe_chai_ddv"));
+                               x.Field<String>("no_cas").Equals(y.Field<String>("no_cas")); 
+                               // x.Field<String>("pe_chai_ddv").Equals(y.Field<String>("pe_chai_ddv"));
                     }
                 } else {
                     return false;

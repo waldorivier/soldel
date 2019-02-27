@@ -6,6 +6,7 @@ namespace mupeModel {
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
+    using System.Linq;
     using System.Windows.Data;
 
     public class pe_ip: soldel, INotifyPropertyChanging, INotifyPropertyChanged, i_soldel {
@@ -34,9 +35,16 @@ namespace mupeModel {
         public virtual void add_libl(pe_libl libl) {
             libl.pe_ip = this;
             libl.no_ip = this.no_ip;
-            this.pe_libl_list.Add(libl);
-        }
 
+            // cette collection est un Set, soit un ensemble d'éléments uniques
+            if (this.pe_libl_list.Contains(libl)) {
+                var persistant_controller = new persistant_controller(hibernate_util.get_instance().get_current_session());
+                persistant_controller.session.Merge(libl);
+            } else {
+                this.pe_libl_list.Add(libl);
+            }
+        }
+        
         public virtual void add_muta(pe_muta muta) {
             muta.pe_ip = this;
             muta.no_ip = this.no_ip;
@@ -186,6 +194,8 @@ namespace mupeModel {
         void i_soldel.add_child(object child) {
             var libl = child as pe_libl;
             if (libl != null) {
+
+                // set collection; if items exists, replace it
                 this.add_libl(libl);
             } else {
                 var grmu = child as pe_grmu;

@@ -133,15 +133,6 @@ namespace Soldel.Views {
             } catch (Exception) {
             }
 
-            /*       La mise en place d'une vue n'améliore pas la vélocité du refresh, c'est win 7 qui n'est pas adapté à wpf
-                          source.Filter = item  => {
-                            pe_elca e = item as pe_elca;
-
-                            if (e == null) return false;
-
-                            return e.no_cas.Equals(Convert.ToInt32(sel_value)) ;
-                        };
-            */
             var x = from DataRow dr in _dt_filtered.AsEnumerable()
                     where dr.Field<String>(field) == sel_value
                     select dr;
@@ -184,11 +175,11 @@ namespace Soldel.Views {
         public int no_cas { get; set; }
         public DateTime pe_chai_ddv{ get; set; }
         
-        public elcaProjection(string elem, string logi, string cas, string chai_ddv) {
+        public elcaProjection(string elem, string logi, string cas) {
             nom_elem = elem;
             nom_logi = logi;
             no_cas = Int32.Parse(cas);
-            pe_chai_ddv = DateTime.Parse(chai_ddv);
+            // pe_chai_ddv = DateTime.Parse(chai_ddv);
         }
     }
 }

@@ -60,6 +60,10 @@
                         CanExecute="delete_attr_can_execute"
                         Executed="delete_attr_executed"/>
 
+        <CommandBinding Command="commands:libl_command.paste"
+                        CanExecute="paste_libl_can_execute"
+                        Executed="paste_libl_executed"/>
+
         <CommandBinding Command="commands:libl_command.copy"
                         CanExecute="copy_libl_can_execute"
                         Executed="copy_libl_executed"/>
@@ -447,9 +451,13 @@
                                                   Command="commands:libl_command.add"
                                                   CommandParameter="{Binding}"/>
 
+                                        <MenuItem Header="Copier le libellé" 
+                                                  Command="commands:libl_command.copy"/>
+
                                         <MenuItem Header="Coller le libellé" 
-                                                  Command="commands:libl_command.copy"
-                                                  CommandParameter="coller_element"/>
+                                                  Command="commands:libl_command.paste"
+                                                  CommandParameter="{Binding}"/>
+
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding nom_attr}"/>

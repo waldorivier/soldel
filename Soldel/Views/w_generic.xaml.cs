@@ -29,8 +29,6 @@ namespace Soldel.Views {
     /// </summary>
     public partial class w_generic : Window {
 
-        private TreeViewItem _tree_view_item;
-
         private pe_attr _attr;
         private pe_libl _libl;
         public  pe_muta _muta;
@@ -58,7 +56,8 @@ namespace Soldel.Views {
 
                 List<pe_ip> ips = session.CreateCriteria<pe_ip>().List<pe_ip>().OrderBy(x => x.no_ip).ToList();
                 ips = (from ip in ips where ip.pe_grmu_list.Count > 0 orderby ip.no_ip ascending select ip).ToList();
-                // ips = (from ip in ips where ip.no_ip.Equals(11) select ip).ToList();
+
+                // ips = (from ip in ips where new int[]{ 8, 11}.Contains(ip.no_ip)  select ip).ToList();
 
                 tree_main.ItemsSource = new ObservableCollection<pe_ip>(ips);
             }
@@ -317,11 +316,11 @@ namespace Soldel.Views {
                     List<object> l = new List<object>();
 
                     if(grmu.pe_muta_list != null)  
-                        l.AddRange(grmu.pe_muta_list);
+                        l.AddRange(grmu.pe_muta_list.OrderBy(x => x.muta_order));
 
                     if(grmu.pe_cfgd_list.Count > 0) {
                         folder_node folder_grmu = new folder_node();
-                        folder_grmu.child_nodes = grmu.pe_cfgd_list;
+                        folder_grmu.child_nodes = grmu.pe_cfgd_list.OrderByDescending(x => x.pe_cfgt.dadval);
                         l.Add(folder_grmu);
                     }
 
@@ -332,17 +331,11 @@ namespace Soldel.Views {
 
             pe_muta muta = e.NewValue as pe_muta;
             if (muta != null) {
-                muta.pe_attr_list = muta.pe_attr_list.OrderBy(x => x.position).ToList();
-                current_tree_view_item.ItemsSource = muta.pe_attr_list;
+                var l = muta.pe_attr_list.OrderBy(x => x.position).ToList();
+                current_tree_view_item.ItemsSource = l;
 
-                try {
-                    dg_list.ItemsSource = muta.pe_attr_list;
-
-                    // le datagrid provoque une exception lorsque le type de d'objet affiché change
-                } catch (Exception ex) {
-                    dg_list.ItemsSource = null;
-                    dg_list.ItemsSource = muta.pe_attr_list;
-                }
+                dg_list.ItemsSource = null;
+                dg_list.ItemsSource = l;
             }
 
             pe_attr attr = e.NewValue as pe_attr;

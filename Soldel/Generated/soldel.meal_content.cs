@@ -323,14 +323,14 @@ namespace mupeModel
             }
         }
 
-        public virtual meal_content shallow_copy() {
+        #region I_SOLDEL
+
+        public virtual i_soldel shallow_copy() {
             var copy = new meal_content();
             copy_object.copy<meal_content>(this, copy);
 
             return copy;
         }
-
-        #region I_SOLDEL
 
         public virtual void add_child(object child) {
             throw new NotImplementedException();

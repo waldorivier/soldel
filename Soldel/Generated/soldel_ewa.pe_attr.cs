@@ -497,7 +497,7 @@ namespace mupeModel {
                 handler(this,new PropertyChangedEventArgs(propertyName));
         }
            
-       public virtual pe_attr shallow_copy(pe_muta muta) {
+       public virtual i_soldel shallow_copy(pe_muta muta) {
             var copy = new pe_attr();
 
             copy_object.copy<pe_attr>(this,copy);

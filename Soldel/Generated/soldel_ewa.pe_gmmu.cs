@@ -288,6 +288,10 @@ namespace mupeModel {
             throw new NotImplementedException();
         }
 
+        public i_soldel shallow_copy() {
+            throw new NotImplementedException();
+        }
+
         public virtual IList<pe_muta> pe_muta_list {
             get {
                 var collection = new ObservableCollection<pe_muta>();

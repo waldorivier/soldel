@@ -5,9 +5,6 @@
       <column name="food_id" not-null="true" />
       <generator class="assigned" />
     </id>
-    <property name="category_fkid" type="Int64">
-      <column name="category_fkid" not-null="true" />
-    </property>
     <property name="name" type="String">
       <column name="name" not-null="true" />
     </property>

@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using mupeModel.Utils;
 
 namespace mupeModel
 {
@@ -21,7 +22,7 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for food, Soldel in the schema.
     /// </summary>
-    public partial class food {
+    public partial class food : i_soldel {
     
         #region Extensibility Method Definitions
         
@@ -29,6 +30,7 @@ namespace mupeModel
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
+
         
         #endregion
         /// <summary>
@@ -44,16 +46,6 @@ namespace mupeModel
         /// There are no comments for food_id in the schema.
         /// </summary>
         public virtual long food_id
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for category_fkid in the schema.
-        /// </summary>
-        public virtual long category_fkid
         {
             get;
             set;
@@ -78,6 +70,37 @@ namespace mupeModel
             get;
             set;
         }
+
+        #region I_SOLDEL
+
+        public virtual i_soldel shallow_copy() {
+            var copy = new food();
+            copy_object.copy<food>(this, copy);
+
+            return copy;
+        }
+
+        public void add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public bool can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public bool can_remove_me() {
+            throw new NotImplementedException();
+        }
+
+        public void remove_me() {
+            throw new NotImplementedException();
+        }
+
+        public bool is_persistant() {
+            throw new NotImplementedException();
+        }
+
+        #endregion  
     }
 
 }

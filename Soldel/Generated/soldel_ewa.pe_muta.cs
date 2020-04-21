@@ -324,14 +324,14 @@ namespace mupeModel {
                 
         public virtual pe_muta deep_copy(string muta_id,mupeModel.pe_ip ip) {
 
-            pe_muta muta = shallow_copy(muta_id,ip);
+            i_soldel muta = shallow_copy(muta_id,ip);
             foreach(pe_attr _attr in pe_attr_list) {
                 muta.add_child(_attr.shallow_copy(muta));
             }
             return muta;
         }
 
-        public virtual pe_muta shallow_copy(string muta_id,mupeModel.pe_ip ip) {
+        public virtual i_soldel shallow_copy(string muta_id,mupeModel.pe_ip ip) {
 
             pe_muta copy = new pe_muta();
             copy_object.copy<pe_muta>(this,copy);

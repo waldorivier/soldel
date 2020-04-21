@@ -76,6 +76,10 @@ namespace mupeModel {
             throw new NotImplementedException();
         }
 
+        public i_soldel shallow_copy() {
+            throw new NotImplementedException();
+        }
+
         public virtual int pe_este_id {
             get =>
                 this._pe_este_id;

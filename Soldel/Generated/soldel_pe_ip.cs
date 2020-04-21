@@ -181,6 +181,10 @@ namespace mupeModel {
             return true;
         }
 
+        public i_soldel shallow_copy() {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

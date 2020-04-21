@@ -74,40 +74,21 @@
             <Setter Property="Margin" Value="2"/>
         </Style>
 
-        <DataTemplate x:Key="item_meal_template" DataType="{x:Type model:meal_content}">
+        <DataTemplate x:Key="food_template" DataType="{x:Type model:food}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="100"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <WrapPanel Orientation="Vertical">
-                        <TextBox Tag="date" Name="date" Text="{Binding Path=meal_date, StringFormat=dd.MM.yyyy}">
-                        </TextBox>
-                        <TextBox Tag="code" Name="code_str" Text="{Binding Path=meal_code_str}">
-                        </TextBox>
-                    </WrapPanel>
+                    <TextBox Text="{Binding Path=name, Mode=TwoWay}"/>
                 </Grid>
-
-                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=l_cats}" IsReadOnly="True" Grid.Column="1">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="cat_1" Binding="{Binding Path=val1, Mode=OneWay}" Width="150"> 
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="cat_2" Binding="{Binding  Path=val2, Mode=OneWay}" Width="150">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="cat_3" Binding="{Binding  Path=val3, Mode=OneWay}" Width="150">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="cat_4" Binding="{Binding  Path=val4, Mode=OneWay}" Width="150">
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <Border BorderBrush="LightGray" BorderThickness="1" Margin="2" Grid.Column="2">
-                    <Grid>
-                    </Grid>
-                </Border>
+                <Grid Grid.Column="1">
+                    <ComboBox Tag="food_cat" Name="food_cat"
+                                             SelectedItem = "{Binding Path=caterory, Mode=TwoWay}">
+                    </ComboBox>
+                </Grid>
             </Grid>
         </DataTemplate>
                 
@@ -144,7 +125,6 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
-
                         <StackPanel>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
                                       SelectedItem = "{Binding Path=meal_cat_10, Mode=TwoWay}">
@@ -163,23 +143,23 @@
                     <Grid Grid.Column="1">
                         <StackPanel>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                    SelectedItem = "{Binding Path=meal_cat_20, Mode=TwoWay}">
+                                      SelectedItem = "{Binding Path=meal_cat_20, Mode=TwoWay}">
                             </ComboBox>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                    SelectedItem = "{Binding Path=meal_cat_21, Mode=TwoWay}">
+                                      SelectedItem = "{Binding Path=meal_cat_21, Mode=TwoWay}">
                             </ComboBox>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                    SelectedItem = "{Binding Path=meal_cat_22, Mode=TwoWay}">
+                                      SelectedItem = "{Binding Path=meal_cat_22, Mode=TwoWay}">
                             </ComboBox>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                    SelectedItem = "{Binding Path=meal_cat_23, Mode=TwoWay}">
+                                      SelectedItem = "{Binding Path=meal_cat_23, Mode=TwoWay}">
                             </ComboBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="2">
                         <StackPanel>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
-                                    SelectedItem = "{Binding Path=meal_cat_30, Mode=TwoWay}">
+                                      SelectedItem = "{Binding Path=meal_cat_30, Mode=TwoWay}">
                             </ComboBox>
                             <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
                                     SelectedItem = "{Binding Path=meal_cat_31, Mode=TwoWay}">

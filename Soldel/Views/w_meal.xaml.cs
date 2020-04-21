@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using mupeModel;
 using mupeModel.Utils;
+using System.Collections;
 
 namespace Soldel.Views {
     /// <summary>
@@ -24,7 +25,11 @@ namespace Soldel.Views {
         // to integrate in uc_connection
         internal persistant_controller persistant_controller { get; set; }
 
-        public w_meal() {
+        // specifies the class name to manage
+        private String _class_name = null;
+
+        public w_meal(String class_name) {
+            this._class_name = class_name;
             InitializeComponent();
             // test_();
         }
@@ -53,11 +58,20 @@ namespace Soldel.Views {
         }
 
         private void load_executed(object sender, ExecutedRoutedEventArgs e) {
-            List<meal_content> l_meal = uc_select_connection.session.CreateCriteria<meal_content>().List<meal_content>().ToList();
-            l_element.ItemsSource = l_meal;
-            l_element.SelectedItem = null;
 
-            persistant_controller = new persistant_controller(uc_select_connection.session);
+            ISession session = uc_select_connection.session;
+
+            IList l = null;
+            if (this._class_name == "meal_content") {
+                 l = session.CreateCriteria<meal_content>().List<meal_content>().ToList();
+             
+            } else {
+                l = session.CreateCriteria<food>().List<food>().ToList();
+            }
+
+            l_element.ItemsSource = l;
+            l_element.SelectedItem = null;
+            persistant_controller = new persistant_controller(session);
         }
 
         private void validate_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -65,9 +79,9 @@ namespace Soldel.Views {
         }
 
         private void validate_executed(object sender, ExecutedRoutedEventArgs e) {
-            meal_content meal_content = (meal_content)element.DataContext;
-            if (meal_content != null) {
-                persistant_controller.update(meal_content);
+            object elem = element.DataContext;
+            if (elem != null) {
+                persistant_controller.update(elem);
             }
             l_element.SelectedItem = null;
         }
@@ -77,8 +91,8 @@ namespace Soldel.Views {
         }
 
         private void copy_executed(object sender, ExecutedRoutedEventArgs e) {
-            meal_content to_copy = (meal_content)l_element.SelectedItem;
-            meal_content copy = to_copy.shallow_copy();
+            i_soldel to_copy = (i_soldel)l_element.SelectedItem;
+            i_soldel copy = to_copy.shallow_copy();
             element.DataContext = copy;
         }
 

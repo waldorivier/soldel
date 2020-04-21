@@ -5,5 +5,6 @@
         bool can_remove_me();
         void remove_me();
         bool is_persistant();
+        i_soldel shallow_copy();
     }
 }

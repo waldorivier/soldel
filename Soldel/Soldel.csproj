@@ -340,11 +340,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Mappings\soldel.food.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel.food.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Mappings\soldel.symptom.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Mappings\soldel.caterory.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel.caterory.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

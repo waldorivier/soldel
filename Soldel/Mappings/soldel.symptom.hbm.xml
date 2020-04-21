@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="symptom" table="symptom">
+    <id name="symptom_id" type="Int64">
+      <column name="symptom_id" not-null="true" />
+      <generator class="assigned" />
+    </id>
+    <property name="symptom_cat" type="Int64">
+      <column name="symptom_cat" not-null="true" />
+    </property>
+    <property name="value" type="String">
+      <column name="value" not-null="true" />
+    </property>
+    <property name="symptom_date" type="DateTime">
+      <column name="symptom_date" not-null="true" />
+    </property>
+  </class>
+</hibernate-mapping>

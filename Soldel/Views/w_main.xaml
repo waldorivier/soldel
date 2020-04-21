@@ -4,19 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="SOLDEL" Height="300" Width="300">
+        Title="MLFOOD" Height="300" Width="300">
         <Grid x:Name ="g_main" Background = "LightGray" Margin = "5,10,5,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <!--<ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>-->
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
             <StackPanel>
-                <Button x:Name="btn_elca" Content="Chaînages"/>
-                <Button x:Name="btn_elsi" Content="Eléments de situation"/>
-                <Button x:Name="btn_ewa" Content="Configuration EWA"/>
+                <Button x:Name="btn_meal" Content="Saisie repas"/>
+                <Button x:Name="btn_food" Content="Configurer liste aliments"/>
             </StackPanel>
         </Grid>
     </Grid>

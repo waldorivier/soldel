@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using NHibernate.Collection.Observable;
-
-
+using mupeModel;
 
 namespace Soldel.Views {
     /// <summary>
@@ -24,28 +23,19 @@ namespace Soldel.Views {
             try {
                 InitializeComponent();
 
-                btn_elca.Click += Btn_elca_Click;
-                btn_elsi.Click += Btn_elsi_Click;
-                btn_ewa.Click += Btn_ewa_Click;
+                btn_meal.Click += Btn_meal_Click;
+                btn_food.Click += Btn_food_Click;
 
             } catch (Exception ex) {
                 MessageBox.Show(ex.StackTrace);            }
         }
 
-        private void Btn_ewa_Click(object sender, RoutedEventArgs e) {
-            try {
-                new w_generic().ShowDialog();
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
-            }
+        private void Btn_food_Click(object sender, RoutedEventArgs e) {
+            new w_food().ShowDialog();
         }
 
-        private void Btn_elca_Click(object sender, RoutedEventArgs e) { 
-            new w_compare().ShowDialog();
-        }
-
-        public void Btn_elsi_Click(object sender, RoutedEventArgs e) {
-            new w_elsi().ShowDialog();
+        private void Btn_meal_Click(object sender, RoutedEventArgs e) {
+            new w_meal().ShowDialog();
         }
     }
 }

@@ -1,207 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<hibernate-mapping assembly="Soldel" p1:Guid="9a5cb190-ccbe-4eb8-8d01-1ead74789450" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0" xmlns="urn:nhibernate-mapping-2.2">
-  <class name="pe_elca" table="pe_elca" schema="mupe" p1:Guid="776b0061-3eb5-47dd-9bcf-288588d1fd95">
+<hibernate-mapping assembly="Soldel" p1:name="mupeModel" p1:Guid="9a5cb190-ccbe-4eb8-8d01-1ead74789450" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_elca" table="" p1:Guid="776b0061-3eb5-47dd-9bcf-288588d1fd95">
     <id name="pe_elca_id" type="String" p1:ValidateMaxLength="10" p1:ValidateRequired="True" p1:Guid="1b5fb6a2-b9bd-417f-9730-10785557d8ac">
-      <column name="pe_elca_id" default="''" not-null="true" length="10" sql-type="varchar" unique-key="KEY1" p1:unicode="true" />
+      <column name="" default="''" not-null="true" length="10" unique-key="KEY1" p1:unicode="true" />
     </id>
     <property name="no_ip" type="Decimal" p1:ValidateRequired="True" p1:Guid="f98946db-9be6-4e0f-927c-032fe3a155e1">
-      <column name="no_ip" not-null="true" precision="7" scale="0" sql-type="decimal" unique-key="KEY1" p1:unicode="false" />
+      <column name="" not-null="true" precision="7" scale="0" unique-key="KEY1" p1:unicode="false" />
     </property>
     <property name="no_plan" type="Decimal" p1:ValidateRequired="True" p1:Guid="7148b089-1562-4d45-a670-30981d07174a">
-      <column name="no_plan" not-null="true" precision="7" scale="0" sql-type="decimal" unique-key="KEY1" p1:unicode="false" />
+      <column name="" not-null="true" precision="7" scale="0" unique-key="KEY1" p1:unicode="false" />
     </property>
     <property name="no_cas" type="Decimal" p1:ValidateRequired="True" p1:Guid="4211f242-d3fe-440a-b9ed-69a86fdf03e6">
-      <column name="no_cas" not-null="true" precision="7" scale="0" sql-type="decimal" unique-key="KEY1" p1:unicode="false" />
+      <column name="" not-null="true" precision="7" scale="0" unique-key="KEY1" p1:unicode="false" />
     </property>
     <property name="no_cate" type="Decimal" p1:ValidateRequired="True" p1:Guid="791ceeb9-0e46-4012-9d56-d9460746afbd">
-      <column name="no_cate" not-null="true" precision="7" scale="0" sql-type="decimal" unique-key="KEY1" p1:unicode="false" />
+      <column name="" not-null="true" precision="7" scale="0" unique-key="KEY1" p1:unicode="false" />
     </property>
     <property name="tymouv" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="2d0af92f-1ca2-4d65-ae21-6cb4a73d2bae">
-      <column name="tymouv" not-null="true" length="2" sql-type="varchar" unique-key="KEY1" p1:unicode="true" />
+      <column name="" not-null="true" length="2" unique-key="KEY1" p1:unicode="true" />
     </property>
     <property name="pe_chai_ddv" type="DateTime" p1:ValidateRequired="True" p1:Guid="8796889a-10a8-4553-afe4-6b40dddbd989">
-      <column name="pe_chai_ddv" not-null="true" sql-type="date" unique-key="KEY1" p1:unicode="false" />
+      <column name="" not-null="true" unique-key="KEY1" p1:unicode="false" />
     </property>
     <property name="no_bloc" type="Decimal" p1:ValidateRequired="True" p1:Guid="e5847a95-67ab-43a6-9615-c291e54a9b4f">
-      <column name="no_bloc" not-null="true" precision="7" scale="0" sql-type="decimal" unique-key="KEY1" p1:unicode="false" />
+      <column name="" not-null="true" precision="7" scale="0" unique-key="KEY1" p1:unicode="false" />
     </property>
     <property name="u_version" type="String" p1:nullable="true" p1:ValidateMaxLength="1" p1:ValidateRequired="False" p1:Guid="1df82bb4-89dd-4df2-9374-8760a8cf0761">
-      <column name="u_version" not-null="false" length="1" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="1" p1:unicode="true" />
     </property>
     <property name="nom_elem" type="String" p1:ValidateMaxLength="12" p1:ValidateRequired="True" p1:Guid="897f234b-a0b3-45d2-a7ef-9315db9ea822">
-      <column name="nom_elem" not-null="true" length="12" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="12" p1:unicode="true" />
     </property>
     <property name="nom_logi" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="cccb83f7-b6e5-4876-b21e-848b53a37bb1">
-      <column name="nom_logi" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="no_volet" type="Decimal" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="338e0c63-8626-4b1f-91cf-2a152d621533">
-      <column name="no_volet" not-null="false" precision="7" scale="0" sql-type="decimal" p1:unicode="false" />
+      <column name="" not-null="false" precision="7" scale="0" p1:unicode="false" />
     </property>
     <property name="pos_volet" type="Decimal" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="60aa9006-4f71-465c-b750-57116bb452e2">
-      <column name="pos_volet" not-null="false" precision="7" scale="0" sql-type="decimal" p1:unicode="false" />
+      <column name="" not-null="false" precision="7" scale="0" p1:unicode="false" />
     </property>
     <property name="codaff_elvf" type="String" p1:nullable="true" p1:ValidateMaxLength="2" p1:ValidateRequired="False" p1:Guid="46a0a0c1-1d7b-4c0b-a8a0-87587bd427cc">
-      <column name="codaff_elvf" not-null="false" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="2" p1:unicode="true" />
     </property>
     <property name="user_maj" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="54f8ae3f-6824-4422-8e5f-d75689fdb1dd">
-      <column name="user_maj" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_maj" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="f3f2e9b2-58b4-44eb-9fe5-4ffa50fdb228">
-      <column name="dh_maj" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
     <property name="user_cre" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="903b31e2-ef64-4f2a-8ad3-a74c6fb7ce7f">
-      <column name="user_cre" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_cre" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="410fc7a0-8b20-4c95-8edd-0dfd2c9e444e">
-      <column name="dh_cre" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
   </class>
-  <class name="pe_elem" table="pe_elem" schema="mupe" p1:Guid="12559ba1-434f-41cd-9847-fc293c836c75">
+  <class name="pe_elem" table="" p1:Guid="12559ba1-434f-41cd-9847-fc293c836c75">
     <id name="nom_elem" type="String" p1:ValidateMaxLength="12" p1:ValidateRequired="True" p1:Guid="31c937f4-5d12-432b-b7da-01058f3c5ed5">
-      <column name="nom_elem" default="''" not-null="true" length="12" sql-type="varchar" p1:unicode="true" />
+      <column name="" default="''" not-null="true" length="12" p1:unicode="true" />
     </id>
     <property name="u_version" type="String" p1:nullable="true" p1:ValidateMaxLength="1" p1:ValidateRequired="False" p1:Guid="daf9771c-fd8c-47e6-a382-c4ab9e3d3cc0">
-      <column name="u_version" not-null="false" length="1" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="1" p1:unicode="true" />
     </property>
     <property name="libf_elem" type="String" p1:ValidateMaxLength="40" p1:ValidateRequired="True" p1:Guid="51442d96-e4a4-4d2d-b773-c9524bbf894c">
-      <column name="libf_elem" not-null="true" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="40" p1:unicode="true" />
     </property>
     <property name="libd_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="1f1e7a7a-f6b2-4649-88ab-8f7b029ea66f">
-      <column name="libd_elem" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="libi_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="72282d64-f53a-4422-9a42-b84f52b2d053">
-      <column name="libi_elem" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="libe_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="cc6cd9a8-6e06-42b6-88a6-c3029cef1585">
-      <column name="libe_elem" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="abregf_elem" type="String" p1:ValidateMaxLength="18" p1:ValidateRequired="True" p1:Guid="989483de-7959-4534-ad92-75e67b7a0805">
-      <column name="abregf_elem" not-null="true" length="18" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="18" p1:unicode="true" />
     </property>
     <property name="abregd_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="18" p1:ValidateRequired="False" p1:Guid="eccfbdc4-1f39-44be-829c-1ddbe39a246c">
-      <column name="abregd_elem" not-null="false" length="18" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="18" p1:unicode="true" />
     </property>
     <property name="abregi_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="18" p1:ValidateRequired="False" p1:Guid="eca973b1-c60b-43a7-9f22-1a5e429fddff">
-      <column name="abregi_elem" not-null="false" length="18" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="18" p1:unicode="true" />
     </property>
     <property name="abrege_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="18" p1:ValidateRequired="False" p1:Guid="0e8bde0f-45d6-44b1-9b7d-52b9e40aea0b">
-      <column name="abrege_elem" not-null="false" length="18" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="18" p1:unicode="true" />
     </property>
     <property name="tydata_elem" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="7c994581-2525-4645-80f7-a9b7355c13c8">
-      <column name="tydata_elem" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="format_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="2" p1:ValidateRequired="False" p1:Guid="6070da1f-423a-437b-959c-ca42233aeff3">
-      <column name="format_elem" not-null="false" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="2" p1:unicode="true" />
     </property>
     <property name="tyutil_elem" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="c36ef93f-561f-4308-9ced-909a032e4dda">
-      <column name="tyutil_elem" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="tyinit_elem" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="0ad3687a-e4d1-44f1-86f7-1b7b48769f88">
-      <column name="tyinit_elem" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="valinit_elem" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="b266cc9d-6731-448c-a379-647909421ea9">
-      <column name="valinit_elem" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="tyelem_elem" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="c473447a-d6bd-40c0-b7f9-5664aee55082">
-      <column name="tyelem_elem" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="user_maj" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="2a6e3fe4-b750-478a-aba2-bc2d5fa78638">
-      <column name="user_maj" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_maj" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="f9889580-929a-4927-9c46-23249c608ea9">
-      <column name="dh_maj" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
     <property name="user_cre" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="6cc39d3b-0ed0-4cc7-afa6-149bf9d8cfde">
-      <column name="user_cre" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_cre" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="8f0babdd-9a65-4c88-85f6-de759d86f0ab">
-      <column name="dh_cre" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
     <property name="caspname" type="String" p1:nullable="true" p1:ValidateMaxLength="30" p1:ValidateRequired="False" p1:Guid="e6d9a9c5-4aa8-4a03-91af-c94a927865ce">
-      <column name="caspname" not-null="false" length="30" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="30" p1:unicode="true" />
     </property>
     <property name="ybronly" type="String" p1:nullable="true" p1:ValidateMaxLength="1" p1:ValidateRequired="False" p1:Guid="a916a940-b703-4c0c-ab5b-58eec3bae7f1">
-      <column name="ybronly" not-null="false" length="1" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="1" p1:unicode="true" />
     </property>
   </class>
-  <class name="pe_elne" table="pe_elne" schema="mupe" p1:Guid="bf83b24d-e052-4dac-9f1f-aa07df4d3b85">
+  <class name="pe_elne" table="" p1:Guid="bf83b24d-e052-4dac-9f1f-aa07df4d3b85">
     <composite-id>
       <key-property name="nom_elem" type="String" p1:ValidateMaxLength="12" p1:ValidateRequired="True" p1:Guid="c03d1c30-464b-4837-9205-9fbbf18c142b">
-        <column name="nom_elem" default="''" not-null="true" length="12" sql-type="varchar" p1:unicode="true" />
+        <column name="" default="''" not-null="true" length="12" p1:unicode="true" />
       </key-property>
       <key-property name="nom_logi" type="String" p1:ValidateMaxLength="20" p1:ValidateRequired="True" p1:Guid="0bee2efa-5396-468d-9a02-9e0cc1868c84">
-        <column name="nom_logi" default="''" not-null="true" length="20" sql-type="varchar" p1:unicode="true" />
+        <column name="" default="''" not-null="true" length="20" p1:unicode="true" />
       </key-property>
       <key-property name="nom_elne" type="String" p1:ValidateMaxLength="12" p1:ValidateRequired="True" p1:Guid="a221876a-23fb-4dbb-a0fd-c345d0c8162e">
-        <column name="nom_elne" default="''" not-null="true" length="12" sql-type="varchar" p1:unicode="true" />
+        <column name="" default="''" not-null="true" length="12" p1:unicode="true" />
       </key-property>
     </composite-id>
     <property name="oblig_elne" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="77e4fd11-a072-40d6-ab31-f6af919b8873">
-      <column name="oblig_elne" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="etex_elne" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="cd614c6a-eb40-4226-a5c5-b67bb02ce3ee">
-      <column name="etex_elne" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="u_version" type="String" p1:nullable="true" p1:ValidateMaxLength="1" p1:ValidateRequired="False" p1:Guid="e46f6952-f57e-4e24-b57b-b31d7cbff77b">
-      <column name="u_version" not-null="false" length="1" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="1" p1:unicode="true" />
     </property>
     <property name="user_maj" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="644e2669-bbfb-4e49-b315-e21feb2de45f">
-      <column name="user_maj" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_maj" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="1d52cc82-90a0-4cb6-b041-ff11d19e964c">
-      <column name="dh_maj" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
     <property name="user_cre" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="fd0e026d-ac5c-4384-9d30-933161cbf751">
-      <column name="user_cre" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_cre" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="4e09421a-b5a0-4d22-bf6f-5f51aa52e198">
-      <column name="dh_cre" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
   </class>
-  <class name="pe_logi" table="pe_logi" schema="mupe" p1:Guid="4db7f9dd-f8db-4acd-ae6e-3be754dac427">
+  <class name="pe_logi" table="" p1:Guid="4db7f9dd-f8db-4acd-ae6e-3be754dac427">
     <composite-id>
       <key-property name="nom_elem" type="String" p1:ValidateMaxLength="12" p1:ValidateRequired="True" p1:Guid="e0b0b76b-41ea-4efa-a228-ada104cf68a5">
-        <column name="nom_elem" default="''" not-null="true" length="12" sql-type="varchar" p1:unicode="true" />
+        <column name="" default="''" not-null="true" length="12" p1:unicode="true" />
       </key-property>
       <key-property name="nom_logi" type="String" p1:ValidateMaxLength="20" p1:ValidateRequired="True" p1:Guid="f60a0441-6e99-4ee7-89c5-c2d1e45fe833">
-        <column name="nom_logi" default="''" not-null="true" length="20" sql-type="varchar" p1:unicode="true" />
+        <column name="" default="''" not-null="true" length="20" p1:unicode="true" />
       </key-property>
     </composite-id>
     <property name="u_version" type="String" p1:nullable="true" p1:ValidateMaxLength="1" p1:ValidateRequired="False" p1:Guid="69754e0f-91b0-488b-b801-399330fc9b57">
-      <column name="u_version" not-null="false" length="1" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="1" p1:unicode="true" />
     </property>
     <property name="libf_logi" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="e4fa7366-937d-4778-80ef-59ec45520b78">
-      <column name="libf_logi" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="libd_logi" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="00df736e-724a-430c-bf94-db14fd64bb9a">
-      <column name="libd_logi" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="libi_logi" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="83956961-600f-4906-9734-9b1c60964569">
-      <column name="libi_logi" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="libe_logi" type="String" p1:nullable="true" p1:ValidateMaxLength="40" p1:ValidateRequired="False" p1:Guid="695bf588-ab24-44fc-b836-247b5635922b">
-      <column name="libe_logi" not-null="false" length="40" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="40" p1:unicode="true" />
     </property>
     <property name="caract_logi" type="String" p1:nullable="true" p1:ValidateMaxLength="2000" p1:ValidateRequired="False" p1:Guid="dcd03662-3493-4fff-917f-9c65b166fdf3">
-      <column name="caract_logi" not-null="false" length="2000" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="2000" p1:unicode="true" />
     </property>
     <property name="operat_logi" type="String" p1:ValidateMaxLength="14" p1:ValidateRequired="True" p1:Guid="73a2cb3d-b15f-41ba-9a42-0b724217a4cc">
-      <column name="operat_logi" not-null="true" length="14" sql-type="varchar" unique="true" p1:unicode="true" />
+      <column name="" not-null="true" length="14" unique="true" p1:unicode="true" />
     </property>
     <property name="rvmult" type="String" p1:ValidateMaxLength="2" p1:ValidateRequired="True" p1:Guid="4d1d851a-a233-4b9c-a852-f0b977634a37">
-      <column name="rvmult" not-null="true" length="2" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="true" length="2" p1:unicode="true" />
     </property>
     <property name="user_maj" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="373ad6ac-bac8-41a9-9783-fabd97283e10">
-      <column name="user_maj" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_maj" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="24368dc1-94dc-4558-83a4-24296117e166">
-      <column name="dh_maj" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
     <property name="user_cre" type="String" p1:nullable="true" p1:ValidateMaxLength="20" p1:ValidateRequired="False" p1:Guid="472ea789-eb98-4875-a3ed-1caad282463e">
-      <column name="user_cre" not-null="false" length="20" sql-type="varchar" p1:unicode="true" />
+      <column name="" not-null="false" length="20" p1:unicode="true" />
     </property>
     <property name="dh_cre" type="DateTime" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="1200b43f-dda1-429b-a81b-a2148d81dd8f">
-      <column name="dh_cre" not-null="false" sql-type="date" p1:unicode="false" />
+      <column name="" not-null="false" p1:unicode="false" />
     </property>
+  </class>
+  <class name="meal_content" table="meal_content" p1:Guid="c279a70e-416d-49aa-9792-93ae3ba51569">
+    <id name="meal_id" type="Int64" p1:ValidateRequired="True" p1:Guid="80b89168-35de-4c73-9cbe-14c4edf55149">
+      <column name="" />
+      <generator class="increment" />
+    </id>
+    <property name="meal_date" type="DateTime" p1:ValidateRequired="True" p1:Guid="847350d9-9443-456d-934a-87fa87a5902e">
+      <column name="" />
+    </property>
+    <property name="meal_code" type="Int64" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="dd1c9793-60bf-45a1-91c0-764f773ac7f0">
+      <column name="" />
+    </property>
+    <property name="meal_code_str" type="String" p1:ValidateRequired="True" p1:Guid="87f75172-7175-4771-a02b-66f5de5c2202">
+      <column name="" />
+    </property>
+    <property name="meal_cat_10" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="2bce7e2d-684f-4cb0-9141-859b982c6f33">
+      <column name="" />
+    </property>
+    <property name="meal_cat_11" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="0cd82e2b-056f-4daa-8161-81f1fc5940c2">
+      <column name="" />
+    </property>
+    <property name="meal_cat_12" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="2d712b98-af10-4bf2-8c57-83b6ba4b312f">
+      <column name="" />
+    </property>
+    <property name="meal_cat_13" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="e7f4ad0d-a2f7-4bdf-b634-6a62063ff4c7">
+      <column name="" />
+    </property>
+    <property name="meal_cat_20" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="9accbfe8-5d10-4d21-a019-996282c12858">
+      <column name="" />
+    </property>
+    <property name="meal_cat_21" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="59fdc516-c110-4278-b526-cf5e4447fe52">
+      <column name="" />
+    </property>
+    <property name="meal_cat_22" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="7a61273a-2ed8-470e-86e9-29eb2f698326">
+      <column name="" />
+    </property>
+    <property name="meal_cat_23" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="0f90a894-b84a-481a-bb3d-5af266cf0769">
+      <column name="" />
+    </property>
+    <property name="meal_cat_30" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="325a4de1-9f89-4dfe-9022-07d658016c98">
+      <column name="" />
+    </property>
+    <property name="meal_cat_31" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="bf1235f1-2079-4152-84df-826e926e5e54">
+      <column name="" />
+    </property>
+    <property name="meal_cat_32" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="1cb020f0-489a-416a-ac0d-16b83795dbd6">
+      <column name="" />
+    </property>
+    <property name="meal_cat_33" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="03c2e396-b8b6-4c6d-b746-f0614220cf92">
+      <column name="" />
+    </property>
+    <property name="meal_cat_40" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="06773bd4-3cb1-4ab9-af8b-2749b70c4e29">
+      <column name="" />
+    </property>
+    <property name="meal_cat_41" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="314fb142-0e4e-43a8-a27d-9649363e072d">
+      <column name="" />
+    </property>
+    <property name="meal_cat_42" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="2630b8b1-69e7-47af-9d48-bcb332b4d5a7">
+      <column name="" />
+    </property>
+    <property name="meal_cat_43" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="43e17f3f-1fea-41fe-b228-fe9beae5f606">
+      <column name="" />
+    </property>
+  </class>
+  <class name="food" table="food" p1:Guid="ac73c475-c740-451e-b58e-d84c81451638">
+    <id name="food_id" type="Int64" p1:ValidateRequired="True" p1:Guid="1837765c-20b3-4efc-a8f5-4e889c05e93b">
+      <column name="" />
+    </id>
+    <property name="category_fkid" type="Int64" p1:ValidateRequired="True" p1:Guid="bd9caaeb-9fb3-46d1-93c6-22329af020e7">
+      <column name="" />
+    </property>
+    <property name="name" type="String" p1:ValidateRequired="True" p1:Guid="97d162f3-13d8-499f-be00-279ce1556fee">
+      <column name="" />
+    </property>
+    <many-to-one name="caterory" class="caterory" p1:AssociationGuid="c9c38452-e54f-408a-b83d-b770662e2be9" p1:Guid="f0b50a33-23ae-452e-a375-b83793633012">
+      <column name="" />
+    </many-to-one>
+  </class>
+  <class name="symptom" table="symptom" p1:Guid="e3f2ba54-45e9-4500-9087-008132e71af0">
+    <id name="symptom_id" type="Int64" p1:ValidateRequired="True" p1:Guid="36da391c-8001-4586-8103-d76f276c6a53">
+      <column name="" />
+    </id>
+    <property name="symptom_cat" type="Int64" p1:ValidateRequired="True" p1:Guid="7757692b-999d-4c3c-b86d-649c67b49acf">
+      <column name="" />
+    </property>
+    <property name="value" type="String" p1:ValidateRequired="True" p1:Guid="c3732528-3931-4f75-97a8-1fb0e0163eb0">
+      <column name="" />
+    </property>
+    <property name="symptom_date" type="DateTime" p1:ValidateRequired="True" p1:Guid="529fedc4-de61-4d55-8534-6bf1e9838445">
+      <column name="" />
+    </property>
+  </class>
+  <class name="caterory" table="caterory" p1:Guid="4197df9a-b39a-40c1-b18a-dbfbdc1a77fd">
+    <id name="category_id" type="Int64" p1:ValidateRequired="True" p1:Guid="96005ae7-28bd-4b78-9453-019ec9438247">
+      <column name="" />
+    </id>
+    <property name="name" type="String" p1:ValidateRequired="True" p1:Guid="7ba3cdfa-f6fa-4255-afe2-bd3940d6e91a">
+      <column name="" />
+    </property>
+    <bag name="foods" inverse="true" generic="true" p1:AssociationGuid="c9c38452-e54f-408a-b83d-b770662e2be9" p1:Guid="d74c27d0-18fb-4f43-9ee3-0989a7b9535f">
+      <key>
+        <column name="" />
+      </key>
+      <one-to-many class="food" />
+    </bag>
   </class>
 </hibernate-mapping>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="caterory" table="caterory">
+    <id name="category_id" type="Int64">
+      <column name="category_id" not-null="true" />
+      <generator class="assigned" />
+    </id>
+    <property name="name" type="String">
+      <column name="name" not-null="true" />
+    </property>
+    <bag name="foods" inverse="true" generic="true">
+      <key>
+        <column name="category_id" />
+      </key>
+      <one-to-many class="food" />
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -114,6 +114,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\food_command.cs" />
+    <Compile Include="Command\meal_command.cs" />
     <Compile Include="Command\grmu_command.cs" />
     <Compile Include="Command\dict_command.cs" />
     <Compile Include="Command\chat_box_command .cs" />
@@ -123,7 +125,10 @@
     <Compile Include="Command\generate_config_command.cs" />
     <Compile Include="Generated\global_dict.cs" />
     <Compile Include="Generated\i_soldel.cs" />
+    <Compile Include="Generated\soldel.caterory.cs" />
     <Compile Include="Generated\soldel.cs" />
+    <Compile Include="Generated\soldel.food.cs" />
+    <Compile Include="Generated\soldel.meal_content.cs" />
     <Compile Include="Generated\soldel.pe_assu.cs" />
     <Compile Include="Generated\soldel.pe_elca.cs" />
     <Compile Include="Generated\soldel.pe_elem.cs" />
@@ -133,6 +138,7 @@
     <Compile Include="Generated\soldel.pe_per.cs" />
     <Compile Include="Generated\soldel.pe_per1.cs" />
     <Compile Include="Generated\soldel.pe_situ.cs" />
+    <Compile Include="Generated\soldel.symptom.cs" />
     <Compile Include="Generated\soldel_ewa.pe_attr.cs" />
     <Compile Include="Generated\soldel_ewa.pe_cfgd.cs" />
     <Compile Include="Generated\soldel_ewa.pe_cfgt.cs" />
@@ -151,12 +157,18 @@
     <Compile Include="Utils\Parser.cs" />
     <Compile Include="Views\Converters\folder_node.cs" />
     <Compile Include="Views\Converters\w_generic_tree_multi_list_converter.cs" />
-    <Compile Include="Views\Templates\w_generic_detail_template_selector.cs" />
+    <Compile Include="Views\Templates\w_generic_template_selector.cs" />
     <Compile Include="Views\uc_find_element.xaml.cs">
       <DependentUpon>uc_find_element.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\uc_select_connection.xaml.cs">
       <DependentUpon>uc_select_connection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\w_food_.xaml.cs">
+      <DependentUpon>w_food_.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\w_meal.xaml.cs">
+      <DependentUpon>w_meal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\w_chatbot_box.xaml.cs">
       <DependentUpon>w_chatbot_box.xaml</DependentUpon>
@@ -185,6 +197,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\uc_select_connection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_food_.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_meal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,6 +332,19 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel_ewa.pe_este.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel.meal_content.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Mappings\soldel.food.hbm.xml" />
+    <Resource Include="Mappings\soldel.symptom.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Mappings\soldel.caterory.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

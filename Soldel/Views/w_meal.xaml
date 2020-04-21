@@ -1,0 +1,321 @@
+﻿<Window x:Class="Soldel.Views.w_meal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:mupeModel"
+        xmlns:local="clr-namespace:Soldel.Views"
+        xmlns:commands="clr-namespace:mupeModel.Commands"
+        xmlns:templates="clr-namespace:mupeModel.Views.Templates"
+        mc:Ignorable="d"
+        Title="meal" Height="450" Width="800" Background="LightGray">
+    <Window.CommandBindings>
+        <CommandBinding Command="commands:meal_command.validate"
+                        CanExecute="validate_can_execute"
+                        Executed="validate_executed"/>
+
+        <CommandBinding Command="commands:meal_command.load"
+                        CanExecute="load_can_execute"
+                        Executed="load_executed"/>
+
+        <CommandBinding Command="commands:meal_command.update"
+                        CanExecute="update_can_execute"
+                        Executed="update_executed"/>
+
+        <CommandBinding Command="commands:meal_command.copy"
+                        CanExecute="copy_can_execute"
+                        Executed="copy_executed"/>
+
+        <CommandBinding Command="commands:meal_command.delete"
+                        CanExecute="delete_can_execute"
+                        Executed="delete_executed"/>
+
+        <CommandBinding Command="commands:meal_command.cancel"
+                        CanExecute="cancel_can_execute"
+                        Executed="cancel_executed"/>
+    </Window.CommandBindings>
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontFamily" Value="Courier"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+        </Style>
+        <Style TargetType="ListView">
+            <Setter Property="FontFamily" Value="Courier"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Courier"/>
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Courier"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="Grid">
+             <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+        </Style>
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="FontFamily" Value="Courier"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <DataTemplate x:Key="item_meal_template" DataType="{x:Type model:meal_content}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <WrapPanel Orientation="Vertical">
+                        <TextBox Tag="date" Name="date" Text="{Binding Path=meal_date, StringFormat=dd.MM.yyyy}">
+                        </TextBox>
+                        <TextBox Tag="code" Name="code_str" Text="{Binding Path=meal_code_str}">
+                        </TextBox>
+                    </WrapPanel>
+                </Grid>
+
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=l_cats}" IsReadOnly="True" Grid.Column="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="cat_1" Binding="{Binding Path=val1, Mode=OneWay}" Width="150"> 
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="cat_2" Binding="{Binding  Path=val2, Mode=OneWay}" Width="150">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="cat_3" Binding="{Binding  Path=val3, Mode=OneWay}" Width="150">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="cat_4" Binding="{Binding  Path=val4, Mode=OneWay}" Width="150">
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Border BorderBrush="LightGray" BorderThickness="1" Margin="2" Grid.Column="2">
+                    <Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+                
+        <DataTemplate x:Key="meal_content_template" DataType="{x:Type model:meal_content}">
+            <DataTemplate.Resources>
+                <Style TargetType="Grid">
+                    <Setter Property="Margin" Value="1"/>
+                </Style>
+            </DataTemplate.Resources>
+            <Grid MinHeight="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <WrapPanel Orientation="Vertical">
+                            <DatePicker Tag="meal_date" Name="meal_date" SelectedDate="{Binding meal_date, Mode=TwoWay}">
+                            </DatePicker>
+                            <ComboBox Tag="meal_code" Name="meal_code" 
+                                      ItemsSource = "{Binding Path=l_meal_code_str}"
+                                      SelectedItem = "{Binding Path=meal_code_str, Mode=TwoWay}">
+                            </ComboBox>
+                        </WrapPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+
+                        <StackPanel>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
+                                      SelectedItem = "{Binding Path=meal_cat_10, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
+                                      SelectedItem = "{Binding Path=meal_cat_11, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
+                                    SelectedItem = "{Binding Path=meal_cat_12, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
+                                    SelectedItem = "{Binding Path=meal_cat_13, Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <StackPanel>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
+                                    SelectedItem = "{Binding Path=meal_cat_20, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
+                                    SelectedItem = "{Binding Path=meal_cat_21, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
+                                    SelectedItem = "{Binding Path=meal_cat_22, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
+                                    SelectedItem = "{Binding Path=meal_cat_23, Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <StackPanel>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
+                                    SelectedItem = "{Binding Path=meal_cat_30, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
+                                    SelectedItem = "{Binding Path=meal_cat_31, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
+                                    SelectedItem = "{Binding Path=meal_cat_32, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
+                                    SelectedItem = "{Binding Path=meal_cat_33, Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="3">
+                        <StackPanel>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                    SelectedItem = "{Binding Path=meal_cat_40, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                    SelectedItem = "{Binding Path=meal_cat_41, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                    SelectedItem = "{Binding Path=meal_cat_42, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                    SelectedItem = "{Binding Path=meal_cat_43, Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="4">
+                        <StackPanel>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_40, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_41, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_42, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_43, Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="5">
+                        <StackPanel>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_40, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_41, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_42, Mode=TwoWay}">
+                            </ComboBox>
+                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
+                                SelectedItem = "{Binding Path=meal_cat_43, Mode=TwoWay}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <local:uc_select_connection x:Name="uc_select_connection"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <StackPanel HorizontalAlignment="Left" Margin="2">
+                <Button x:Name="btn_load" Content="Lire" Command="commands:meal_command.load"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ListView x:Name="l_element" Grid.Row="0"
+                      HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplateSelector>
+                    <templates:w_generic_template_selector/>
+                </ListView.ItemTemplateSelector>
+            </ListView>
+            
+            <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" Margin="2">
+            </GridSplitter>
+
+            <Grid x:Name="element" Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="45"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <WrapPanel HorizontalAlignment="Left">
+                        <Button x:Name="copy" Content="Copier" Command="commands:meal_command.copy"/>
+                        <Button x:Name="update" Content="Modifier" Command="commands:meal_command.update"/>
+                        <Button x:Name="delete" Content="Supprimer" Command="commands:meal_command.delete"/>
+                    </WrapPanel>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <ContentControl 
+                        Content="{Binding}" Grid.Row="0">
+                        <ContentControl.ContentTemplateSelector>
+                            <templates:w_generic_template_selector/>
+                        </ContentControl.ContentTemplateSelector>
+                    </ContentControl>
+               </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel HorizontalAlignment="Right" Grid.Column="1" Margin="2" >
+                        <Button x:Name="btn_validate" Content="Valider" Command="commands:meal_command.validate"/>
+                        <Button x:Name="btn_cancel" Content="Annuler" Command="commands:meal_command.validate"/>
+                    </WrapPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

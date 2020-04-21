@@ -110,7 +110,7 @@
                 </ComboBox>
                 <Label Content="Type de donnée :"/>
                 <ComboBox Text="tydata_dict" 
-                          ItemsSource  = "{Binding Path=tydata_list}" 
+                          ItemsSource = "{Binding Path=tydata_list}" 
                           SelectedItem = "{Binding Path=tydata_dict, Mode=TwoWay}">
                 </ComboBox>
             </StackPanel>
@@ -516,7 +516,7 @@
                             <ContentControl 
                                 Content="{Binding}" Grid.Row="0">
                                 <ContentControl.ContentTemplateSelector>
-                                    <templates:w_generic_detail_template_selector/>
+                                    <templates:w_generic_template_selector/>
                                 </ContentControl.ContentTemplateSelector>
                             </ContentControl>
                         </ScrollViewer>

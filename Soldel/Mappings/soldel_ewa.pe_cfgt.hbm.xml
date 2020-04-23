@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_cfgt" table="pe_cfgt">
+    <id name="pe_cfgt_id" type="String">
+      <column name="pe_cfgt_id" default="''" not-null="true" length="10" sql-type="varchar" />
+      <generator class="native" />
+    </id>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" sql-type="varchar" />
+    </property>
+    <property name="no_ip" type="Int32">
+      <column name="no_ip" not-null="true" precision="11" scale="0" sql-type="int" unique-key="KEY1" />
+    </property>
+    <property name="dadval" type="DateTime">
+      <column name="dadval" not-null="true" sql-type="date" unique-key="KEY1" />
+    </property>
+    <property name="description" type="String">
+      <column name="description" not-null="false" length="40" sql-type="varchar" />
+    </property>
+    <property name="statut" type="String">
+      <column name="statut" not-null="true" length="10" sql-type="varchar" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" sql-type="date" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" sql-type="varchar" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" sql-type="date" />
+    </property>
+    <bag name="pe_cfgd_list" generic="true">
+      <key not-null="true">
+        <column name="pe_cfgt_id" default="''" not-null="true" length="10" sql-type="varchar" />
+      </key>
+      <one-to-many class="pe_cfgd" />
+    </bag>
+    <many-to-one name="pe_ip" class="pe_ip" insert="false" update="false">
+      <column name="no_ip" not-null="true" sql-type="int" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

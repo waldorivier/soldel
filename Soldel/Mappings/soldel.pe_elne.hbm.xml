@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="pe_elne" table="pe_elnes">
+    <composite-id>
+      <key-property name="nom_elem" type="String">
+        <column name="nom_elem" default="''" not-null="true" length="12" />
+      </key-property>
+      <key-property name="nom_logi" type="String">
+        <column name="nom_logi" default="''" not-null="true" length="20" />
+      </key-property>
+      <key-property name="nom_elne" type="String">
+        <column name="nom_elne" default="''" not-null="true" length="12" />
+      </key-property>
+    </composite-id>
+    <property name="oblig_elne" type="String">
+      <column name="oblig_elne" not-null="true" length="2" />
+    </property>
+    <property name="etex_elne" type="String">
+      <column name="etex_elne" not-null="true" length="2" />
+    </property>
+    <property name="u_version" type="String">
+      <column name="u_version" not-null="false" length="1" />
+    </property>
+    <property name="user_maj" type="String">
+      <column name="user_maj" not-null="false" length="20" />
+    </property>
+    <property name="dh_maj" type="DateTime">
+      <column name="dh_maj" not-null="false" />
+    </property>
+    <property name="user_cre" type="String">
+      <column name="user_cre" not-null="false" length="20" />
+    </property>
+    <property name="dh_cre" type="DateTime">
+      <column name="dh_cre" not-null="false" />
+    </property>
+  </class>
+</hibernate-mapping>

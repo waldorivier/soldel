@@ -80,23 +80,23 @@ namespace mupeModel
             return copy;
         }
 
-        public virtual void add_child(object child) {
+        public void add_child(object child) {
             throw new NotImplementedException();
         }
 
-        public virtual bool can_add_child(object child) {
+        public bool can_add_child(object child) {
             throw new NotImplementedException();
         }
 
-        public virtual  bool can_remove_me() {
+        public bool can_remove_me() {
             throw new NotImplementedException();
         }
 
-        public virtual void remove_me() {
+        public void remove_me() {
             throw new NotImplementedException();
         }
 
-        public virtual bool is_persistant() {
+        public bool is_persistant() {
             throw new NotImplementedException();
         }
 

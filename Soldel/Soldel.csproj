@@ -123,12 +123,33 @@
     <Compile Include="Command\libl_command.cs" />
     <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
+    <Compile Include="Generated\global_dict.cs" />
     <Compile Include="Generated\i_soldel.cs" />
     <Compile Include="Generated\soldel.caterory.cs" />
     <Compile Include="Generated\soldel.cs" />
     <Compile Include="Generated\soldel.food.cs" />
     <Compile Include="Generated\soldel.meal_content.cs" />
+    <Compile Include="Generated\soldel.pe_assu.cs" />
+    <Compile Include="Generated\soldel.pe_elca.cs" />
+    <Compile Include="Generated\soldel.pe_elem.cs" />
+    <Compile Include="Generated\soldel.pe_elne.cs" />
+    <Compile Include="Generated\soldel.pe_elsi.cs" />
+    <Compile Include="Generated\soldel.pe_logi.cs" />
+    <Compile Include="Generated\soldel.pe_per.cs" />
+    <Compile Include="Generated\soldel.pe_per1.cs" />
+    <Compile Include="Generated\soldel.pe_situ.cs" />
     <Compile Include="Generated\soldel.symptom.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_attr.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_cfgd.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_cfgt.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_dict.cs" />
+    <Compile Include="Generated\soldel_pe_este.cs" />
+    <Compile Include="Generated\soldel_pe_ip.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_gmes.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_gmmu.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_grmu.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_libl.cs" />
+    <Compile Include="Generated\soldel_ewa.pe_muta.cs" />
     <Compile Include="Utils\audit_interceptor.cs" />
     <Compile Include="Generated\persistant_controller.cs" />
     <Compile Include="Utils\hibernate_util_LOCAL.cs" />
@@ -137,19 +158,44 @@
     <Compile Include="Views\Converters\folder_node.cs" />
     <Compile Include="Views\Converters\w_generic_tree_multi_list_converter.cs" />
     <Compile Include="Views\Templates\w_generic_template_selector.cs" />
+    <Compile Include="Views\uc_find_element.xaml.cs">
+      <DependentUpon>uc_find_element.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\uc_select_connection.xaml.cs">
       <DependentUpon>uc_select_connection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\w_food_.xaml.cs">
       <DependentUpon>w_food_.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\w_meal.xaml.cs">
+      <DependentUpon>w_meal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\w_chatbot_box.xaml.cs">
+      <DependentUpon>w_chatbot_box.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\w_generic.xaml.cs">
+      <DependentUpon>w_generic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\w_main.xaml.cs">
       <DependentUpon>w_main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\w_compare.xaml.cs">
+      <DependentUpon>w_compare.xaml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Views\w_compare_result.xaml.cs" />
+    <Compile Include="Views\uc_elca.xaml.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\w_elsi.xaml.cs">
+      <DependentUpon>w_elsi.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\uc_find_element.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\uc_select_connection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,7 +204,36 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\w_meal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_chatbot_box.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\w_main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\w_compare.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\w_compare_result.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\uc_elca.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\w_elsi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -207,6 +282,56 @@
     <EmbeddedResource Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel.pe_elca.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_elem.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_elne.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_logi.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel.pe_assu.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_elsi.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_per.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_per1.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel.pe_situ.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_attr.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_cfgd.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_cfgt.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_dict.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_gmes.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_gmmu.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_grmu.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_libl.hbm.xml" />
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_muta.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_ip.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel_ewa.pe_este.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel.meal_content.hbm.xml">

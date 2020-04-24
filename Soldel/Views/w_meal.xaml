@@ -74,9 +74,6 @@
             <Setter Property="Margin" Value="2"/>
         </Style>
 
-        <DataTemplate x:Key="food_category" DataType="{x:Type model:caterory}">
-            <Label Content="{Binding Path=name}"/>
-        </DataTemplate>
         
         <DataTemplate x:Key="food_template" DataType="{x:Type model:food}">
             <Grid MaxHeight="20">
@@ -99,7 +96,7 @@
             </Grid>
         </DataTemplate>
                 
-        <DataTemplate x:Key="meal_content_template" DataType="{x:Type model:meal_content}">
+        <DataTemplate x:Key="meal_template" DataType="{x:Type model:meal}">
             <DataTemplate.Resources>
                 <Style TargetType="Grid">
                     <Setter Property="Margin" Value="1"/>

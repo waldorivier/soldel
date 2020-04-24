@@ -34,6 +34,7 @@ namespace Soldel.Views {
             w_meal w = new w_meal("food");
             w.Height = 450;
             w.Width = 500;
+
             w.ShowDialog();
         }
 

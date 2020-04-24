@@ -41,7 +41,7 @@ namespace Soldel.Views {
 
             IList l = null;
             if (this._class_name == "meal_content") {
-                 l = session.CreateCriteria<meal_content>().List<meal_content>().ToList();
+                 l = session.CreateCriteria<meal>().List<meal>().ToList();
              
             } else {
                 

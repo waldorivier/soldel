@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="meal" table="meal">
+    <id name="meal_id" type="Int64">
+      <column name="meal_id" not-null="true" />
+      <generator class="increment" />
+    </id>
+    <property name="meal_date" type="DateTime">
+      <column name="meal_date" not-null="true" />
+    </property>
+    <property name="meal_code" type="Int64">
+      <column name="meal_code" not-null="false" />
+    </property>
+    <property name="meal_code_str" type="String">
+      <column name="meal_code_str" not-null="true" />
+    </property>
+    <property name="meal_cat_10" type="String">
+      <column name="meal_cat_10" not-null="false" />
+    </property>
+    <property name="meal_cat_11" type="String">
+      <column name="meal_cat_11" not-null="false" />
+    </property>
+    <property name="meal_cat_12" type="String">
+      <column name="meal_cat_12" not-null="false" />
+    </property>
+    <property name="meal_cat_13" type="String">
+      <column name="meal_cat_13" not-null="false" />
+    </property>
+    <property name="meal_cat_20" type="String">
+      <column name="meal_cat_20" not-null="false" />
+    </property>
+    <property name="meal_cat_21" type="String">
+      <column name="meal_cat_21" not-null="false" />
+    </property>
+    <property name="meal_cat_22" type="String">
+      <column name="meal_cat_22" not-null="false" />
+    </property>
+    <property name="meal_cat_23" type="String">
+      <column name="meal_cat_23" not-null="false" />
+    </property>
+    <property name="meal_cat_30" type="String">
+      <column name="meal_cat_30" not-null="false" />
+    </property>
+    <property name="meal_cat_31" type="String">
+      <column name="meal_cat_31" not-null="false" />
+    </property>
+    <property name="meal_cat_32" type="String">
+      <column name="meal_cat_32" not-null="false" />
+    </property>
+    <property name="meal_cat_33" type="String">
+      <column name="meal_cat_33" not-null="false" />
+    </property>
+    <property name="meal_cat_40" type="String">
+      <column name="meal_cat_40" not-null="false" />
+    </property>
+    <property name="meal_cat_41" type="String">
+      <column name="meal_cat_41" not-null="false" />
+    </property>
+    <property name="meal_cat_42" type="String">
+      <column name="meal_cat_42" not-null="false" />
+    </property>
+    <property name="meal_cat_43" type="String">
+      <column name="meal_cat_43" not-null="false" />
+    </property>
+    <bag name="l_meal_content" inverse="true" generic="true">
+      <key>
+        <column name="meal_id" />
+      </key>
+      <one-to-many class="meal_content" />
+    </bag>
+  </class>
+</hibernate-mapping>

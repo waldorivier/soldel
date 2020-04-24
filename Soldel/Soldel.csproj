@@ -127,6 +127,7 @@
     <Compile Include="Generated\soldel.caterory.cs" />
     <Compile Include="Generated\soldel.cs" />
     <Compile Include="Generated\soldel.food.cs" />
+    <Compile Include="Generated\soldel.meal.cs" />
     <Compile Include="Generated\soldel.meal_content.cs" />
     <Compile Include="Generated\soldel.symptom.cs" />
     <Compile Include="Utils\audit_interceptor.cs" />
@@ -216,7 +217,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\soldel.meal_content.hbm.xml">
+    <EmbeddedResource Include="Mappings\soldel.meal.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -229,6 +230,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\soldel.caterory.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\soldel.meal_content.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

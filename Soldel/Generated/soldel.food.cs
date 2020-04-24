@@ -71,6 +71,14 @@ namespace mupeModel
             set;
         }
 
+        /// <summary>
+        /// There are no comments for l_meal_content in the schema.
+        /// </summary>
+        public virtual IList<meal_content> l_meal_content {
+            get;
+            set;
+        }
+
         public virtual IList<caterory> l_caterory {
             get {
                 return hibernate_util.get_instance().get_l_category();

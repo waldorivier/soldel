@@ -8,7 +8,7 @@
         xmlns:commands="clr-namespace:mupeModel.Commands"
         xmlns:templates="clr-namespace:mupeModel.Views.Templates"
         mc:Ignorable="d"
-        Title="meal" Height="450" Width="800" Background="LightGray">
+        Title="meal" Background="LightGray">
     <Window.CommandBindings>
         <CommandBinding Command="commands:meal_command.validate"
                         CanExecute="validate_can_execute"
@@ -74,8 +74,12 @@
             <Setter Property="Margin" Value="2"/>
         </Style>
 
+        <DataTemplate x:Key="food_category" DataType="{x:Type model:caterory}">
+            <Label Content="{Binding Path=name}"/>
+        </DataTemplate>
+        
         <DataTemplate x:Key="food_template" DataType="{x:Type model:food}">
-            <Grid>
+            <Grid MaxHeight="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="100"></ColumnDefinition>
@@ -85,9 +89,12 @@
                     <TextBox Text="{Binding Path=name, Mode=TwoWay}"/>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <ComboBox Tag="food_cat" Name="food_cat"
-                                             SelectedItem = "{Binding Path=caterory, Mode=TwoWay}">
+                    <ComboBox x:Name="food_cat"
+                              ItemsSource="{Binding Path=l_caterory}"
+                              DisplayMemberPath="name"
+                              SelectedItem="{Binding Path=caterory, Mode=TwoWay}">
                     </ComboBox>
+
                 </Grid>
             </Grid>
         </DataTemplate>

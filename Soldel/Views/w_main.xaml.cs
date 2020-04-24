@@ -31,11 +31,17 @@ namespace Soldel.Views {
         }
 
         private void Btn_food_Click(object sender, RoutedEventArgs e) {
-            new w_meal("food").ShowDialog();
+            w_meal w = new w_meal("food");
+            w.Height = 450;
+            w.Width = 500;
+            w.ShowDialog();
         }
 
         private void Btn_meal_Click(object sender, RoutedEventArgs e) {
-            new w_meal("meal_content").ShowDialog();
+            w_meal w = new w_meal("meal_content");
+            w.Height = 450;
+            w.Width = 700;
+            w.ShowDialog();
         }
     }
 }

@@ -71,6 +71,12 @@ namespace mupeModel
             set;
         }
 
+        public virtual IList<caterory> l_caterory {
+            get {
+                return hibernate_util.get_instance().get_l_category();
+            }
+        }
+
         #region I_SOLDEL
 
         public virtual i_soldel shallow_copy() {
@@ -89,11 +95,10 @@ namespace mupeModel
         }
 
         public virtual bool can_remove_me() {
-            throw new NotImplementedException();
+            return true;
         }
 
         public virtual void remove_me() {
-            throw new NotImplementedException();
         }
 
         public virtual bool is_persistant() {

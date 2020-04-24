@@ -3,15 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 using mupeModel;
 using mupeModel.Utils;
 using System.Collections;
@@ -31,24 +27,6 @@ namespace Soldel.Views {
         public w_meal(String class_name) {
             this._class_name = class_name;
             InitializeComponent();
-            // test_();
-        }
-
-        // bypass command handler 
-
-        private void test_() {
-            meal_content meal = new meal_content();
-            meal.meal_code = 1;
-            meal.meal_code_str = "matin";
-            meal.meal_cat_10 = meal.l_food_cat_1[1];
-            meal.meal_cat_20 = meal.l_food_cat_2[1];
-            meal.meal_cat_30 = meal.l_food_cat_3[1];
-            meal.meal_cat_40 = meal.l_food_cat_4[1];
-
-            IList<meal_content> l_meals = new List<meal_content>();
-            l_meals.Add(meal);
-
-            l_element.ItemsSource = l_meals;
         }
 
         #region COMMAND HANDLER
@@ -66,6 +44,7 @@ namespace Soldel.Views {
                  l = session.CreateCriteria<meal_content>().List<meal_content>().ToList();
              
             } else {
+                
                 l = session.CreateCriteria<food>().List<food>().ToList();
             }
 
@@ -109,7 +88,7 @@ namespace Soldel.Views {
         }
 
         private void delete_executed(object sender, ExecutedRoutedEventArgs e) {
-            persistant_controller.delete(null, (meal_content)l_element.SelectedItem);
+            persistant_controller.delete(null, (i_soldel)l_element.SelectedItem);
             l_element.SelectedItem = null;
         }
 

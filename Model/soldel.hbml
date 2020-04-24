@@ -204,7 +204,7 @@
       <column name="" not-null="false" p1:unicode="false" />
     </property>
   </class>
-  <class name="meal_content" table="meal_content" p1:Guid="c279a70e-416d-49aa-9792-93ae3ba51569">
+  <class name="meal" table="meal" p1:Guid="c279a70e-416d-49aa-9792-93ae3ba51569">
     <id name="meal_id" type="Int64" p1:ValidateRequired="True" p1:Guid="80b89168-35de-4c73-9cbe-14c4edf55149">
       <column name="" />
       <generator class="increment" />
@@ -266,6 +266,12 @@
     <property name="meal_cat_43" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="43e17f3f-1fea-41fe-b228-fe9beae5f606">
       <column name="" />
     </property>
+    <bag name="l_meal_content" inverse="true" generic="true" p1:AssociationGuid="d3af3dc1-778f-4af0-b6dd-9b6aa9d5f4a6" p1:Guid="f6692564-57a3-4c6b-9fe0-f1dca0436437">
+      <key>
+        <column name="" />
+      </key>
+      <one-to-many class="meal_content" />
+    </bag>
   </class>
   <class name="food" table="food" p1:Guid="ac73c475-c740-451e-b58e-d84c81451638">
     <id name="food_id" type="Int64" p1:ValidateRequired="True" p1:Guid="1837765c-20b3-4efc-a8f5-4e889c05e93b">
@@ -280,6 +286,12 @@
     <many-to-one name="caterory" class="caterory" p1:AssociationGuid="c9c38452-e54f-408a-b83d-b770662e2be9" p1:Guid="f0b50a33-23ae-452e-a375-b83793633012">
       <column name="" />
     </many-to-one>
+    <bag name="l_meal_content" inverse="true" generic="true" p1:AssociationGuid="cc7f016c-9186-44c8-906f-b637a195aef9" p1:Guid="379190d9-bd5b-4ba6-afc9-4b9a9697d63c">
+      <key>
+        <column name="" />
+      </key>
+      <one-to-many class="meal_content" />
+    </bag>
   </class>
   <class name="symptom" table="symptom" p1:Guid="e3f2ba54-45e9-4500-9087-008132e71af0">
     <id name="symptom_id" type="Int64" p1:ValidateRequired="True" p1:Guid="36da391c-8001-4586-8103-d76f276c6a53">
@@ -308,5 +320,21 @@
       </key>
       <one-to-many class="food" />
     </bag>
+  </class>
+  <class name="meal_content" table="meal_content" p1:Guid="8fd6e2be-6cfe-416f-8de8-39ecce1c3643">
+    <composite-id>
+      <key-property name="food_id" type="Int64" p1:ValidateRequired="True" p1:Guid="cb2a30ef-7a95-4c5f-8fa8-4bcda0d47fe5">
+        <column name="" />
+      </key-property>
+      <key-property name="meal_id" type="Int64" p1:ValidateRequired="True" p1:Guid="04c69fb3-8826-4b68-932a-2e4f0d8b80a0">
+        <column name="" />
+      </key-property>
+    </composite-id>
+    <many-to-one name="food" class="food" p1:AssociationGuid="cc7f016c-9186-44c8-906f-b637a195aef9" p1:Guid="b583bbf9-cf70-4e0d-a153-34a60abfad62">
+      <column name="" />
+    </many-to-one>
+    <many-to-one name="meal" class="meal" p1:AssociationGuid="d3af3dc1-778f-4af0-b6dd-9b6aa9d5f4a6" p1:Guid="c30c3002-39bd-469c-95af-42dba02602fc">
+      <column name="" />
+    </many-to-one>
   </class>
 </hibernate-mapping>

@@ -8,18 +8,20 @@
         <File Name="soldel.pe_elem.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
         <File Name="soldel.pe_elne.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
         <File Name="soldel.pe_logi.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
-        <File Name="soldel.meal_content.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
+        <File Name="soldel.meal.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
         <File Name="soldel.food.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
         <File Name="soldel.symptom.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
         <File Name="soldel.caterory.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
+        <File Name="soldel.meal_content.cs" DestinationFolder="C:\Projets\Soldel\Soldel\Generated" />
         <File Name="soldel.pe_elca.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
         <File Name="soldel.pe_elem.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
         <File Name="soldel.pe_elne.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
         <File Name="soldel.pe_logi.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
-        <File Name="soldel.meal_content.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
+        <File Name="soldel.meal.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
         <File Name="soldel.food.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
         <File Name="soldel.symptom.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
         <File Name="soldel.caterory.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
+        <File Name="soldel.meal_content.hbm.xml" DestinationFolder="C:\Projets\Soldel\Soldel\Mappings" />
       </GeneratedFiles>
     </Generation>
     <generator class="assigned" />

@@ -299,27 +299,27 @@ namespace mupeModel
             }
         }
 
-        public virtual IList<String> l_food_cat_1 {
+        public virtual IList<food> l_food_cat_1 {
             get {
-                return new List<String>() { "", "amande", "noix", "noix de cajoux", "noisette" };
+                return hibernate_util.get_instance().get_l_food(1);
             }
         }
 
-        public virtual IList<String> l_food_cat_2 {
+        public virtual IList<food> l_food_cat_2 {
             get {
-                return new List<String>() { "", "morue", "fletan", "dorade", "truite" };
+                return hibernate_util.get_instance().get_l_food(2);
             }
         }
 
-        public virtual IList<String> l_food_cat_3 {
+        public virtual IList<food> l_food_cat_3 {
             get {
-                return new List<String>() { "", "lait", "the", "huile", "vin", "biere" };
+                return hibernate_util.get_instance().get_l_food(3);
             }
         }
 
-        public virtual IList<String> l_food_cat_4 {
+        public virtual IList<food> l_food_cat_4 {
             get {
-                return new List<String>() { "", "salade verte", "carotte", "rave", "betterave" };
+                return hibernate_util.get_instance().get_l_food(4);
             }
         }
 

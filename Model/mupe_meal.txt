@@ -4,19 +4,14 @@
 -- Server Version: 5.6
 
 -- 
--- Dropping a table mupe.symptom 
+-- Creating a table mupe.meal_content 
 -- 
-DROP TABLE mupe.symptom;
+CREATE TABLE mupe.meal_content (
+   food_id BIGINT(18) NOT NULL,
+   meal_id BIGINT(18) NOT NULL,
+   PRIMARY KEY (food_id, meal_id)
+);
 
--- 
--- Dropping a table mupe.food 
--- 
-DROP TABLE mupe.food;
-
--- 
--- Dropping a table mupe.meal_content 
--- 
-DROP TABLE mupe.meal_content;
 
 -- 
 -- Creating a table mupe.symptom 
@@ -34,17 +29,7 @@ CREATE TABLE mupe.symptom (
 -- Target Server: MySQL
 -- Server Version: 5.6
 
--- 
--- Dropping a table mupe.food 
--- 
-DROP TABLE mupe.food;
-
--- 
--- Dropping a table mupe.caterory 
--- 
-DROP TABLE mupe.caterory;
-
--- 
+--- 
 -- Creating a table mupe.caterory 
 -- 
 CREATE TABLE mupe.caterory (
@@ -67,14 +52,9 @@ CREATE TABLE mupe.food (
 
 
 -- 
--- Creating a table mupe.meal_content 
+-- Creating a table mupe.meal
 -- 
-DROP TABLE mupe.meal_content;
-
--- 
--- Creating a table mupe.meal_content 
--- 
-CREATE TABLE mupe.meal_content (
+CREATE TABLE mupe.meal (
    meal_id BIGINT(18) NOT NULL,
    meal_date DATETIME NOT NULL,
    meal_code BIGINT(18) NOT NULL,

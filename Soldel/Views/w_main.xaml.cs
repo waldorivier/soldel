@@ -15,10 +15,7 @@ using NHibernate.Collection.Observable;
 using mupeModel;
 
 namespace Soldel.Views {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
-    public partial class w_main : Window {
+      public partial class w_main : Window {
         public w_main() {
             try {
                 InitializeComponent();
@@ -42,6 +39,7 @@ namespace Soldel.Views {
             w_meal w = new w_meal("meal_content");
             w.Height = 450;
             w.Width = 700;
+
             w.ShowDialog();
         }
     }

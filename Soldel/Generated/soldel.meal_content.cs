@@ -21,14 +21,21 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for meal_content, Soldel in the schema.
     /// </summary>
-    public partial class meal_content {
+    public partial class meal_content : i_soldel {
     
-        #region Extensibility Method Definitions
         
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
+
+        public meal_content(meal meal, food food) {
+            this.food_id = food.food_id;
+            this.meal_id = meal.meal_id;
+
+            meal.l_meal_content.Add(this);
+            food.l_meal_content.Add(this);
+        }
 
         public override bool Equals(object obj)
         {
@@ -53,8 +60,8 @@ namespace mupeModel
           hashCode = (hashCode * 7) + meal_id.GetHashCode();
           return hashCode;
         }
+
         
-        #endregion
         /// <summary>
         /// There are no comments for meal_content constructor in the schema.
         /// </summary>
@@ -102,6 +109,34 @@ namespace mupeModel
             get;
             set;
         }
-    }
 
+        #region I_SOLDEL
+
+        public virtual void add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_remove_me() {
+            throw new NotImplementedException();
+        }
+
+        public virtual void remove_me() {
+            food.l_meal_content.Remove(this);
+            meal.l_meal_content.Remove(this);
+        }
+
+        public virtual bool is_persistant() {
+            throw new NotImplementedException();
+        }
+
+        public virtual i_soldel shallow_copy() {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
 }

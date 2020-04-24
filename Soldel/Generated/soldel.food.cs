@@ -103,7 +103,7 @@ namespace mupeModel
         }
 
         public virtual bool can_remove_me() {
-            return true;
+            return l_meal_content.Count == 0;
         }
 
         public virtual void remove_me() {

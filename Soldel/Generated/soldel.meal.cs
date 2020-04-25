@@ -300,6 +300,14 @@ namespace mupeModel
             set;
         }
 
+        public virtual IList<food> l_meal_content_food_cat_1 {
+            get {
+                IList<food> l = l_meal_content.Where(x => x.food.caterory.category_id == 1).Select(x => x.food).ToList<food>();
+                return l;
+            }
+        }
+        
+        
         // matin / midi / soir
         public virtual IList<String> l_meal_code_str {
             get {

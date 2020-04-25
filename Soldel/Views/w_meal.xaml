@@ -118,132 +118,15 @@
                         </WrapPanel>
                     </Grid>
 
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <StackPanel>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_10, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_11, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_12, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_1}"
-                                      DisplayMemberPath="name"
-                                    SelectedItem = "{Binding Path=meal_cat_13, Mode=TwoWay}">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <StackPanel>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_20, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_21, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_22, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_2}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_23, Mode=TwoWay}">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="2">
-                        <StackPanel>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_30, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_31, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_32, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_3}"
-                                      DisplayMemberPath="name"
-                                     SelectedItem = "{Binding Path=meal_cat_33, Mode=TwoWay}">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="3">
-                        <StackPanel>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_40, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_41, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_42, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_43, Mode=TwoWay}">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="4">
-                        <StackPanel>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_40, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                SelectedItem = "{Binding Path=meal_cat_41, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_42, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                      DisplayMemberPath="name"
-                                      SelectedItem = "{Binding Path=meal_cat_43, Mode=TwoWay}">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="5">
-                        <StackPanel>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                SelectedItem = "{Binding Path=meal_cat_40, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                SelectedItem = "{Binding Path=meal_cat_41, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                SelectedItem = "{Binding Path=meal_cat_42, Mode=TwoWay}">
-                            </ComboBox>
-                            <ComboBox ItemsSource = "{Binding Path=l_food_cat_4}"
-                                SelectedItem = "{Binding Path=meal_cat_43, Mode=TwoWay}">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
+                <Grid Grid.Column="1">
+                    <DataGrid AutoGenerateColumns="False" ColumnWidth="100" 
+                              ItemsSource="{Binding Path=l_meal_content_food_cat_1}">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header ="cat_1" 
+                                                    ItemsSource="{Binding Path=l_food_cat_1}"
+                                                    SelectedItemBinding="{Binding food_id}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Grid>
         </DataTemplate>

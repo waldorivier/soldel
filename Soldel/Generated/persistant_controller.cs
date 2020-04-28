@@ -22,9 +22,7 @@ namespace mupeModel.Utils {
         public ISession session { get => _session;}
 
         public void add_child(i_soldel parent, object child) {
-
             ITransaction transaction = null;
-
             if(parent.can_add_child(child)) {
                 try {
                     transaction = _session.BeginTransaction();
@@ -50,9 +48,7 @@ namespace mupeModel.Utils {
         }
 
         internal void delete(i_soldel parent, i_soldel child) {
-
             ITransaction transaction = null;
-
             if(child.can_remove_me()) {
                 try {
                     transaction = _session.BeginTransaction();
@@ -72,12 +68,15 @@ namespace mupeModel.Utils {
             }
         }
 
-        internal void update(object elem) {
-
+        internal void update(i_soldel elem) {
             ITransaction transaction = null;
-
             try {
                 transaction = _session.BeginTransaction();
+
+                if (elem.is_modified()) {
+                    elem = elem.shallow_copy();
+                }
+
                 _session.Save(elem);
                 transaction.Commit();
                 _session.Refresh(elem);

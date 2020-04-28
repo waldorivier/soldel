@@ -113,7 +113,11 @@ namespace mupeModel
             return true;
         }
 
-        #endregion  
+        public virtual bool is_modified() {
+            return false;
+        }
+
+        #endregion
     }
 
 }

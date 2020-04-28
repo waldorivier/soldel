@@ -98,6 +98,8 @@
                 
         <DataTemplate x:Key="meal_template" DataType="{x:Type model:meal}">
             <DataTemplate.Resources>
+                 
+     
                 <Style TargetType="Grid">
                     <Setter Property="Margin" Value="1"/>
                 </Style>
@@ -119,12 +121,19 @@
                     </Grid>
 
                 <Grid Grid.Column="1">
-                    <DataGrid AutoGenerateColumns="False" ColumnWidth="100" 
-                              ItemsSource="{Binding Path=l_meal_content_food_cat_1}">
+                    <DataGrid Name="meal_content" AutoGenerateColumns="False" ColumnWidth="100" 
+                              ItemsSource="{Binding Path=l_meal_content_cat_1}">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_1" Source="{Binding l_food_cat_1}"/>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header ="cat_1" 
-                                                    ItemsSource="{Binding Path=l_food_cat_1}"
-                                                    SelectedItemBinding="{Binding food_id}"/>
+                            <DataGridComboBoxColumn Header="cat_1" 
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
+                                                    DisplayMemberPath="name"
+                                                    SelectedItemBinding="{Binding Path=food}"
+                                                    SelectedValuePath="food_id"
+                                                    SelectedValueBinding="{Binding Path=food_id, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

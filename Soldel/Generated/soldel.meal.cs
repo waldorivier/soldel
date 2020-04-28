@@ -300,9 +300,9 @@ namespace mupeModel
             set;
         }
 
-        public virtual IList<food> l_meal_content_food_cat_1 {
+        public virtual IList<meal_content> l_meal_content_cat_1 {
             get {
-                IList<food> l = l_meal_content.Where(x => x.food.caterory.category_id == 1).Select(x => x.food).ToList<food>();
+                IList<meal_content> l = l_meal_content.Where(x => x.food.caterory.category_id == 1).ToList<meal_content>();
                 return l;
             }
         }
@@ -366,6 +366,10 @@ namespace mupeModel
 
         public virtual bool is_persistant() {
             return true;
+        }
+
+        public virtual bool is_modified() {
+            return false;
         }
 
         #endregion

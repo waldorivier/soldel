@@ -330,10 +330,10 @@
         <column name="" />
       </key-property>
     </composite-id>
-    <many-to-one name="food" class="food" p1:AssociationGuid="cc7f016c-9186-44c8-906f-b637a195aef9" p1:Guid="b583bbf9-cf70-4e0d-a153-34a60abfad62">
+    <many-to-one name="meal" class="meal" p1:AssociationGuid="d3af3dc1-778f-4af0-b6dd-9b6aa9d5f4a6" p1:Guid="c30c3002-39bd-469c-95af-42dba02602fc">
       <column name="" />
     </many-to-one>
-    <many-to-one name="meal" class="meal" p1:AssociationGuid="d3af3dc1-778f-4af0-b6dd-9b6aa9d5f4a6" p1:Guid="c30c3002-39bd-469c-95af-42dba02602fc">
+    <many-to-one name="food" class="food" p1:AssociationGuid="cc7f016c-9186-44c8-906f-b637a195aef9" p1:Guid="b583bbf9-cf70-4e0d-a153-34a60abfad62">
       <column name="" />
     </many-to-one>
   </class>

@@ -11,5 +11,11 @@
     <many-to-one name="caterory" class="caterory">
       <column name="category_id" not-null="true" />
     </many-to-one>
+    <bag name="l_meal_content" cascade="save-update" generic="true">
+      <key>
+        <column name="food_id" />
+      </key>
+      <one-to-many class="meal_content" />
+    </bag>
   </class>
 </hibernate-mapping>

@@ -58,7 +58,7 @@ namespace Soldel.Views {
         }
 
         private void validate_executed(object sender, ExecutedRoutedEventArgs e) {
-            object elem = element.DataContext;
+            i_soldel elem = (i_soldel)element.DataContext;
             if (elem != null) {
                 persistant_controller.update(elem);
             }

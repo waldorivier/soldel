@@ -36,6 +36,8 @@ namespace mupeModel {
             this.food_id = food.food_id;
 
             this._food = food;
+
+            OnCreated();
         }
 
         public override bool Equals(object obj) {
@@ -65,7 +67,6 @@ namespace mupeModel {
         /// </summary>
         public meal_content() {
             OnCreated();
-            this._food = food;
         }
 
 
@@ -104,7 +105,6 @@ namespace mupeModel {
             set;
         }
 
-
         #region I_SOLDEL
 
         public virtual void add_child(object child) {
@@ -116,13 +116,13 @@ namespace mupeModel {
         }
 
         public virtual bool can_remove_me() {
-            throw new NotImplementedException();
+            return true;
         }
 
         public virtual void remove_me() {
             food.l_meal_content.Remove(this);
             meal.l_meal_content.Remove(this);
-        }
+         }
 
         public virtual bool is_persistant() {
             throw new NotImplementedException();
@@ -133,7 +133,7 @@ namespace mupeModel {
         }
 
         public virtual bool is_modified() {
-            return _food != food;
+            return _food != null & _food != food;
         }
 
         #endregion

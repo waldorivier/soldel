@@ -300,6 +300,24 @@ namespace mupeModel
             set;
         }
 
+        public override bool Equals(object obj) {
+            meal toCompare = obj as meal;
+            if (toCompare == null) {
+                return false;
+            }
+
+            if (!Object.Equals(this.meal_id, toCompare.meal_id))
+                return false;
+
+            return true;
+        }
+
+        public override int GetHashCode() {
+            int hashCode = 13;
+            hashCode = (hashCode * 7) + meal_id.GetHashCode();
+            return hashCode;
+        }
+        
         public virtual IList<meal_content> l_meal_content_cat_1 {
             get {
                 IList<meal_content> l = l_meal_content.Where(x => x.food.caterory.category_id == 1).ToList<meal_content>();
@@ -343,17 +361,34 @@ namespace mupeModel
         #region I_SOLDEL
 
         public virtual i_soldel shallow_copy() {
-            // var copy = new meal();
-            // copy_object.copy<meal>(this, copy);
+            
+            /* var copy = new meal();
+            copy_object.copy<meal>(this, copy);
+            */
             
             if (this.is_modified()) {
-                IList<meal_content> l_mc_modified = new List<meal_content>(); 
+                IList<meal_content> l_mc_to_add = new List<meal_content>();
+                IList<meal_content> l_mc_to_remove = new List<meal_content>();
+
                 foreach (meal_content mc in l_meal_content) {
                     if (mc.is_modified()) {
-                        l_mc_modified.Add(new meal_content(this, mc._food));
+                        
+                        // vérifier que l'aliment n'existe pas déjà
+                        int cnt = l_meal_content.Where(x => x.food.Equals(mc._food)).Count();
+                        if (cnt == 0) {
+                            l_mc_to_add.Add(new meal_content(this, mc._food));
+                            l_mc_to_remove.Add(mc);
+                        }
                     }
                 }
-                l_meal_content.Concat(l_mc_modified);
+
+                foreach (meal_content mc in l_mc_to_remove) {
+                    mc.remove_me();
+                }
+
+                foreach (meal_content mc in l_mc_to_add) {
+                    l_meal_content.Add(mc);
+                }
             }
             return this;
         }
@@ -378,7 +413,7 @@ namespace mupeModel
         }
 
         public virtual bool is_modified() {
-            return l_meal_content.Any(x => x.is_modified() == true);
+            return l_meal_content.Any(x=>x.is_modified() == true);
         }
 
         #endregion

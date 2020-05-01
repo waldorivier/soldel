@@ -127,10 +127,13 @@
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn Header="cat_1" 
                                                     ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
-                                                    DisplayMemberPath="name"
-                                                    SelectedItemBinding="{Binding Path=_food}"
-                                                    SelectedValuePath="food_id"
-                                                    SelectedValueBinding="{Binding Path=food_id, Mode=TwoWay}">
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}"
+                                                    DisplayMemberPath="name">
+                                
+                                                    <!--SelectedValuePath="food_id"
+                                                        SelectedValueBinding="{Binding Path=food_id, Mode=TwoWay}">
+                                                    -->
+                                
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>

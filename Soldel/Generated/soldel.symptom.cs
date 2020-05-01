@@ -78,6 +78,24 @@ namespace mupeModel
             get;
             set;
         }
+
+        public override bool Equals(object obj) {
+            symptom toCompare = obj as symptom;
+            if (toCompare == null) {
+                return false;
+            }
+
+            if (!Object.Equals(this.symptom_id, toCompare.symptom_id))
+                return false;
+
+            return true;
+        }
+
+        public override int GetHashCode() {
+            int hashCode = 13;
+            hashCode = (hashCode * 7) + symptom_id.GetHashCode();
+            return hashCode;
+        }
     }
 
 }

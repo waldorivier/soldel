@@ -41,7 +41,18 @@ namespace mupeModel
             OnCreated();
         }
 
-    
+        public override bool Equals(object obj) {
+            food toCompare = obj as food;
+            if (toCompare == null) {
+                return false;
+            }
+
+            if (!Object.Equals(this.food_id, toCompare.food_id))
+                return false;
+
+            return true;
+        }
+
         /// <summary>
         /// There are no comments for food_id in the schema.
         /// </summary>
@@ -77,6 +88,16 @@ namespace mupeModel
         public virtual IList<meal_content> l_meal_content {
             get;
             set;
+        }
+
+        public override int GetHashCode() {
+            int hashCode = 13;
+            hashCode = (hashCode * 7) + food_id.GetHashCode();
+            return hashCode;
+        }
+
+        public override string ToString() {
+            return this.name; 
         }
 
         public virtual IList<caterory> l_caterory {

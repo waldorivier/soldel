@@ -72,11 +72,7 @@ namespace mupeModel.Utils {
             ITransaction transaction = null;
             try {
                 transaction = _session.BeginTransaction();
-
-                if (elem.is_modified()) {
-                    elem.shallow_copy();
-                }
-
+                
                 _session.Save(elem);
                 transaction.Commit();
                 _session.Refresh(elem);

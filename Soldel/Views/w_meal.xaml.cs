@@ -29,6 +29,16 @@ namespace Soldel.Views {
             InitializeComponent();
         }
 
+        private void _TEST(meal meal) {
+            IList<food> l_food = persistant_controller.session.CreateCriteria<food>().List<food>();
+
+            meal_content mc = meal.l_meal_content[0];
+            mc._food = l_food[1];
+
+            meal.shallow_copy();
+            persistant_controller.update(meal);
+        }
+
         #region COMMAND HANDLER
 
         private void load_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -36,7 +46,6 @@ namespace Soldel.Views {
         }
 
         private void load_executed(object sender, ExecutedRoutedEventArgs e) {
-
             ISession session = uc_select_connection.session;
 
             IList l = null;
@@ -59,7 +68,11 @@ namespace Soldel.Views {
 
         private void validate_executed(object sender, ExecutedRoutedEventArgs e) {
             i_soldel elem = (i_soldel)element.DataContext;
+
             if (elem != null) {
+                if (elem.is_modified()) {
+                    elem.shallow_copy();
+                }
                 persistant_controller.update(elem);
             }
             l_element.SelectedItem = null;
@@ -71,8 +84,13 @@ namespace Soldel.Views {
 
         private void copy_executed(object sender, ExecutedRoutedEventArgs e) {
             i_soldel to_copy = (i_soldel)l_element.SelectedItem;
+
+            // _TEST((meal)to_copy);
+
+            /*
             i_soldel copy = to_copy.shallow_copy();
             element.DataContext = copy;
+            */
         }
 
         private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {

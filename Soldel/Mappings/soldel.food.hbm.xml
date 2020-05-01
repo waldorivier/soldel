@@ -11,7 +11,7 @@
     <many-to-one name="caterory" class="caterory">
       <column name="category_id" not-null="true" />
     </many-to-one>
-    <bag name="l_meal_content" cascade="save-update" generic="true">
+    <bag name="l_meal_content" cascade="none" inverse="true" generic="true">
       <key>
         <column name="food_id" />
       </key>

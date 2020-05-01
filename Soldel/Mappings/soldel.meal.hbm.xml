@@ -62,7 +62,7 @@
     <property name="meal_cat_43" type="String">
       <column name="meal_cat_43" not-null="false" />
     </property>
-    <bag name="l_meal_content" cascade="save-update" generic="true">
+    <bag name="l_meal_content" cascade="all-delete-orphan" inverse="true" generic="true">
       <key>
         <column name="meal_id" />
       </key>

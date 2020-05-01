@@ -343,10 +343,19 @@ namespace mupeModel
         #region I_SOLDEL
 
         public virtual i_soldel shallow_copy() {
-            var copy = new meal();
-            copy_object.copy<meal>(this, copy);
-
-            return copy;
+            // var copy = new meal();
+            // copy_object.copy<meal>(this, copy);
+            
+            if (this.is_modified()) {
+                IList<meal_content> l_mc_modified = new List<meal_content>(); 
+                foreach (meal_content mc in l_meal_content) {
+                    if (mc.is_modified()) {
+                        l_mc_modified.Add(new meal_content(this, mc._food));
+                    }
+                }
+                l_meal_content.Concat(l_mc_modified);
+            }
+            return this;
         }
 
         public virtual void add_child(object child) {
@@ -369,7 +378,7 @@ namespace mupeModel
         }
 
         public virtual bool is_modified() {
-            return false;
+            return l_meal_content.Any(x => x.is_modified() == true);
         }
 
         #endregion

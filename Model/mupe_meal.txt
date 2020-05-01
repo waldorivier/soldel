@@ -6,9 +6,12 @@
 -- 
 -- Creating a table mupe.meal_content 
 -- 
+-- 
+
 CREATE TABLE mupe.meal_content (
    food_id BIGINT(18) NOT NULL,
    meal_id BIGINT(18) NOT NULL,
+   modified TINYINT(1) NOT NULL,
    PRIMARY KEY (food_id, meal_id)
 );
 

@@ -21,19 +21,21 @@ namespace mupeModel {
     /// There are no comments for meal_content, Soldel in the schema.
     /// </summary>
     public partial class meal_content : i_soldel {
-        private food _food;
 
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
 
-        public meal_content(meal meal, food food) {
-            this.food_id = food.food_id;
-            this.meal_id = meal.meal_id;
 
-            meal.l_meal_content.Add(this);
-            food.l_meal_content.Add(this);
+        public meal_content(meal meal, food food) {
+            this.meal = meal;
+            this.food = food;
+
+            this.meal_id = meal.meal_id;
+            this.food_id = food.food_id;
+
+            this._food = food;
         }
 
         public override bool Equals(object obj) {
@@ -63,6 +65,7 @@ namespace mupeModel {
         /// </summary>
         public meal_content() {
             OnCreated();
+            this._food = food;
         }
 
 
@@ -83,23 +86,10 @@ namespace mupeModel {
             set;
         }
         
-       public virtual food food {
-            get {
-                return this._food;
-            }
-            set {
-                if (this._food != value) {
-                    this._food = value;
-                    this.modified = true;
-                }
-            }
-        }
-
-        public virtual bool modified {
+        public virtual food food {
             get;
             set;
         }
-
 
         /// <summary>
         /// There are no comments for meal in the schema.
@@ -108,6 +98,12 @@ namespace mupeModel {
             get;
             set;
         }
+
+        public virtual food _food {
+            get;
+            set;
+        }
+
 
         #region I_SOLDEL
 
@@ -137,7 +133,7 @@ namespace mupeModel {
         }
 
         public virtual bool is_modified() {
-            return modified;
+            return _food != food;
         }
 
         #endregion

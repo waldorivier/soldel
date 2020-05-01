@@ -37,7 +37,7 @@ namespace Soldel.Views {
 
         private void Btn_meal_Click(object sender, RoutedEventArgs e) {
             w_meal w = new w_meal("meal_content");
-            w.Height = 450;
+            w.Height = 700;
             w.Width = 700;
 
             w.ShowDialog();

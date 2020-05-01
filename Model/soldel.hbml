@@ -330,6 +330,9 @@
         <column name="" />
       </key-property>
     </composite-id>
+    <property name="modified" type="Boolean" access="property" p1:ValidateRequired="True" p1:Guid="7479acf5-c086-4bea-9604-9b4c1919fe3e">
+      <column name="" />
+    </property>
     <many-to-one name="meal" class="meal" p1:AssociationGuid="d3af3dc1-778f-4af0-b6dd-9b6aa9d5f4a6" p1:Guid="c30c3002-39bd-469c-95af-42dba02602fc">
       <column name="" />
     </many-to-one>

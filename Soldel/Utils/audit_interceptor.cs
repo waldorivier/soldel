@@ -26,6 +26,10 @@ namespace mupeModel.Utils {
 
         public override bool OnFlushDirty(object entity,object id,object[] currentState,object[] previousState,string[] propertyNames,IType[] types) {
             bool flag = false;
+
+            if(entity.GetType() == typeof(meal_content)) {
+            }
+
             this.updates++;
             for(int i = 0;i < propertyNames.Length;i++) {
                 if("dh_maj".Equals(propertyNames[i])) {

@@ -98,8 +98,6 @@
                 
         <DataTemplate x:Key="meal_template" DataType="{x:Type model:meal}">
             <DataTemplate.Resources>
-                 
-     
                 <Style TargetType="Grid">
                     <Setter Property="Margin" Value="1"/>
                 </Style>
@@ -130,7 +128,7 @@
                             <DataGridComboBoxColumn Header="cat_1" 
                                                     ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
                                                     DisplayMemberPath="name"
-                                                    SelectedItemBinding="{Binding Path=food}"
+                                                    SelectedItemBinding="{Binding Path=_food}"
                                                     SelectedValuePath="food_id"
                                                     SelectedValueBinding="{Binding Path=food_id, Mode=TwoWay}">
                             </DataGridComboBoxColumn>

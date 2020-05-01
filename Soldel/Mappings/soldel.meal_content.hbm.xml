@@ -9,11 +9,14 @@
         <column name="meal_id" not-null="true" />
       </key-property>
     </composite-id>
-    <many-to-one name="food" class="food" insert="false" update="false">
-      <column name="food_id" not-null="true" />
-    </many-to-one>
+    <!--<property name="modified" type="Boolean">
+      <column name="modified" not-null="false" />
+    </property>-->
     <many-to-one name="meal" class="meal" insert="false" update="false">
       <column name="meal_id" not-null="true" />
+    </many-to-one>
+    <many-to-one name="food" class="food" insert="false" update="false">
+      <column name="food_id" not-null="true" />
     </many-to-one>
   </class>
 </hibernate-mapping>

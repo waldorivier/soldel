@@ -74,7 +74,7 @@ namespace mupeModel.Utils {
                 transaction = _session.BeginTransaction();
 
                 if (elem.is_modified()) {
-                    elem = elem.shallow_copy();
+                    elem.shallow_copy();
                 }
 
                 _session.Save(elem);

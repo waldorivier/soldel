@@ -132,10 +132,12 @@
     <Compile Include="Generated\soldel.symptom.cs" />
     <Compile Include="Utils\audit_interceptor.cs" />
     <Compile Include="Generated\persistant_controller.cs" />
+    <Compile Include="Utils\food_post_load_listener.cs" />
     <Compile Include="Utils\hibernate_util_LOCAL.cs" />
     <Compile Include="Utils\TokenTree.cs" />
     <Compile Include="Utils\Parser.cs" />
     <Compile Include="Views\Converters\folder_node.cs" />
+    <Compile Include="Views\Converters\food_converter.cs" />
     <Compile Include="Views\Converters\w_generic_tree_multi_list_converter.cs" />
     <Compile Include="Views\Templates\w_generic_template_selector.cs" />
     <Compile Include="Views\uc_select_connection.xaml.cs">

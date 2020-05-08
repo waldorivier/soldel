@@ -40,7 +40,7 @@ namespace mupeModel.Utils {
             return flag;
         }
 
-        public override bool OnLoad(object entity,object id,object[] state,string[] propertyNames,IType[] types) {
+        public override bool OnLoad(object entity, object id, object[] state, string[] propertyNames, IType[] types) {
             this.loads++;
             return false;
         }

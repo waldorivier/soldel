@@ -325,7 +325,6 @@ namespace mupeModel
             }
         }
         
-        
         // matin / midi / soir
         public virtual IList<String> l_meal_code_str {
             get {
@@ -357,51 +356,21 @@ namespace mupeModel
             }
         }
 
-
         #region I_SOLDEL
-
-        public virtual i_soldel shallow_copy() {
-            
-            /* var copy = new meal();
-            copy_object.copy<meal>(this, copy);
-            */
-            
-            if (this.is_modified()) {
-                IList<meal_content> l_mc_to_add = new List<meal_content>();
-                IList<meal_content> l_mc_to_remove = new List<meal_content>();
-
-                foreach (meal_content mc in l_meal_content) {
-                    if (mc.is_modified()) {
-                        
-                        // vérifier que l'aliment n'existe pas déjà
-                        int cnt = l_meal_content.Where(x => x.food.Equals(mc._food)).Count();
-                        if (cnt == 0) {
-                            l_mc_to_add.Add(new meal_content(this, mc._food));
-                            l_mc_to_remove.Add(mc);
-                        }
-                    }
-                }
-
-                foreach (meal_content mc in l_mc_to_remove) {
-                    mc.remove_me();
-                }
-
-                foreach (meal_content mc in l_mc_to_add) {
-                    l_meal_content.Add(mc);
-                }
-            }
-            return this;
-        }
-
+       
         public virtual void add_child(object child) {
-            throw new NotImplementedException();
+            if (child is meal_content) {
+                meal_content mc = (meal_content)child;
+                this.l_meal_content.Add(mc);
+                mc.meal = this;                       
+            }
         }
 
         public virtual bool can_add_child(object child) {
-            return false;
+            return true;
         }
 
-        public virtual bool can_remove_me() {
+        public virtual bool can_remove_me() { 
             return true;
         }
 
@@ -412,8 +381,46 @@ namespace mupeModel
             return true;
         }
 
-        public virtual bool is_modified() {
-            return l_meal_content.Any(x=>x.is_modified() == true);
+        public virtual bool can_update() {
+            return l_meal_content.Any(x => x.can_update() == true);
+        }
+
+        public virtual void update() {
+            IList<meal_content> l_mc_to_add = new List<meal_content>();
+            IList<meal_content> l_mc_to_remove = new List<meal_content>();
+
+            foreach (meal_content mc in l_meal_content) {
+                if (mc.can_update()) {
+
+                    // vérifier que l'aliment n'existe pas déjà
+                    int cnt = l_meal_content.Where(x => x.food.Equals(mc._food)).Count();
+                    if (cnt == 0) {
+                        l_mc_to_add.Add(new meal_content(this, mc._food));
+                        l_mc_to_remove.Add(mc);
+                    }
+                }
+            }
+
+            foreach (meal_content mc in l_mc_to_remove) {
+                mc.remove_me();
+            }
+
+            foreach (meal_content mc in l_mc_to_add) {
+                l_meal_content.Add(mc);
+            }
+        }
+
+        public virtual i_soldel copy() {
+            var copy = new meal();
+            copy_object.copy<meal>(this, copy);
+
+            foreach (meal_content mc in l_meal_content) {
+                meal_content mc_copy = (meal_content)mc.copy();
+                mc_copy.food_id = mc.food_id;
+                mc_copy.food = mc.food;
+                copy.add_child(mc_copy);
+            }
+            return copy;
         }
 
         #endregion

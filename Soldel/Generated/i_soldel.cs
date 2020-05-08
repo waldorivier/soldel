@@ -4,8 +4,9 @@
         bool can_add_child(object child);
         bool can_remove_me();
         void remove_me();
-        bool is_modified();
+        bool can_update();
+        void update();
         bool is_persistant();
-        i_soldel shallow_copy();
+        i_soldel copy();
     }
 }

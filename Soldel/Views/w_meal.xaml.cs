@@ -35,7 +35,7 @@ namespace Soldel.Views {
             meal_content mc = meal.l_meal_content[0];
             mc._food = l_food[1];
 
-            meal.shallow_copy();
+            meal.copy();
             persistant_controller.update(meal);
         }
 
@@ -51,9 +51,7 @@ namespace Soldel.Views {
             IList l = null;
             if (this._class_name == "meal_content") {
                  l = session.CreateCriteria<meal>().List<meal>().ToList();
-             
-            } else {
-                
+             } else {
                 l = session.CreateCriteria<food>().List<food>().ToList();
             }
 
@@ -70,11 +68,12 @@ namespace Soldel.Views {
             i_soldel elem = (i_soldel)element.DataContext;
 
             if (elem != null) {
-                if (elem.is_modified()) {
-                    elem.shallow_copy();
+                if (elem.can_update()) {
+                    elem.update();
                 }
                 persistant_controller.update(elem);
             }
+
             l_element.SelectedItem = null;
         }
 
@@ -85,12 +84,8 @@ namespace Soldel.Views {
         private void copy_executed(object sender, ExecutedRoutedEventArgs e) {
             i_soldel to_copy = (i_soldel)l_element.SelectedItem;
 
-            // _TEST((meal)to_copy);
-
-            /*
-            i_soldel copy = to_copy.shallow_copy();
+            i_soldel copy = to_copy.copy();
             element.DataContext = copy;
-            */
         }
 
         private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {

@@ -23,21 +23,15 @@ namespace mupeModel
     /// There are no comments for food, Soldel in the schema.
     /// </summary>
     public partial class food : i_soldel {
-    
-        #region Extensibility Method Definitions
-        
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
 
-        
-        #endregion
         /// <summary>
         /// There are no comments for food constructor in the schema.
         /// </summary>
-        public food()
-        {
+        public food() {
             OnCreated();
         }
 
@@ -56,28 +50,25 @@ namespace mupeModel
         /// <summary>
         /// There are no comments for food_id in the schema.
         /// </summary>
-        public virtual long food_id
-        {
+        public virtual long food_id {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for name in the schema.
         /// </summary>
-        public virtual string name
-        {
+        public virtual string name {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for caterory in the schema.
         /// </summary>
-        public virtual caterory caterory
-        {
+        public virtual caterory caterory {
             get;
             set;
         }
@@ -97,7 +88,7 @@ namespace mupeModel
         }
 
         public override string ToString() {
-            return this.name; 
+            return this.name;
         }
 
         public virtual IList<caterory> l_caterory {
@@ -108,10 +99,9 @@ namespace mupeModel
 
         #region I_SOLDEL
 
-        public virtual i_soldel shallow_copy() {
+        public virtual i_soldel copy() {
             var copy = new food();
             copy_object.copy<food>(this, copy);
-
             return copy;
         }
 
@@ -134,10 +124,12 @@ namespace mupeModel
             return true;
         }
 
-        public virtual bool is_modified() {
+        public virtual bool can_update() {
             return false;
         }
 
+        public virtual void update() {
+        }
         #endregion
     }
 

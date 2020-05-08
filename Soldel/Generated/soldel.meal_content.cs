@@ -14,19 +14,23 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using NHibernate.Event;
+using NHibernate.Event.Default;
+using mupeModel.Utils;
 
 namespace mupeModel {
 
     /// <summary>
     /// There are no comments for meal_content, Soldel in the schema.
     /// </summary>
-    public partial class meal_content : i_soldel {
+    /// 
+  
+    public partial class meal_content : food_post_load_listener, i_soldel {
 
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
-
 
         public meal_content(meal meal, food food) {
             this.meal = meal;
@@ -36,6 +40,7 @@ namespace mupeModel {
             this.food_id = food.food_id;
 
             this._food = food;
+            this._food_id = food.food_id;
 
             OnCreated();
         }
@@ -66,6 +71,8 @@ namespace mupeModel {
         /// There are no comments for meal_content constructor in the schema.
         /// </summary>
         public meal_content() {
+
+            _food_id = food_id;
             OnCreated();
         }
 
@@ -105,6 +112,11 @@ namespace mupeModel {
             set;
         }
 
+        public virtual long _food_id {
+            get;
+            set;
+        }
+
         #region I_SOLDEL
 
         public virtual void add_child(object child) {
@@ -128,12 +140,17 @@ namespace mupeModel {
             throw new NotImplementedException();
         }
 
-        public virtual i_soldel shallow_copy() {
-            throw new NotImplementedException();
+        public virtual i_soldel copy() {
+            var copy = new meal_content();
+            copy_object.copy<meal_content>(this, copy);
+            return copy;
         }
 
-        public virtual bool is_modified() {
+        public virtual bool can_update() {
             return _food != null & _food != food;
+        }
+
+        public virtual void update() {
         }
 
         #endregion

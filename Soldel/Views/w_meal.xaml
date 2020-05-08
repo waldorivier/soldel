@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:model="clr-namespace:mupeModel"
         xmlns:local="clr-namespace:Soldel.Views"
+        xmlns:converters="clr-namespace:mupeModel.Views.Converters"
         xmlns:commands="clr-namespace:mupeModel.Commands"
         xmlns:templates="clr-namespace:mupeModel.Views.Templates"
         mc:Ignorable="d"
@@ -36,6 +37,9 @@
     </Window.CommandBindings>
 
     <Window.Resources>
+
+        <converters:food_converter x:Key="food_converter"/>
+
         <Style TargetType="Button">
             <Setter Property="Width" Value="100"/>
             <Setter Property="FontFamily" Value="Courier"/>
@@ -119,21 +123,14 @@
                     </Grid>
 
                 <Grid Grid.Column="1">
-                    <DataGrid Name="meal_content" AutoGenerateColumns="False" ColumnWidth="100" 
-                              ItemsSource="{Binding Path=l_meal_content_cat_1}">
+                    <DataGrid Name="meal_content" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_1}">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_1" Source="{Binding l_food_cat_1}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="cat_1" 
-                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
-                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}"
-                                                    DisplayMemberPath="name">
-                                
-                                                    <!--SelectedValuePath="food_id"
-                                                        SelectedValueBinding="{Binding Path=food_id, Mode=TwoWay}">
-                                                    -->
-                                
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>

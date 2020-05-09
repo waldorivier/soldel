@@ -19,19 +19,21 @@ using mupeModel.Utils;
 namespace mupeModel
 {
 
+   
     /// <summary>
     /// There are no comments for meal_content, Soldel in the schema.
     /// </summary>
     public partial class meal : i_soldel {
-    
-        #region Extensibility Method Definitions
-        
+
+        private IList<meal_content> _l_meal_content = new List<meal_content>();
+
+       
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
         
-        #endregion
+      
         /// <summary>
         /// There are no comments for meal_content constructor in the schema.
         /// </summary>
@@ -296,8 +298,8 @@ namespace mupeModel
         /// There are no comments for l_meal_content in the schema.
         /// </summary>
         public virtual IList<meal_content> l_meal_content {
-            get;
-            set;
+            get => this._l_meal_content;
+            set => this._l_meal_content = value;
         }
 
         public override bool Equals(object obj) {
@@ -362,7 +364,8 @@ namespace mupeModel
             if (child is meal_content) {
                 meal_content mc = (meal_content)child;
                 this.l_meal_content.Add(mc);
-                mc.meal = this;                       
+                mc.meal = this;
+                mc.meal_id = this.meal_id;
             }
         }
 
@@ -414,10 +417,15 @@ namespace mupeModel
             var copy = new meal();
             copy_object.copy<meal>(this, copy);
 
+            copy.meal_id = hibernate_util.get_instance().generate_meal_id();
+
             foreach (meal_content mc in l_meal_content) {
                 meal_content mc_copy = (meal_content)mc.copy();
+
                 mc_copy.food_id = mc.food_id;
                 mc_copy.food = mc.food;
+                mc_copy._food = mc_copy.food;
+
                 copy.add_child(mc_copy);
             }
             return copy;

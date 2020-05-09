@@ -86,6 +86,9 @@ namespace Soldel.Views {
 
             i_soldel copy = to_copy.copy();
             element.DataContext = copy;
+            persistant_controller.update(copy);
+
+            l_element.SelectedItem = null;
         }
 
         private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {

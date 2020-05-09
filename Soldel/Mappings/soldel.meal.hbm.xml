@@ -3,7 +3,7 @@
   <class name="meal" table="meal">
     <id name="meal_id" type="Int64">
       <column name="meal_id" not-null="true" />
-      <generator class="increment" />
+      <generator class="assigned" />
     </id>
     <property name="meal_date" type="DateTime">
       <column name="meal_date" not-null="true" />

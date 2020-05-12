@@ -114,14 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\meal_content_command.cs" />
     <Compile Include="Command\food_command.cs" />
     <Compile Include="Command\meal_command.cs" />
-    <Compile Include="Command\grmu_command.cs" />
-    <Compile Include="Command\dict_command.cs" />
     <Compile Include="Command\chat_box_command .cs" />
-    <Compile Include="Command\attr_command.cs" />
-    <Compile Include="Command\libl_command.cs" />
-    <Compile Include="Command\muta_command.cs" />
     <Compile Include="Command\generate_config_command.cs" />
     <Compile Include="Generated\i_soldel.cs" />
     <Compile Include="Generated\soldel.caterory.cs" />

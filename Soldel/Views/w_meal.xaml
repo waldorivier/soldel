@@ -34,6 +34,7 @@
         <CommandBinding Command="commands:meal_command.cancel"
                         CanExecute="cancel_can_execute"
                         Executed="cancel_executed"/>
+
     </Window.CommandBindings>
 
     <Window.Resources>
@@ -77,7 +78,6 @@
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="Margin" Value="2"/>
         </Style>
-
         
         <DataTemplate x:Key="food_template" DataType="{x:Type model:food}">
             <Grid MaxHeight="20">
@@ -124,7 +124,8 @@
 
                 <Grid Grid.Column="1">
                     <DataGrid Name="meal_content" AutoGenerateColumns="False" 
-                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_1}">
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_1}"
+                              CellEditEnding="dg_meal_content_add">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_1" Source="{Binding l_food_cat_1}"/>
                         </DataGrid.Resources>

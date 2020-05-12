@@ -370,7 +370,15 @@ namespace mupeModel
         }
 
         public virtual bool can_add_child(object child) {
-            return true;
+            bool can_add = false;
+            if (child is meal_content) {
+                meal_content mc = (meal_content)child;
+                int cnt = l_meal_content.Where(x => x.food.Equals(mc.food)).Count();
+                if (cnt==0) {
+                    can_add = true;
+                }
+            }
+            return can_add;
         }
 
         public virtual bool can_remove_me() { 
@@ -394,7 +402,6 @@ namespace mupeModel
 
             foreach (meal_content mc in l_meal_content) {
                 if (mc.can_update()) {
-
                     // vérifier que l'aliment n'existe pas déjà
                     int cnt = l_meal_content.Where(x => x.food.Equals(mc._food)).Count();
                     if (cnt == 0) {

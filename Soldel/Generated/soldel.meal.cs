@@ -402,10 +402,11 @@ namespace mupeModel
 
             foreach (meal_content mc in l_meal_content) {
                 if (mc.can_update()) {
-                    // vérifier que l'aliment n'existe pas déjà
-                    int cnt = l_meal_content.Where(x => x.food.Equals(mc._food)).Count();
-                    if (cnt == 0) {
-                        l_mc_to_add.Add(new meal_content(this, mc._food));
+                    meal_content n_mc = new meal_content(this, mc._food);
+                    if (mc._food.Equals("vide")) {
+                        l_mc_to_remove.Add(mc);
+                    } else if (can_add_child(n_mc)) {
+                        l_mc_to_add.Add(n_mc);
                         l_mc_to_remove.Add(mc);
                     }
                 }
@@ -416,7 +417,7 @@ namespace mupeModel
             }
 
             foreach (meal_content mc in l_mc_to_add) {
-                l_meal_content.Add(mc);
+                add_child(mc);
             }
         }
 

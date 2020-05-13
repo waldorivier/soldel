@@ -39,8 +39,7 @@ namespace Soldel.Views {
                     ComboBox cb = (ComboBox)e.EditingElement;
                     food food = (food)cb.SelectedItem;
                     if (food != null) {
-                        mc = new meal_content();
-                        mc.food_id = food.food_id;
+                        mc = new meal_content(meal, food);
                         if (meal.can_add_child(mc)) {
                             meal.add_child(mc);
                         }
@@ -86,6 +85,7 @@ namespace Soldel.Views {
             }
 
             l_element.SelectedItem = null;
+            element.DataContext = null;
         }
 
         private void copy_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -100,6 +100,7 @@ namespace Soldel.Views {
             persistant_controller.update(copy);
 
             l_element.SelectedItem = null;
+            element.DataContext = null;
         }
 
         private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -117,6 +118,7 @@ namespace Soldel.Views {
         private void delete_executed(object sender, ExecutedRoutedEventArgs e) {
             persistant_controller.delete(null, (i_soldel)l_element.SelectedItem);
             l_element.SelectedItem = null;
+            element.DataContext = null;
         }
 
         private void cancel_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -126,6 +128,7 @@ namespace Soldel.Views {
         private void cancel_executed(object sender, ExecutedRoutedEventArgs e) {
             element = null;
             l_element.SelectedItem = null;
+            element.DataContext = null;
         }
 
         private void add_can_execute(object sender, CanExecuteRoutedEventArgs e) {

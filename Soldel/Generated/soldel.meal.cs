@@ -403,7 +403,7 @@ namespace mupeModel
             foreach (meal_content mc in l_meal_content) {
                 if (mc.can_update()) {
                     meal_content n_mc = new meal_content(this, mc._food);
-                    if (mc._food.Equals("vide")) {
+                    if (mc._food.name.Equals("vide")) {
                         l_mc_to_remove.Add(mc);
                     } else if (can_add_child(n_mc)) {
                         l_mc_to_add.Add(n_mc);

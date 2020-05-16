@@ -215,55 +215,7 @@
     <property name="meal_code" type="Int64" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="dd1c9793-60bf-45a1-91c0-764f773ac7f0">
       <column name="" />
     </property>
-    <property name="meal_code_str" type="String" p1:ValidateRequired="True" p1:Guid="87f75172-7175-4771-a02b-66f5de5c2202">
-      <column name="" />
-    </property>
-    <property name="meal_cat_10" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="2bce7e2d-684f-4cb0-9141-859b982c6f33">
-      <column name="" />
-    </property>
-    <property name="meal_cat_11" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="0cd82e2b-056f-4daa-8161-81f1fc5940c2">
-      <column name="" />
-    </property>
-    <property name="meal_cat_12" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="2d712b98-af10-4bf2-8c57-83b6ba4b312f">
-      <column name="" />
-    </property>
-    <property name="meal_cat_13" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="e7f4ad0d-a2f7-4bdf-b634-6a62063ff4c7">
-      <column name="" />
-    </property>
-    <property name="meal_cat_20" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="9accbfe8-5d10-4d21-a019-996282c12858">
-      <column name="" />
-    </property>
-    <property name="meal_cat_21" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="59fdc516-c110-4278-b526-cf5e4447fe52">
-      <column name="" />
-    </property>
-    <property name="meal_cat_22" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="7a61273a-2ed8-470e-86e9-29eb2f698326">
-      <column name="" />
-    </property>
-    <property name="meal_cat_23" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="0f90a894-b84a-481a-bb3d-5af266cf0769">
-      <column name="" />
-    </property>
-    <property name="meal_cat_30" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="325a4de1-9f89-4dfe-9022-07d658016c98">
-      <column name="" />
-    </property>
-    <property name="meal_cat_31" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="bf1235f1-2079-4152-84df-826e926e5e54">
-      <column name="" />
-    </property>
-    <property name="meal_cat_32" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="1cb020f0-489a-416a-ac0d-16b83795dbd6">
-      <column name="" />
-    </property>
-    <property name="meal_cat_33" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="03c2e396-b8b6-4c6d-b746-f0614220cf92">
-      <column name="" />
-    </property>
-    <property name="meal_cat_40" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="06773bd4-3cb1-4ab9-af8b-2749b70c4e29">
-      <column name="" />
-    </property>
-    <property name="meal_cat_41" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="314fb142-0e4e-43a8-a27d-9649363e072d">
-      <column name="" />
-    </property>
-    <property name="meal_cat_42" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="2630b8b1-69e7-47af-9d48-bcb332b4d5a7">
-      <column name="" />
-    </property>
-    <property name="meal_cat_43" type="String" p1:nullable="true" p1:ValidateRequired="False" p1:Guid="43e17f3f-1fea-41fe-b228-fe9beae5f606">
+    <property name="meal_code_str" type="String" p1:ValidateRequired="False" p1:Guid="87f75172-7175-4771-a02b-66f5de5c2202">
       <column name="" />
     </property>
     <bag name="l_meal_content" inverse="true" generic="true" p1:AssociationGuid="d3af3dc1-778f-4af0-b6dd-9b6aa9d5f4a6" p1:Guid="f6692564-57a3-4c6b-9fe0-f1dca0436437">
@@ -272,6 +224,12 @@
       </key>
       <one-to-many class="meal_content" />
     </bag>
+    <set name="l_meal_smptom" inverse="true" generic="true" p1:AssociationGuid="327663f0-44e7-4ce3-9769-d3da5a7a27bb" p1:Guid="cc7ad444-1fd4-447d-87d1-a5981b83fdc3">
+      <key>
+        <column name="" />
+      </key>
+      <one-to-many class="meal_symptom" />
+    </set>
   </class>
   <class name="food" table="food" p1:Guid="ac73c475-c740-451e-b58e-d84c81451638">
     <id name="food_id" type="Int64" p1:ValidateRequired="True" p1:Guid="1837765c-20b3-4efc-a8f5-4e889c05e93b">
@@ -306,6 +264,12 @@
     <property name="symptom_date" type="DateTime" p1:ValidateRequired="True" p1:Guid="529fedc4-de61-4d55-8534-6bf1e9838445">
       <column name="" />
     </property>
+    <set name="l_meal_smptom" inverse="true" generic="true" p1:AssociationGuid="cacccdcf-e5fd-46bf-9714-0247dd12bb52" p1:Guid="847bb9ac-981a-478a-9c8c-a534165f5a73">
+      <key>
+        <column name="" />
+      </key>
+      <one-to-many class="meal_symptom" />
+    </set>
   </class>
   <class name="caterory" table="caterory" p1:Guid="4197df9a-b39a-40c1-b18a-dbfbdc1a77fd">
     <id name="category_id" type="Int64" p1:ValidateRequired="True" p1:Guid="96005ae7-28bd-4b78-9453-019ec9438247">
@@ -337,6 +301,22 @@
       <column name="" />
     </many-to-one>
     <many-to-one name="food" class="food" p1:AssociationGuid="cc7f016c-9186-44c8-906f-b637a195aef9" p1:Guid="b583bbf9-cf70-4e0d-a153-34a60abfad62">
+      <column name="" />
+    </many-to-one>
+  </class>
+  <class name="meal_symptom" table="meal_symptom" p1:Guid="8b2dabdb-aee3-4b71-9eb5-b8a100080466">
+    <composite-id>
+      <key-property name="meal_id" type="Int64" p1:ValidateRequired="True" p1:Guid="76294115-1288-4ca0-b607-153175d59c4e">
+        <column name="" />
+      </key-property>
+      <key-property name="symptom_id" type="Int64" p1:ValidateRequired="True" p1:Guid="1ecd4d96-28a2-4d63-b899-53c476487523">
+        <column name="" />
+      </key-property>
+    </composite-id>
+    <many-to-one name="meal" class="meal" p1:AssociationGuid="327663f0-44e7-4ce3-9769-d3da5a7a27bb" p1:Guid="12b1b799-c860-469f-acd4-4f6b5484a826">
+      <column name="" />
+    </many-to-one>
+    <many-to-one name="symptom" class="symptom" p1:AssociationGuid="cacccdcf-e5fd-46bf-9714-0247dd12bb52" p1:Guid="18cc6c87-51a7-4479-9d59-ba7c92a7953b">
       <column name="" />
     </many-to-one>
   </class>

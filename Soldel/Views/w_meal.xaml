@@ -110,6 +110,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <WrapPanel Orientation="Vertical">
@@ -123,7 +128,7 @@
                     </Grid>
 
                 <Grid Grid.Column="1">
-                    <DataGrid Name="meal_content" AutoGenerateColumns="False" 
+                    <DataGrid Name="cat_1" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_1}"
                               CellEditEnding="dg_meal_content_add">
                         <DataGrid.Resources>
@@ -131,6 +136,76 @@
                         </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <DataGrid Name="cat_2" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_2}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_2" Source="{Binding l_food_cat_2}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_2}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <DataGrid Name="cat_3" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_3}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_3" Source="{Binding l_food_cat_3}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_3}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="4">
+                    <DataGrid Name="cat_4" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_4}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_4" Source="{Binding l_food_cat_4}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_4}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="5">
+                    <DataGrid Name="cat_5" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_5}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_5" Source="{Binding l_food_cat_5}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_5}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="6">
+                    <DataGrid Name="cat_6" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_6}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_6" Source="{Binding l_food_cat_6}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_6}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>

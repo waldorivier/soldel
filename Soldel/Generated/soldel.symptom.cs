@@ -79,6 +79,11 @@ namespace mupeModel
             set;
         }
 
+        public virtual IList<meal_symptom> l_meal_symptom {
+            get;
+            set;
+        }
+
         public override bool Equals(object obj) {
             symptom toCompare = obj as symptom;
             if (toCompare == null) {

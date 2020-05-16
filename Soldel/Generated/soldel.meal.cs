@@ -26,8 +26,8 @@ namespace mupeModel
     public partial class meal : i_soldel {
 
         private IList<meal_content> _l_meal_content = new List<meal_content>();
+        private IList<meal_symptom> _l_meal_symptom = new List<meal_symptom>();
 
-       
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
@@ -81,218 +81,6 @@ namespace mupeModel
             set;
         }
 
-        /// <summary>
-        /// There are no comments for meal_cat_10 in the schema.
-        /// </summary>
-        public virtual string meal_cat_10
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_11 in the schema.
-        /// </summary>
-        public virtual string meal_cat_11
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_12 in the schema.
-        /// </summary>
-        public virtual string meal_cat_12
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_13 in the schema.
-        /// </summary>
-        public virtual string meal_cat_13
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_20 in the schema.
-        /// </summary>
-        public virtual string meal_cat_20
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_21 in the schema.
-        /// </summary>
-        public virtual string meal_cat_21
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_22 in the schema.
-        /// </summary>
-        public virtual string meal_cat_22
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_23 in the schema.
-        /// </summary>
-        public virtual string meal_cat_23
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_30 in the schema.
-        /// </summary>
-        public virtual string meal_cat_30
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_31 in the schema.
-        /// </summary>
-        public virtual string meal_cat_31
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_32 in the schema.
-        /// </summary>
-        public virtual string meal_cat_32
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_33 in the schema.
-        /// </summary>
-        public virtual string meal_cat_33
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_40 in the schema.
-        /// </summary>
-        public virtual string meal_cat_40
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_41 in the schema.
-        /// </summary>
-        public virtual string meal_cat_41
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_42 in the schema.
-        /// </summary>
-        public virtual string meal_cat_42
-        {
-            get;
-            set;
-        }
-
-    
-        /// <summary>
-        /// There are no comments for meal_cat_43 in the schema.
-        /// </summary>
-        public virtual string meal_cat_43
-        {
-            get;
-            set;
-        }
-
-
-        public class cat {
-            public cat(String v1, String v2, String v3, String v4) {
-                val1 = v1 != null ? v1 : "";
-                val2 = v2 != null ? v2:  "";
-                val3 = v3 != null ? v3 : "";
-                val4 = v4 != null ? v4 : "";
-            }
-
-            public Boolean all_null() {
-                return val1 + val2 + val3 + val4 == "";
-            }
-
-            public string val1 {
-                get;
-            }
-
-            public string val2 {
-                get;
-            }
-
-            public string val3 {
-                get;
-            }
-
-            public string val4 {
-                get;
-            }
-
-        };
-
-        public virtual IList<cat> l_cats {
-            get {
-                List<cat> l_ = new List<cat>();
-                cat cat = new cat(meal_cat_10, meal_cat_20, meal_cat_30, meal_cat_40);
-                if(!cat.all_null())
-                    l_.Add(cat);
-
-                cat = new cat(meal_cat_11, meal_cat_21, meal_cat_31, meal_cat_41);
-                if (!cat.all_null())
-                    l_.Add(cat);
-
-                cat = new cat(meal_cat_12, meal_cat_22, meal_cat_32, meal_cat_42);
-                if (!cat.all_null())
-                    l_.Add(cat);
-
-                cat = new cat(meal_cat_13, meal_cat_23, meal_cat_33, meal_cat_43);
-                if (!cat.all_null())
-                    l_.Add(cat);
-
-                return l_;
-            }
-        }
 
         /// <summary>
         /// There are no comments for l_meal_content in the schema.
@@ -300,6 +88,11 @@ namespace mupeModel
         public virtual IList<meal_content> l_meal_content {
             get => this._l_meal_content;
             set => this._l_meal_content = value;
+        }
+
+        public virtual IList<meal_symptom> l_meal_symptom {
+            get => this._l_meal_symptom;
+            set => this._l_meal_symptom = value;
         }
 
         public override bool Equals(object obj) {
@@ -322,11 +115,44 @@ namespace mupeModel
         
         public virtual IList<meal_content> l_meal_content_cat_1 {
             get {
-                IList<meal_content> l = l_meal_content.Where(x => x.food.caterory.category_id == 1).ToList<meal_content>();
-                return l;
+                return l_meal_content_cat(1);
+            }
+        }
+
+        public virtual IList<meal_content> l_meal_content_cat_2 {
+            get {
+                return l_meal_content_cat(2);
+            }
+        }
+
+        public virtual IList<meal_content> l_meal_content_cat_3 {
+            get {
+                return l_meal_content_cat(3);
             }
         }
         
+        public virtual IList<meal_content> l_meal_content_cat_4 {
+            get {
+                return l_meal_content_cat(4);
+            }
+        }
+
+        public virtual IList<meal_content> l_meal_content_cat_5 {
+            get {
+                return l_meal_content_cat(5);
+            }
+        }
+
+        public virtual IList<meal_content> l_meal_content_cat_6 {
+            get {
+                return l_meal_content_cat(6);
+            }
+        }
+
+        public virtual IList<meal_content> l_meal_content_cat(int cat_id) {
+            return l_meal_content.Where(x => x.food.caterory.category_id == cat_id).ToList<meal_content>();
+        }
+
         // matin / midi / soir
         public virtual IList<String> l_meal_code_str {
             get {
@@ -358,8 +184,20 @@ namespace mupeModel
             }
         }
 
+        public virtual IList<food> l_food_cat_5 {
+            get {
+                return hibernate_util.get_instance().get_l_food(5);
+            }
+        }
+
+        public virtual IList<food> l_food_cat_6{
+            get {
+                return hibernate_util.get_instance().get_l_food(6);
+            }
+        }
+
         #region I_SOLDEL
-       
+
         public virtual void add_child(object child) {
             if (child is meal_content) {
                 meal_content mc = (meal_content)child;

@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping assembly="Soldel" namespace="mupeModel" xmlns="urn:nhibernate-mapping-2.2">
-  <class name="meal_content" table="meal_content">
+  <class name="meal_symptom" table="meal_symptom">
     <composite-id>
-      <key-property name="food_id" type="Int64">
-        <column name="food_id" not-null="true" />
-      </key-property>
       <key-property name="meal_id" type="Int64">
         <column name="meal_id" not-null="true" />
       </key-property>
+      <key-property name="symptom_id" type="Int64">
+        <column name="symptom_id" not-null="true" />
+      </key-property>
     </composite-id>
-    <many-to-one name="meal" lazy="false" class="meal" insert="false" update="false">
+    <many-to-one name="meal" class="meal" insert="false" update="false">
       <column name="meal_id" not-null="true" />
     </many-to-one>
-    <many-to-one name="food" lazy="false" class="food" insert="false" update="false">
-      <column name="food_id" not-null="true" />
+    <many-to-one name="symptom" class="symptom" insert="false" update="false">
+      <column name="symptom_id" not-null="true" />
     </many-to-one>
   </class>
 </hibernate-mapping>

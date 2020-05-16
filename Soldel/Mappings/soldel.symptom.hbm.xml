@@ -14,5 +14,12 @@
     <property name="symptom_date" type="DateTime">
       <column name="symptom_date" not-null="true" />
     </property>
+
+    <bag name="l_meal_symptom" cascade="all-delete-orphan" inverse="true" generic="true">
+      <key>
+        <column name="symptom_id" />
+      </key>
+      <one-to-many class="meal_symptom" />
+    </bag>
   </class>
 </hibernate-mapping>

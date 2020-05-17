@@ -34,13 +34,10 @@
         <CommandBinding Command="commands:meal_command.cancel"
                         CanExecute="cancel_can_execute"
                         Executed="cancel_executed"/>
-
     </Window.CommandBindings>
 
     <Window.Resources>
-
         <converters:food_converter x:Key="food_converter"/>
-
         <Style TargetType="Button">
             <Setter Property="Width" Value="100"/>
             <Setter Property="FontFamily" Value="Courier"/>
@@ -78,11 +75,11 @@
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="Margin" Value="2"/>
         </Style>
-        
+
         <DataTemplate x:Key="food_template" DataType="{x:Type model:food}">
             <Grid MaxHeight="20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="100"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
@@ -95,7 +92,6 @@
                               DisplayMemberPath="name"
                               SelectedItem="{Binding Path=caterory, Mode=TwoWay}">
                     </ComboBox>
-
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -115,6 +111,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <WrapPanel Orientation="Vertical">
@@ -128,14 +125,15 @@
                     </Grid>
 
                 <Grid Grid.Column="1">
-                    <DataGrid Name="cat_1" AutoGenerateColumns="False" 
-                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_1}"
+                    <DataGrid Name="cat_1" AutoGenerateColumns="False"
+                              ItemsSource="{Binding Path=l_meal_content_cat_1}"
                               CellEditEnding="dg_meal_content_add">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_1" Source="{Binding l_food_cat_1}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
+                            <DataGridComboBoxColumn Header="oleagineux"
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_1}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
@@ -149,7 +147,8 @@
                             <CollectionViewSource x:Key="l_food_cat_2" Source="{Binding l_food_cat_2}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_2}}"
+                            <DataGridComboBoxColumn Header="legumes"   
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_2}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
@@ -163,7 +162,8 @@
                             <CollectionViewSource x:Key="l_food_cat_3" Source="{Binding l_food_cat_3}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_3}}"
+                            <DataGridComboBoxColumn Header="fruits"    
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_3}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
@@ -177,7 +177,8 @@
                             <CollectionViewSource x:Key="l_food_cat_4" Source="{Binding l_food_cat_4}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_4}}"
+                            <DataGridComboBoxColumn Header="cat_4"
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_4}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
@@ -191,7 +192,8 @@
                             <CollectionViewSource x:Key="l_food_cat_5" Source="{Binding l_food_cat_5}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_5}}"
+                            <DataGridComboBoxColumn Header="viande poison"
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_5}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
@@ -205,8 +207,24 @@
                             <CollectionViewSource x:Key="l_food_cat_6" Source="{Binding l_food_cat_6}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource l_food_cat_6}}"
+                            <DataGridComboBoxColumn Header="divers"
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_6}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="7">
+                    <DataGrid Name="symptom" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_symptom}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_symptom" Source="{Binding l_symptom}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="symptomes"
+                                                    ItemsSource="{Binding Source={StaticResource l_symptom}}"
+                                                    SelectedItemBinding="{Binding Path=_symptom, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>

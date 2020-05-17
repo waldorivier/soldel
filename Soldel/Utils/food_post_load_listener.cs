@@ -15,6 +15,11 @@ namespace mupeModel.Utils {
                 meal_content mc = (meal_content)@event.Entity;
                 mc._food = mc.food;
             }
+
+            if (@event.Entity is mupeModel.meal_symptom) {
+                meal_symptom ms = (meal_symptom)@event.Entity;
+                ms._symptom = ms.symptom;
+            }
         }
      }
 }

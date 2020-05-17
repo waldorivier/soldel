@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using mupeModel.Utils;
 
 namespace mupeModel
 {
@@ -21,7 +22,7 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for meal_symptom, Soldel in the schema.
     /// </summary>
-    public partial class meal_symptom : INotifyPropertyChanging, INotifyPropertyChanged {
+    public partial class meal_symptom : i_soldel, INotifyPropertyChanging, INotifyPropertyChanged {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
 
@@ -31,43 +32,39 @@ namespace mupeModel
 
         private meal _meal;
 
-        private symptom _symptom;
-    
+
         #region Extensibility Method Definitions
-        
+
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
 
-        public override bool Equals(object obj)
-        {
-          meal_symptom toCompare = obj as meal_symptom;
-          if (toCompare == null)
-          {
-            return false;
-          }
+        public override bool Equals(object obj) {
+            meal_symptom toCompare = obj as meal_symptom;
+            if (toCompare == null) {
+                return false;
+            }
 
-          if (!Object.Equals(this.meal_id, toCompare.meal_id))
-            return false;
-          if (!Object.Equals(this.symptom_id, toCompare.symptom_id))
-            return false;
-          
-          return true;
+            if (!Object.Equals(this.meal_id, toCompare.meal_id))
+                return false;
+            if (!Object.Equals(this.symptom_id, toCompare.symptom_id))
+                return false;
+
+            return true;
         }
 
-        public override int GetHashCode()
-        {
-          int hashCode = 13;
-          hashCode = (hashCode * 7) + meal_id.GetHashCode();
-          hashCode = (hashCode * 7) + symptom_id.GetHashCode();
-          return hashCode;
+        public override int GetHashCode() {
+            int hashCode = 13;
+            hashCode = (hashCode * 7) + meal_id.GetHashCode();
+            hashCode = (hashCode * 7) + symptom_id.GetHashCode();
+            return hashCode;
         }
         /// <summary>
         /// There are no comments for Onmeal_idChanging in the schema.
         /// </summary>
         partial void Onmeal_idChanging(long value);
-        
+
         /// <summary>
         /// There are no comments for Onmeal_idChanged in the schema.
         /// </summary>
@@ -76,7 +73,7 @@ namespace mupeModel
         /// There are no comments for Onsymptom_idChanging in the schema.
         /// </summary>
         partial void Onsymptom_idChanging(long value);
-        
+
         /// <summary>
         /// There are no comments for Onsymptom_idChanged in the schema.
         /// </summary>
@@ -99,30 +96,37 @@ namespace mupeModel
         /// There are no comments for OnsymptomChanged in the schema.
         /// </summary>
         partial void OnsymptomChanged();
-        
+
         #endregion
         /// <summary>
         /// There are no comments for meal_symptom constructor in the schema.
         /// </summary>
-        public meal_symptom()
-        {
+        public meal_symptom() {
             OnCreated();
         }
 
-    
+        public meal_symptom(meal meal, symptom symptom) {
+            this.meal = meal;
+            this.symptom = symptom;
+
+            this.meal_id = meal.meal_id;
+            this.symptom_id = symptom.symptom_id;
+
+            this._symptom = symptom;
+            this._symptom_id = symptom.symptom_id;
+
+            OnCreated();
+        }
+
         /// <summary>
         /// There are no comments for meal_id in the schema.
         /// </summary>
-        public virtual long meal_id
-        {
-            get
-            {
+        public virtual long meal_id {
+            get {
                 return this._meal_id;
             }
-            set
-            {
-                if (this._meal_id != value)
-                {
+            set {
+                if (this._meal_id != value) {
                     this.Onmeal_idChanging(value);
                     this.SendPropertyChanging();
                     this._meal_id = value;
@@ -132,20 +136,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for symptom_id in the schema.
         /// </summary>
-        public virtual long symptom_id
-        {
-            get
-            {
+        public virtual long symptom_id {
+            get {
                 return this._symptom_id;
             }
-            set
-            {
-                if (this._symptom_id != value)
-                {
+            set {
+                if (this._symptom_id != value) {
                     this.Onsymptom_idChanging(value);
                     this.SendPropertyChanging();
                     this._symptom_id = value;
@@ -155,20 +155,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for meal in the schema.
         /// </summary>
-        public virtual meal meal
-        {
-            get
-            {
+        public virtual meal meal {
+            get {
                 return this._meal;
             }
-            set
-            {
-                if (this._meal != value)
-                {
+            set {
+                if (this._meal != value) {
                     this.OnmealChanging(value);
                     this.SendPropertyChanging();
                     this._meal = value;
@@ -178,20 +174,16 @@ namespace mupeModel
             }
         }
 
-    
+
         /// <summary>
         /// There are no comments for symptom in the schema.
         /// </summary>
-        public virtual symptom symptom
-        {
-            get
-            {
+        public virtual symptom symptom {
+            get {
                 return this._symptom;
             }
-            set
-            {
-                if (this._symptom != value)
-                {
+            set {
+                if (this._symptom != value) {
                     this.OnsymptomChanging(value);
                     this.SendPropertyChanging();
                     this._symptom = value;
@@ -200,7 +192,12 @@ namespace mupeModel
                 }
             }
         }
-   
+
+        public virtual symptom _symptom {
+            get;
+            set;
+        }
+
         public virtual event PropertyChangingEventHandler PropertyChanging;
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
@@ -225,6 +222,45 @@ namespace mupeModel
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #region I_SOLDEL
+
+        public virtual void add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_remove_me() {
+            return true;
+        }
+
+        public virtual void remove_me() {
+            meal.l_meal_symptom.Remove(this);
+            symptom.l_meal_symptom.Remove(this);
+        }
+
+        public virtual bool is_persistant() {
+            throw new NotImplementedException();
+        }
+
+        public virtual i_soldel copy() {
+            var copy = new meal_symptom();
+            copy_object.copy<meal_symptom>(this, copy);
+            return copy;
+        }
+
+        public virtual bool can_update() {
+            return _symptom != null & _symptom != symptom
+                ;
+        }
+
+        public virtual void update() {
+        }
+
+        #endregion
     }
 
 }

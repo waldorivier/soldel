@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using mupeModel.Utils;
 
 namespace mupeModel
 {
@@ -21,60 +22,55 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for symptom, Soldel in the schema.
     /// </summary>
-    public partial class symptom {
-    
+    public partial class symptom : i_soldel {
+
         #region Extensibility Method Definitions
-        
+
         /// <summary>
         /// There are no comments for OnCreated in the schema.
         /// </summary>
         partial void OnCreated();
-        
+
         #endregion
         /// <summary>
         /// There are no comments for symptom constructor in the schema.
         /// </summary>
-        public symptom()
-        {
+        public symptom() {
             OnCreated();
         }
 
-    
+
         /// <summary>
         /// There are no comments for symptom_id in the schema.
         /// </summary>
-        public virtual long symptom_id
-        {
+        public virtual long symptom_id {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for symptom_cat in the schema.
         /// </summary>
-        public virtual long symptom_cat
-        {
+        public virtual long symptom_cat {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for value in the schema.
         /// </summary>
-        public virtual string value
-        {
+        public virtual string value {
             get;
             set;
         }
 
-    
+
         /// <summary>
         /// There are no comments for symptom_date in the schema.
         /// </summary>
-        public virtual System.DateTime symptom_date
-        {
+        public virtual System.DateTime symptom_date {
             get;
             set;
         }
@@ -101,6 +97,45 @@ namespace mupeModel
             hashCode = (hashCode * 7) + symptom_id.GetHashCode();
             return hashCode;
         }
-    }
 
+        public override string ToString() {
+            return this.value;
+        }
+
+        #region I_SOLDEL
+
+        public virtual i_soldel copy() {
+            var copy = new symptom();
+            copy_object.copy<symptom>(this, copy);
+
+            return copy;
+        }
+
+        public virtual void add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_add_child(object child) {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool can_remove_me() {
+            return l_meal_symptom.Count == 0;
+        }
+
+        public virtual void remove_me() {
+        }
+
+        public virtual bool is_persistant() {
+            return true;
+        }
+
+        public virtual bool can_update() {
+            return false;
+        }
+
+        public virtual void update() {
+        }
+        #endregion
+    }
 }

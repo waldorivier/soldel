@@ -71,7 +71,6 @@ namespace mupeModel {
         /// There are no comments for meal_content constructor in the schema.
         /// </summary>
         public meal_content() {
-
             _food_id = food_id;
             OnCreated();
         }
@@ -84,7 +83,6 @@ namespace mupeModel {
             get;
             set;
         }
-
 
         /// <summary>
         /// There are no comments for meal_id in the schema.

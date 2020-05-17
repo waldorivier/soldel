@@ -28,20 +28,35 @@ namespace Soldel.Views {
             this._class_name = class_name;
             InitializeComponent();
         }
-        
+
         private void dg_meal_content_add(object sender, DataGridCellEditEndingEventArgs e) {
             if (element.DataContext is meal) {
                 meal meal = (meal)element.DataContext;
 
-                meal_content mc = (meal_content)e.EditingElement.DataContext;
-                // n'insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
-                if (mc.meal_id == 0) {
-                    ComboBox cb = (ComboBox)e.EditingElement;
-                    food food = (food)cb.SelectedItem;
-                    if (food != null) {
-                        mc = new meal_content(meal, food);
-                        if (meal.can_add_child(mc)) {
-                            meal.add_child(mc);
+                if (e.EditingElement.DataContext is meal_content) {
+                    meal_content mc = (meal_content)e.EditingElement.DataContext;
+                    // insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
+                    if (mc.meal_id == 0) {
+                        ComboBox cb = (ComboBox)e.EditingElement;
+                        food food = (food)cb.SelectedItem;
+                        if (food != null) {
+                            mc = new meal_content(meal, food);
+                            if (meal.can_add_child(mc)) {
+                                meal.add_child(mc);
+                            }
+                        }
+                    }
+                } else if (e.EditingElement.DataContext is meal_symptom) {
+                    meal_symptom ms = (meal_symptom)e.EditingElement.DataContext;
+                    // insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
+                    if (ms.meal_id == 0) {
+                        ComboBox cb = (ComboBox)e.EditingElement;
+                        symptom symptom = (symptom)cb.SelectedItem;
+                        if (symptom != null) {
+                            ms = new meal_symptom(meal, symptom);
+                            if (meal.can_add_child(ms)) {
+                                meal.add_child(ms);
+                            }
                         }
                     }
                 }

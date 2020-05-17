@@ -196,6 +196,12 @@ namespace mupeModel
             }
         }
 
+        public virtual IList<symptom> l_symptom {
+            get {
+                return hibernate_util.get_instance().get_l_symptom();
+            }
+        }
+
         #region I_SOLDEL
 
         public virtual void add_child(object child) {
@@ -204,6 +210,13 @@ namespace mupeModel
                 this.l_meal_content.Add(mc);
                 mc.meal = this;
                 mc.meal_id = this.meal_id;
+            }
+
+            if (child is meal_symptom) {
+                meal_symptom ms = (meal_symptom)child;
+                this.l_meal_symptom.Add(ms);
+                ms.meal = this;
+                ms.meal_id = this.meal_id;
             }
         }
 
@@ -214,6 +227,17 @@ namespace mupeModel
                 int cnt = l_meal_content.Where(x => x.food.Equals(mc.food)).Count();
                 if (cnt==0) {
                     can_add = true;
+                }
+            }
+
+            if (child is meal_symptom) {
+                meal_symptom ms = (meal_symptom)child;
+
+                if (l_meal_symptom.Count() > 0) {
+                    int cnt = l_meal_symptom.Where(x => x.symptom.Equals(ms.symptom)).Count();
+                    if (cnt == 0) {
+                        can_add = true;
+                    }
                 }
             }
             return can_add;
@@ -231,17 +255,18 @@ namespace mupeModel
         }
 
         public virtual bool can_update() {
-            return l_meal_content.Any(x => x.can_update() == true);
+            return l_meal_content.Any(x => x.can_update() == true) ||
+                   l_meal_symptom.Any(x => x.can_update() == true);
         }
 
         public virtual void update() {
-            IList<meal_content> l_mc_to_add = new List<meal_content>();
-            IList<meal_content> l_mc_to_remove = new List<meal_content>();
+            IList<i_soldel> l_mc_to_add = new List<i_soldel>();
+            IList<i_soldel> l_mc_to_remove = new List<i_soldel>();
 
             foreach (meal_content mc in l_meal_content) {
                 if (mc.can_update()) {
                     meal_content n_mc = new meal_content(this, mc._food);
-                    if (mc._food.name.Equals("vide")) {
+                    if (mc.ToString().Equals("vide")) {
                         l_mc_to_remove.Add(mc);
                     } else if (can_add_child(n_mc)) {
                         l_mc_to_add.Add(n_mc);
@@ -273,6 +298,16 @@ namespace mupeModel
                 mc_copy._food = mc_copy.food;
 
                 copy.add_child(mc_copy);
+            }
+
+            foreach (meal_symptom ms in l_meal_symptom) {
+                meal_symptom ms_copy = (meal_symptom)ms.copy();
+
+                ms_copy.symptom_id = ms.symptom_id;
+                ms_copy.symptom = ms.symptom;
+                ms_copy._symptom = ms.symptom;
+
+                copy.add_child(ms_copy);
             }
             return copy;
         }

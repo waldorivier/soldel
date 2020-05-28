@@ -22,18 +22,7 @@ namespace mupeModel
     /// <summary>
     /// There are no comments for meal_symptom, Soldel in the schema.
     /// </summary>
-    public partial class meal_symptom : i_soldel, INotifyPropertyChanging, INotifyPropertyChanged {
-
-        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(System.String.Empty);
-
-        private long _meal_id;
-
-        private long _symptom_id;
-
-        private meal _meal;
-
-
-        #region Extensibility Method Definitions
+    public partial class meal_symptom : food_post_load_listener, i_soldel {
 
         /// <summary>
         /// There are no comments for OnCreated in the schema.
@@ -60,44 +49,8 @@ namespace mupeModel
             hashCode = (hashCode * 7) + symptom_id.GetHashCode();
             return hashCode;
         }
-        /// <summary>
-        /// There are no comments for Onmeal_idChanging in the schema.
-        /// </summary>
-        partial void Onmeal_idChanging(long value);
-
-        /// <summary>
-        /// There are no comments for Onmeal_idChanged in the schema.
-        /// </summary>
-        partial void Onmeal_idChanged();
-        /// <summary>
-        /// There are no comments for Onsymptom_idChanging in the schema.
-        /// </summary>
-        partial void Onsymptom_idChanging(long value);
-
-        /// <summary>
-        /// There are no comments for Onsymptom_idChanged in the schema.
-        /// </summary>
-        partial void Onsymptom_idChanged();
-        /// <summary>
-        /// There are no comments for OnmealChanging in the schema.
-        /// </summary>
-        partial void OnmealChanging(meal value);
-
-        /// <summary>
-        /// There are no comments for OnmealChanged in the schema.
-        /// </summary>
-        partial void OnmealChanged();
-        /// <summary>
-        /// There are no comments for OnsymptomChanging in the schema.
-        /// </summary>
-        partial void OnsymptomChanging(symptom value);
-
-        /// <summary>
-        /// There are no comments for OnsymptomChanged in the schema.
-        /// </summary>
-        partial void OnsymptomChanged();
-
-        #endregion
+       
+        
         /// <summary>
         /// There are no comments for meal_symptom constructor in the schema.
         /// </summary>
@@ -122,18 +75,8 @@ namespace mupeModel
         /// There are no comments for meal_id in the schema.
         /// </summary>
         public virtual long meal_id {
-            get {
-                return this._meal_id;
-            }
-            set {
-                if (this._meal_id != value) {
-                    this.Onmeal_idChanging(value);
-                    this.SendPropertyChanging();
-                    this._meal_id = value;
-                    this.SendPropertyChanged("meal_id");
-                    this.Onmeal_idChanged();
-                }
-            }
+            get;
+            set;
         }
 
 
@@ -141,18 +84,8 @@ namespace mupeModel
         /// There are no comments for symptom_id in the schema.
         /// </summary>
         public virtual long symptom_id {
-            get {
-                return this._symptom_id;
-            }
-            set {
-                if (this._symptom_id != value) {
-                    this.Onsymptom_idChanging(value);
-                    this.SendPropertyChanging();
-                    this._symptom_id = value;
-                    this.SendPropertyChanged("symptom_id");
-                    this.Onsymptom_idChanged();
-                }
-            }
+            get;
+            set;
         }
 
 
@@ -160,18 +93,8 @@ namespace mupeModel
         /// There are no comments for meal in the schema.
         /// </summary>
         public virtual meal meal {
-            get {
-                return this._meal;
-            }
-            set {
-                if (this._meal != value) {
-                    this.OnmealChanging(value);
-                    this.SendPropertyChanging();
-                    this._meal = value;
-                    this.SendPropertyChanged("meal");
-                    this.OnmealChanged();
-                }
-            }
+            get;
+            set;
         }
 
 
@@ -179,18 +102,8 @@ namespace mupeModel
         /// There are no comments for symptom in the schema.
         /// </summary>
         public virtual symptom symptom {
-            get {
-                return this._symptom;
-            }
-            set {
-                if (this._symptom != value) {
-                    this.OnsymptomChanging(value);
-                    this.SendPropertyChanging();
-                    this._symptom = value;
-                    this.SendPropertyChanged("symptom");
-                    this.OnsymptomChanged();
-                }
-            }
+            get;
+            set;
         }
 
         public virtual symptom _symptom {
@@ -198,29 +111,9 @@ namespace mupeModel
             set;
         }
 
-        public virtual event PropertyChangingEventHandler PropertyChanging;
-
-        public virtual event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void SendPropertyChanging()
-        {
-		        var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, emptyChangingEventArgs);
-        }
-
-        protected virtual void SendPropertyChanging(System.String propertyName) 
-        {    
-		        var handler = this.PropertyChanging;
-            if (handler != null)
-                handler(this, new PropertyChangingEventArgs(propertyName));
-        }
-
-        protected virtual void SendPropertyChanged(System.String propertyName)
-        {    
-		        var handler = this.PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+        public virtual long _symptom_id {
+            get;
+            set;
         }
 
         #region I_SOLDEL
@@ -243,7 +136,7 @@ namespace mupeModel
         }
 
         public virtual bool is_persistant() {
-            throw new NotImplementedException();
+            return true;
         }
 
         public virtual i_soldel copy() {
@@ -253,8 +146,7 @@ namespace mupeModel
         }
 
         public virtual bool can_update() {
-            return _symptom != null & _symptom != symptom
-                ;
+            return _symptom != null & _symptom != symptom;
         }
 
         public virtual void update() {

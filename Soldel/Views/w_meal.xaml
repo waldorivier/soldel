@@ -112,6 +112,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <WrapPanel Orientation="Vertical">
@@ -177,7 +178,7 @@
                             <CollectionViewSource x:Key="l_food_cat_4" Source="{Binding l_food_cat_4}"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="cat_4"
+                            <DataGridComboBoxColumn Header="produits laitiers"
                                                     ItemsSource="{Binding Source={StaticResource l_food_cat_4}}"
                                                     SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
                             </DataGridComboBoxColumn>
@@ -215,8 +216,23 @@
                     </DataGrid>
                 </Grid>
                 <Grid Grid.Column="7">
+                    <DataGrid Name="cat_7" AutoGenerateColumns="False" 
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_7}"
+                              CellEditEnding="dg_meal_content_add">
+                        <DataGrid.Resources>
+                            <CollectionViewSource x:Key="l_food_cat_7" Source="{Binding l_food_cat_7}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="cereales"
+                                                    ItemsSource="{Binding Source={StaticResource l_food_cat_7}}"
+                                                    SelectedItemBinding="{Binding Path=_food, Mode=TwoWay}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="8">
                     <DataGrid Name="symptom" AutoGenerateColumns="False" 
-                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_symptom}"
+                              ColumnWidth="100" ItemsSource="{Binding Path=l_meal_symptom_}"
                               CellEditEnding="dg_meal_content_add">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_symptom" Source="{Binding l_symptom}"/>

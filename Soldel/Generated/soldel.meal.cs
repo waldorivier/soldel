@@ -149,6 +149,12 @@ namespace mupeModel
             }
         }
 
+        public virtual IList<meal_content> l_meal_content_cat_7 {
+            get {
+                return l_meal_content_cat(7);
+            }
+        }
+
         public virtual IList<meal_content> l_meal_content_cat(int cat_id) {
             return l_meal_content.Where(x => x.food.caterory.category_id == cat_id).ToList<meal_content>();
         }
@@ -196,9 +202,21 @@ namespace mupeModel
             }
         }
 
+        public virtual IList<food> l_food_cat_7 {
+            get {
+                return hibernate_util.get_instance().get_l_food(7);
+            }
+        }
+
         public virtual IList<symptom> l_symptom {
             get {
                 return hibernate_util.get_instance().get_l_symptom();
+            }
+        }
+        
+        public virtual IList<meal_symptom> l_meal_symptom_ {
+            get {
+                return l_meal_symptom.Where(x => x.symptom_id > 0).ToList<meal_symptom>();
             }
         }
 
@@ -232,14 +250,12 @@ namespace mupeModel
 
             if (child is meal_symptom) {
                 meal_symptom ms = (meal_symptom)child;
-
-                if (l_meal_symptom.Count() > 0) {
-                    int cnt = l_meal_symptom.Where(x => x.symptom.Equals(ms.symptom)).Count();
-                    if (cnt == 0) {
-                        can_add = true;
-                    }
+                int cnt = l_meal_symptom.Where(x => x.symptom.Equals(ms.symptom)).Count();
+                if (cnt == 0) {
+                    can_add = true;
                 }
             }
+          
             return can_add;
         }
 
@@ -260,26 +276,56 @@ namespace mupeModel
         }
 
         public virtual void update() {
-            IList<i_soldel> l_mc_to_add = new List<i_soldel>();
-            IList<i_soldel> l_mc_to_remove = new List<i_soldel>();
+            update_l_meal_content();
+            update_l_meal_symptom();
+        }
+
+        private void update_l_meal_content() {
+            IList<i_soldel> l_to_add = new List<i_soldel>();
+            IList<i_soldel> l_to_remove = new List<i_soldel>();
 
             foreach (meal_content mc in l_meal_content) {
                 if (mc.can_update()) {
                     meal_content n_mc = new meal_content(this, mc._food);
-                    if (mc.ToString().Equals("vide")) {
-                        l_mc_to_remove.Add(mc);
+                    if (mc._food.ToString().Equals("vide")) {
+                        l_to_remove.Add(mc);
                     } else if (can_add_child(n_mc)) {
-                        l_mc_to_add.Add(n_mc);
-                        l_mc_to_remove.Add(mc);
+                        l_to_add.Add(n_mc);
+                        l_to_remove.Add(mc);
                     }
                 }
             }
 
-            foreach (meal_content mc in l_mc_to_remove) {
+            foreach (meal_content mc in l_to_remove) {
                 mc.remove_me();
             }
 
-            foreach (meal_content mc in l_mc_to_add) {
+            foreach (meal_content mc in l_to_add) {
+                add_child(mc);
+            }
+        }
+
+        private void update_l_meal_symptom() {
+            IList<i_soldel> l_to_add = new List<i_soldel>();
+            IList<i_soldel> l_to_remove = new List<i_soldel>();
+
+            foreach (meal_symptom mc in l_meal_symptom) {
+                if (mc.can_update()) {
+                    meal_symptom n_mc = new meal_symptom(this, mc._symptom);
+                    if (mc._symptom.ToString().Equals("vide")) {
+                        l_to_remove.Add(mc);
+                    } else if (can_add_child(n_mc)) {
+                        l_to_add.Add(n_mc);
+                        l_to_remove.Add(mc);
+                    }
+                }
+            }
+
+            foreach (meal_content mc in l_to_remove) {
+                mc.remove_me();
+            }
+
+            foreach (meal_content mc in l_to_add) {
                 add_child(mc);
             }
         }

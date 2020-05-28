@@ -21,5 +21,5 @@ namespace mupeModel.Utils {
                 ms._symptom = ms.symptom;
             }
         }
-     }
+    }
 }

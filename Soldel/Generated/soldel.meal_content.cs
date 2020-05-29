@@ -32,17 +32,21 @@ namespace mupeModel {
         /// </summary>
         partial void OnCreated();
 
-        public meal_content(meal meal, food food) {
-            this.meal = meal;
-            this.food = food;
+        public meal_content(meal meal, i_soldel i_soldel) {
+            try {
+                food food = (food)i_soldel;
 
-            this.meal_id = meal.meal_id;
-            this.food_id = food.food_id;
+                this.meal = meal;
+                this.food = food;
 
-            this._food = food;
-            this._food_id = food.food_id;
+                this.meal_id = meal.meal_id;
+                this.food_id = food.food_id;
 
-            OnCreated();
+                this._food = food;
+                this._food_id = food.food_id;
+            } catch (Exception e) {
+
+            }
         }
 
         public override bool Equals(object obj) {

@@ -58,17 +58,20 @@ namespace mupeModel
             OnCreated();
         }
 
-        public meal_symptom(meal meal, symptom symptom) {
-            this.meal = meal;
-            this.symptom = symptom;
+        public meal_symptom(meal meal, i_soldel i_soldel) {
+            try {
+                symptom symptom = (symptom)i_soldel;
 
-            this.meal_id = meal.meal_id;
-            this.symptom_id = symptom.symptom_id;
+                this.meal = meal;
+                this.symptom = symptom;
 
-            this._symptom = symptom;
-            this._symptom_id = symptom.symptom_id;
+                this.meal_id = meal.meal_id;
+                this.symptom_id = symptom.symptom_id;
 
-            OnCreated();
+                this._symptom = symptom;
+                this._symptom_id = symptom.symptom_id;
+            } catch (Exception e) {
+            }
         }
 
         /// <summary>

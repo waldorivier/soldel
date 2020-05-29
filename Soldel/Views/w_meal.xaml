@@ -95,7 +95,19 @@
                 </Grid>
             </Grid>
         </DataTemplate>
-                
+
+        <DataTemplate x:Key="symptom_template" DataType="{x:Type model:symptom}">
+            <Grid MaxHeight="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <TextBox Text="{Binding Path=value, Mode=TwoWay}"/>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        
         <DataTemplate x:Key="meal_template" DataType="{x:Type model:meal}">
             <DataTemplate.Resources>
                 <Style TargetType="Grid">
@@ -128,7 +140,7 @@
                 <Grid Grid.Column="1">
                     <DataGrid Name="cat_1" AutoGenerateColumns="False"
                               ItemsSource="{Binding Path=l_meal_content_cat_1}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_1" Source="{Binding l_food_cat_1}"/>
                         </DataGrid.Resources>
@@ -143,7 +155,7 @@
                 <Grid Grid.Column="2">
                     <DataGrid Name="cat_2" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_2}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_2" Source="{Binding l_food_cat_2}"/>
                         </DataGrid.Resources>
@@ -158,7 +170,7 @@
                 <Grid Grid.Column="3">
                     <DataGrid Name="cat_3" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_3}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_3" Source="{Binding l_food_cat_3}"/>
                         </DataGrid.Resources>
@@ -173,7 +185,7 @@
                 <Grid Grid.Column="4">
                     <DataGrid Name="cat_4" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_4}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_4" Source="{Binding l_food_cat_4}"/>
                         </DataGrid.Resources>
@@ -188,7 +200,7 @@
                 <Grid Grid.Column="5">
                     <DataGrid Name="cat_5" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_5}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_5" Source="{Binding l_food_cat_5}"/>
                         </DataGrid.Resources>
@@ -203,7 +215,7 @@
                 <Grid Grid.Column="6">
                     <DataGrid Name="cat_6" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_6}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_6" Source="{Binding l_food_cat_6}"/>
                         </DataGrid.Resources>
@@ -218,7 +230,7 @@
                 <Grid Grid.Column="7">
                     <DataGrid Name="cat_7" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_content_cat_7}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_food_cat_7" Source="{Binding l_food_cat_7}"/>
                         </DataGrid.Resources>
@@ -233,7 +245,7 @@
                 <Grid Grid.Column="8">
                     <DataGrid Name="symptom" AutoGenerateColumns="False" 
                               ColumnWidth="100" ItemsSource="{Binding Path=l_meal_symptom_}"
-                              CellEditEnding="dg_meal_content_add">
+                              CellEditEnding="dg_meal_symptom_modify">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="l_symptom" Source="{Binding l_symptom}"/>
                         </DataGrid.Resources>

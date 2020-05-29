@@ -296,11 +296,11 @@ namespace mupeModel
                 }
             }
 
-            foreach (meal_content mc in l_to_remove) {
+            foreach (i_soldel mc in l_to_remove) {
                 mc.remove_me();
             }
 
-            foreach (meal_content mc in l_to_add) {
+            foreach (i_soldel mc in l_to_add) {
                 add_child(mc);
             }
         }
@@ -321,11 +321,11 @@ namespace mupeModel
                 }
             }
 
-            foreach (meal_content mc in l_to_remove) {
+            foreach (i_soldel mc in l_to_remove) {
                 mc.remove_me();
             }
 
-            foreach (meal_content mc in l_to_add) {
+            foreach (i_soldel mc in l_to_add) {
                 add_child(mc);
             }
         }

@@ -14,6 +14,7 @@
             <StackPanel>
                 <Button x:Name="btn_meal" Content="Saisie repas"/>
                 <Button x:Name="btn_food" Content="Configurer liste aliments"/>
+                <Button x:Name="btn_symptom" Content="Configurer liste symptomes"/>
             </StackPanel>
         </Grid>
     </Grid>

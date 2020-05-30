@@ -77,10 +77,12 @@ namespace Soldel.Views {
             ISession session = uc_select_connection.session;
 
             IList l = null;
-            if (this._class_name == "meal_content") {
-                 l = session.CreateCriteria<meal>().List<meal>().ToList();
-             } else {
+            if (this._class_name == "meal") {
+                l = session.CreateCriteria<meal>().AddOrder(NHibernate.Criterion.Order.Desc("meal_date")).List();
+            } else if (this._class_name == "food") {
                 l = session.CreateCriteria<food>().List<food>().ToList();
+            } else if (this._class_name == "symptom") {
+                l = session.CreateCriteria<symptom>().List<symptom>().ToList();
             }
 
             l_element.ItemsSource = l;

@@ -30,7 +30,7 @@ namespace Soldel.Views {
         }
 
         private void dg_meal_content_modify(object sender, DataGridCellEditEndingEventArgs e) {
-            meal meal = (meal)element.DataContext;
+            meal meal = (meal)l_element.SelectedItem;
 
             if (e.EditingElement.DataContext is meal_content) {
                 meal_content mc = (meal_content)e.EditingElement.DataContext;
@@ -49,7 +49,7 @@ namespace Soldel.Views {
         }
 
         private void dg_meal_symptom_modify(object sender, DataGridCellEditEndingEventArgs e) {
-            meal meal = (meal)element.DataContext;
+            meal meal = (meal)l_element.SelectedItem;
 
             if (e.EditingElement.DataContext is meal_symptom) {
                 meal_symptom ms = (meal_symptom)e.EditingElement.DataContext;
@@ -93,7 +93,9 @@ namespace Soldel.Views {
         }
 
         private void validate_executed(object sender, ExecutedRoutedEventArgs e) {
-            i_soldel elem = (i_soldel)element.DataContext;
+            // i_soldel elem = (i_soldel)element.DataContext;
+
+            i_soldel elem = (i_soldel)l_element.SelectedItem;
 
             // TODO : déplacer dans persistant_controller ?
             if (elem != null) {
@@ -104,7 +106,6 @@ namespace Soldel.Views {
             }
 
             l_element.SelectedItem = null;
-            element.DataContext = null;
         }
 
         private void copy_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -115,11 +116,10 @@ namespace Soldel.Views {
             i_soldel to_copy = (i_soldel)l_element.SelectedItem;
 
             i_soldel copy = to_copy.copy();
-            element.DataContext = copy;
+            l_element.SelectedItem = copy;
             persistant_controller.update(copy);
 
             l_element.SelectedItem = null;
-            element.DataContext = null;
         }
 
         private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -127,7 +127,7 @@ namespace Soldel.Views {
         }
 
         private void update_executed(object sender, ExecutedRoutedEventArgs e) {
-            element.DataContext = l_element.SelectedItem;
+            // element.DataContext = l_element.SelectedItem;
         }
 
         private void delete_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -137,7 +137,6 @@ namespace Soldel.Views {
         private void delete_executed(object sender, ExecutedRoutedEventArgs e) {
             persistant_controller.delete(null, (i_soldel)l_element.SelectedItem);
             l_element.SelectedItem = null;
-            element.DataContext = null;
         }
 
         private void cancel_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -145,10 +144,8 @@ namespace Soldel.Views {
         }
 
         private void cancel_executed(object sender, ExecutedRoutedEventArgs e) {
-            element = null;
             l_element.SelectedItem = null;
-            element.DataContext = null;
-        }
+       }
 
         private void add_can_execute(object sender, CanExecuteRoutedEventArgs e) {
         }

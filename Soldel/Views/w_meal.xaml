@@ -283,55 +283,21 @@
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <ListView x:Name="l_element" Grid.Row="0"
                       HorizontalContentAlignment="Stretch">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="modifier" Command="commands:meal_command.validate"/>
+                        <MenuItem Header="copier" Command="commands:meal_command.copy"/>
+                        <MenuItem Header="supprimer" Command="commands:meal_command.delete"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
                 <ListView.ItemTemplateSelector>
                     <templates:w_generic_template_selector/>
                 </ListView.ItemTemplateSelector>
             </ListView>
-            
-            <GridSplitter HorizontalAlignment="Stretch" Grid.Row="1" Margin="2">
-            </GridSplitter>
-
-            <Grid x:Name="element" Grid.Row="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="45"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <WrapPanel HorizontalAlignment="Left">
-                        <Button x:Name="copy" Content="Copier" Command="commands:meal_command.copy"/>
-                        <Button x:Name="update" Content="Modifier" Command="commands:meal_command.update"/>
-                        <Button x:Name="delete" Content="Supprimer" Command="commands:meal_command.delete"/>
-                    </WrapPanel>
-                </Grid>
-
-                <Grid Grid.Row="1">
-                    <ContentControl 
-                        Content="{Binding}" Grid.Row="0">
-                        <ContentControl.ContentTemplateSelector>
-                            <templates:w_generic_template_selector/>
-                        </ContentControl.ContentTemplateSelector>
-                    </ContentControl>
-               </Grid>
-
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <WrapPanel HorizontalAlignment="Right" Grid.Column="1" Margin="2" >
-                        <Button x:Name="btn_validate" Content="Valider" Command="commands:meal_command.validate"/>
-                        <Button x:Name="btn_cancel" Content="Annuler" Command="commands:meal_command.validate"/>
-                    </WrapPanel>
-                </Grid>
-            </Grid>
         </Grid>
     </Grid>
 </Window>

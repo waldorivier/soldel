@@ -32,16 +32,18 @@ namespace Soldel.Views {
         private void dg_meal_content_modify(object sender, DataGridCellEditEndingEventArgs e) {
             meal meal = (meal)l_element.SelectedItem;
 
-            if (e.EditingElement.DataContext is meal_content) {
-                meal_content mc = (meal_content)e.EditingElement.DataContext;
-                // insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
-                if (mc.meal_id == 0) {
-                    ComboBox cb = (ComboBox)e.EditingElement;
-                    i_soldel i_soldel = (food)cb.SelectedItem;
-                    if (i_soldel != null) {
-                        mc = new meal_content(meal, i_soldel);
-                        if (meal.can_add_child(mc)) {
-                            meal.add_child(mc);
+            if (meal != null) {
+                if (e.EditingElement.DataContext is meal_content) {
+                    meal_content mc = (meal_content)e.EditingElement.DataContext;
+                    // insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
+                    if (mc.meal_id == 0) {
+                        ComboBox cb = (ComboBox)e.EditingElement;
+                        i_soldel i_soldel = (food)cb.SelectedItem;
+                        if (i_soldel != null) {
+                            mc = new meal_content(meal, i_soldel);
+                            if (meal.can_add_child(mc)) {
+                                meal.add_child(mc);
+                            }
                         }
                     }
                 }
@@ -51,16 +53,18 @@ namespace Soldel.Views {
         private void dg_meal_symptom_modify(object sender, DataGridCellEditEndingEventArgs e) {
             meal meal = (meal)l_element.SelectedItem;
 
-            if (e.EditingElement.DataContext is meal_symptom) {
-                meal_symptom ms = (meal_symptom)e.EditingElement.DataContext;
-                // insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
-                if (ms.meal_id == 0) {
-                    ComboBox cb = (ComboBox)e.EditingElement;
-                    i_soldel i_soldel = (symptom)cb.SelectedItem;
-                    if (i_soldel != null) {
-                        ms = new meal_symptom(meal, i_soldel);
-                        if (meal.can_add_child(ms)) {
-                            meal.add_child(ms);
+            if (meal != null) {
+                if (e.EditingElement.DataContext is meal_symptom) {
+                    meal_symptom ms = (meal_symptom)e.EditingElement.DataContext;
+                    // insérer un nouvel aliment ssi le contexte est vide; sinon il s'agit d'une modification
+                    if (ms.meal_id == 0) {
+                        ComboBox cb = (ComboBox)e.EditingElement;
+                        i_soldel i_soldel = (symptom)cb.SelectedItem;
+                        if (i_soldel != null) {
+                            ms = new meal_symptom(meal, i_soldel);
+                            if (meal.can_add_child(ms)) {
+                                meal.add_child(ms);
+                            }
                         }
                     }
                 }
@@ -78,11 +82,15 @@ namespace Soldel.Views {
 
             IList l = null;
             if (this._class_name == "meal") {
-                l = session.CreateCriteria<meal>().AddOrder(NHibernate.Criterion.Order.Desc("meal_date")).List();
+                l = session.CreateCriteria<meal>().
+                    AddOrder(NHibernate.Criterion.Order.Desc("meal_date")).
+                    AddOrder(NHibernate.Criterion.Order.Desc("meal_code")).List();
             } else if (this._class_name == "food") {
-                l = session.CreateCriteria<food>().List<food>().ToList();
+                l = session.CreateCriteria<food>().
+                    AddOrder(NHibernate.Criterion.Order.Asc("name")).List();
             } else if (this._class_name == "symptom") {
-                l = session.CreateCriteria<symptom>().List<symptom>().ToList();
+                l = session.CreateCriteria<symptom>().
+                    AddOrder(NHibernate.Criterion.Order.Asc("name")).List();
             }
 
             l_element.ItemsSource = l;

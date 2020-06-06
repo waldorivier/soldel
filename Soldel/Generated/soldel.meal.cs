@@ -159,11 +159,13 @@ namespace mupeModel
             return l_meal_content.Where(x => x.food.caterory.category_id == cat_id).ToList<meal_content>();
         }
 
-        // matin / midi / soir
-        public virtual IList<String> l_meal_code_str {
+        public virtual IList< object> l_meal_code_str {
             get {
-                return new List<String>() { "matin", "midi", "soir"};
-            }
+                return new[] { new { name = "matin", code = (long)1},
+                               new { name = "midi",  code = (long)2},
+                               new { name = "soir",  code = (long)3}
+                             };
+                }
         }
 
         public virtual IList<food> l_food_cat_1 {

@@ -132,7 +132,9 @@
                             </DatePicker>
                             <ComboBox Tag="meal_code" Name="meal_code" 
                                       ItemsSource = "{Binding Path=l_meal_code_str}"
-                                      SelectedItem = "{Binding Path=meal_code_str, Mode=TwoWay}">
+                                      DisplayMemberPath="name"
+                                      SelectedValue="{Binding meal_code, Mode=TwoWay}"
+                                      SelectedValuePath="code">
                             </ComboBox>
                         </WrapPanel>
                     </Grid>

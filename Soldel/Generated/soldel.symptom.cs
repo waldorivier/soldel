@@ -107,6 +107,7 @@ namespace mupeModel
         public virtual i_soldel copy() {
             var copy = new symptom();
             copy_object.copy<symptom>(this, copy);
+            copy.symptom_id = 0;
 
             return copy;
         }

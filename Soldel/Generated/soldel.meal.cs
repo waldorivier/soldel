@@ -337,6 +337,7 @@ namespace mupeModel
             copy_object.copy<meal>(this, copy);
 
             copy.meal_id = hibernate_util.get_instance().generate_meal_id();
+            copy.meal_date = DateTime.Today;
 
             foreach (meal_content mc in l_meal_content) {
                 meal_content mc_copy = (meal_content)mc.copy();

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Soldel.Views"
         mc:Ignorable="d"
         Title="MLFOOD" Height="300" Width="300">
         <Grid x:Name ="g_main" Background = "LightGray" Margin = "5,10,5,5">
@@ -12,6 +13,7 @@
 
         <Grid Grid.Column="0">
             <StackPanel>
+                <local:uc_select_connection x:Name="uc_select_connection"/>
                 <Button x:Name="btn_meal" Content="Saisie repas"/>
                 <Button x:Name="btn_food" Content="Configurer liste aliments"/>
                 <Button x:Name="btn_symptom" Content="Configurer liste symptomes"/>

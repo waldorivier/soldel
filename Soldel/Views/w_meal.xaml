@@ -11,10 +11,6 @@
         mc:Ignorable="d"
         Title="meal" Background="LightGray">
     <Window.CommandBindings>
-        <CommandBinding Command="commands:meal_command.validate"
-                        CanExecute="validate_can_execute"
-                        Executed="validate_executed"/>
-
         <CommandBinding Command="commands:meal_command.load"
                         CanExecute="load_can_execute"
                         Executed="load_executed"/>
@@ -114,7 +110,7 @@
                     <Setter Property="Margin" Value="1"/>
                 </Style>
             </DataTemplate.Resources>
-            <Grid MinHeight="80">
+            <Grid MinHeight="80" IsEnabled="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
@@ -126,8 +122,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <WrapPanel Orientation="Vertical">
+                <Grid Grid.Column="0">
+                    <WrapPanel Orientation="Vertical">
                             <DatePicker Tag="meal_date" Name="meal_date" SelectedDate="{Binding meal_date, Mode=TwoWay}">
                             </DatePicker>
                             <ComboBox Tag="meal_code" Name="meal_code" 
@@ -140,7 +136,7 @@
                     </Grid>
 
                 <Grid Grid.Column="1">
-                    <DataGrid Name="cat_1" AutoGenerateColumns="False"
+                    <DataGrid Name="cat_1" AutoGenerateColumns="False" 
                               ItemsSource="{Binding Path=l_meal_content_cat_1}"
                               CellEditEnding="dg_meal_content_modify">
                         <DataGrid.Resources>
@@ -265,24 +261,21 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="55"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <StackPanel>
-                <local:uc_select_connection x:Name="uc_select_connection"/>
-            </StackPanel>
+           
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0">
             <StackPanel HorizontalAlignment="Left" Margin="2">
                 <Button x:Name="btn_load" Content="Lire" Command="commands:meal_command.load"/>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -291,7 +284,7 @@
                       HorizontalContentAlignment="Stretch">
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="modifier" Command="commands:meal_command.validate"/>
+                        <MenuItem Header="modifier" Command="commands:meal_command.update"/>
                         <MenuItem Header="copier" Command="commands:meal_command.copy"/>
                         <MenuItem Header="supprimer" Command="commands:meal_command.delete"/>
                     </ContextMenu>

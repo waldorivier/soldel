@@ -24,8 +24,12 @@ namespace Soldel.Views {
         // specifies the class name to manage
         private String _class_name = null;
 
-        public w_meal(String class_name) {
+        private ISession _session = null;
+
+        public w_meal(String class_name, ISession session) {
             this._class_name = class_name;
+            this._session = session;
+
             InitializeComponent();
         }
 
@@ -74,37 +78,38 @@ namespace Soldel.Views {
         #region COMMAND HANDLER
 
         private void load_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            e.CanExecute = uc_select_connection.session != null;
+            e.CanExecute = _session != null;
         }
 
         private void load_executed(object sender, ExecutedRoutedEventArgs e) {
-            ISession session = uc_select_connection.session;
+            reload();
+        }
 
+        private void reload() {
             IList l = null;
             if (this._class_name == "meal") {
-                l = session.CreateCriteria<meal>().
+                l = _session.CreateCriteria<meal>().
                     AddOrder(NHibernate.Criterion.Order.Desc("meal_date")).
                     AddOrder(NHibernate.Criterion.Order.Desc("meal_code")).List();
             } else if (this._class_name == "food") {
-                l = session.CreateCriteria<food>().
+                l = _session.CreateCriteria<food>().
                     AddOrder(NHibernate.Criterion.Order.Asc("name")).List();
             } else if (this._class_name == "symptom") {
-                l = session.CreateCriteria<symptom>().
-                    AddOrder(NHibernate.Criterion.Order.Asc("name")).List();
+                l = _session.CreateCriteria<symptom>().
+                    AddOrder(NHibernate.Criterion.Order.Asc("value")).List();
             }
 
             l_element.ItemsSource = l;
             l_element.SelectedItem = null;
-            persistant_controller = new persistant_controller(session);
+            persistant_controller = new persistant_controller(_session);
+
         }
 
-        private void validate_can_execute(object sender, CanExecuteRoutedEventArgs e) {
+        private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = l_element.SelectedItem != null;
         }
 
-        private void validate_executed(object sender, ExecutedRoutedEventArgs e) {
-            // i_soldel elem = (i_soldel)element.DataContext;
-
+        private void update_executed(object sender, ExecutedRoutedEventArgs e) {
             i_soldel elem = (i_soldel)l_element.SelectedItem;
 
             // TODO : déplacer dans persistant_controller ?
@@ -116,6 +121,7 @@ namespace Soldel.Views {
             }
 
             l_element.SelectedItem = null;
+            reload();
         }
 
         private void copy_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -130,14 +136,7 @@ namespace Soldel.Views {
             persistant_controller.update(copy);
 
             l_element.SelectedItem = null;
-        }
-
-        private void update_can_execute(object sender, CanExecuteRoutedEventArgs e) {
-            e.CanExecute = l_element.SelectedItem != null;
-        }
-
-        private void update_executed(object sender, ExecutedRoutedEventArgs e) {
-            // element.DataContext = l_element.SelectedItem;
+            reload();
         }
 
         private void delete_can_execute(object sender, CanExecuteRoutedEventArgs e) {
@@ -147,6 +146,7 @@ namespace Soldel.Views {
         private void delete_executed(object sender, ExecutedRoutedEventArgs e) {
             persistant_controller.delete(null, (i_soldel)l_element.SelectedItem);
             l_element.SelectedItem = null;
+            reload();
         }
 
         private void cancel_can_execute(object sender, CanExecuteRoutedEventArgs e) {

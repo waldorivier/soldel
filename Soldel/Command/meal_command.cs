@@ -4,18 +4,12 @@ namespace mupeModel.Commands {
 
     public static class meal_command {
 
-        private static RoutedUICommand _validate = new RoutedUICommand("validate", "validate", typeof(meal_command), null);
         private static RoutedUICommand _load = new RoutedUICommand("load", "load", typeof(meal_command), null);
         private static RoutedUICommand _update = new RoutedUICommand("update", "update", typeof(meal_command), null);
         private static RoutedUICommand _create = new RoutedUICommand("create", "create", typeof(meal_command), null);
         private static RoutedUICommand _copy = new RoutedUICommand("copy", "copy", typeof(meal_command), null);
         private static RoutedUICommand _delete = new RoutedUICommand("delete", "delete", typeof(meal_command), null);
         private static RoutedUICommand _cancel = new RoutedUICommand("cancel", "cancel", typeof(meal_command), null);
-
-        public static RoutedUICommand validate {
-            get => _validate;
-            set => _validate = value;
-        }
 
         public static RoutedUICommand load {
             get => _load;

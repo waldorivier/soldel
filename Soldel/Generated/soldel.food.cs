@@ -102,6 +102,7 @@ namespace mupeModel
         public virtual i_soldel copy() {
             var copy = new food();
             copy_object.copy<food>(this, copy);
+            copy.food_id = 0;
 
             copy.caterory = this.caterory;
             return copy;

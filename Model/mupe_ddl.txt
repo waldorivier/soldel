@@ -1,5 +1,5 @@
 -- Start of DDL Script for Table PADEV96_DATA.PE_ASSU
--- Generated 21-déc.-2017 07:43:46 from PADEV96_DATA@labcit
+-- Generated 21-dÃ©c.-2017 07:43:46 from PADEV96_DATA@labcit
 
 CREATE TABLE pe_assu
     (no_ip                         INTEGER ,
@@ -59,6 +59,7 @@ ADD CONSTRAINT pe_assup1 PRIMARY KEY (no_ip, nperso, no_plan, no_cas, nassur);
 
 -- Start of DDL Script for Table PADEV96_DATA.PE_SITU
 -- Generated 22.12.2017 15:56:26 from PADEV96_DATA@labcit
+
 
 CREATE TABLE pe_situ
     (pe_assu_id                    VARCHAR(10) ,
